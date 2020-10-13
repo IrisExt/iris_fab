@@ -1,0 +1,21 @@
+menu:
+  barrehoriz:
+    accueil: 'Accueil'
+    creerAppelPro: 'Créer un Appel à projet'
+    appelprojet: 'Appels à projets'
+    parameterForm : 'paramétrage formulaires'
+    comite: 'Comité'
+    comites: 'Comités'
+    creercomite: 'Créer un comité'
+    lstcomite: 'Liste des comités'
+    administrateur: 'Administration'
+    utilisateur: 'Utilisateurs'
+    ces: 'CES'
+    enregistreeval: 'Enrgistrer un évaluateur'
+    gestionform : Gestion formulaires
+  compte:
+    profil: 'Mon Profile'
+    role: 'Role'
+    deconnexion: 'Déconnexion'
+
+

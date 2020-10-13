@@ -1,0 +1,154 @@
+$(document).ready(function() {
+
+    $('#exampleModal').on('shown.bs.modal', function () {
+        var modal = $(this);
+        $.ajax('{{ path('
+        ajouter_comite
+        ') }}', {
+            success: function (data) {
+                modal.find('.modal-body').html(data);
+                $('.chosen-select').chosen();
+            }
+        }
+    )
+        ;
+    });
+
+//modal pour la création reunion
+    $('#reunionPeriodeModal').on('show.bs.modal', function (e) {
+        if (e.namespace === 'bs.modal') {               // <-- ajouter pour le fonctionnement de Datapicker
+            var modal_periode_reunion = $(this);
+            // récuperer la route du lien modal  data-id
+            $.ajax('{{ path('
+            ajouter_periode_reu
+            ') }}', {
+                success: function (data) {
+                    modal_periode_reunion.find('.modal-body').html(data);
+                    $('#data_periode .input-daterange').datepicker({
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        autoclose: true,
+                        showOnFocus: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+
+                    });
+                }
+            }
+        );
+        }
+    });
+
+// modal pour la modification reunion
+    var $modal = $('#modifperiodeModal');
+    $modal.on('show.bs.modal', function (e) {
+        if (e.namespace === 'bs.modal') {
+            // récuperer la route du lien modal  data-id
+            var path = $(e.relatedTarget).data('id');
+            var modal_modif_reunion = $(this);
+            $.ajax({
+                'url': path,
+                success: function (data) {
+                    modal_modif_reunion.find('.modal-body').html(data);
+                    $('.chosen-select').chosen();
+                    $('#data_periode .input-daterange').datepicker({
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        autoclose: true,
+                        showOnFocus: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+                    });
+
+                }
+            });
+        }
+    });
+
+//modal pour la création reunion
+    $('#seanceModal').on('show.bs.modal', function (e) {
+        if (e.namespace === 'bs.modal') {
+            // récuperer la route du lien modal  data-id
+            var path = $(e.relatedTarget).data('id');
+            var modal_seance = $(this);
+            $.ajax({
+                type: 'GET',
+                'url': path,
+                success: function (data) {
+                    modal_seance.find('.modal-body').html(data);
+                    $('#data_periode .input-daterange').datepicker({
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        autoclose: true,
+                        showOnFocus: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+                    });
+
+                }
+            });
+        }
+    });
+
+// modal pour la modification reunion
+    var $modal = $('#ajouterSeanceModal');
+    $modal.on('show.bs.modal', function (e) {
+        if (e.namespace === 'bs.modal') {
+            // récuperer la route du lien modal  data-id
+            var path = $(e.relatedTarget).data('id');
+            var modal_ajouter_seance = $(this);
+            $.ajax({
+                'url': path,
+                success: function (data) {
+                    modal_ajouter_seance.find('.modal-body').html(data);
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
+                    $('#data_1 .input-group.date').datepicker({
+                        todayBtn: "linked",
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        calendarWeeks: true,
+                        autoclose: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+                    });
+
+                }
+            });
+        }
+    });
+
+//modal pour la création message cps coes pres
+    $('#messageModal').on('show.bs.modal', function (e) {
+        // récuperer la route du lien modal  data-id
+        var path = $(e.relatedTarget).data('id');
+        var modal_message = $(this);
+        $.ajax({
+            'url': path,
+            success: function (data) {
+                modal_message.find('.modal-body').html(data);
+            }
+        });
+    });
+
+//modal pour la création message pilote
+    $('#messagePiloteModal').on('show.bs.modal', function (e) {
+        // récuperer la route du lien modal  data-id
+        var path = $(e.relatedTarget).data('id');
+        var modal_message = $(this);
+        $.ajax({
+            'url': path,
+            success: function (data) {
+                modal_message.find('.modal-body').html(data);
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('[rel="tooltip"]').tooltip({trigger: "hover"});
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+}

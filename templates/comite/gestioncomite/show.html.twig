@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Comites' %}
+{% block title %}voir comité{% endblock %}
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'comite.liste.creercomite'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a href="{{ path('comite_index') }}">{{ 'comite.form.retour'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>{{ 'comite.form.acron'|trans }}</th>
+                                    <td>{{ tg_comite.lbAcr }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'comite.form.text'|trans }}</th>
+                                    <td>{{ tg_comite.lbTitre }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'comite.form.desc'|trans }}</th>
+                                    <td>{{ tg_comite.lbDesc }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'comite.form.departement'|trans }}</td>
+                                    <td>{% for dep in tg_comite.idDepartement %}
+                                            {{ dep }},
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="footer-text-right">
+                                <a class="btn btn-primary"
+                                   href="{{ path('comite_edit', {'idComite': tg_comite.idComite}) }}">{{ 'comite.liste.modifcomite'|trans }}</a>
+                            </div>
+                            {{ include('comite/gestioncomite/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

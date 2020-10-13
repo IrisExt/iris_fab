@@ -1,0 +1,34 @@
+personne:
+  from:
+    genre: 'Genre'
+    idCivilite: 'Civilité'
+    lbNomUsage: 'Nom'
+    lbPrenom: 'Prénom'
+    blFm: 'Sexe'
+    idProfil: 'Profil'
+    modif: 'Modifier'
+    cree: 'Créer'
+    supprimer: 'Supprimer'
+    retour: 'Retour'
+    action: 'Action'
+    delete: 'Supprimer'
+    modifier: 'Modifier'
+    iduser: 'Utilisateur'
+    idprofil: 'Profil'
+    username: 'username'
+    email: 'email'
+    typepers: 'Type personne'
+    cdfrancophone: 'Francophone'
+    lbWebPerso: 'Site Web'
+    fonction: 'Fonction'
+    langue: 'Langue'
+    courriel: 'Courriel'
+    role: 'Rôle'
+  liste:
+    listeper: 'Liste personne'
+    modifpers: 'Modifier une personne'
+    creerpers: 'Créer une personne'
+  message:
+    suppression: 'Voulez vous vraiment supprimer cette personne'
+  enregistrement:
+      note: "The first step to creating an account is to enter your basic profile information. "

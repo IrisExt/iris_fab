@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="text-center">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="sparkline8-list shadow-reset">
+                <div class="sparkline8-hd" style="background-color: #dfdfdf">
+                    <div class="main-sparkline8-hd">
+                        <h1>Affectation R/L</h1>
+                        <div class="sparkline9-outline-icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline8-graph">
+                    <div class="alert alert-warning"> Attention ! le comité n'a pas de membres ou de projets . !</div>
+                    <div class="footer-text-right"><a class="btn btn-secondary" href="{{ path('accueil') }}">Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

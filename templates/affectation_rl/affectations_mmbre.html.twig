@@ -1,0 +1,751 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        .row:before {
+            display: table;
+            content: none;
+        }
+
+        .loader {
+            background: url({{asset('img/loading.gif')}}) 50% 50% no-repeat rgba(255, 255, 255, 0.8);
+            cursor: wait;
+            height: 100%;
+            left: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+
+        .loader h1 {
+            background: none;
+            border: none;
+            color: #458976;
+            font-size: 22px;
+            font-family: "Open Sans", sans-serif;
+            font-variant: small-caps;
+            font-weight: 700;
+            height: 700px;
+            line-height: 700px;
+            margin: 0 0 10px;
+            padding: 0;
+            text-align: center;
+        }
+
+        /*.container_table {*/
+        /*    margin-bottom: 30px;*/
+        /*}*/
+
+        .seat {
+            background-color: #fff;
+            text-align: center;
+            width: 20px;
+        }
+
+        th.rotate {
+
+            vertical-align: bottom;
+            padding: 5px;
+        }
+
+        .verticaltxt {
+            display: inline-block;
+            overflow: hidden;
+            width: 1.5em;
+            line-height: 1.5em;
+        }
+
+        .verticaltxt span {
+            display: inline-block;
+            white-space: nowrap;
+            -webkit-transform: translate(0, 100%) rotate(-90deg);
+            -moz-transform: translate(0, 100%) rotate(-90deg);
+            -ms-transform: translate(0, 100%) rotate(-90deg);
+            -o-transform: translate(0, 100%) rotate(-90deg);
+            transform: translate(0, 100%) rotate(-90deg);
+            -webkit-transform-origin: 0 0;
+            -moz-transform-origin: 0 0;
+            -ms-transform-origin: 0 0;
+            -o-transform-origin: 0 0;
+            transform-origin: 0 0;
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /*IE8: shim*/
+        }
+
+        .verticaltxt span:after {
+            content: "";
+            float: left;
+            margin-top: 100%;
+        }
+
+        thead {
+            background: white;
+            color: black;
+            position: sticky;
+            /*position: -webkit-sticky;*/
+            top: 0;
+            border: 1px solid black;
+        }
+
+        .gras {
+            font-weight: bold;
+        }
+
+        .scorll_tab {
+            width: 100%;
+            height: 50em;
+            padding: .75em;
+
+        }
+
+        {% for key , arrStatutsClassmmbre in arrStatutsClassMembre %}
+
+        .seat.{{ arrStatutsClassmmbre }} {
+            background-color: {{ arrStatutsClassColor[key] }};
+            color: black;
+        }
+
+        {% endfor %}
+        .mcrap {
+            text-align: center;
+        }
+
+        .mtot {
+            text-align: center;
+        }
+
+        .mclect {
+            text-align: center;
+        }
+
+        .prap {
+            text-align: center;
+        }
+
+        .plect {
+            text-align: center;
+        }
+
+        #ttrap {
+            text-align: center;
+        }
+
+        #ttlect {
+            text-align: center;
+        }
+
+        .color-sample {
+            display: block;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            color: black;
+        }
+
+    </style>
+{% endblock %}
+{% block body %}
+
+    <div class="loader">
+        <h1>Veuillez patientez pendant le chargement de la page.</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            {#            <div class="col-lg-3">#}
+            {#            </div>#}
+            <div class="col-lg-12">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd" style="background: #dfdfdf">
+                        <div class="main-sparkline8-hd">
+                            <h1>{{ comite }}: Affectation des rapporteurs et lecteurs</h1>
+                            <div class="sparkline8-outline-icon">
+{#                                <a href="{{ path('export_affec_RL',  {'tgComite': comite.idComite}) }}" title="EXCEL"><i class="fa fa-file-excel"></i>Excel</a>#}
+                                <a href="{{ path('accueil') }}">Retour</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <div class="sparkline8-graph">
+                            <div class="row">
+                                {% if comite.isBlDroitProjetOuvert == 1 %}
+                                <div class="alert alert-warning">les accès sont ouvert pour les Rapporteurs / lecteurs</div>
+                                {% else %}
+                                <div class="success_open"></div>
+                                {% endif %}
+                                <div class="success"></div>
+
+                                <div class="errors"></div>
+                                <div class="form-group col-lg-4">
+                                    <div class="breadcome-heading">
+                                        <form role="search" class="">
+                                            <input type="text" id="search" placeholder="Projet..."
+                                                   class="form-control">
+                                            <a><i class="fa fa-search"></i></a>
+                                        </form>
+                                    </div>
+                                    {#                                  <span class="fa fa-remove" id="remove_text"></span>  #}
+                                    {#                                    <input class="form-control" id="search" type="text" placeholder="Recherche ...">#}
+                                </div>
+                                {% set droitOuver = comite.isBlDroitProjetOuvert == false %}
+
+                                {% if comite.isBlDroitProjetOuvert != 1 %}
+                                    {% set disabled = ''%} {% set actif ='' %}
+                                    {% set lien_save = path('submit_rl',{'idComite' : comite.idComite, 'openAccess' : true}) %}
+                                    {% set lien = path('submit_rl',{'idComite' : comite.idComite, 'openAccess' : true}) %}
+                                    {% set hide_select = '' %}
+                                {% else %}
+                                        {% set actif %} onClick="this.disabled=true;" {% endset %} {% set lien_sav = '' %} {% set lien = '' %}  {% set disabled = 'disabled'%}
+                                        {% set hide_select = 'hidden' %}
+                                {% endif %}
+
+{#                                {% if comite.isBlDroitProjetOuvert != 1 %} {% set disabled = ''%} {% set actif ='' %} {% set lien = path('submit_rl',{'idComite' : comite.idComite, 'openAccess' : true}) %}#}
+{#                                {% else %} {% set actif %} onClick="this.disabled=true;" {% endset %}{% set lien = '' %}  {% set disabled = 'disabled'%} {% endif %}#}
+
+                                <div class="form-group col-lg-1 col-lg-offset-2">
+                                    <form method="POST" id="formaffs">
+                                        <input type="hidden" value="" name="affectations" id="affectations">
+                                        <input type="hidden" value="" name="positions" id="positions">
+                                        <input type="hidden" value="{{ nbPrjs }}" name="num_prjs" id="num_prjs">
+                                        <input type="hidden" value="{{ nbMembers }}" name="num_membres"
+                                               id="num_membres">
+                                        <input type="hidden" value='{{ tabProjs }}' name="id_prjs" id="id_prjs">
+                                        <input type="hidden" value='{{ tabMbres }}' name="id_membres" id="id_membres">
+                                        <a href="#" class="btn btn-primary btn-sm" name="save_affect"
+                                           data-id="{{ path('submit_rl',{'idComite' : comite.idComite}) }}"
+                                           id="submit_affectations" {{ disabled }} {{ actif }} >Enregistrer</a>
+                                    </form>
+                                </div>
+
+                                <div class="form-group col-lg-2" {{ hide_select }}>
+                                    <select class="form-control" id="changeTimes" {{ disabled }}  >
+                                        <option value="0" >Manuel</option>
+                                        <option value="5" selected>Auto. toutes les : 5 min</option>
+                                        <option value="10">Auto. toutes les : 10 min</option>
+                                    </select>
+                                    <small id="mesageTime"></small>
+{#                                    <small>un enregistrement automatique de vos affectations aura lieu toutes les 5 mn</small>#}
+                                </div>
+
+
+                                <div class="form-group col-lg-2">
+                                    <a href="#" {{ disabled }} {{ actif }}
+                                                                    class="btn btn-warning btn-sm" name="open_access"
+                                                                    id="submit_affectations" data-id="{{ lien }}" >
+                                        Ouvrir les accès </a></div>
+
+                            </div>
+                            <br><br>
+                            <div class="container_table">
+                                <div class="scorll_tab" style="overflow:scroll;">
+                                    <table class="" border="1">
+                                        <thead style="position:static">
+                                        <tr>
+                                            {#                    <th>&nbsp;</th>#}
+                                            <th colspan="3" style="background-color:#dfdfdf">
+                                                {% set cpt_mbr = 0 %}
+                                                {% for membre in affectMembre %}
+                                            <th data-rlight="0" data-clight="tcol-{{ cpt_mbr }}"
+                                                class="gras rotate tcol-{{ cpt_mbr }}">
+                                                <span class="verticaltxt"><span> {{ membre.idPersonne.lbNomUsage|capitalize }} {{ membre.idPersonne.lbPrenom }}</span></span>
+                                            </th>
+                                            {% set cpt_mbr = cpt_mbr + 1 %}
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td class="gras" style="padding:3px;"></td>
+                                            <td class="gras" style="padding:3px;">Rap.</td>
+                                            <td></td>
+
+                                            {% set cpt_mbr = 0 %}
+                                            {% for membre in affectMembre %}
+                                                <td data-rlight="0" data-clight="tcol-{{ cpt_mbr }}"
+                                                    id="mcrap-{{ cpt_mbr }}"
+                                                    class="gras mcrap tcol-{{ cpt_mbr }}">0
+                                                </td>
+                                                {% set cpt_mbr = cpt_mbr + 1 %}
+                                            {% endfor %}
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="gras" style="padding:3px;">Lect.</td>
+
+                                            {% set cpt_mbr = 0 %}
+                                            {% for membre in affectMembre %}
+                                                <td data-rlight="0" data-clight="tcol-{{ cpt_mbr }}"
+                                                    id="mclect-{{ cpt_mbr }}"
+                                                    class="gras mclect tcol-{{ cpt_mbr }}">0
+                                                </td>
+                                                {% set cpt_mbr = cpt_mbr + 1 %}
+                                            {% endfor %}
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td colspan="2">Total</td>
+                                            {% set cpt_mbr = 0 %}
+                                            {% for membre in affectMembre %}
+                                                <td data-rlight="0" data-clight="tcol-{{ cpt_mbr }}"
+                                                    id="mtot-{{ cpt_mbr }}"
+                                                    class="gras mtot tcol-{{ cpt_mbr }}">0
+                                                </td>
+                                                {% set cpt_mbr = cpt_mbr + 1 %}
+                                            {% endfor %}
+                                        </tr>
+                                        <tr>
+                                            <td>&nbspProjet</td>
+                                            <td id="ttrap" class="gras">0</td>
+                                            <td id="ttlect" class="gras">0</td>
+                                            {% set cpt_mbr = 0 %}
+                                            {% for membre in affectMembre %}
+                                                <td data-rlight="0"
+                                                    data-clight="tcol-{{ cpt_mbr }}"
+                                                    id="moyen-mtot-{{ cpt_mbr }}"
+                                                    class="text-center gras moyen-mtot tcol-{{ cpt_mbr }}">0
+                                                </td>
+                                                {% set cpt_mbr = cpt_mbr + 1 %}
+                                            {% endfor %}
+                                        </tr>
+
+                                        </thead>
+                                        <tbody id="myTable">
+                                        {#                                        <tr>#}
+                                        {#                                            <td class="gras" style="padding:3px;">Projet</td>#}
+                                        {#                                        </tr>#}
+                                        {% set cpt_case_affectations = 0 %}
+                                        {% set cpt_tab_prjs = 0 %}
+
+                                        {% for prj, arrProjet in  affactProjet %}
+                                            <tr class="row trow">
+                                                <td data-clight="0" data-rlight="trow-{{ cpt_tab_prjs }}"
+                                                    class="gras trow-{{ cpt_tab_prjs }}"
+                                                    style="padding:3px;">
+                                                    {% set langue_ = '' %}
+                                                    {% if comite.idLangue.idLangue is defined  %}
+                                                        {% if comite.idLangue.idLangue == 108 %}
+                                                            {% set langue_ %} {{ arrProjet.lbTitreFr }} {% endset %}
+                                                        {% else %}
+                                                            {% set langue_ %} {{ arrProjet.lbTitreEn }}  {% endset %}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                    <span data-toggle="tooltip" data-placement="top" title="{{ langue_ }} - {{ arrProjet.idInfraFi|default('') }}">{{ arrProjet.lbAcro }} {{ arrProjet.idInfraFi.lbAcro|default('') }}</span>
+                                                </td>
+                                                <td data-clight="0" data-rlight="trow-{{ cpt_tab_prjs }}"
+                                                    id="prap-{{ cpt_tab_prjs }}"
+                                                    class="gras trow-{{ cpt_tab_prjs }} prap">0
+                                                </td>
+                                                <td data-clight="0" data-rlight="trow-{{ cpt_tab_prjs }}"
+                                                    id="plect-{{ cpt_tab_prjs }}"
+                                                    class="gras trow-{{ cpt_tab_prjs }} plect">0
+                                                </td>
+
+                                                {% set cpt_tab_mbrs = 0 %}
+                                                {% for mbr,  membre in affectMembre %}
+                                                    {% set  classe_affectation = 'emp' %}
+                                                    {% set  str_affectation = '' %}
+                                                    {% set  str_special_attributes = '' %}
+                                                    {% set  result = '' %}
+                                                    {% set obj_questionnaire %} {"symbole":"{{ result }}","couleur":""} {% endset %}
+
+                                                    {% if (arrQuestionnaires[arrProjet.idProjet][membre.idPersonne.idPersonne])  is defined %}
+                                                        {% set result = arrQuestionnaires[arrProjet.idProjet][membre.idPersonne.idPersonne]['codeAvis'] %}  <!-- ++ ou + -->
+                                                        {% set obj_questionnaire %} {"symbole":"{{ result }}","couleur":""} {% endset %}
+
+                                                        {% if arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]  is not defined %} <!-- L ou R-->
+                                                            {% set str_special_attributes %}  style="color:silver;cursor:pointer;" {% endset %}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                    {% if arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]  is defined %}
+                                                        {#                            {% set result = arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]['codeAvis'] %}#}
+                                                        {% set classe_affectation = arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]|lower %}
+                                                        {% set result = arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]|upper %}
+                                                    {% endif %}
+                                                    {% if   classe_affectation == 'emp' and (result == 'X' or result =='O') %}
+                                                        {% set str_special_attributes %} style="cursor: no-drop; color:silver;" onclick="return false;" {% endset %}
+                                                    {% endif %}
+                                                    <td data-rlight="trow-{{ cpt_tab_prjs }}"
+                                                        data-clight="tcol-{{ cpt_tab_mbrs }}"
+                                                        class="trow-{{ cpt_tab_prjs }} tcol-{{ cpt_tab_mbrs }} seat {{ classe_affectation }}"
+                                                        data-questionnaire={{ obj_questionnaire }} {{ str_special_attributes }} style="cursor:pointer;">{{ result }}</td>
+                                                    {% set cpt_case_affectations = cpt_case_affectations+1 %}
+                                                    {% set cpt_tab_mbrs = cpt_tab_mbrs+1 %}
+                                                {% endfor %} <!-- fin membre -->
+
+                                                {% set cpt_tab_prjs = cpt_tab_prjs+1 %}
+                                            </tr>
+                                        {% endfor %} <!-- fin projet -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {#    <script src="{{ asset('js/vendor/jquery-1.11.3.min.js') }}"></script>#}
+    <!-- bootstrap JS
+    ============================================ -->
+{#    <script src="{{ asset('js/bootstrap.min.js') }}"></script>#}
+    <script>
+        $(function () {
+
+            $("#changeTimes").change(function () {
+                    var idSelect = $(this).val();
+                    if( idSelect != 0 ){
+                        $("#mesageTime").text("Un enregistrement automatique de vos affectations aura lieu toutes les "+ idSelect +" mn" );
+                    }else{
+                        $("#mesageTime").text("");
+                    }
+                })
+                .change();
+
+            $("#remove_text").click(function () {
+                $("#search").empty();
+            });
+
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            window.setInterval(function () {
+                var date = new Date();
+               if (date.getMinutes() % document.getElementById('changeTimes').value == 0){
+                   $('#submit_affectations').get(0).click();
+               }
+            }, 100000);
+
+            // var save_affect = $("[name=save_affect]");
+            // var changeTimes = document.getElementById("changeTimes");
+            // var open_access = $("[name=open_access]");
+            //
+            // open_access.onclick = function() {
+            //     alert(save_affect);
+            //     this.setAttribute('disabled', 'disabled');
+            //     save_affect.setAttribute('disabled', 'disabled');
+            //     changeTimes.setAttribute('disabled', 'disabled');
+            // };
+
+            $('[data-toggle="tooltip"]').tooltip()
+
+            $(document).on("click", "#submit_affectations", function (e) {
+                e.preventDefault();
+                var path = $(this).data('id');
+                var arrPositions = [];
+                var arrAffectations = [];
+                seats.forEach((seat, index) => {
+                    if (!seat.classList.contains("emp")) {
+                        arrPositions.push(index);
+                        arrAffectations.push(seat.classList[3]);
+                    }
+                });
+                var form_affectations = document.getElementById('affectations');
+                form_affectations.value = JSON.stringify(arrAffectations);
+                var form_positions = document.getElementById('positions');
+                form_positions.value = JSON.stringify(arrPositions);
+                var id_membres = document.getElementById('id_membres').value;
+                var id_prjs = document.getElementById('id_prjs').value;
+                var nb_membres = document.getElementById('num_membres').value;
+                var nb_projets = document.getElementById('num_prjs').value;
+
+
+                if ($(this).attr('name') == 'open_access') {            // click button open accès
+                    if (confirm('Êtes-vous sûr de vouloir ouvrir à vos membres de comité l\'accès aux projets qui leurs sont affectés dans le tableau ci-contre ?\n' +
+                        'Les conflits d\'intérêt doivent en particulier avoir tous été tracés. \n' +
+                        'Il vous sera possible de modifier une à une ces affectations dans l\'écran xxx')) {
+                        this.setAttribute('disabled', 'disabled');
+                        this.setAttribute('onClick' , "this.disabled=true;");
+                        document.getElementById("changeTimes").setAttribute('disabled', 'disabled');
+                        document.getElementById("submit_affectations").setAttribute('disabled', 'disabled');
+                        document.getElementById("submit_affectations").setAttribute('onClick' , "this.disabled=true;");
+                        $('.success_open').html('<div class="alert alert-warning">les accès sont ouvert pour les Rapporteurs / lecteurs</div>');
+                    }else{
+                        return false
+                    }
+                }
+
+                $.ajax({
+                    url: path,
+                    type: 'POST',
+                    data: {
+                        'form_affectations': form_affectations.value,
+                        'form_positions': form_positions.value,
+                        'id_membres': id_membres,
+                        'id_prjs': id_prjs,
+                        'nb_membres': nb_membres,
+                        'nb_projs': nb_projets
+                    },
+                    success: function (data) {
+
+                        $('.success').show().delay(3000).hide("slow");
+                        $('.success').html(data.success);
+
+
+                        // jQuery(window).load(function () {
+                        //     // Initialisation
+                        //     updateSelectedCount();
+                        //     jQuery(".loader").fadeOut("200");
+                        // });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+        });
+
+        const container_table = document.querySelector('.container_table');
+        const seats = document.querySelectorAll('.row .seat:not(.occupied)');
+
+        function updateSelectedCount() {
+
+            // mise à zéro des totaux membres
+            const cumulmtot = document.querySelectorAll('.mtot');
+            for (i = 0; i < cumulmtot.length; i++) {
+                cumulmtot[i].innerText = 0;
+            }
+
+            // mise à zéro des totaux membres
+            const cumulmtotmoyen = document.querySelectorAll('.moyen-mtot');
+            for (i = 0; i < cumulmtotmoyen.length; i++) {
+                cumulmtotmoyen[i].innerText = 0;
+            }
+
+            {% for kc, vc in arrStatutsMembre %}
+            {% if kc not in arrNoCumul %}
+            // mise à zero des valeurs ligne projet
+            const cumul{{ vc }} = document.querySelectorAll('.p{{ arrStatutsComputMembre[kc] }}');
+            for (i = 0; i < cumul{{ vc }}.length; i++) {
+                cumul{{ vc }}[i].innerText = 0;
+            }
+
+            // mise à zéro des colonne membre
+            const cumulmc{{ vc }} = document.querySelectorAll('.mc{{ arrStatutsComputMembre[kc] }}');
+            for (i = 0; i < cumulmc{{ vc }}.length; i++) {
+                cumulmc{{ vc }}[i].innerText = 0;
+            }
+
+            const selected{{ vc }} = document.querySelectorAll('.row .seat.{{ arrStatutsClassMembre[kc] }}');
+            const seatsIndex{{ vc }} = [...selected{{ vc }}].map(seat => [...seats].indexOf(seat));
+
+            // total global
+            const tt{{ vc }} = document.getElementById('tt{{ arrStatutsComputMembre[kc] }}');
+            tt{{ vc }}.innerText = selected{{ vc }}.length;
+            for (ii = 0; ii < seatsIndex{{ vc }}.length; ii++) {
+                // total par projet == determination de la ligne plect-?? et prap-??
+                const lprojet = Math.floor(seatsIndex{{ vc }}[ii] /{{ nbMembers }});
+                const p{{ vc }} = document.getElementById('p{{ arrStatutsComputMembre[kc] }}-' + lprojet);
+                const p{{ vc }}_val = parseInt(p{{ vc }}.textContent);
+                p{{ vc }}.innerText = p{{ vc }}_val + 1;
+
+
+                // total  par membre
+                const cmembre = seatsIndex{{ vc }}[ii] %{{ nbMembers }};
+                const mc{{ vc }} = document.getElementById('mc{{ arrStatutsComputMembre[kc] }}-' + cmembre);
+                const mc{{ vc }}_val = parseInt(mc{{ vc }}.textContent);
+                mc{{ vc }}.innerText = mc{{ vc }}_val + 1;
+
+
+                // mise a jour total membre
+                const mtot = document.getElementById('mtot-' + cmembre);
+                const mtot_val = parseInt(mtot.textContent);
+                mtot.innerText = mtot_val + 1;
+
+
+                // Valeur calculée,
+                //     Pour un membre : somme des rôles rapporteur et lecteur d’un membre divisé par le nombre de projets du comité.
+                // ([nb rôles lecteur] + [nb rôles rapporteur])/[nb total projets]
+
+                const cmembremoyen = seatsIndex{{ vc }}[ii] % {{ nbMembers }} ;
+                const moyenmtot = document.getElementById('moyen-mtot-' + cmembremoyen);
+                const count_tt = mtot_val + 1;
+                var projetNb = {{ nbPrjs }};
+                moyenmtot.innerText = (count_tt / projetNb).toFixed(1);
+
+            }
+
+            {% endif %}
+            {% endfor %}
+            updateColors();
+        }
+
+        function updateColors() {
+            // rangée
+            vmtot = document.getElementsByClassName("mtot");
+
+            for (var i = 0, len = vmtot.length; i < len; i++) {
+                // xxx[i].style["background-color"] = "#FFCCFF";
+                //console.log(vmtot[i].innerText);
+
+                mtotval = parseInt(vmtot[i].innerText, 10) * (50 / 300);
+                if (mtotval <= 0.4) {
+                    vmtot[i].style["background-color"] = "#CCFFCC"; // green
+                } else if (mtotval >= 1.4) {
+                    vmtot[i].style["background-color"] = "#FFCCFF"; // red
+                } else {
+                    vmtot[i].style["background-color"] = "yellow";
+                }
+            }
+
+            vmcrap = document.getElementsByClassName("mcrap");
+            for (var i = 0, len = vmcrap.length; i < len; i++) {
+                // xxx[i].style["background-color"] = "#FFCCFF";
+                //console.log(vmcrap[i].innerText);
+                mtotval = parseInt(vmcrap[i].innerText, 10) * (50 / 300);
+                if (mtotval <= 0.4) {
+                    vmcrap[i].style["background-color"] = "#CCFFCC";
+                } else if (mtotval >= 1.4) {
+                    vmcrap[i].style["background-color"] = "#FFCCFF";
+                } else {
+                    vmcrap[i].style["background-color"] = "yellow";
+                }
+            }
+            vmclect = document.getElementsByClassName("mclect");
+            for (var i = 0, len = vmclect.length; i < len; i++) {
+                // xxx[i].style["background-color"] = "#FFCCFF";
+                //console.log(vmcrap[i].innerText);
+                mtotval = parseInt(vmclect[i].innerText, 10) * (50 / 300);
+                if (mtotval <= 0.4) {
+                    vmclect[i].style["background-color"] = "#CCFFCC";
+                } else if (mtotval >= 1.4) {
+                    vmclect[i].style["background-color"] = "#FFCCFF";
+                } else {
+                    vmclect[i].style["background-color"] = "yellow";
+                }
+            }
+            // colonnes : prap, plect
+            vprap = document.getElementsByClassName("prap");
+            for (var i = 0, len = vprap.length; i < len; i++) {
+                // xxx[i].style["background-color"] = "#FFCCFF";
+                //console.log(vmcrap[i].innerText);
+                mtotval = parseInt(vprap[i].innerText, 10);
+                if (mtotval == 0 ) {
+                    vprap[i].style["background-color"] = "#FFCCFF";
+                } else if (mtotval == 1) {
+                    vprap[i].style["background-color"] = "#CCFFCC";
+
+                } else if (mtotval >= 2) {
+                    vprap[i].style["background-color"] = "#FFCCFF";
+                }
+            }
+
+            vlect = document.getElementsByClassName("plect");
+            for (var i = 0, len = vlect.length; i < len; i++) {
+                // xxx[i].style["background-color"] = "#FFCCFF";
+                //console.log(vmcrap[i].innerText);
+                mtotval = parseInt(vlect[i].innerText, 10);
+                if (mtotval == 0 ) {
+                    vlect[i].style["background-color"] = "#FFCCFF";
+                } else if (mtotval == 1) {
+                    vlect[i].style["background-color"] = "#CCFFCC";
+                } else if (mtotval == 2) {
+                    vlect[i].style["background-color"] = "#FFCC99";
+                } else if (mtotval >= 3) {
+                    vlect[i].style["background-color"] = "#FFCCFF";
+                }
+            }
+        }
+
+        var vclight_value = 0;
+        var vrlight_value = 0;
+        container_table.addEventListener('mouseover', e => {
+            // alert('hover');
+            /*
+            /* ATTENTION A NE PAS DEGAGER LES COULEURS DES AFFECTATIONS ET DES TOTAUX ET DES CASES */
+            if (vclight_value != 0) {
+                clight_cells = document.getElementsByClassName(vclight_value);
+                vclight_value = 0;
+                for (var j = 0, len = clight_cells.length; j < len; j++) {
+                    clight_cells[j].style["background-color"] = "#fff";
+                }
+            }
+            if (vrlight_value != 0) {
+                rlight_cells = document.getElementsByClassName(vrlight_value);
+                vrlight_value = 0;
+                for (var i = 0, len = rlight_cells.length; i < len; i++) {
+                    rlight_cells[i].style["background-color"] = "#fff";
+                }
+            }
+            // console.log(vrlight_value);
+            // verification des anciennes couleurs des cases
+            var xxx = document.getElementsByClassName("x");
+            for (var i = 0, len = xxx.length; i < len; i++) {
+                xxx[i].style["background-color"] = "red";
+            }
+            var ooo = document.getElementsByClassName("o");
+            for (var i = 0, len = ooo.length; i < len; i++) {
+                ooo[i].style["background-color"] = "orange";
+            }
+            updateColors();
+            var clight_value = e.target.dataset.clight;
+            var rlight_value = e.target.dataset.rlight;
+            if (clight_value === undefined || rlight_value === undefined) return false;
+
+            if (rlight_value != 0) {
+                rlight_cells = document.getElementsByClassName(rlight_value);
+                vrlight_value = rlight_value;
+                for (var i = 0, len = rlight_cells.length; i < len; i++) {
+                    rlight_cells[i].style["background-color"] = "#ffa";
+                }
+            }
+            if (clight_value != 0) {
+                clight_cells = document.getElementsByClassName(clight_value);
+                vclight_value = clight_value;
+                for (var j = 0, len = clight_cells.length; j < len; j++) {
+                    clight_cells[j].style["background-color"] = "#ffa";
+                }
+            }
+        });
+
+        container_table.addEventListener('click', e => {
+            {% for  kSCM, strStatutClassMembre in arrStatutsClassMembre %}
+            {% if kSCM == intSCMCount-1 %} {% set strNextStatut = 0 %}   {% else %}  {% set strNextStatut = kSCM+1 %}  {% endif %}
+            if (e.target.classList.contains('seat') && e.target.classList.contains('{{ strStatutClassMembre }}')) {
+                let resp_json = e.target.dataset.questionnaire;
+                let resp_data = JSON.parse(resp_json);
+
+                {% if strNextStatut != 0 %}
+                if (resp_data.symbole != "O" && resp_data.symbole != "X") {
+                    e.target.innerText = '{{ arrStatutsMembre[strNextStatut] }}';
+                    e.target.classList.remove('{{ strStatutClassMembre }}');
+                    e.target.classList.add('{{ arrStatutsClassMembre[strNextStatut] }}');
+                    e.target.innerText = '{{ arrStatutsMembre[strNextStatut] }}';
+                    e.target.style.cssText = `color:#000;`;
+
+                }
+                {% else %}
+                e.target.classList.remove('{{ strStatutClassMembre }}');
+                e.target.classList.add('{{ arrStatutsClassMembre[strNextStatut] }}');
+                // verification d'une réponse au questionnaire
+                let json = e.target.dataset.questionnaire;
+                let data = JSON.parse(json);
+                e.target.innerText = data.symbole;
+                e.target.style.cssText = `color:silver;`;
+                {% endif %}
+
+                updateSelectedCount();
+                return 1;
+            }
+            {% endfor %}
+        });
+
+
+
+        $(window).on('load', function () {
+            // Initialisation
+            updateSelectedCount();
+            jQuery(".loader").fadeOut("200");
+        });
+
+
+    </script>
+{% endblock %}
+

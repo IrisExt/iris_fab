@@ -1,0 +1,9 @@
+{{ form_start(form_etr, {'action' : action }) }}
+
+    {{ form_widget(form_etr) }}
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit"  class="btn btn-primary"> {{ button_label|default('Ajouter') }} </button>
+    </div>
+{{ form_end(form_etr) }}

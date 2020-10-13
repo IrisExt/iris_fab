@@ -1,0 +1,104 @@
+{% extends 'cvPersonne/menubloc.html.twig' %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datapicker/datepicker3.css') }}">
+
+{% endblock %}
+{% block titre_cv %}formation supérieure {% endblock %}
+   {% block cv %}
+       <div class="col-lg-8 col-lg-offset-2">
+           <div class="text-center">
+               <p> </p>
+           </div>
+       <div class="col-lg-12">
+        {{ form_start(form) }}
+           <div class="col-lg-8 col-lg-offset-2">
+               <div class="text-center">
+                    <small >Date de soutenance de thèse de doctorat (facultatif)</small>
+               </div>
+            <div class="col-lg-4 col-lg-offset-4">
+               <div class="form-group row" >
+                       <div class="form-group data-custon-pick" id="date_these">
+                           <div class="input-group date">
+                               <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                               {{ form_widget(form.dtSoutenanceDeThese,{'attr' : {'value' :  formation_cv.dtSoutenanceDeThese is empty ? "" : formation_cv.dtSoutenanceDeThese|date("m/Y") }}) }}
+                           </div>
+                       </div>
+               </div>
+            </div>
+           <div class="col-lg-12">
+           <div class="text-center">
+               <small>Les non titulaire d'un PhD indiquent la date de leur dernier diplôme académique.</small>
+           </div>
+            </div>
+
+        {{ form_widget(form.diplomeAcademique,{'attr': {'style' : "height: 115px;"}}) }}
+{#         <div class="col-lg-3 col-lg-offset-3">#}
+             <small class="msgCount"><span id="wordCount">0</span> mot(s)  |  <span id="charCount">0</span>   Caractère(s) restant.</small>
+{#         </div>#}
+
+               <br>
+       <div class="footer-text-right">
+           <button type="submit" class="validate btn btn-primary">Enregistrer</button>
+       </div>
+           </div>
+       </div>
+       </div>
+           <br>
+        {{ form_end(form) }}
+
+
+   {% endblock %}
+{% block javascripts1 %}
+    <script>
+        $(document).ready(function(){
+            $('#date_these .input-group.date').datepicker({
+                endDate: 'now',
+                minViewMode: "months",
+                viewMode: "months",
+                format: 'mm/yyyy',
+                language: 'fr',
+            });
+
+            //nbr de caractères
+
+            var txtarea = $('#cv_formations_diplomeAcademique');
+            var regex = /\s+/gi;
+
+            $('#wordCount').html(txtarea.val().trim().replace(regex, ' ').split(' ').length);
+            $('#charCount').html(1000 - txtarea.val().trim().length);
+
+
+                $('#count').click(counter);
+                txtarea.change(counter);
+                txtarea.keydown(counter);
+                txtarea.keypress(counter);
+                txtarea.keyup(counter);
+                txtarea.blur(counter);
+                txtarea.focus(counter);
+
+
+        });
+        counter = function() {
+            var value = $('#cv_formations_diplomeAcademique').val();
+            if (value.length == 0) {
+                $('#wordCount').html(0);
+                $('#charCount').html(1000);
+                return;
+            }
+
+            var regex = /\s+/gi;
+            var wordCount = value.trim().replace(regex, ' ').split(' ').length;
+            var charCount = value.trim().length;
+
+            $('#wordCount').html(wordCount);
+            $('#charCount').html(1000 - charCount);
+
+        };
+
+    </script>
+    <!-- datapicker JS
+============================================ -->
+    <script src="{{ asset('js/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/datapicker/datepicker-active.js') }}"></script>
+{% endblock %}

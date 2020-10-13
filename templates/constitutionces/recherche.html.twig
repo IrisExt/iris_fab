@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Membres comite' %}
+  {% block stylesheets1 %}
+
+      <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+
+  {% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-6">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd" style="background: #b7b8e1">
+                        <div class="main-sparkline8-hd">
+                            <h1>Rechercher un évaluateur</h1>
+                            <div class="sparkline8-outline-icon">
+                                <a href="{{ path('lst_membre', {'idComite' : idcomite}) }}">{{ 'action.list'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <div class="sparkline8-graph">
+
+                            {{ form_start(form) }}
+                            {{ form_row(form.genre) }}
+                            {{ form_row(form.personne) }}
+                            {{ form_row(form.email) }}
+                            {{ form_row(form.motcle) }}
+                            {{ form_row(form.organisme) }}
+                            <div class="footer-text-right">
+                                <button class="btn btn-primary"> Rechercher</button>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<br>
+        {% if personnes != null %}
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-10">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd" style="background: #b7b8e1">
+                        <div class="main-sparkline8-hd">
+{#                            <h1>Choisir un évaluateur</h1>#}
+                                {% if nb != 0 %}
+                                    <p class="text-center"> {{nb}} évaluateur(s) trouvé(s) </p>
+                                {% else %}
+                                    <p class="text-center"> Aucun évaluateur trouvé avec ces critères </p>
+                                {% endif %}
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <div class="sparkline8-graph">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr style="background: #dbf1fa">
+                                            <th>Genre</th>
+                                            <th>Nom</th>
+                                            <th>Email</th>
+                                            <th>Organisme</th>
+                                            <th>Mots clé</th>
+                                            <th>Profil</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tbody>
+
+                                        {% for personne in personnes %}
+                                            <form method="post" action="{{ path('enregistrer_evalua_existant_comite', {'personne' : personne.idPersonne, 'idComite' : idcomite }) }}" onsubmit="return confirm('Êtes vous sûr d\'ajouter cette personne ?');">
+                                        <tr>
+                                            <th>{{ personne.idGenre.cdGenre | default('') }}</th>
+                                            <td>{{ personne.lbNomUsage| default('') }}  {{ personne.lbPrenom| default('') }}</td>
+                                            <td>{{ personne.idperscps.lbadrmail| default('') }}</td>
+                                            <td>{{ personne.idperscps.lbOrganisme| default('') }}</td>
+                                            <td>{% for motcle in personne.idMcCps| default('')  %}
+                                                    {{ motcle }}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                    <select id="pers_cps_profil{{ personne.idPersonne }}" name="profil" class="form-control" required="required">
+                                                        {% for profil in profils %}
+                                                    <option value="{{ profil.idProfil }}">{{ profil.lbprofil}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                            </td>
+                                            <td>
+                                                    <input type="hidden" name="_method" value="POST">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('post' ~ personne.idPersonne) }}">
+                                                    <button class="btn btn-primary"><i class="fa fa-plus"></i> Ajouter</button>
+                                            </td>
+
+                                        </tr>
+                                            </form>
+                                        {% endfor %}
+                                    </table>
+                                    <p>
+                                       </p>
+
+                            <div class="footer-text-center">
+                                {{ knp_pagination_render(personnes) }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+   {% block javascripts1 %}
+
+       <!-- chosen JS
+             ============================================ -->
+       <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+       <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+       <!-- icheck JS
+                  ============================================ -->
+       <script src="{{ asset('/js/icheck/icheck.min.js') }}"></script>
+       <script src="{{ asset('/js/icheck/icheck-active.js') }}"></script>
+
+   {% endblock %}
+   {% block javascripts %}
+       {% include 'comite/jslstmmbre.html.twig' %}
+{#       <script>#}
+{#           $(document).ready(function () {#}
+{#               $('body').on('change','#pers_cps_profil', function() {#}
+{#                   $('#profil').val(this.value);#}
+{#               });#}
+{#           });#}
+{#       </script>#}
+
+   {% endblock %}
+
+{% endblock %}
+
+

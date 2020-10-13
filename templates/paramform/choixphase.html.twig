@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+{% block stylesheets1 %}
+    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+    <!-- modals CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="password-meter-area mg-b-40">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <div class="sparkline12-list password-mt-b shadow-reset">
+                    <div class="sparkline12-hd">
+                        <div class="main-sparkline12-hd">
+                            <h1>Sélection la phase pour le formulaire <span class="password-mt-none"></span></h1>
+                            <div class="sparkline12-outline-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline12-graph">
+                        <div class="row">
+                            <form action="{{ path('assignment_appel_phase',{'idAppel' : appel }) }}" method="POST">
+                            <div class="col-lg-3 text-right"> Choisir une phase : </div>
+                            <div class="col-lg-3">
+                                    <select name="phase" class="chosen-select form-control">
+                                        {% for phase in phases %}
+                                            <option value="{{ phase.idPhase }}">{{ phase.lbNom }} </option>
+                                        {% endfor %}
+                                    </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <button class="btn btn-primary" type="submit">Envoyer</button>
+                            </div>
+                            </form>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

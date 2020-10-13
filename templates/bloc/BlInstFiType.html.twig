@@ -1,0 +1,132 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/duallistbox/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+
+    <style>
+     .rightButton {
+	     color: #fff;
+	     background-color: #337ab7;
+	     border-color: #2e6da4;
+	     float: right;
+     }
+     .d-block {
+         color: crimson;
+         font-size: 11px;
+         display: ruby-base;
+     }
+     .badge {
+         background-color: #a23e3e;
+         font-size: 10px;
+     }
+    </style>
+
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation, idProjet:idProjet } %}
+    <div class="col-sm-9">
+        {% block content %}
+           {% include 'bloc/modalbloc1.html.twig' %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                            {{ form_start(bloc) }}
+                             <div class="form-group row">
+                                <div class="col-sm-1"></div>
+                             <div class="col-sm-11">
+                                    <div id="Instruments">
+                                {{ form_row(bloc.idInfraFi, {'label_attr': {'class': 'required'}}) }}
+                            </div>
+                                    <div id="Agences">
+                                {{ form_row(bloc.idAgenceFi, {'label_attr': {'class': 'required'}}) }}
+                            </div>
+
+                             </div>
+
+                             </div>
+                            <br><br><br>
+                            <div class="form-group row">
+                                <div class="col-md-8 col-sm-6"></div>
+                                <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBlocWithoutRedirect) }} </div>
+                                <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                                </div>
+                            </div>
+                            {{ form_end(bloc) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$(function() {
+    // on load hide the agances list if no instrument PRCI  is selected
+     var str = $('#BlInstFiType_idInfraFi option:selected').text();
+     if (str.indexOf("PRCI") < 0) {
+         $("#BlInstFiType_idAgenceFi").attr('required', false);
+         $("#Agences").hide();
+         $("#BlInstFiType_idAgenceFi").val('').attr('selected', true);
+     } else {
+         $("#BlInstFiType_idAgenceFi").attr('required', true);
+          $("#Agences").show();
+     }
+
+      {% for error in errors %}
+    var error_bloc = '<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> {{ error.message }}</span></span></span>';
+    $( error_bloc ).insertAfter( $( "#BlInstFiType_{{ error.field }}" ) );
+           {% endfor %}
+
+});
+
+$('#BlInstFiType_idInfraFi').on('change',function () {
+   var str = $('#BlInstFiType_idInfraFi option:selected').text();
+   if (str.indexOf("PRCI") >= 0) {
+       $("#BlInstFiType_idAgenceFi").attr('required', true);
+       $("#Agences").show();
+   } else {
+       $("#BlInstFiType_idAgenceFi").attr('required', false);
+       $("#Agences").hide();
+       $("#BlInstFiType_idAgenceFi").val('').attr('selected', true);
+   }
+{#  {% if(idInstrument) %} if($("#BlInstFiType_idInfraFi option:selected").val() !=  {{  idInstrument }} ) $("#messageModal").modal('show'); {% endif %}#}
+
+});
+{#$( "#BlInstFiType_saveBloc" ).click(function() {#}
+{#    {% if(idInstrument) %} if($("#BlInstFiType_idInfraFi option:selected").val() !=  {{  idInstrument }} ) $("#BlInstFiType_saveBloc").confirm("Vous êtes sur de vouloir changer de projet?"); {% endif %}#}
+
+{#});#}
+{#$( "#BlInstFiType_saveBlocWithoutRedirect" ).click(function() {#}
+{#    {% if(idInstrument) %} if($("#BlInstFiType_idInfraFi option:selected").val() !=  {{  idInstrument }} ) $("#BlInstFiType_saveBlocWithoutRedirect").confirm("Vous êtes sur de vouloir changer de projet?"); {% endif %}#}
+{#alert('tsttt');#}
+{#    $('form[name="BlInstFiType"]').validate({#}
+{#        rules: {#}
+{#            'BlInstFiType[idAgenceFi]': { required: true }#}
+{#        }#}
+{#    });#}
+{#});#}
+</script>
+    <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+    <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+{% endblock %}

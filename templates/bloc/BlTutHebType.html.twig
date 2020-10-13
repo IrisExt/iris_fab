@@ -1,0 +1,87 @@
+{% block tutHeb %}
+    <div id="tutHeb" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-close-area modal-close-df">
+                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                </div>
+                <div class="modal-body" id="scrollmodal">
+                    <div class="add-part-label">
+                        <div class="main-sparkline8-hd">
+                            <h1>Tutelle Hébergeante (Lieu de réalisation de travaux du partenaire)</h1>
+                        </div>
+                    </div>
+                    {{ form_start(tutHebForm) }}
+
+                    {{ form_row(tutHebForm.rnsr) }}
+                    {{ form_row(tutHebForm.siret) }}
+                    {{ form_row(tutHebForm.name_tut_heb) }}
+                    {{ form_row(tutHebForm.adress_tut_heb) }}
+                    {{ form_row(tutHebForm.compl_adress_tut_heb) }}
+                    {{ form_row(tutHebForm.postal_code_tut_heb) }}
+                    {{ form_row(tutHebForm.country_tut_heb) }}
+                    {{ form_row(tutHebForm.city_tut_heb) }}
+
+                    <div class="add-part-label">
+                        <div class="main-sparkline8-hd">
+                            <h1>Directeur du laboratoire</h1>
+                        </div>
+                    </div>
+
+                    {{ form_row(tutHebForm.firstname_direct_lab) }}
+                    {{ form_row(tutHebForm.lastname_direct_lab) }}
+                    {{ form_row(tutHebForm.courriel_direct_lab) }}
+
+                    {{ form_end(tutHebForm) }}
+
+                </div>
+                <div class="modal-footer">
+                    <a data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('tutHeb_add', {'idProjet' : idProjet}) }}" id="submitTutHeb"
+                       class="add-part">Ajouter</a>
+                    <a id="nextTutHeb" data-dismiss="modal" data-toggle="modal" href="#tutGest">Suivant</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+ {% block javascripts %}
+<script>
+
+    $('#submitTutHeb').click(function (e) {
+        var path = $(e.target).data('id');
+        $.ajax({
+            'url': path,
+            type: 'POST',
+            data: {
+                'rnsr': $("#BlTutHebType_rnsr").val(),
+                'siret': $("#BlTutHebType_siret").val(),
+                'name_tut_heb': $("#BlTutHebType_name_tut_heb").val(),
+                'adress_tut_heb': $("#BlTutHebType_adress_tut_heb").val(),
+                'compl_adress_tut_heb': $("#BlTutHebType_compl_adress_tut_heb").val(),
+                'postal_code_tut_heb': $("#BlTutHebType_postal_code_tut_heb").val(),
+                'city_tut_heb': $("#BlTutHebType_city_tut_heb").val(),
+                'country_tut_heb': $("#BlTutHebType_country_tut_heb").val(),
+                'firstname_direct_lab': $("#BlTutHebType_firstname_direct_lab").val(),
+                'lastname_direct_lab': $("#BlTutHebType_lastname_direct_lab").val(),
+                'courriel_direct_lab': $("#BlTutHebType_courriel_direct_lab").val(),
+
+                'type_part': $("#BlPartenariatType_type_part").val(),
+            },
+            success: function (data) {
+             //   console.log(data['siret']);
+                $("#BlPartenariatType_id_part").val(data['partenaireId']);
+                $('form[name="BlTutHebType"]').trigger("reset");
+                $('#tutHeb').modal('hide');
+                $('#tutGest').modal('show');
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+
+</script>
+ {% endblock %}

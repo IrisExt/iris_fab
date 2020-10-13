@@ -1,0 +1,196 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/duallistbox/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/craueformflow/css/buttons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/tree-multiselect/jquery.tree-multiselect.min.css') }}" />
+    <style>
+        .duallistbox{
+            width: 100%;
+        }
+        .rightButton {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            float: right;
+        }
+        .d-block {
+            color: crimson;
+            font-size: 11px;
+            display: ruby-base;
+        }
+        .badge {
+            background-color: #dd1717;
+            font-size: 10px;
+        }
+        .form-check {
+            display: flex;
+            margin-right: 20px;
+        }
+        .form-check-input {
+            margin-right: 10px !important;
+            margin-bottom: auto !important;
+        }
+        div.tree-multiselect div.title {
+            background: #369 !important;
+        }
+        div.tree-multiselect span.remove-selected, div.tree-multiselect span.description{
+            background: #88a5c1;
+        }
+        div.tree-multiselect > div.selected > div.item{
+            background: #369;
+            color:#fff;
+        }
+        div.tree-multiselect .auxiliary {padding-bottom: 15px;}
+</style>
+
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+
+{% block body %}
+        {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+        <div class="col-sm-9">
+            {% block content %}
+            <div class="advanced-form-area mg-b-15">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="sparkline8-list shadow-reset">
+                            <div class="sparkline8-hd">
+                                <div class="main-sparkline8-hd">
+                                    <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                                </div>
+                            </div>
+
+                            <div class="sparkline8-graph">
+                                <div class="sparkline8-graph">
+                                    {% if CatMcErcs|length > 0 %}
+                                    <select id="test-select" multiple="multiple" >
+                                            {% for CatMcErc in CatMcErcs %}
+                                                        {% for DiscMcErc in CatMcErc.TrDiscErcs %}
+                                                                    {% for TgMcErc in DiscMcErc.TgMcErcs %}
+                                                                        <option value="{{ TgMcErc.idMcErc }}"
+                                                                                {% if tgMcSelected|length > 0 %}
+                                                                                {% for tgMcS in tgMcSelected %}
+                                                                                    {% if tgMcS.idMcErc == TgMcErc.idMcErc %}
+                                                                                    selected
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                                {% endif %}
+                                                                                data-section="{{ CatMcErc.lbCatErc }}/{{ DiscMcErc.lbDiscErc }}">{{ TgMcErc.lbNomFr }}</option>
+                                                                    {% endfor %}
+                                                        {% endfor %}
+                                            {% endfor %}
+                                    </select>
+                                    {% else %}
+                                        <i class="indicator glyphicon glyphicon-folder-close"></i>
+                                        <p>Aucun mot clé Erc n'a été trouvé...</p>
+                                    {% endif %}
+
+                                {{ form_start(bloc) }}
+                                    <div id="bl_BlMotCleCesType">
+
+                                        <div id="McCes">
+                                            {{ form_row(bloc.idMcErc, {'label_attr': {'class': 'required'}, 'attr': {'class': 'hidden'} }) }}
+                                            {% if NbErcMax %}<p style="font-size: 13px;color: #a23e3e"><span>*</span> Le nombre de mot clé ERC sélectionnés doit être inférieur ou égal à {{NbErcMax}}</p>{% endif %}
+                                        </div>
+                                    </div>
+                                    <br><br><br>
+                                    <div>
+                                        <div class="col-md-6 col-sm-3"></div>
+                                        <div class="col-md-2 col-sm-3">  <a href="{{ previousblock }}" class="btn btn-primary pull-right"><< Précédent</a> </div>
+                                        <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBlocWithoutRedirect) }} </div>
+                                        <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                                        </div>
+                                    </div>
+                                {{ form_end(bloc) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="{{ asset('js/tree-multiselect/jquery.tree-multiselect.min.js') }}"></script>
+
+    <script>
+        $(function(){
+
+            {% if(errors) %}
+            {% for error in errors %}
+            var error_bloc = '<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> {{ error.message }}</span></span></span>';
+            if('idMcErc[id_mc_erc]' === "{{ error.field }}"){
+                $( error_bloc ).insertAfter( $( "#BlMotCleErcType_idMcErc" ) );
+            }
+            {% endfor %}
+            {% endif %}
+
+
+
+            var tree4 = $("#test-select").treeMultiselect({
+                allowBatchSelection: false,
+                enableSelectAll: true,
+                maxSelections: {{NbErcMax}},
+                searchable: true,
+                sortable: true,
+                startCollapsed: false,
+                selectAllText: 'Tout sélectionner',
+                unselectAllText: 'Tout déselectionner'
+               // freeze: true
+            });
+
+
+            $('#test-select').change(function (e) {
+                var selectobject = $("[id*=treemultiselect-0-]:checked");
+                $('#BlMotCleErcType_idMcErc').val( '' );
+
+                for(i=0;i<selectobject.length;i++) {
+                    var item = $(selectobject[i]).parent().data("value");
+                    $('#BlMotCleErcType_idMcErc option[value='+item+']').prop('selected','selected');
+                }
+
+                var size = $('#test-select').find(":selected").size();
+                if(size >= {{NbErcMax}}){
+                    $('input[id*="treemultiselect"]').attr('disabled', true);
+                    tree4.treeMultiselect('refresh', true);
+                } else {
+                    $('input[id*="treemultiselect"]').attr('disabled', false);
+                    tree4.treeMultiselect('refresh', true);
+                }
+            });
+
+
+            var size = $('#test-select').find(":selected").size();
+            if(size >= {{NbErcMax}}){
+                $('input[id*="treemultiselect"]').attr('disabled', true);
+                tree4.treeMultiselect('refresh', true);
+            } else {
+                $('input[id*="treemultiselect"]').attr('disabled', false);
+                tree4.treeMultiselect('refresh', true);
+            }
+
+
+        });
+    </script>
+{% endblock %}

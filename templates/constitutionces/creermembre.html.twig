@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Constitutuionces' %}
+{% block title %}{{ 'consti.form.enrgEvalua'|trans }}{% endblock %}
+{% block stylesheets1 %}
+
+    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+
+
+{% endblock %}
+{% block body %}
+
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'consti.form.enrgEvalua'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a href="{{ path('select_comite') }}">{{ 'consti.form.retour'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+
+                            {{ form_start(form) }}
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    {{ form_row(form.lbNomUsage) }}
+                                    {{ form_row(form.lbPrenom) }}
+                                    {{ form_row(form.courriel) }}
+
+                                </div>
+                                <div class="col-sm-5">
+                                {{ form_row(form.cdFrancophone) }}
+                                {{ form_row(form.idRole) }}
+
+                            </div>
+                            </div>
+                            <div class="footer-text-right">
+                            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+                            </div>
+                            {{ form_end(form) }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block javascripts %}
+        <!-- chosen JS
+              ============================================ -->
+        <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+        <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+
+    {% endblock %}
+
+{% endblock %}

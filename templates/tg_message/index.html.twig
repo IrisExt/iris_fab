@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TgMessage index{% endblock %}
+
+{% block body %}
+    <h1>TgMessage index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdMessage</th>
+                <th>DhEnvoi</th>
+                <th>Texte</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tg_message in tg_messages %}
+            <tr>
+                <td>{{ tg_message.idMessage }}</td>
+                <td>{{ tg_message.dhEnvoi ? tg_message.dhEnvoi|date('Y-m-d') : '' }}</td>
+                <td>{{ tg_message.texte }}</td>
+                <td>
+                    <a href="{{ path('tg_message_show', {'idMessage': tg_message.idMessage}) }}">show</a>
+                    <a href="{{ path('tg_message_edit', {'idMessage': tg_message.idMessage}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tg_message_new') }}">Create new</a>
+{% endblock %}

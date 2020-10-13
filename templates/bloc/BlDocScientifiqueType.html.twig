@@ -1,0 +1,131 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/duallistbox/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+   <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
+    <style>
+        .rightButton {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            float: right;
+        }
+        .d-block {
+            color: crimson;
+            font-size: 11px;
+            display: ruby-base;
+        }
+        .badge {
+            background-color: #dd1717;
+            font-size: 10px;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% endblock %}
+{% block body %}
+    {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+    <div class="col-sm-9">
+        {% block content %}
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                            {{ form_start(bloc) }}
+                            <div class="form-group row">
+                                <div class="col-sm-1"></div>
+                            <div id="BlDocScientifiqueType_langue" class="col-sm-11">
+                                {{ form_row(bloc.lbLangue, {'label_attr': {'class': 'required'}}) }}
+                            </div>
+                            </div>
+                            <div id="BlDocScientifiqueType_preproposition">
+                                <div class="form-group row">
+                                    <div class="col-sm-1"></div>
+                                    <label class="required col-form-label col-sm-4"
+                                           for="BlDocScientifiqueType_lbPreproposition">
+                                          Fichier (
+                                        {% for paramFile in paramsFile %}
+                                            {% if paramFile.lbCode == 'FMT_DOC_SC' %}
+                                                <span>{{ paramFile.lbValeur }} </span>{% endif %}
+                                            {% if paramFile.lbCode == 'TAILLE_FIC_MAX' %}<span>
+                                                | max. {{ paramFile.lbValeur }} Mo</span>{% endif %}
+                                            {% if paramFile.lbCode == 'NB_PAGES_MAX' %}<span>
+                                                | max. {{ paramFile.lbValeur }} pages</span>{% endif %}
+                                        {% endfor %}
+                                        ):
+                                    </label>
+                                    <div class="col-sm-7">
+                                        {{ form_widget(bloc.lbPreproposition, {'label_attr': {'class': 'required'}}) }}
+                                        {{ form_row(bloc.lbPreproposition, {'label_attr': {'class': 'required'}}) }}
+
+                                       {% if fileName %}
+                                       <a href="{{ asset('uploads/doc_sc/' ~ fileName) }}" name="doc_sc">
+                                       {% if FmtDocSc|lower == 'pdf' %} <i style="font-size: xx-large" class="fa fa-file-pdf"></i>
+                                       {% elseif FmtDocSc|lower == 'doc' or FmtDocSc|lower == 'docx' %} <i style="font-size: xx-large" class="fa fa-file-word"></i>
+                                       {% elseif FmtDocSc|lower == 'ppt' or  FmtDocSc|lower == 'pptx' %} <i style="font-size: xx-large" class="fa fa-file-powerpoint"></i>
+                                       {% elseif FmtDocSc|lower == 'xls' or FmtDocSc|lower == 'xlsx' %} <i style="font-size: xx-large" class="fa fa-file-excel"></i>
+                                       {% elseif FmtDocSc|lower == 'png' or FmtDocSc|lower == 'jpg' or FmtDocSc|lower == 'jpeg' or FmtDocSc|lower == 'gif' %} <i style="font-size: xx-large" class="fa fa-file-image"></i>
+                                       {% elseif FmtDocSc|lower == 'csv' %} <i style="font-size: xx-large" class="fa fa-file-csv"></i>
+                                       {% else %}  <i style="font-size: xx-large" class="fa fa-file-csv"></i> {% endif %}
+                                       {{ fileName }}
+                                       </a>
+                                       {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div>
+                                <div class="col-md-6 col-sm-3"></div>
+                                <div class="col-md-2 col-sm-3">  <a href="{{ previousblock }}" class="btn btn-primary pull-right"><< Précédent</a> </div>
+                                <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBlocWithoutRedirect) }} </div>
+                                <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                            </div>
+                            <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                                    </div>
+                                </div>
+                            {{ form_end(bloc) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{ asset('js/fontawesome.js') }}"></script>
+<script>
+
+$(function() {
+
+    {% for error in errors %}
+        var error_bloc = '<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> {{ error.message }}</span></span></span>';
+        $( error_bloc ).insertAfter( $( "#BlDocScientifiqueType_{{ error.field }}" ) );
+    {% endfor %}
+
+   var lang = "{{lbLangue}}";
+    $('#BlDocScientifiqueType_lbLangue').val(lang);
+});
+</script>
+   <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+   <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+{% endblock %}

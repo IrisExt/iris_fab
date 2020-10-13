@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TgMessage{% endblock %}
+
+{% block body %}
+    <h1>Edit TgMessage</h1>
+
+    {{ include('tg_message/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('tg_message_index') }}">back to list</a>
+
+    {{ include('tg_message/_delete_form.html.twig') }}
+{% endblock %}

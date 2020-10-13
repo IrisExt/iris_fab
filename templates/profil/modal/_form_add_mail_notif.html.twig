@@ -1,0 +1,25 @@
+<style>
+    .hidden {
+        visibility: hidden;
+    }
+</style>
+{{ form_start(form_notif,{action :  path('add_mail_notif')}) }}
+<div class="form-group row">
+    <label class="col-form-label col-sm-3 required" for="adresse_mail">Adresse mail</label>
+    <div class="col-lg-6">
+        {{ form_widget(form_notif.adrMailNotif) }}
+       <div class="hidden"> {{ form_widget(form_notif.blObsolete,{'attr' : {'type' : 'hidden'}}) }}</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-4">
+        <div class="i-checks pull-left">
+{#            <label>{{ form_widget(form_notif.blObsolete,{'attr' : {'type' : 'hidden'}}) }}  </label>#}
+        </div>
+    </div>
+</div>
+<div class="footer-text-right">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    <button type="submit" class="btn btn-primary" >Enregistrer</button>
+{{ form_end(form_notif) }}

@@ -1,0 +1,70 @@
+{% extends 'cvPersonne/menubloc.html.twig' %}
+{% block stylesheets %}
+
+{% endblock %}
+    {% block style_menu_cv %}
+
+{% endblock %}
+
+   {% block titre_cv %}autres activités{% endblock %}
+{% block cv %}
+
+<div class="col-lg-12">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="text-center">
+            <p> Activités de direction, avec encadrement, enseignement, activités d'évaluation dans des commissions ou en tant qu'expert scientifique
+
+            </p>
+        </div>
+        <form method="post" action="{{ path('cv_add_lb_champ') }}">
+                 <textarea id="autre_activite" name="autre_activite" class="form-control" maxlength="1000">{{ text_autre_act }}</textarea>
+            <small class="msgCount"><span id="wordCount">0</span> mot(s)   <span id="charCount">0</span>   Caractère(s) restant.</small><br>
+               <div class="text-right">
+                   <button id="ajout_autre_activite" type="submit" class="btn btn-primary">Enregistrer</button>
+               </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts1 %}
+    <script>
+        $(document).ready(function(){
+            //nbr de caractères
+
+            var txtarea = $('#autre_activite');
+            var regex = /\s+/gi;
+
+            $('#wordCount').html(txtarea.val().trim().replace(regex, ' ').split(' ').length);
+            $('#charCount').html(1000 - txtarea.val().trim().length);
+
+
+            $('#count').click(counter);
+            txtarea.change(counter);
+            txtarea.keydown(counter);
+            txtarea.keypress(counter);
+            txtarea.keyup(counter);
+            txtarea.blur(counter);
+            txtarea.focus(counter);
+
+
+        })
+        counter = function() {
+            var value = $('#autre_activite').val();
+            if (value.length == 0) {
+                $('#wordCount').html(0);
+                $('#charCount').html(1000);
+                return;
+            }
+
+            var regex = /\s+/gi;
+            var wordCount = value.trim().replace(regex, ' ').split(' ').length;
+            var charCount = value.trim().length;
+
+            $('#wordCount').html(wordCount);
+            $('#charCount').html(1000 - charCount);
+
+        };
+    </script>
+{% endblock %}

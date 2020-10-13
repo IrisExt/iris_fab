@@ -1,0 +1,80 @@
+{{ form_start(form, {'attr' : {'action' : path('cv_update_autre_activ', {'idOrganisme' : poste.idOrganisme.idOrganisme})}}) }}
+<div class="form-group row">
+    <div class="col-sm-3">
+        <label class=""> Période </label>
+    </div>
+    <div id="daterangepicker" title="daterangepicker"></div>
+    <div class="col-sm-6">
+        <div class="form-group data-custon-pick data-custom-mg" id="data_periode">
+            <div class="input-daterange input-group" id="datepicker">
+                <span class="input-group-addon">De</span>
+                {{ form_widget(form.dtDebut) }}
+                <span class="input-group-addon">à</span>
+                {{ form_widget(form.dtFin) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="result"></div>
+{#<div class ="form-group row">#}
+{#    <label class="col-form-label col-sm-3 required" for="tg_poste_lbNomFr">Date début</label>#}
+{#    <div class="col-lg-2 col-lg-offset-2">#}
+{#        <div class="form-group row" >#}
+{#            <div class="form-group data-custon-pick" id="date_debut">#}
+{#                <div class="input-group date">#}
+{#                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>#}
+{#                    {{ form_widget(form.dtDebut) }}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#<div class ="form-group row">#}
+{#    <label class="col-form-label col-sm-3 required" for="tg_poste_lbNomFr">Date fin</label>#}
+{#    <div class="col-lg-2 col-lg-offset-2">#}
+{#        <div class="form-group row" >#}
+{#            <div class="form-group data-custon-pick" id="date_fin">#}
+{#                <div class="input-group date">#}
+{#                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>#}
+{#                    {{ form_widget(form.dtFin) }}#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{{ form_row(form.lbNomFr, { attr: { value : poste.idOrganisme.lbNomFr } }) }}
+{{ form_row(form.ville, { attr: { value : poste.idOrganisme.ville } }) }}
+{{ form_row(form.idFonction) }}
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    <button type="submit"  class="modif btn btn-warning"> {{ button_label|default('Modifier') }} </button>
+</div>
+{{ form_end(form) }}
+{% block javascripts1 %}
+
+    <script>
+        $(document).ready(function () {
+            $("#tg_poste_dtDebut").on("input", function(){
+                // alert($(this).val());
+                $("#result").text($(this).val());
+            });
+{#        $(document).ready(function(){#}
+{#            $('#date_debut .input-group.date').datepicker({#}
+{#                endDate: 'now',#}
+{#                minViewMode: "years",#}
+{#                viewMode: "years",#}
+{#                format: 'yyyy',#}
+{#                language: 'fr',#}
+{#            });#}
+
+{#            $('#date_fin .input-group.date').datepicker({#}
+{#                endDate: 'now',#}
+{#                minViewMode: "years",#}
+{#                viewMode: "years",#}
+{#                format: 'yyyy',#}
+{#                language: 'fr',#}
+{#            });#}
+        });
+    </script>
+{% endblock %}

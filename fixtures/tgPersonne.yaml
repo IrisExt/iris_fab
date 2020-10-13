@@ -1,0 +1,741 @@
+App\Entity\TgPersonne:
+
+  per1:
+    id_personne: 1
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_1'
+    lb_nom_usage: Guesdon
+    lb_prenom: Karim
+    cd_francophone: Fr
+    lb_web_perso: "www.cnrs.fr"
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+  per2:
+    id_personne: 2
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_2'
+    lb_nom_usage: Dumond
+    lb_prenom: Franck
+    cd_francophone: Fr
+    lb_web_perso: "www.anr.fr"
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+  per3:
+    id_personne: 3
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: '@tgPersCps_3'
+    lb_nom_usage: Roth
+    lb_prenom: Chaney
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per4:
+    id_personne: 4
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_4'
+    lb_nom_usage: Collin
+    lb_prenom: Nicolas
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per5:
+    id_personne: 5
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_5'
+    lb_nom_usage: Goigoux
+    lb_prenom: Roland
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per6:
+    id_personne: 6
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: '@tgPersCps_6'
+    lb_nom_usage: Bonte
+    lb_prenom: Milene
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per7:
+    id_personne: 7
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: '@tgPersCps_7'
+    lb_nom_usage: Huang
+    lb_prenom: Q
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per8:
+    id_personne: 8
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_8'
+    lb_nom_usage: NOTO
+    lb_prenom: "Yuichi"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per9:
+    id_personne: 9
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_9'
+    lb_nom_usage: Pillet
+    lb_prenom: "JeanDamien"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per10:
+    id_personne: 10
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_10'
+    lb_nom_usage: "Brémond"
+    lb_prenom: "Joël"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per11:
+    id_personne: 11
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: '@tgPersCps_11'
+    lb_nom_usage: Aussant
+    lb_prenom: Emilie
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per12:
+    id_personne: 12
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_12'
+    lb_nom_usage: Soubiran
+    lb_prenom: Thomas
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per13:
+    id_personne: 13
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: '@tgPersCps_13'
+    lb_nom_usage: Wissel
+    lb_prenom: Stephanie
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per14:
+    id_personne: 14
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: '@tgPersCps_14'
+    lb_nom_usage: GERTON
+    lb_prenom: Jennifer
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per15:
+    id_personne: 15
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_15'
+    lb_nom_usage: PUCEAT
+    lb_prenom: Michel
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per16:
+    id_personne: 16
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: Leon
+    lb_prenom: Clarke
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per17:
+    id_personne: 17
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: '@tgPersCps_16'
+    lb_nom_usage: Dupon
+    lb_prenom: "François"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: true
+
+  per18:
+    id_personne: 18
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: Adlen
+    lb_prenom: Boussadia
+    cd_francophone: "FR "
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per19:
+    id_personne: 19
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: Varron
+    lb_prenom: "Céline"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per20:
+    id_personne: 20
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: LEBON
+    lb_prenom: Pierre
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per21:
+    id_personne: 21
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: DAUBERTIN
+    lb_prenom: Alex
+    cd_francophone: Fr
+    lb_web_perso: "http://www.anr.fr"
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per22:
+    id_personne: 22
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: PAQUIRISSAMY
+    lb_prenom: "Aurélie"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per23:
+    id_personne: 23
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: ROULEAU
+    lb_prenom: "Béatrice"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per24:
+    id_personne: 24
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: GANNE
+    lb_prenom: Delphine
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per25:
+    id_personne: 25
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: Breitwieser
+    lb_prenom: Romain
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per26:
+    id_personne: 26
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: PINEL
+    lb_prenom: Eric
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per27:
+    id_personne: 27
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: GRIGORIEV
+    lb_prenom: Konstantin
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per28:
+    id_personne: 28
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: COBIGO
+    lb_prenom: Alexandre
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per29:
+    id_personne: 29
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: SAUVAGET
+    lb_prenom: Catherine
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per30:
+    id_personne: 30
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: BOUJDAINE
+    lb_prenom: Fatiha
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per31:
+    id_personne: 31
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: DUBOIS
+    lb_prenom: "Loïc"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per32:
+    id_personne: 32
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: BRICKS
+    lb_prenom: Thibault
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per33:
+    id_personne: 33
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: ROUET
+    lb_prenom: Vincent
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per34:
+    id_personne: 34
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: "ECHAGÜE"
+    lb_prenom: Eugenio
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per35:
+    id_personne: 35
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: Gay
+    lb_prenom: Sophie
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per36:
+    id_personne: 36
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: HOURCADE
+    lb_prenom: Edith
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per37:
+    id_personne: 37
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: ARNULPHY
+    lb_prenom: "Béatrice"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per38:
+    id_personne: 38
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: HELFT
+    lb_prenom: Florence
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per39:
+    id_personne: 39
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: MIA
+    lb_prenom: Eric
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per40:
+    id_personne: 40
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: Toto
+    lb_prenom: Titi
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per41:
+    id_personne: 41
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: TATA
+    lb_prenom: TATA
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per42:
+    id_personne: 42
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: Pinel
+    lb_prenom: Eric
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per43:
+    id_personne: 43
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: NOTO
+    lb_prenom: "Yuichi"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per44:
+    id_personne: 44
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: Aussant
+    lb_prenom: Emilie
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per45:
+    id_personne: 45
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: CARRIVE
+    lb_prenom: Jean
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per46:
+    id_personne: 46
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: TRT
+    lb_prenom: TRUC
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per47:
+    id_personne: 47
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: ggf
+    lb_prenom: gfgf
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per48:
+    id_personne: 48
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: trezyrezr
+    lb_prenom: rzyzzryrzyr
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per49:
+    id_personne: 49
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: BREMOND
+    lb_prenom: "Joël"
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per50:
+    id_personne: 50
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: dfdsg
+    lb_prenom: fsgfgf
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per51:
+    id_personne: 51
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: ROTH
+    lb_prenom: Chainey
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per52:
+    id_personne: 52
+    id_genre: '@trGenre_2'
+    id_civilite: '@civi_2'
+    id_pers_cps: null
+    lb_nom_usage: Aussant
+    lb_prenom: Emilie
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false
+
+  per53:
+    id_personne: 53
+    id_genre: '@trGenre_1'
+    id_civilite: '@civi_1'
+    id_pers_cps: null
+    lb_nom_usage: ROTH
+    lb_prenom: Chaney
+    cd_francophone: Fr
+    lb_web_perso: null
+    fonction: null
+
+    dt_soutenance_these: null
+    cv_renseigne: false

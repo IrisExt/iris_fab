@@ -1,0 +1,427 @@
+    {% extends 'base.html.twig' %}
+    {% trans_default_domain 'Comites' %}
+
+      {% block stylesheets1 %}
+          <style>
+              /*html, body.materialdesign {background: blue;*/
+              /*}*/
+
+              .sort_tab {
+                  cursor: pointer;
+              }
+              .datepicker table tr td.range {
+                  background: #c1e9ff;
+              }
+              a.disabled {
+                  pointer-events: none;
+                  cursor: default;
+              }
+          </style>
+
+          <!-- modals CSS
+              ============================================ -->
+          <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+          <!-- tabs CSS
+              ============================================ -->
+          <link rel="stylesheet" href="{{ asset('css/datapicker/datepicker3.css') }}">
+          <link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
+          <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+          <!-- Preloader CSS
+              ============================================ -->
+          <link rel="stylesheet" href="{{ asset('css/preloader/preloader-style.css') }}">
+          <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+      {% endblock %}
+
+      {% block navmenu %}
+          <span class="bread-slash">/</span>
+          <li><a href={{ path('list_comite') }}><b>{{ 'comite.liste.listecomite'|trans }}</b></a></li>
+      {% endblock %}
+
+
+    {% block body %}
+        {%  if apstatut == true %} {% set disabled = '' %}{% else %}{% set disabled = 'disabled' %}{% endif %}       <!-- statut appel encours or clos -->
+        <div class="loader">
+            <h1>Veuillez patientez pendant le chargement de la page.</h1>
+        </div>
+
+        <div class="data-table-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="sparkline13-list shadow-reset">
+                            <div class="sparkline12-hd">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h3>{{ 'comite.liste.listecomite'|trans }} <span class="table-project-n"></span>
+                                            <span class="text-primary">: </span> <span class="text-primary"> {{ appel }} </span>
+                                        </h3>
+                                        {#                                    <div class="footer-text-right">#}
+                                        <div class="breadcome-heading">
+                                            <input id="filter" type="text" placeholder="Recherche..." class="form-control">
+                                        </div>
+                                        {#                                    </div>#}
+
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <!-- choisir Comités -->
+                                        <form  action="{{ path('list_comite') }}" method='GET'>
+                                            <div class="input-group custom-go-button">
+                                                <select data-placeholder="Chosir un comite" name="cmte" class="chosen-select" tabindex="-1" required onChange = "this.form.submit();">
+                                                    <option value="">{{ 'comite.form.choixcomite'|trans }}</option>
+                                                    <option value="">{{ 'comite.form.tous'|trans }}</option>
+                                                    {% for comite in cmte %}
+                                                        <option value="{{ comite.idcomite }}">{{ comite.lbacr}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>  {{ reunion_modif|default('') }}
+                                    <div class="col-md-2">
+                                        <!-- choisir département -->
+                                        <form  action="{{ path('list_comite') }}" method='GET'>
+                                            <div class="input-group custom-go-button">
+                                                <select data-placeholder="Chosir un département" name="dep" class="chosen-select" tabindex="-1" required onChange = "this.form.submit();">
+                                                    <option value="">{{ 'comite.form.choixdep'|trans }}</option>
+                                                    <option value="">{{ 'comite.form.tous'|trans }}</option>
+                                                    {% for dep in deps %}
+                                                        <option value="{{ dep.lblong }}">{{ dep.lbcourt }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>    <!-- MODAL POUR LA CREATION -->
+                                    {% if is_granted('ROLE_PILOTE') == true %}
+                                        <div class="text-right">
+                                            <div class="col-md-4">
+                                                <button class="btn btn-custon-four btn-primary" data-toggle="modal" data-target="#exampleModal" {{ disabled }}>
+                                                    <i class="fa fa-plus"></i> {{ 'comite.liste.creercomite'|trans }}
+                                                </button>
+                                                <!-- Modal pour les reunion -->
+                                                <button class="btn btn-warning" data-backdrop="static" data-keyboard="false"  data-toggle="modal" id="reunionPeriode" data-target="#reunionPeriodeModal" {{ disabled }}>
+                                                    <i class="adminpro-icon adminpro-calendar"></i> Imposer une période de réunion
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if comites is not empty  %}
+                            <div class="sparkline13-graph">
+                                <div class="datatable-dashv1-list custom-datatable-overright">
+                                    <!-- tableau -->
+
+                                    {#                            <div class="input-group"> <span class="input-group-addon">Filter</span>#}
+                                    {#                                <input id="filter" type="text" class="form-control" placeholder="Type here...">#}
+                                    {#                            </div>#}
+                                    <table class="table table-condensed table-striped table-hover tablesorter ui-table-reflow" id="sortTable" >
+                                        <thead>
+                                        <tr>
+                                            {# sorting of properties based on query components #}
+                                            <th  class="col-md-4"> <h5>Comités <span class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                                {#                                      <h5>{{ knp_pagination_sortable(comites, 'Tri comités', 'idComite')}} </h5>  </i>#}
+                                            </th>
+                                            <th  class="col-md-4"><h5>CPS / Réunion <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
+                                            <th  class="col-md-3"><h5>Messages <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
+                                            <th  class="col-md-1"></th>
+                                        </tr>
+
+                                        </thead>
+                                        <tbody class="searchable">
+                                        {% for comite in comites %}
+                                            <tr >
+                                                <!-- block comite , titre, département -->
+                                                <td class="col-md-4" style="word-wrap: break-word;">
+                                                    <div class="col-lg-12" >
+
+                                                        <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
+                                                            <i><b>
+                                                                    {% if is_granted('ROLE_PILOTE') == true %}
+                                                                        <a class="text-primary {{disabled}}" href="{{ path('comite_edit', {'idComite' : comite.idComite }) }}" data-toggle="tooltip" data-placement="top"
+                                                                           title="{{ 'comite.form.modif'|trans }}" > {{ comite.lbacr }} : {{ comite.lbtitre }} <i class="fa fa-edit text-primary"></i>
+                                                                        </a>
+                                                                    {% else %}
+                                                                        {{ comite.lbacr }} : {{ comite.lbtitre }}
+                                                                    {% endif %}
+                                                                </b></i><br>
+                                                            <h6>{{ comite.lbdesc }}</h6>
+                                                            <i><b>Dept :</b></i> {% for  dep in comite.iddepartement %}
+                                                                {{ dep.lbcourt }}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- block président, vise Prés, Cps, Cps Sec , reunion  -->
+                                                <td class="col-md-4" style="overflow-wrap: break-word;">
+                                                    <div class="col-lg-12">
+                                                        <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
+                                                            {% set PR = true %}
+                                                            {% set VP = true %}
+                                                            {% set virg = true %}
+                                                            <!-- id  2 => 'vise président', 3 => 'Président', 4, 'Membre', 5, 'CPS Secondaire', 1, 'CPS Principal' Tg_role -->
+                                                            <b> <i> <b>CPS: </b></i> </b>
+                                                            {% set virgule = 0 %}
+                                                            {% set virg = 0 %}
+                                                            {% for  part in comite.idhabilitation %}
+                                                                {% if part.idprofil.idprofil == 6 and part.blsupprime == 1 and part.idPersonne != null %}    <!-- 6 CPS Princ -->
+                                                                    {% if virg == 1 %} , {% endif %}   {% if virgule == 1 %} , {% endif %}
+                                                                    <b>  {{ part.idPersonne.lbprenom|capitalize|slice(0, 1) }}.<span rel="tooltip" title="CPS principal">{{ part.idPersonne.lbnomusage }}</span></b>
+                                                                    {% set virg = 0 %}  {% set virgule = 1 %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            {% for  part in comite.idhabilitation %}
+                                                                {% if part.idprofil.idprofil == 7 and part.blsupprime == 1 and part.idPersonne != null %}
+                                                                    {% if virg == 1 %} , {% endif %}   {% if virgule == 1 %} , {% endif %}
+                                                                    {{ part.idPersonne.lbprenom|capitalize|slice(0, 1) }}.{{ part.idPersonne.lbnomusage }}
+                                                                    {% set virg = 0 %}  {% set virgule = 1 %}
+                                                                {% endif %}
+                                                            {% endfor %}
+
+                                                            <br>
+                                                            <i> <b>Bureau </b>:
+                                                                {% set virgule = 0 %}
+                                                                {% set virg = 0 %}
+                                                                {% for  part in comite.idhabilitation %}
+                                                                    {% if part.idprofil.idprofil == 4 and part.blsupprime == 1 and part.idPersonne != null %} <!-- 4 vise prés et 8 Prési ,  -->
+                                                                        {% if virgule == 1 %} , {% endif %}
+                                                                        <span rel="tooltip" title="Président">(P)
+                                                                            <b>  {{ part.idPersonne.lbprenom|capitalize|slice(0, 1) }}.{{ part.idPersonne.lbnomusage }} </b></span>
+                                                                        {% set virg = 1 %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% for  part in comite.idhabilitation %}
+                                                                    {% if part.idprofil.idprofil == 8 and part.blsupprime == 1 and part.idPersonne != null %} <!-- 4 vise prés et 8 Prési ,  -->
+                                                                        {% if virg == 1 %} , {% endif %}   {% if virgule == 1 %} , {% endif %}
+                                                                        {{ part.idPersonne.lbprenom|capitalize|slice(0, 1) }}.{{ part.idPersonne.lbnomusage }}
+                                                                        {% set virg = 0 %}  {% set virgule = 1 %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                {% for  part in comite.idhabilitation %}
+                                                                    {#  {% if part.idRole.idrole == 6 and part.blsupprime == 1 and part.idPersonne != null %} <!-- 6 COES,  -->#}
+                                                                    {#      {% if coes == true %}#}
+                                                                    {#          <b>Coes </b>:#}
+                                                                    {#      {% endif %}#}
+                                                                    {#      {% set coes = false %}#}
+                                                                    {#      {{ part.idPersonne.lbprenom|capitalize|slice(0, 1) }}.{{ part.idPersonne.lbnomusage }},#}
+                                                                    {#  {% endif %}#}
+                                                                {% endfor %}
+                                                                <br>
+                                                                <!-- Block reunion -->
+                                                                {% for  reunion in comite.idAppel.idreunion %}
+                                                                    {#                                                               {{  reunion.idPhase.idPhaseRef.LbNom|slice(0, 2) }}#}
+                                                                    {% if(reunion.blActif == 1) %}
+                                                                        {{ reunion.idPhase.idPhaseRef.LbNom|slice(0, 2) }} {{ reunion.idPhase.idPhaseRef.LbNom[5:] }} : <i class="text-danger">{{ reunion.idtypereunion|slice(0, 3) }} </i>
+                                                                        {{ reunion.dtDebPeriode|date('d/m') }} au {{ reunion.dtFinPeriode|date('d/m') }} durée : {{ reunion.nbDureeMax }} J
+
+                                                                        <a href="#" class="text" data-toggle="tooltip_info" data-placement="top" data-html="true"
+                                                                           data-title="Calendrier des séances <br>-------------<br>
+                                                                        {% for seance in reunion.idSeance %}
+                                                                            {% if seance.idComite == comite  %}
+                                                                          <span> {{ seance.dtseance|date('d/m') }} : {{ seance.matin ? 'AM' : ''}} - {{ seance.apresmidi ? 'PM' : ''}}</span><br>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                                "><span style="color: #00acee" class="fa fa-info-circle"></span></a>
+                                                                        <br>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- block messages -->
+                                                <td class="col-md-5">
+                                                    <div class="col-lg-12">
+                                                        <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
+                                                            <div class="row">
+                                                                {% if  ( is_granted('ROLE_ANR_R') == true or comite in comitePart )   %} <!-- si pilote, Dos,Respo  voir tt les messages -->
+                                                                    <div class="col-lg-10" style="max-width:600px;  overflow-wrap:break-word;">
+                                                                        <!-- un controller qui renvois  une vue pour les messages du comité concerné  idComite-->
+                                                                        {{ render(controller('App\\Controller\\MessageController:consultMessageComite', {'comite' : comite.idcomite})) }}
+                                                                        <!-- Modal pour les messages -->
+                                                                    </div>
+                                                                    <div class="col-lg-2">
+                                                                        <div class="footer-text-right">
+                                                                            <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal"
+                                                                               data-target="#messageModal" rel="tooltip"
+                                                                               data-id="{{ path('new_message_comite',{'idComite' : comite.idComite }) }}" title="Envoyer un message">
+                                                                                <i class="fa fa-comments"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="col-sm-2" >
+                                                    <!-- 1 : pilote d appel -->
+                                                    <div class="row">
+                                                        <div class="col-xs-5">
+                                                            {% if (is_granted('ROLE_CPS') == true and comite in comitePart )  %}
+                                                                <!-- Modal pour les séance -->
+                                                                <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal"
+                                                                   data-target="#seanceModal" rel="tooltip"
+                                                                   data-backdrop="static" data-keyboard="false"
+                                                                   data-id="{{ path('show_seance',{'idComite' : comite.idComite }) }}"
+                                                                   title="Fixer une réunion">
+                                                                    <i class="fa fa-briefcase" style="color:green"></i>
+                                                                    {#                                                          <img src="{{ asset('img/seance.ico') }} " height="18" width="18">#}
+                                                                </a>
+                                                            {% endif %}
+                                                            {% if is_granted('ROLE_PILOTE') == true %}
+                                                                <!-- block annulation comite -->
+                                                                <form method="post" action="{{ path('annuler_comite', {'idComite': comite.idComite}) }}" onsubmit="return confirm('voulez vous supprimer ce comité ?');">
+                                                                    <input type="hidden" name="_token" value="{{ csrf_token('annuler' ~ comite.idComite) }}">
+                                                                    <button class="btn btn-link" aria-hidden="true" {{ disabled }}><i class="fa fa-trash-o text-danger" ></i> </button>
+                                                                </form>
+                                                            {% endif %}
+
+                                                            {% if  ( is_granted('ROLE_ANR_R') == true or comite in comitePart )  %}
+                                                                <!-- Liste des memebre -->
+                                                                <a  class="btn btn-link" href="{{ path('lst_membre', {'idComite' : comite.idComite }) }}" rel="tooltip" title="Liste des membres">
+                                                                    <i class="fa fa-list-ol"></i>
+                                                                </a>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <div class="footer-text-center">
+                                        {{ knp_pagination_render(comites) }}
+                                    </div>
+                                </div>
+                            </div>
+                            {#                        {% include 'reunion/modalreunioncomite.html.twig' %}#}
+                            {% include 'reunion/modalPeriodeReunion/modalperiodereunion.html.twig' %}
+                            {% include 'tg_seance/modalSeanceComite/modalseancecomite.html.twig' %}
+                            {% include 'tg_message/modal/modalMessage.html.twig' %} <!-- modal message cps ... -->
+                        {% else %}
+                            <br>
+                            <div class="alert alert-warning">
+                                <strong>Comités !</strong> Il n'existe aucun comité pour cet appel.
+                            </div>
+                        {% endif %}
+                        {% include 'comite/modalcreatcomite.html.twig' %} <!-- ajouter le modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- pour charger le modal séance apres submit -->
+        {% for comite in  comitePart %}
+            {% if app.request.get('cmte-seance') == comite.idComite %}
+                {% if app.request.get('cmte-seance') is not null %}
+                    <a href="#" id="modalseancemaj" class="btn btn-light" data-toggle="modal"
+                       data-backdrop="static" data-keyboard="false"
+                       data-target="#seanceModalMaj" rel="tooltip"
+                       data-id="{{ path('show_seance',{'idComite' : app.request.get('cmte-seance') }) }}">
+                    </a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {#    <button type="button" class="btn btn-default btn-lg" id="button1">Result</button>#}
+    {% endblock %}
+        {% block javascripts1 %}
+            <!-- modal JS
+                   ============================================ -->
+            <script src="{{ asset('js/modal-active.js') }}"></script>
+            <!-- datapicker JS
+        ============================================ -->
+            <script src="{{ asset('js/datapicker/bootstrap-datepicker.js') }}"></script>
+            <script src="{{ asset('js/datapicker/datepicker-active.js') }}"></script>
+
+            <!-- chosen JS
+                  ============================================ -->
+            <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+            <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+            <!-- icheck JS
+                       ============================================ -->
+            <script src="{{ asset('/js/icheck/icheck.min.js') }}"></script>
+            <script src="{{ asset('/js/icheck/icheck-active.js') }}"></script>
+            <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
+
+        {% endblock %}
+            {% block javascripts %}
+                {% include 'comite/jslstmmbre.html.twig' %}
+
+                <script>
+                    $(document).ready(function(){
+                        (function ($) {
+                            $('#filter').keyup(function () {
+                                var rex = new RegExp($(this).val(), 'i');
+                                $('.searchable tr').hide();
+                                $('.searchable tr').filter(function () {
+                                    return rex.test($(this).text());
+                                }).show();
+                            })
+                        }(jQuery));
+
+
+                        $('[rel="tooltip"]').tooltip({trigger: "hover"});
+                        $('[data-toggle="tooltip"]').tooltip()
+                        $('[data-toggle="tooltip_info"]').tooltip()
+
+
+                        $("#sortTable")
+                            .tablesorter({
+                                // Enable filter
+                                widgets: ["filter"],
+                                widgetOptions: {
+                                    filter_columnFilters: false,
+                                    filter_searchDelay: 60,
+                                    filter_useParsedData: true
+                                },
+                                sortList: [
+                                    [8, 1]
+                                ]
+                            });
+                    });
+
+                    function msg(status,classe, messages){
+                        return '<div class="alert alert-'+ status + ' text-center">' +
+                            ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                            ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                            ' </button>' +
+                            '<p class="message-alert-none"><strong>'+ classe + ' </strong>'+  messages +  '</p>' +
+                            '</div>';
+                    }
+                    window.onload = function() { // chargement de page avec un modal
+                        var ParamReu = location.search.split('reun-true=')[1];
+                        $(document).ready(function () {
+                            if(ParamReu) {
+
+                                $('#reunionPeriode').get(0).click();
+                                // if (ParamReu == 'msg2reu'){var success =    msg('success','Succès !','La période des réunions pour tous les comités ont été créées avec succès.' );}
+                                if (ParamReu == 'msg7reu'){var success =    msg('success','Succès !','La réunion a été modifiée avec succès.' );}
+                                if (ParamReu == 'msg9reu'){var success =    msg('success','Succès !','Les réunion des comités ont bien été supprimée.' );}
+                                if (ParamReu == 'msg1reu'){var error =      msg('danger', 'Erreur !','Erreur ! Vous avez déjà une réunion programmé avec ces critères !' ) ;}
+                                if(ParamReu == 'msg3reu') {var error =      msg('danger', 'Erreur !','Impossible de modifier la durée max. ,une séance d\'un comité est hors cette durée ! ' ) ;}
+                                if(ParamReu == 'msg4reu') {var error =      msg('danger', 'Erreur !','Impossible de modifier la période autorisé, une séance d\'comité est hors périodes ! ' ) ;}
+                                if(ParamReu == 'msg5reu') {var error =      msg('danger', 'Erreur !','Impossible de modifier La date début est inférieur  à la date fin !' ) ;}
+                                if(ParamReu == 'msg6reu') {var error =      msg('danger', 'Erreur !','Impossible de modifier, La durée max. est supérieur à la période autorisée !' ) ;}
+                                if(ParamReu == 'msg8reu') {var error =      msg('danger', 'Erreur !',' Impossible de supprimer, des séances sont déjà programmées pour cette réunion !' ) ;}
+                                $('.js-success').html(success);
+                                $('.js-error').html(error);
+                                setTimeout(function(){
+                                    $('.js-success').remove();
+                                }, 5000);
+                                setTimeout(function(){
+                                    $('.js-error').remove();
+                                }, 5000);
+                            }
+                        });
+                    };
+
+                </script>
+            {% endblock %}
+
+

@@ -1,0 +1,30 @@
+{#<form id="delete_seance_ajax" method="post" action="{{ path('supprimer_seance', {'idSeance': seance.idSeance}) }}">#}
+{#    <p>Souhaitez-vous supprimer cette date de réunion ?</p>#}
+
+
+{#        <input type="hidden" name="_method" value="DELETE">#}
+{#   <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ seance.idSeance) }}">#}
+{#    <div class="footer-text-right">#}
+{#    <button type="button" data-dismiss="modal" class="btn">Annuler</button>#}
+{#        <button id="delete_seance_ajax" type="button" class="btn btn-danger"  #}
+{#                data-id="{{ path('show_seance',{'idComite' : seance.idComite.idComite }) }}">supprimer</button>#}
+{#    <button type="button" id="SeanceModal"    class="btn btn-danger"#}
+{#      data-target="#seanceModal" rel="tooltip"#}
+{#      data-backdrop="static" data-keyboard="false"#}
+{#      data-id="{{ path('show_seance',{'idComite' : seance.idComite }) }}">Supprimer</button>#}
+{#    </div>#}
+{#</form>#}
+
+            <form id="form_delete_seance" method="post" action="{{ path('supprimer_seance', {'idSeance': seance.idSeance}) }}">
+                <p>Souhaitez-vous supprimer cette date de réunion : {{ seance.dtseance|date('d/m/Y') }} : {{ seance.matin ? 'AM' : ''}} - {{ seance.apresmidi ? 'PM' : ''}} ?</p>
+                <input type="hidden" id="_seance" name="_seance" value="{{ seance.idSeance }}">
+                <input type="hidden" id="_comite" name="_comite" value="{{ seance.idComite.idComite }}">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_redir" value="{{ redir }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ seance.idSeance) }}">
+                <div class="footer-text-right">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Annuler</button>
+{#               <a id="SupprimeSeanceModal"  class="btn btn-primary" data-id="{{ path('supprimer_seance', {'idSeance': seance.idSeance}) }}" >Supprimer</a>#}
+                   <button class="btn btn-danger" type="submit" > Supprimer</i> </button>
+                </div>
+            </form>

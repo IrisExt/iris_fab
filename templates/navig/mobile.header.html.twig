@@ -1,0 +1,72 @@
+<!-- Mobile Menu start -->
+{% trans_default_domain 'Menu' %}
+<div class="mobile-menu-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="mobile-menu">
+                    <nav id="dropdown">
+                        <ul class="mobile-menu-nav">
+                            <li class="nav-item"><a href="{{ path('accueil') }}"
+                                                    class="nav-link">{{ 'menu.barrehoriz.accueil'|trans }}</a>
+                            </li>
+                            {% if app.user.idpersonne is not null %}     <!-- si user est rattaché à personne" -->
+                            {% if is_granted('ROLE_DOS_EM') == true %}
+                                <li class="nav-item dropdown">
+                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                       class="nav-link dropdown-toggle">{{ 'menu.barrehoriz.appelprojet'|trans }}
+                                        <span class="angle-down-topmenu"><i
+                                                    class="fa fa-angle-down"></i></span></a>
+                                    <div role="menu" class="dropdown-menu animated flipInX">
+                                        <a href="{{ path('tg_appel_proj_index') }}"
+                                           class="dropdown-item">{{ 'menu.barrehoriz.appelprojet'|trans }}</a>
+                                    </div>
+                                </li>
+                            {% endif %}
+                                <!-- Comite -->
+                                {% if(is_granted("ROLE_VISE_PRES") == false and is_granted("ROLE_PRES") == false and is_granted("ROLE_PORTEUR_PROJET") == false) %}
+                                    <li class="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                           class="nav-link dropdown-toggle">{{ 'menu.barrehoriz.comites'|trans }}<span
+                                                    class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+                                        <div role="menu" class="dropdown-menu animated flipInX">
+                                            {#                                        {% if is_granted('ROLE_ANR') == true %}#}
+                                            {#                                            <a href="{{ path('comite_index') }}"#}
+                                            {#                                               class="dropdown-item">{{ 'menu.barrehoriz.creercomite'|trans }}</a>#}
+                                            {#                                        {% endif %}#}
+                                            <a href="{{ path('list_comite') }}"
+                                               class="dropdown-item">{{ 'menu.barrehoriz.lstcomite'|trans }}</a>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if(is_granted("ROLE_PORTEUR_PROJET") == false) %}
+                                    <li class="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                           class="nav-link dropdown-toggle">{{ 'menu.barrehoriz.ces'|trans }}<span
+                                                    class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+                                        <div role="menu" class="dropdown-menu animated flipInX">
+                                            <a href="{{ path('select_comite') }}" class="dropdown-item">{{ 'menu.barrehoriz.comite'|trans }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                <!-- Administration -->
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"> {{ 'menu.barrehoriz.administrateur'|trans }}
+                                            <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+                                        <div role="menu" class="dropdown-menu animated flipInX">
+                                            <a href="{{ path('tg_personne_index') }}" class="dropdown-item">{{ 'menu.barrehoriz.utilisateur'|trans }}</a>
+                                            <a href="{{ path('index_soumission') }}" class="dropdown-item">Gestion des formulaires</a>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mobile Menu end -->

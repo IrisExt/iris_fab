@@ -1,0 +1,139 @@
+{% extends 'cvPersonne/menubloc.html.twig' %}
+{% block stylesheets %}
+{#    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">#}
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <!-- modals CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/tree-multiselect/jquery.tree-multiselect.min.css') }}" />
+{% endblock %}
+    {% block style_menu_cv %}
+        <style>
+            th {
+                background-color: #369;
+                color: white;
+            }
+        </style>
+    {% endblock %}
+  {% block titre_cv %} Langues {% endblock %}
+   {% block cv %}
+       <div class="col-lg-12">
+               <div class="col-lg-8 col-lg-offset-2">
+               <div class="text-center">
+                   <p> Langues vivantes maîtrisées (dans le cas d'une évaluation scientifique).      </p>
+               </div>
+           </div>
+           <div class="col-lg-12">
+               <div class="text-right">
+                   <button type="button" class="ajoute_langue btn btn-primary btn-xs" data-toggle="modal" data-target="#ajouterLangue" data-id="{{ path('cv_add_ddrec') }}"><i class="fa fa-plus"></i>
+                       Ajouter une langue
+                   </button>
+               </div>
+               <div class="table-responsive">
+                   <table class="table table-striped table-bordered" id="user_data">
+                       <tr>
+                           <th colspan="col">Langue</th>
+                           <th colspan="col">Ecrit</th>
+                           <th colspan="col">Lu</th>
+                           <th colspan="col">Parlé</th>
+                           <th colspan="col">Action</th>
+                       </tr>
+                       {%  for comp in competences %}
+                       <tr id="{{comp.idPratiqueLangue}}">
+                           <td>{{comp.idLangue}} <input type="hidden" name="data_langue_" id="langue_{{ comp.idPratiqueLangue }}" class="langue_" value="{{comp.idLangue.idLangue}}" /></td>
+                           <td>{{comp.niveauEcrit.lbniveau}}<input type="hidden" name="data_ecrit_" id="ecrit_{{ comp.idPratiqueLangue }}" class="ecrit_" value="{{comp.niveauEcrit.idNiveau}}" /></td>
+                           <td>{{comp.niveauLu.lbniveau}}<input type="hidden" name="data_lu_" id="lu_{{ comp.idPratiqueLangue }}" class="first_name" value="{{comp.niveaulu.idNiveau}}" /></td>
+                           <td>{{comp.niveauParle.lbniveau}}<input type="hidden" name="data_parle_" id="parle_{{ comp.idPratiqueLangue }}" class="parle_" value="{{comp.niveauparle.idNiveau}}" /></td>
+                           <td><a  href="#"><span type="button"   class="update_langue fa fa-edit text-primary"   data-toggle="modal" data-target="#modifierLangue"  data-id="{{ path('cv_update_ddrec', {'idCompetenceLangue' : comp.idPratiqueLangue}) }}"></span></a>
+                               |  <a  href="#"><span type="button"   class="delete_langue fa fa-trash-o text-danger" data-toggle="modal" data-target="#deleteLangue"    data-id="{{ path('cv_delete_ddrec', {'idCompetenceLangue' : comp.idPratiqueLangue}) }}"></span></a></td>
+                           {% endfor %}
+                   </table>
+               </div>
+               <br/>
+           </div>
+           <!-- Modal ajout-->   {% include 'cvPersonne/blocs/tg_competence_langue/ajouterLangue.html.twig' %}
+           <!-- Modal delete-->   {% include 'cvPersonne/blocs/tg_competence_langue/deleteLangue.html.twig' %}
+           <!-- Modal modif -->   {% include 'cvPersonne/blocs/tg_competence_langue/modifierLangue.html.twig' %}
+       </div>
+   {% endblock %}
+ {% block javascripts_add %}
+{#     <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>#}
+{#     <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>#}
+     <script src="{{ asset('js/select2.min.js') }}"></script>
+
+{#     <script src="{{ asset('js/select2/select2.full.min.js') }}"></script>#}
+
+     {#           <script src="{{ asset('js/jquery-ui.js') }}"></script>#}
+     <!-- modal JS
+            ============================================ -->
+     <script src="{{ asset('js/modal-active.js') }}"></script>
+
+
+
+     <script>
+
+             $(document).on("click", ".ajoute_langue", function () {
+                 var path = $(this).data('id');
+                 // AJAX request
+                 $.ajax({
+                     url: path,
+                     type: 'post',
+                     success: function(response){
+                         // Add response in Modal body
+                         $('.modal-body').html(response);
+                         // Display Modal
+                         $('#ajouterLangue').modal('show');
+                         $('#tg_competence_lange_idLangue').select2();
+                         $('#tg_competence_lange_niveauEcrit').select2();
+                         $('#tg_competence_lange_niveauLu').select2();
+                         $('#tg_competence_lange_niveauParle').select2();
+                     },
+                     error: function (XMLHttpRequest, textStatus, errorThrown) {
+                         alert('Error : ' + errorThrown);
+                     }
+                 });
+             });
+
+             $(document).on("click", ".update_langue", function () {
+                 var path =  $(this).data('id');
+
+                 // AJAX request
+                 $.ajax({
+                     url: path,
+                     type: 'post',
+                     success: function(response){
+                         // Add response in Modal body
+                         $('.modal-body').html(response);
+                         // Display Modal
+                         $('#modifierLangue').modal('show');
+                         $('select').select2();
+                     },
+                     error: function (XMLHttpRequest, textStatus, errorThrown) {
+                         alert('Error : ' + errorThrown);
+                     }
+                 });
+             });
+
+             $(document).on("click", ".delete_langue", function () {
+                 var path =  $(this).data('id');
+
+                 // AJAX request
+                 $.ajax({
+                     url: path,
+                     type: 'delete',
+                     success: function(response){
+                         // Add response in Modal body
+                         $('.modal-body').html(response);
+                         // Display Modal
+                         $('#deleteLangue').modal('show');
+
+                     },
+                     error: function (XMLHttpRequest, textStatus, errorThrown) {
+                         alert('Error : ' + errorThrown);
+                     }
+                 });
+             });
+     </script>
+ {% endblock %}

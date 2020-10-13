@@ -1,0 +1,23 @@
+{% block infraRecherche %}
+    <div id="bl_ir" class="infocompl" >
+{#        <div class="title_sous_bloc">#}
+{#            <h4>Infrastructure(s) de recherche (IR)</h4>#}
+{#        </div>#}
+        <div class="row">
+            <p class="col-sm-7" style="font-size: 15px">
+                Le projet fait il appel a une ou plusieurs infrastructures de recherche
+                <i id="CHOIX_IR" class="fa fa-question-circle"></i>
+            </p>
+            <div class="col-sm-5" style="float: left">
+                {{ form_row(bloc.blInfraRecherche) }}
+            </div>
+        </div>
+        <br><br>
+        <div id="infras">
+            {{ form_widget(bloc.idInfRech, {'label_attr': {'class': 'required'}}) }}
+            {% if NbStructRechMax %}<p style="font-size: 13px;color: #a23e3e"><span>*</span> Le nombre d'infrastructures sélectionnées doit être inférieur ou égal à {{NbStructRechMax}}</p>{% endif %}
+            <div id="tooltip_container"></div>
+        </div>
+    </div>
+{% endblock %}
+

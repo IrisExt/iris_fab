@@ -1,0 +1,138 @@
+{% extends 'cvPersonne/menubloc.html.twig' %}
+    {% block style_menu_cv %}
+        <style>
+            th {
+                background-color: #369;
+                color: white;
+                text-align: center;
+            }
+        </style>
+    {% endblock %}
+{% block titre_cv %}mots clés libres {% endblock %}
+   {% block cv %}
+       <div class="sparkline8-graph">
+           <div class="col-lg-8 col-lg-offset-2">
+               <div class="text-center">
+                   <p> Jusqu'à {{count_row}} mots clés caractérisant vos domaines de compétence.<br>
+                       <small>(Pour ordonner vos mots clés, amenez la souris sur <span
+                                   class="btn btn-info btn-xs">↕</span> à gauche et effectuez un glissé-déposé pour
+                           effectuer votre tri.)</small>
+                   </p>
+               </div>
+           </div>
+           {% set count = 50 %}
+           <form method="post" action="{{ path('cv_mot_cle_libre') }}">
+               <div class="repeat">
+                   <table class="wrapper table table-striped table-bordered" id="table_mot_cle">
+                       <thead>
+                       <tr>
+                           <td colspan="5">
+                               <div class="text-right">
+                                   <a href="#" id="ajout_ligne" class="add btn btn-primary btn-xs"><i class="fa fa-plus"></i> Ajouter mot clé libre</a>
+                               </div>
+                           </td>
+                       </tr>
+                       <tr>
+                       <tr>
+                           <th></th>
+                           <th colspan="col" width="150px">glissé-déposé</th>
+                           <th colspan="col">Français</th>
+                           <th colspan="col">Anglais</th>
+                           <th colspan="col">Action</th>
+                       </tr>
+                       </thead>
+                       <tbody class="container">
+
+                       {% for mcLibre in mcLibres %}
+
+                           <tr class="row">
+                               <td>
+                                   <span class="move btn btn-info">↕</span>
+                               </td>
+                               <td>
+                                   <input type="text" style="background-color: #DFDFDF" class="form-control"
+                                          name="an-input-fr[{{ order_max + count}}]" required value="{{ mcLibre.lbMcFr }}">
+                               </td>
+                               <td>
+                                   <input type="text" style="background-color: #DFDFDF" class="form-control"
+                                          name="an-input-an[{{ order_max + count}}]" required value="{{ mcLibre.lbMcEn }}">
+                               </td>
+                               <td><a href="#" class="remove  fa fa-trash-o text-danger"></a></td>
+                           </tr>
+                           {% set count = count + 1 %}
+                       {% endfor %}
+                       <tr class="template row">
+                           <td>
+                               <span class="move btn btn-info">↕</span>
+                           </td>
+                           <td>
+                               <input type="text" style="background-color: #DFDFDF" class="form-control"
+                                      name="an-input-fr[{{ order_max +1}}]" required/>
+                           </td>
+                           <td>
+                               <input type="text" style="background-color: #DFDFDF" class="form-control"
+                                      name="an-input-an[{{ order_max +1}}]" required/>
+                           </td>
+                           <td><a href="#" class="remove  fa fa-trash-o text-danger"></a></td>
+                       </tr>
+                       </tbody>
+                   </table>
+
+               </div>
+               <div class="col-lg-2 col-lg-offset-8">
+                   <button type="submit" id="submit_McErc" class="btn btn-primary ">Enregistrer</button>
+               </div>
+           </form>
+       </div>
+
+   {% endblock %}
+{% block jquery %}
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+{% endblock %}
+{% block javascripts1 %}
+    <script src="{{ asset('js/repeatable-fields.js') }}"></script>
+{% endblock %}
+ {% block javascripts_add %}
+     <script>
+         $(document).ready(function () {
+             $('.add').click(function (e) {
+                 var rowCount = $(".wrapper .row").length;
+                 // alert(rowCount);
+                 if(rowCount > {{ count_row }}){
+                     // $('.add').prop('disabled', true);
+                     alert('vous avez atteint le nombre maximum de mots clés libres');
+                     return false
+                 }
+             });
+
+         });
+
+         jQuery(function () {
+             jQuery('.repeat').each(function () {
+                 jQuery(this).repeatable_fields({
+                     wrapper: '.wrapper',
+                     container: '.container',
+                     row: '.row',
+                     add: '.add',
+                     remove: '.remove',
+                     move: '.move',
+                     move_up: '.move-up',
+                     move_down: '.move-down',
+                     move_steps: '.move-steps',
+                     template: '.template',
+                     is_sortable: true,
+                     before_add: null,
+                     after_add: self.after_add,
+                     before_remove: null,
+                     after_remove: null,
+                     sortable_options: null,
+                     row_count_placeholder: {{ order_max + 1 }},
+
+                 });
+
+             });
+
+         });
+
+     </script>
+ {% endblock %}

@@ -1,0 +1,83 @@
+{% trans_default_domain'Reunion' %}
+<div class="admintab-wrap mg-b-40">
+    <ul class="nav nav-tabs custom-menu-wrap custon-tab-menu-style1">
+        <li class="active"><a id="reunion_liste" data-toggle="tab" href="#Reunions"><span class="adminpro-icon adminpro-calendar tab-custon-ic"></span>Réunions</a>
+        </li>
+        <li>
+            <a href="#" class="btn" data-toggle="modal" data-target="#ajoute_reunion"
+               data-backdrop="static" data-keyboard="false"
+               data-id="{{ path('ajouter_periode_reu') }}">
+                <span class="adminpro-icon adminpro-plus-add-button-in tab-custon-ic"></span>Définir une réunion et sa période
+            </a>
+{#            <a data-toggle="tab" href="#AjouterReunion"><span class="adminpro-icon adminpro-plus-add-button-in tab-custon-ic"></span>Ajouter réunion</a>#}
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="Reunions" class="tab-pane in active animated flipInX custon-tab-style1">
+
+            {% if count_reun != 0 %}
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{'reunion.form.phase'|trans}}</th>
+                        <th>{{'reunion.form.typereunion'|trans}}</th>
+                        <th>Ob</th>
+                        <th colspan="2">{{'reunion.form.periodeautorise'|trans}}</th>
+                        <th>Durée Maximum</th>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for reunion in reunions %}
+                        <tr>
+                            <td>{{ reunion.idPhase.idphaseref.lbNom }}</td>
+                            <td>{{ reunion.idtypereunion }}</td>
+                            <td>{{ reunion.blobligatoire ? 'Oui' : 'Non' }}</td>
+                            <td>{{ reunion.dtdebperiode|date("d/m/Y") }}</td>
+                            <td>{{ reunion.dtfinperiode|date("d/m/Y") }}</td>
+                            <td><b>{{ reunion.nbdureemax }}</b>  jour(s)</td>
+                            <td> <!-- Large modal -->
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <a href="#" class="btn" data-toggle="modal" data-target="#modifperiodeModal"
+                                           data-id="{{ path('modif_reunion',{'idReunion' : reunion.idreunion }) }}">
+                                            <i class="adminpro-icon adminpro-edit"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <form method="post" action="{{ path('annuler_reunion', {'idReunion': reunion.idreunion}) }}"
+                                              onsubmit="return confirm('voulez vous supprimer cette réunion ?');" id="deleteReu">
+                                            <input type="hidden" name="_token"
+                                                   value="{{ csrf_token('annuler' ~ reunion.idreunion) }}">
+                                            <button class="btn btn-link" aria-hidden="true"><i class="fa fa-trash-o text-danger"></i> </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="footer-text-right">
+                        <a href="{{ path('list_comite') }}" class="btn btn-warning">Fermer</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <strong>Info!</strong> Aucune réunion.
+                </div>
+                <div class="row">
+                    <div class="footer-text-right">
+                        <a href="{{ path('list_comite') }}" class="btn btn-warning">Fermer</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

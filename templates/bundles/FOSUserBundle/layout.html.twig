@@ -1,0 +1,51 @@
+{% extends 'bundles/FOSUserBundle/base.login.html.twig' %}
+
+  {% block stylesheets %}{% endblock %}
+{% block body %}
+{#    <div class="container">#}
+{#        <div class="row">#}
+
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-danger alert-mg-b alert-success-style4 alert-success-stylenone">
+                            <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">
+                                <span class="icon-sc-cl" aria-hidden="true">×</span>
+                            </button>
+                            <span class="adminpro-icon adminpro-danger-error admin-check-sucess admin-check-pro-none"></span>
+                            <p class="message-alert-none"><strong>Erreur !</strong>  {{ message }} </p>
+                        </div>
+                    {% endfor %}
+
+                    <ul class="nav justify-content-end">
+                        <li class="nav-item">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <span class="navbar-text">         {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                            <a class="nav-link active" href="{{ path('fos_user_security_logout') }}">
+                                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                            </a>
+                            </span>
+                        </li>
+                        <li>
+                        {% else %}
+                            <div class="nav-link" ></div>
+                        {% endif %}
+                        </li>
+                    </ul>
+
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                <div>
+                    {% block fos_user_content %}
+                    {% endblock fos_user_content %}
+                </div>
+{#        </div>#}
+{#    </div>#}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{{ form_start(form_notif,{action :  path('update_mail_notif',{'mailNotification' : mailNotif})}) }}
+<div class="form-group row">
+    <label class="col-form-label col-sm-3 required" for="adresse_mail">Adresse mail</label>
+    <div class="col-lg-6">
+        {{ form_widget(form_notif.adrMailNotif) }}
+        <input type="hidden" name="old_mail_notif" value="{{ mailNotif }}">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-4">
+        <div class="i-checks pull-left">
+            <label>{{ form_widget(form_notif.blObsolete) }}  </label>
+        </div>
+    </div>
+</div>
+<div class="footer-text-right">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    <button type="submit" id="modifier_mail_notif" class="btn btn-primary" >Modifier</button>
+{{ form_end(form_notif) }}
+

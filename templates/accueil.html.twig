@@ -1,0 +1,15 @@
+{% extends 'baselight.html.twig' %}
+
+{% block body%}
+    <!-- Cps - pilote -->
+    {{ render(controller('App\\Controller\\AccueilController:widgetProfilPersonne')) }}
+    <!-- fin -->
+
+    <!--  Porteur de Projet -->
+   {{ render(controller('App\\Controller\\AccueilController:widgetformSoumissionPorteur')) }}
+    <!--  Fin Porteur de Projet -->
+    <!--  Resp.sc ou Gest. adm -->
+   {{ render(controller('App\\Controller\\AccueilController:widgetformSoumissionRespSc')) }}
+    {{ render(controller('App\\Controller\\AccueilController:widgetformSoumissionRespAdm')) }}
+    <!--  Fin Resp.sc ou Gest. adm -->
+{% endblock %}

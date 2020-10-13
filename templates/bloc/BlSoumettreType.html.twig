@@ -1,0 +1,102 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <style>
+     .rightButton {
+	     color: #fff;
+	     background-color: #337ab7;
+	     border-color: #2e6da4;
+	     float: right;
+     }
+     .d-block {
+         color: crimson;
+         font-size: 11px;
+         display: ruby-base;
+     }
+     .badge {
+         background-color: #dd1717;
+         font-size: 10px;
+     }
+        h2 {text-align: center; color: #ddd;}
+     fieldset {
+         border:2px solid darkred;
+         -moz-border-radius:8px;
+         -webkit-border-radius:8px;
+         border-radius:8px;
+         padding: 20px;
+     }
+    </style>
+
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+    <div class="col-sm-9">
+        {% block content %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                             <div class="form-group row">
+                                 <div class="col-sm-1"></div>
+                                <div class="col-sm-10">
+                                    <h2>Soumettre votre Pré-proposition</h2><br><br>
+                                    <p>Cliquer sur le bouton "Soumettre ma Pré-proposition" ne bloque pas la saisie d'informations complémentaires ou la modification
+                                        des informations saisies.<br> Cependant, vous devrez alors cliquer à nouveau sur ce bouton pour entrer dans le processus d'évaluation au
+                                    moment de la clôture de l'appel à projet.</p>
+                                    <br><br>
+                                    {% if errors %}
+                                        <fieldset>
+                                        <p style="text-align: center; color: #dd1717">Proposition de projet non complète, voici la liste des champs obligatoires qu'il vous reste à renseigner:</p><br>
+                                    {% for error in errors %}
+                                    {% if error %}  <p style="color: #dd1717; font-size: 13px"> *{{ error.message }}</p>{% endif %}
+                                    {% endfor %}
+                                        </fieldset>
+                                    {% endif %}
+                                    {% if validSoumission %}
+                                    <p style="text-align: center; color: green">Tous les champs obligatoires ont a priori été saisis. L'éligibilité de votre pré-proposition sera vérifiée par l'ANR après
+                                        la date de clôture de l'appel à projets.<br>
+                                        <small>Vous pouvez soumettre votre pré-proposition en cliquant sur le bouton "Soumettre ma pré-proposition".</small>
+                                    </p>
+                                    {% endif %}
+                                </div>
+                                 <div class="col-sm-1"></div>
+                             </div>
+                            <br><br>
+                            {{ form_start(bloc) }}
+                            <div class="form-group row">
+                                <div class="col-sm-5"></div>
+                                <div class="col-sm-2">
+                                    {{ form_widget(bloc.saveBlocWithoutRedirect, { 'attr': {'class': 'hidden'} }) }}
+                                    {{ form_widget(bloc.saveBloc, { 'attr': {'class': 'hidden'} }) }}
+                                    {{ form_widget(bloc.saveFormulaire) }}
+                                </div>
+                                <div class="col-sm-5"></div>
+                            </div>
+                            {{ form_end(bloc) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+</script>
+{% endblock %}

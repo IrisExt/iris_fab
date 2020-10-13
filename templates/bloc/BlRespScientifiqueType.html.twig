@@ -1,0 +1,73 @@
+{% block respSc %}
+    <div id="respSc" class="modal modal-adminpro-general default-popup-PrimaryModal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-close-area modal-close-df">
+                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                </div>
+                <div class="modal-body" id="scrollmodal">
+
+                    <div class="add-part-label">
+                        <div class="main-sparkline8-hd">
+                            <h1>Responsable scientifique</h1>
+                        </div>
+                    </div>
+                    {{ form_start(respSc) }}
+
+                    {{ form_row(respSc.firstname_direct_lab) }}
+                    {{ form_row(respSc.lastname_direct_lab) }}
+                    {{ form_row(respSc.coord_francais) }}
+                    {{ form_row(respSc.coord_etranger) }}
+
+                    {{ form_end(respSc) }}
+
+                </div>
+                <div class="modal-footer">
+                    <a data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('respSc_add', {'idProjet' : idProjet}) }}" id="submitRespSc"
+                       class="add-part">Ajouter</a>
+                    <a id="nextRespSc" data-dismiss="modal" data-toggle="modal" href="#repJur">Suivant</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    {% block javascripts1 %}
+        <script src="{{ asset('js/modal-active.js') }}"></script>
+
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+
+    {% endblock %}
+ {% block javascripts %}
+     <script>
+
+         $('#submitRespSc').click(function (e) {
+             var path = $(e.target).data('id');
+             $.ajax({
+                 'url': path,
+                 type: 'POST',
+                 data:{
+                     'firstname_direct_lab': $("#BlRespScientifiqueType_firstname_direct_lab").val(),
+                     'lastname_direct_lab': $("#BlRespScientifiqueType_lastname_direct_lab").val(),
+                     'coord_francais': $("#BlRespScientifiqueType_coord_francais").val(),
+                     'coord_etranger': $("#BlRespScientifiqueType_coord_etranger").val(),
+
+                     'type_part': $("#BlPartenariatType_type_part").val(),
+                     'id_part': $("#BlPartenariatType_id_part").val(),
+                 },
+                 success: function (data) {
+                     $("#BlPartenariatType_id_part").val(data['partenaireId']);
+                     $('form[name="BlRespScientifiqueType"]').trigger("reset");
+
+                     $('#respSc').modal('hide');
+                     $('#repJur').modal('show');
+
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                     alert('Error : ' + errorThrown);
+                 }
+             });
+         });
+
+     </script>
+ {% endblock %}

@@ -1,0 +1,29 @@
+{% trans_default_domain 'Comites' %}
+{#{% if not form.vars.valid %}#}
+{#    <ul class="alert alert-danger">#}
+{#        {% for error in form.vars.errors %}#}
+{#            <li>{{error.message}}</li>#}
+{#        {% endfor %}#}
+{#         ainsi que les erreurs concernant chaque champs#}
+{#        {% for child in form.children %}#}
+{#            {% for error in child.vars.errors %}#}
+{#                <li>"{{child.vars.label}}" : {{error.message}} </li>  #}{# on ajoute le label du champ devant l'erreur pour plus de précisions. #}
+{#            {% endfor %}#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#{% endif %}#}
+{#{{ form_start(form, {'attr': {'id': 'creercomite'}}) }}#}
+{{ form_start(form, {'action': path('comite_nv')}) }}
+  {{ form_errors(form) }}
+{{ form_widget(form) }}
+
+
+<div class="modal-footer">
+{# <a data-dismiss="modal" href="#">Annuler</a>#}
+ <button class="btn btn-white" data-dismiss="modal">Annuler</button>
+ <button class="btn btn-primary" type="submit"  name="creer">{{ 'comite.form.creer'|trans }}</button>
+{# <button class="btn btn-primary">{{ button_label|default('') }}</button>#}
+</div>
+{{ form_end(form) }}
+
+

@@ -1,0 +1,71 @@
+{% block repJur %}
+    <div id="repJur" class="modal modal-adminpro-general default-popup-PrimaryModal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-close-area modal-close-df">
+                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                </div>
+                <div class="modal-body" id="scrollmodal">
+
+                    <div class="add-part-label">
+                        <div class="main-sparkline8-hd">
+                            <h1>Personne habillée à représenter juridiquement l'établissement gestionnaire</h1>
+                        </div>
+                    </div>
+                    {{ form_start(repJur) }}
+
+                    {{ form_row(repJur.lastname_rep_juridique) }}
+                    {{ form_row(repJur.firstname_rep_juridique) }}
+                    {{ form_row(repJur.function_rep_juridique) }}
+
+                    {{ form_end(repJur) }}
+
+                </div>
+                <div class="modal-footer">
+                    <a data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('repJur_add', {'idProjet' : idProjet}) }}" id="submitRepJur"
+                       class="add-part">Ajouter</a>
+                    <a id="nextRepJur" data-dismiss="modal" data-toggle="modal" href="#gestAd">Suivant</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    {% block javascripts1 %}
+        <script src="{{ asset('js/modal-active.js') }}"></script>
+
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+
+    {% endblock %}
+ {% block javascripts %}
+     <script>
+
+         $('#submitRepJur').click(function (e) {
+             var path = $(e.target).data('id');
+             $.ajax({
+                 'url': path,
+                 type: 'POST',
+                 data:{
+                     'firstname_rep_juridique': $("#BlRepJuridiqueType_firstname_rep_juridique").val(),
+                     'lastname_rep_juridique': $("#BlRepJuridiqueType_lastname_rep_juridique").val(),
+                     'function_rep_juridique': $("#BlRepJuridiqueType_function_rep_juridique").val(),
+
+                     'type_part': $("#BlPartenariatType_type_part").val(),
+                     'id_part': $("#BlPartenariatType_id_part").val(),
+                 },
+                 success: function (data) {
+                     $("#BlPartenariatType_id_part").val(data['partenaireId']);
+                     $('form[name="BlRepJuridiqueType"]').trigger("reset");
+
+                     $('#repJur').modal('hide');
+                     $('#gestAd').modal('show');
+
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                     alert('Error : ' + errorThrown);
+                 }
+             });
+         });
+
+     </script>
+ {% endblock %}

@@ -1,0 +1,42 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends 'bundles/FOSUserBundle/base.login.html.twig' %}
+  {% block stylesheets %}
+      <style>
+          body{
+              background-color: #d0e5ff;
+          }
+      </style>
+  {% endblock %}
+{% block body %}
+    <div class="text-center">
+        <div class="sidebar-header">
+            <a href="#"><img src="{{ asset('img/logo_iris.png') }}" alt="irsi" width="8%" />
+            </a>
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'en'}))) }}">
+                <img width="15" src="{{ asset('img/en.png') }}" alt="en" title="English">
+            </a>
+
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'fr'}))) }}">
+                <img width="15" src="{{ asset('img/fr.png') }}" alt="fr" title="Français">
+            </a>
+            <div class="col-lg-2 offset-lg-7 text-right"><a href="{{ path('accueil') }}">retour</a></div>
+            <div class="col-lg-2 offset-lg-7 text-right">
+
+            </div>
+        </div>
+    </div>
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">{{ 'resetting.request.submit'|trans }}</div>
+                        <div class="card-body">
+                          <div class="alert alert-warning"> {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

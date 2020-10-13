@@ -1,0 +1,22 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
+            <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8">
+                    <div class="contact-client-content">
+                        <h3><a href="#">{{ 'profile.show.username'|trans }}: {{ user.username }}</a></h3>
+                        <h4>{{ user.idPersonne.idGenre.lbLongue|default('') }} {{ user.idPersonne.lbNomUsage|default('') }} {{ user.idPersonne.lbPrenom|default('') }}</h4>
+                    </div>
+                    <div class="contact-client-address">
+                        <h3>{{ 'profile.show.email'|trans }}: {{ user.email }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

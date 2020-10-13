@@ -1,0 +1,292 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
+    <style>
+        .bleuBackground { background-color: #d0e5ff }
+        .bleu2Background { background-color: #b4d4fd }
+        .errorBackground { background-color: #FF0000}
+        .cbox{
+            -webkit-box-shadow: 0px 0px 0px 1px rgba(255,0,0,1);
+            -moz-box-shadow: 0px 0px 0px 1px rgba(255,0,0,1);
+            box-shadow: 0px 0px 0px 1px rgba(255,0,0,1);
+        }
+        .hidden_error {display: none}
+
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="soum alert alert-success alert-success-style1 alert-success-stylenone" hidden>
+        <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">
+            <span class="icon-sc-cl" aria-hidden="true">×</span>
+        </button>
+        <span class="adminpro-icon adminpro-checked-pro admin-check-sucess admin-check-pro-none"></span>
+        <p class="message-alert-none"><strong> succès !</strong>  {{'bloc.success.save.avisProjet'|trans }} </p>
+    </div>
+
+       <div class="col-lg-6 col-lg-offset-3">
+        <div class="text-center">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="sparkline8-list shadow-reset">
+                <div class="sparkline8-hd" style="background-color: #dfdfdf">
+                    <div class="main-sparkline8-hd">
+                        <h1>{{ tgComite.lbAcr }}: Questionnaire avis projet</h1>
+                        <div class="sparkline9-outline-icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline8-graph">
+                    <div class="quest_enreg alert alert-success" hidden>Le questionnaire a bien été enregistré.</div>
+
+
+                     <table class="table table table-bordered">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" width="25%"></th>
+                        {% for avi in avis %}
+                            <th width="15%" style="text-align: center;">{{ avi.getCdAvis.getLbNomFr() }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr row_id="">
+                        <td width="25%"><b>Projets</b></td>
+                        {% for avi in avis %}
+                            <th width="15%" style="text-align: center; background-color: {{ avi.getCdAvis.getCdCouleur() }}">{{ avi.getCdAvis.getCodeAvis() }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for projet in tgProjets %}
+                        <tr row_id="" >
+                            <td class="bleuBackground">{{ projet.getLbAcro() }}</td>
+                            {% for avi in avis %}
+                                <td class="text-center">
+                                    <input type="radio" class="row_data avis_{{  avi.getCdAvis.getCdAvis() }}" edit_type="click" name="avis_{{ projet.getIdProjet() }}" id="avis_{{ projet.getIdProjet() }}_{{ avi.getCdAvis.getCdAvis() }}" value="{{ avi.getCdAvis.getCdAvis() }}" onclick="incrementCumul({{ avi.getCdAvis.getCdAvis() }}, {{ projet.getIdProjet() }})"
+                                            {% for tlAvisProjet in tlAvisProjets %} {% if tlAvisProjet.getIdProjet.getIdProjet() == projet.getIdProjet() and tlAvisProjet.getCdAvis() == avi.getCdAvis() %}checked  {% endif %} {% endfor %}  />
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        <tr id="error_projet_{{ projet.getIdProjet() }}" hidden>
+                            <td class=""></td>
+                            <td colspan="{{ tgProjets|length }}">
+                                <span class="invalid-feedback d-block">
+                                    <span class="d-block">
+                                        <span class="form-error-icon badge badge-danger text-uppercase">Erreur</span>
+                                        <span class="form-error-message"> Séléctionner un avis pour le projet {{ projet.getLbAcro() }} </span>
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    <tr>
+                        <td class="text-center bleuBackground">Cumul</td>
+                        {% for avi in avis %}
+                            <td class="text-center bleuBackground" style="border: 2px solid dimgray;"><span id="total_avis_{{ avi.getCdAvis.getCdAvis() }}" style="display: contents;">0</span></td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td class="text-center bleu2Background">Min</td>
+                        {% for avi in avis %}
+                            <td class="text-center bleu2Background" style="border: 2px solid dimgray;">
+                                {% if avi.getCdAvis.getCdAvis != 5 and avi.getPourcentMin() != null %}
+                                 <span id="min_{{ avi.getCdAvis.getCdAvis() }}" style="display: contents;">{% set max = avi.getPourcentMin() * tgProjets|length / 100 %}{{ max|round }}</span>
+                                {% endif %}
+                            </td>
+
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td class="text-center bleu2Background">Max</td>
+                        {% for avi in avis %}
+                            <td class="text-center bleu2Background" style="border: 2px solid dimgray;">
+                                {% if avi.getCdAvis.getCdAvis != 5 and avi.getPourcentMax() != null %}
+                                    <span id="max_{{ avi.getCdAvis.getCdAvis() }}" style="display: contents;">{% set min = avi.getPourcentMax() * tgProjets|length / 100 %}{{ min|round }}</span>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    </tbody>
+                </table>
+                    <div class="footer-text-right">
+                        {% set actif = ''%} {% set disabled = ''%}
+                        {% if soum_particip == true %}{% set actif %} onClick="this.disabled=true;" {% endset %}  {% set disabled %} disabled="disabled" {% endset %}{% endif %}
+                        <a href="#" {{ actif }} data-id="{{ tgComite.idComite }}" {{ disabled}} id="enregAvis" class="btn btn-primary" >Enregistrer</a>
+
+                            <a href="#" {{ actif }} data-id="{{ tgComite.idComite }}" {{ disabled }} id="soumetAvis" class="btn btn-primary">Soumettre</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+   {% block javascripts %}
+{#       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>#}
+       <script src="{{ asset('js/emodal/eModal.js')}}"></script>
+       <script>
+           $(document).ready(function() {
+               loadCumulCount();
+           });
+
+           function loadCumulCount(){
+               {% for avi in avis %}
+               var cumul = 0;
+               $(".avis_{{ avi.getCdAvis.getCdAvis() }}").each(function () {
+                   if ($(this).is(":checked")) {
+                       cumul = parseInt(cumul) + parseInt(1);
+                   }
+               });
+               $('#total_avis_{{ avi.getCdAvis.getCdAvis() }}').html(cumul);
+
+               var cumul_avis =   $('#total_avis_{{ avi.getCdAvis.getCdAvis() }}').html();
+               var min_avis = $('#min_{{ avi.getCdAvis.getCdAvis() }}').html();
+               var max_avis = $('#max_{{ avi.getCdAvis.getCdAvis() }}').html();
+
+               if(cumul_avis < min_avis) $('#min_{{ avi.getCdAvis.getCdAvis() }}').closest('td').addClass('errorBackground');
+               else $('#min_{{ avi.getCdAvis.getCdAvis() }}').closest('td').removeClass('errorBackground');
+               if(cumul_avis > max_avis) $('#max_{{ avi.getCdAvis.getCdAvis() }}').closest('td').addClass('errorBackground');
+               else $('#max_{{ avi.getCdAvis.getCdAvis() }}').closest('td').removeClass('errorBackground');
+
+               {% endfor %}
+           }
+
+           function checkOneAvis(id, idProjet) {
+               var checkName = "avis_"+ idProjet;
+               $('input[name='+ checkName +']').prop('checked', false);
+               $('#avis_'+ idProjet + '_' + id).prop('checked', true);
+               loadCumulCount();
+           }
+
+           function incrementCumul(id, idProjet) {
+               var cumul = $('#total_avis_'+ id).html();
+               if ($('#avis_'+ idProjet + '_' + id).is(":checked")) {
+
+                   cumul = parseInt(cumul) + parseInt(1);
+                   $('#total_avis_'+ id).html(cumul);
+                   checkOneAvis(id, idProjet);
+               } else {
+
+                   cumul = parseInt(cumul) - parseInt(1);
+                   $('#total_avis_'+ id).html(cumul);
+                   loadCumulCount();
+               }
+           }
+
+           function showHideError(idProjet, action) {
+               $('#error_projet_' + idProjet).hide();
+
+               if(1 === action){
+                   $('#error_projet_' + idProjet).show();
+               }
+           }
+
+           function checkMinMax() {
+               var error_cumul = false;
+               {% for avi in avis %}
+               var cumul_avis =   $('#total_avis_{{ avi.getCdAvis.getCdAvis() }}').html();
+               var min_avis = $('#min_{{ avi.getCdAvis.getCdAvis() }}').html();
+               var max_avis = $('#max_{{ avi.getCdAvis.getCdAvis() }}').html();
+               if(cumul_avis < min_avis || cumul_avis > max_avis) error_cumul = true;
+               {% endfor %}
+               return error_cumul;
+                   // var conf1 =  confirm("Le nombre de réponses ne respecte pas le maximum ou le minimum admise. Souhaitez-vous continuer ?");
+               // else
+               //     return confirm("Confirmez-vous la soumission du questionnaire projet ?");
+           }
+
+           function submitQuestionnaire(idComite, typSubmit) {
+               var projets = [];
+               var errorProjet = false;
+               {% for key,projet in tgProjets %}
+                   var key = {{ key }};
+                   var idProjet = {{ projet.getIdProjet() }};
+                   var checkName = "avis_{{ projet.getIdProjet() }}";
+                   var chech_avis = parseInt($('input[name='+ checkName +']:checked').val());
+
+                   var atLeastOneIsChecked = $('input[name='+ checkName +']:checked').length > 0;
+
+                   // if(!atLeastOneIsChecked)  {
+                   //     errorProjet = true;
+                   //     $('input[name='+ checkName +']').addClass('cbox');
+                   //     showHideError(idProjet, 1);
+                   // } else {
+                   //     $('input[name='+ checkName +']').removeClass('cbox');
+                   //     showHideError(idProjet, 0);
+                   // }
+
+                   if (isNaN(chech_avis)) chech_avis = 0;
+                   projets[key] = {projet : idProjet, avis : chech_avis };
+               {% endfor %}
+
+               // if (!errorProjet) {
+                   $.ajax({
+                       'url': '/fr/affectation/addavismmbre/' + idComite,
+                       type: 'POST',
+                       data: {projets: projets, typSubmit:typSubmit},
+
+                       success: function (data) {
+                          if (typSubmit == 1) $('.soum').show(); location.reload();
+                           if (typSubmit == 2)
+                           $('.quest_enreg').show().delay(3000).hide("slow");
+                       },
+                       error: function (XMLHttpRequest, textStatus, errorThrown) {
+                           alert('Error : ' + errorThrown);
+                       }
+                   });
+               // }
+
+           }
+
+           $(document).on("click", "#enregAvis", function () {
+               var idComite = $(this).data("id");
+               var msg1 = "Le nombre de réponses ne respecte pas le maximum ou le minimum admise. Souhaitez-vous continuer ?";
+               var msg2 = "Confirmez-vous l'enregistrement du questionnaire projet ?"
+                var msg =  checkMinMax() ? msg1 : msg2;
+               var options = {
+                   url: idComite,
+                   message: msg,
+                   title: 'Confirmation',
+                   size: eModal.size.sm,
+                   subtitle: 'smaller text header',
+                   label: "Valider"
+               };
+               eModal.confirm(options)
+                   .then(function(){
+                       submitQuestionnaire(idComite, 2); },
+                       function(){  }
+                   );
+           });
+
+           $(document).on("click", "#soumetAvis", function () {
+               var idComite = $(this).data("id");
+               var msg1 = "Le nombre de réponses ne respecte pas le maximum ou le minimum admise. Souhaitez-vous continuer ?";
+               var msg2 = "Confirmez-vous la soumission du questionnaire projet ?"
+               var msg =  checkMinMax() ? msg1 : msg2;
+               var options = {
+                   url: idComite,
+                   message: msg,
+                   title: 'Confirmation',
+                   size: eModal.size.sm,
+                   subtitle: 'smaller text header',
+                   label: "Valider"
+               };
+               eModal.confirm(options)
+                   .then(function(){
+                           $('#enregAvis').attr('disabled', 'disabled');
+                           $('#enregAvis').attr('onClick' , "this.disabled=true;");
+                           $('#soumetAvis').attr('disabled', 'disabled');
+                           $('#soumetAvis').attr('onClick' , "this.disabled=true;");
+                           submitQuestionnaire(idComite, 1); },
+                       function(){  }
+                   );
+           });
+
+       </script>
+   {% endblock %}

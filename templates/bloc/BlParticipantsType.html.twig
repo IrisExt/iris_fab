@@ -1,0 +1,126 @@
+{% block participants %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/craueformflow/css/buttons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <style>
+        .rightButton {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            float: right;
+        }
+        .d-block {
+            color: crimson;
+            font-size: 11px;
+            display: ruby-base;
+        }
+        .badge {
+            background-color: #dd1717;
+            font-size: 10px;
+        }
+        .modal-body {
+        padding: 40px 25px !important;
+        }
+         th {
+             background-color: #369;
+             color: white;
+        }
+        .addParticipant { z-index: 1055; }
+        table { margin-bottom: 0 !important;}
+
+        .gender { display: inline-flex; }
+        .gender > .form-check { padding-right: 15px; }
+        fieldset { border: none }
+        .respsc label {font-size: 14px;font-weight: bold;}
+    </style>
+{% endblock %}
+
+    <div id="addParticipant"  class="modal modal-adminpro-general default-popup-PrimaryModal fade addParticipant" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1">
+                    <h4 class="ml14 modal-title">
+                    <span class="text-wrapper">
+                     <span class="letters">Créer un participant</span>
+                    </span>
+                    </h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                    {{ form_start(bloc) }}
+                <div class="respsc">
+                    {{ form_row(bloc.resp) }}
+                </div>
+                    {{form_row(bloc.orcid)}}
+                    {{ form_row(bloc.civ) }}
+                    {{ form_row(bloc.lbNomUsage) }}
+                    {{ form_row(bloc.lbPrenom) }}
+                    {{ form_row(bloc.adrMail) }}
+                    {{ form_row(bloc.idPartenaire) }}
+                    {{ form_end(bloc) }}
+                </div>
+                <div class="modal-footer">
+                    <a id="annulerPart" data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" id="submitENS" class="add-edit-participant">Ajouter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+            {% block javascripts1 %}
+        <script src="{{ asset('js/modal-active.js') }}"></script>
+       {% endblock %}
+ {% block javascripts %}
+        <script>
+            $('#annulerPart').click(function (e) {
+                $('.PartError').hide();
+                $('form[name="BlParticipantsType"]').trigger("reset");
+            });
+        $('#submitENS').click(function (e) {
+            var path = $(e.target).data('id');
+            $.ajax({
+                'url': path,
+                type: 'POST',
+                data:{
+                    'resp': $("input[name='BlParticipantsType[resp]']:checked").val(),
+                    'civ':  $("input[name='BlParticipantsType[civ]']:checked").val(),
+                    'nom': $("#BlParticipantsType_lbNomUsage").val(),
+                    'prenom': $("#BlParticipantsType_lbPrenom").val(),
+                    'mail': $("#BlParticipantsType_adrMail").val(),
+                    'orcid': $("#BlParticipantsType_orcid").val(),
+                },
+                success: function (data) {
+                    $('.PartError').html('');
+                    if(data.result == 0) {
+                        for (var key in data.dataPers) {
+                            $('#BlParticipantsType_'+data.dataPers[key].field+'').after('<span class="invalid-feedback d-block PartError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.dataPers[key].message+'</span></span></span>');
+                        }
+                        for (var key in data.dataMail) {
+                            $('#BlParticipantsType_'+data.dataMail[key].field+'').after('<span class="invalid-feedback d-block PartError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.dataMail[key].message+'</span></span></span>');
+                        }
+                        for (var key in data.dataOrcid) {
+                            $('#BlParticipantsType_orcid').after('<span class="invalid-feedback d-block PartError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.dataOrcid[key].message+'</span></span></span>');
+                        }
+                    }  else {
+                        // Submit OK
+                         $('form[name="BlParticipantsType"]').trigger("reset");
+                         location.reload();
+                         $('#addParticipant').modal('hide');
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  alert('Error : ' + errorThrown);
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

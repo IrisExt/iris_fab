@@ -1,0 +1,89 @@
+{% block bl_ETR %}
+        <div id="bl_ETR"  class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1">
+                    <h4 class="ml14 modal-title">
+                    <span class="text-wrapper">
+                     <span class="letters">Création d'un partenaire étranger</span>
+                    </span>
+                    </h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+                <div class="modal-body" id="scrollmodal">
+                    {{ form_start(partenaireEtr) }}
+                    {{ form_row(partenaireEtr.name_etr, {'label_attr': {'class': 'required'}}) }}
+                    {{ form_row(partenaireEtr.laboratoire_etr) }}
+                    {{ form_row(partenaireEtr.city_etr) }}
+                    {{ form_row(partenaireEtr.country_etr, {'label_attr': {'class': 'required'}}) }}
+                    {{ form_end(partenaireEtr) }}
+                </div>
+                <div class="modal-footer">
+                    <a id="annulerEtr" data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('etr_add', {'idProjet' : idProjet}) }}" data-title="add" id="submitEtr"
+                       class="etr add-part-etr">Ajouter</a>
+                    <a href="#" data-id="" data-title="edit" id="submitEtrEdit"
+                       class="etr edit-part-etr">Modifier</a>
+{#                    <a id="nextTutHeb" data-dismiss="modal" data-toggle="modal" href="#tutGest">Suivant</a>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+ {% block javascripts %}
+<script>
+
+    $('#annulerEtr').click(function (e) {
+        $('.PartError').hide();
+        $('.EtrError').hide();
+        $('.PrfError').hide();
+        $('form[name="BlPartenaireEtrType"]').trigger("reset");
+        $("#BlPartenaireEtrType_country_etr").select2({
+            dropdownParent: $("#bl_ETR"),
+            placeholder: "Choisir un pays",
+        });
+    });
+
+    $('.etr').click(function (e) {
+
+        var path = $(e.target).data('id');
+        country = $("#select2-BlPartenaireEtrType_country_etr-container").html();
+        if("add" == $(e.target).data('title')) country = $("#BlPartenaireEtrType_country_etr").val();
+        $.ajax({
+            'url': path,
+            type: 'POST',
+            data: {
+                'name': $("#BlPartenaireEtrType_name_etr").val(),
+                'laboratoire': $("#BlPartenaireEtrType_laboratoire_etr").val(),
+                'country': country,
+                'city': $("#BlPartenaireEtrType_city_etr").val(),
+                'type_part': $("#BlPartenariatType_type_part").val(),
+            },
+
+            success: function (data) {
+                $('.EtrError').html('');
+                if(data.result == 0) {
+                    for (var key in data.messageError) {
+                        if ("lbNomFr" == data.messageError[key].field) $('#BlPartenaireEtrType_name_etr').after('<span class="invalid-feedback d-block EtrError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> ' + data.messageError[key].message + '</span></span></span>');
+                        if ("cdPays" == data.messageError[key].field) $('.select2-container--default').after('<span class="invalid-feedback d-block EtrError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> ' + data.messageError[key].message + '</span></span></span>');
+                    }
+                } else {
+                    // Submit OK
+                    $("#BlPartenariatType_id_part").val(data.partenaireId);
+                      $('form[name="BlPartenaireEtrType"]').trigger("reset");
+                     location.href = location.href + 'ETR';
+                     location.reload();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+
+</script>
+ {% endblock %}

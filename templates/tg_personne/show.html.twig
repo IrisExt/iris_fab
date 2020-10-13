@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Personne' %}
+{% block title %}Personne{% endblock %}
+
+{% block body %}
+<div class="advanced-form-area mg-b-15">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd">
+                        <div class="main-sparkline8-hd">
+                            <h1>{{  tg_personne.lbNomUsage }}  {{ tg_personne.lbPrenom }}</h1>
+                            <div class="sparkline8-outline-icon">
+                                <a href="{{ path('tg_personne_index') }}">{{ 'personne.from.retour'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <table class="table">
+                            <tbody>
+
+                            <tr>
+                                <th>{{ 'personne.from.genre'|trans }}</th>
+                                <td>{{ tg_personne.idGenre }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'personne.from.lbNomUsage'|trans }}</th>
+                                <td>{{ tg_personne.lbNomUsage }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'personne.from.lbPrenom'|trans }}</th>
+                                <td>{{ tg_personne.lbPrenom }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'personne.from.username'|trans }}</th>
+                                <td>{% if tg_personne.users != null %}{{ tg_personne.users.username }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'personne.from.email'|trans }}</th>
+                                <td>{% if tg_personne.users != null %}{{ tg_personne.users.email }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'personne.from.cdfrancophone'|trans }}</th>
+                                <td>{{ tg_personne.cdfrancophone }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'personne.from.fonction'|trans }}</th>
+                                <td>{{ tg_personne.fonction }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'personne.from.lbWebPerso'|trans }}</th>
+                                <td><a href="{{ tg_personne.lbWebPerso }}">{{ tg_personne.lbWebPerso }}</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="footer-text-right">
+                            <a class="btn btn-primary"
+                               href="{{ path('tg_personne_edit', {'idPersonne': tg_personne.idPersonne}) }}">{{ 'personne.from.modif'|trans }}</a>
+                        </div>
+                        {{ include('tg_personne/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

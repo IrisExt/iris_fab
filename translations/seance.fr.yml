@@ -1,0 +1,5 @@
+seance:
+  form:
+    reunion: 'Réunion'
+    matin: 'Matin'
+    apresmidi: 'Après Midi'

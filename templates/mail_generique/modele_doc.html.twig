@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'AppelProjet' %}
+{% block title %}Modèle de document{% endblock %}
+ {% block stylesheets1 %}
+<style>
+    fieldset
+    {
+        border: 0px solid #c0c0c0;
+        background-color: #FFFFFF;
+        /*max-width:500px;*/
+        /*padding:16px;*/
+    }
+    .form-group
+    {
+        /*margin-bottom:0px;*/
+        /*margin-left:16px;*/
+    }
+</style>
+     <link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.6/chosen.css') }}">
+{#     <link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.0.0/ui/trumbowyg.min.css') }}">#}
+{% endblock %}
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>Modèle de document</h1>
+                                <div class="sparkline8-outline-icon">
+{#                                    <a href="{{ path('tg_appel_proj_index') }}">{{ 'appel.form.retour'|trans }}</a>#}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                            {{ form_start(form)}}
+                            {{ form_widget(form) }}
+                            <div class="footer-text-right">
+                                <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+                            </div>
+                            {{ form_end(form) }}
+{#                            <div class="footer-text-right">#}
+
+{#                                <a href="{{ path('accueil') }}">{{ 'appel.form.edit'|trans }}</a>#}
+{#                            </div>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+        {% block javascripts1 %}
+
+            <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/jquery/1.4.4/jquery.min.js ') }}"></script>
+{#            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react-autosuggest/9.4.3/autosuggest.min.js"></script>#}
+
+            <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+            <script src="{{ asset('js/asuggest/jquery.asuggest.js') }}"></script>
+            <script src="{{ asset('js/asuggest/jquery.a-tools-1.4.1.js') }}"></script>
+            <script>
+                $(document).ready(function(){
+
+                    $("#tg_courriel_adrMail").chosen({
+                        search_contains : true,
+                        width : '340px'
+                });
+                    $("#tg_courriel_idCatModele").chosen({
+                        search_contains : true,
+                        width : '345px'
+                });
+                    $("#tg_courriel_copieMail").chosen({
+                        search_contains : true,
+                        width : '345px'
+                });
+                    // var suggestionList = new SuggestionList(options);
+
+                    // $('#tg_courriel_lbMessageFr').trumbowyg();
+
+
+
+               var suggests = ["%hello%", "%android%", "%world%", "%is%", "%all%", "over", "under"];
+                    var objet = ["%AAPG EN COURS%", "%android%", "%world%", "%is%", "%all%", "over", "under"];
+                    // $("#tg_courriel_lbMessageFr").asuggest(suggests);
+                    $("#tg_courriel_lbObjet").asuggest(objet);
+
+
+
+                var itemsArray = [ { id: 1, name: '@Andrew' }, { id: 2, name: '@Kate' } ];
+                // Called when the user types in the editor or moves the caret.
+                // The range represents the caret position.
+                // function textTestCallback( range ) {
+                //     // You do not want to autocomplete a non-empty selection.
+                //     if ( !range.collapsed ) {
+                //         return null;
+                //     }
+                //     // Use the text match plugin which does the tricky job of doing
+                //     // a text search in the DOM. The matchCallback function should return
+                //     // a matching fragment of the text.
+                //     return CKEDITOR.plugins.textMatch.match( range, matchCallback );
+                // }
+                // Returns the position of the matching text.
+                // It matches with a word starting from the '@' character
+                // up to the caret position.
+                function matchCallback( text, offset ) {
+                    // Get the text before the caret.
+                    var left = text.slice( 0, offset ),
+                        // Will look for an '@' character followed by word characters.
+                        match = left.match( /@\w*$/ );
+                    if ( !match ) {
+                        return null;
+                    }
+                    return { start: match.index, end: offset };
+                }
+                // Returns (through its callback) the suggestions for the current query.
+                function dataCallback( matchInfo, callback ) {
+                    // Simple search.
+                    // Filter the entire items array so only the items that start
+                    // with the query remain.
+                    var suggestions = itemsArray.filter( function( item ) {
+                        return item.name.toLowerCase().indexOf( matchInfo.query.toLowerCase() ) == 0;
+                    } );
+                    // Note: The callback function can also be executed asynchronously
+                    // so dataCallback can do XHR requests or use any other asynchronous API.
+                    callback( suggestions );
+                }
+                // Finally, instantiate the autocomplete class.
+                //  new CKEDITOR.plugins.autocomplete( editor, {
+                //     textTestCallback: textTestCallback,
+                //     dataCallback: dataCallback
+                // } );
+              });
+            </script>
+        {% endblock %}

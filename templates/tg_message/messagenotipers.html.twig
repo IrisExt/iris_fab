@@ -1,0 +1,4 @@
+{%  for message in messages|reverse %}
+   <p> &nbsp; <span style="color: mintcream">{{ message.idComite }} -- {{ message.dhEnvoi|date('d/m H:i') }}  :</span> <b>  </b> <i class="fa indicator-mn fa-angle-right"></i> <b></b> : <span style="color: #b3d4fc">{{ message.texte }}</span></p>
+    <br>
+{% endfor %}

@@ -1,0 +1,28 @@
+{% if appels is not empty %}
+{% extends 'widgets/base_widget.html.twig' %}
+{% block javascripts %}
+{% endblock %}
+{% block name_profil %}Appels{% endblock %}
+{%  block text_profil %}Gestion des appels{% endblock %}
+{% block container_profil %}
+    <div class="widget income-rate-total">
+    <p>formulaires de soumission</p>
+        <span class="price-graph">
+        <a class="btn btn-primary btn-sm"
+           href="{{ path('index_soumission') }}">
+            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+        </span>
+
+            {% for appel in appels %}
+                <div class="income-rate-total">
+                    <p>{{ appel }}</p>
+                    <span class="price-graph">
+                        <a class="btn btn-primary btn-sm"
+                           href="{{ path('assignment_appel', {'idAppel': appel.idAppel}) }}">
+                            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                    </span>
+                </div>
+            {% endfor %}
+    </div>
+{% endblock %}
+{% endif %}

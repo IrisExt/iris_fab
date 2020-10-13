@@ -1,0 +1,22 @@
+appel:
+  form:
+    millesim: 'vintage year'
+    lbappel: 'Wording'
+    desc: 'Description'
+    lbacronyme: 'Acronyme'
+    dtclofin: 'End date'
+    pilote: 'Operator'
+    save: 'Create'
+    retour: 'Return'
+    edit: 'edit'
+    show: 'show'
+    formulaire: 'Form'
+    action: 'Action'
+    delete: 'Delete'
+
+
+  projet:
+    appelpro: 'call for project'
+    action: 'Action'
+    creenewproj: 'new call for projects'
+    modifierproj: 'Edit a call for project'

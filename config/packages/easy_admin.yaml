@@ -1,0 +1,25 @@
+easy_admin:
+    entities:
+        # List the entity class name you want to manage
+        - App\Entity\User
+        - App\Entity\TrCivilite
+        - App\Entity\TgPersonne
+        - App\Entity\TgAdresse
+        - App\Entity\TgAdrMail
+        - App\Entity\TgAppelProj
+        - App\Entity\TgComite
+        - App\Entity\TgPersCps
+        - App\Entity\TlLangPers
+        - App\Entity\TrDepartement
+        - App\Entity\TgParticipation
+        - App\Entity\TgPhase
+        - App\Entity\TrTypeReunion
+        - App\Entity\TgReunion
+        - App\Entity\TgHabilitation
+        - App\Entity\TgMessage
+        - App\Entity\TgAffectation
+        - App\Entity\TgProjet
+#        - App\Entity\TgParticipation
+#        - App\Entity\TrRole
+#        - App\Entity\TgDateReunion
+

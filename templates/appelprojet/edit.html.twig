@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'AppelProjet' %}
+
+  {% block stylesheets1 %}
+      <!-- modals CSS
+          ============================================ -->
+      <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+      <!-- tabs CSS
+          ============================================ -->
+      <link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
+      <link rel="stylesheet" href="{{ asset('css/datapicker/datepicker3.css') }}">
+      <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+
+  {% endblock %}
+{% block title %}Modifier appel à projet{% endblock %}
+
+{% block body %}
+
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'appel.projet.modifierproj'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a href="{{ path('tg_appel_proj_index') }}">{{ 'appel.form.retour'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                                {{ include('appelprojet/_form.html.twig', {'button_label': 'Modifier'}) }}
+                            {{ include('appelprojet/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts1 %}
+    <!-- modal JS
+       ============================================ -->
+
+    <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+    <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+{% endblock %}

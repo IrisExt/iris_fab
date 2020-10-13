@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'AppelProjet' %}
+{% block title %}Appel à Projet{% endblock %}
+
+{% block body %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        <div class="sparkline8-list shadow-reset">
+                            <div class="sparkline8-hd">
+                                <div class="main-sparkline8-hd">
+                                      <h1>{{ 'appel.projet.appelpro'|trans }}</h1>
+                                    <div class="sparkline8-outline-icon">
+                                        <a href="{{ path('tg_appel_proj_index') }}">{{ 'appel.form.retour'|trans }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sparkline8-graph">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>{{ 'appel.form.millesim'|trans }}</th>
+                                        <td>{{ tg_appel_proj.dtMillesime }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'appel.form.lbappel'|trans }}</th>
+                                        <td>{{ tg_appel_proj.lbAppel }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'appel.form.lbacronyme'|trans }}</th>
+                                        <td>{{ tg_appel_proj.lbAcronyme }}</td>
+                                    </tr>
+{#                                    <tr>#}
+{#                                        <th>{{ 'appel.form.dtclofin'|trans }}</th>#}
+{#                                        <td>{{ tg_appel_proj.dtCloFin ? tg_appel_proj.dtCloFin|date('d-m-Y') : '' }}</td>#}
+{#                                    </tr> #}
+                                   <tr>
+                                        <th>Pilote</th>
+                                        <td>{{ tg_appel_proj.pilote }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="footer-text-right">
+                                    <a class="btn btn-primary"
+                                <a href="{{ path('tg_appel_proj_edit', {'idAppel': tg_appel_proj.idAppel}) }}">{{ 'appel.form.edit'|trans }}</a>
+                                </div>
+                                {{ include('appelprojet/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

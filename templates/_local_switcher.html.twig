@@ -1,0 +1,19 @@
+<li class="nav-item">
+    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+        <span class="fa fa-globe header-riht-inf"></span>
+        <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
+    </a>
+    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
+
+        <li>
+                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'en'}))) }}">
+                    <img width="20" src="{{ asset('img/en.png') }}" alt="en">  English
+                </a>
+        </li>
+        <li>
+                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'fr'}))) }}">
+                    <img width="20" src="{{ asset('img/fr.png') }}" alt="fr"> Français
+                </a>
+
+    </ul>
+</li>

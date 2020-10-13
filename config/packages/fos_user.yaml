@@ -1,0 +1,28 @@
+# config/packages/fos_user.yaml
+fos_user:
+  db_driver: orm # other valid values are 'mongodb' and 'couchdb'
+  firewall_name: main
+  user_class: App\Entity\User
+  from_email:
+    address: "Adlen.BOUSSADIA@agencerecherche.fr"
+    sender_name: "IRIS"
+
+
+
+
+  service:
+    mailer: fos_user.mailer.twig_swift
+
+  resetting:
+    email:
+      template:   email/password_resetting.email.twig
+      from_email:
+        address:        "Adlen.BOUSSADIA@agencerecherche.fr"
+        sender_name:    Iris Resetting
+
+  registration:
+    confirmation:
+      template:   '@FOSUser/Registration/email.txt.twig'
+      from_email:
+        address:        "Adlen.BOUSSADIA@agencerecherche.fr"
+        sender_name:    Iris Registration

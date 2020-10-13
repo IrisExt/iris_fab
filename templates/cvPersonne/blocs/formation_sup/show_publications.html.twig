@@ -1,0 +1,138 @@
+{% extends 'cvPersonne/menubloc.html.twig' %}
+{% block stylesheets %}
+<style>
+    .form-control {
+        background-color:
+        #F0EFEF;
+        }
+    th {
+        background-color: #369;
+        color: white;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+   {% block titre_cv %}publications majeures {% endblock %}
+{% block cv %}
+
+<div class="col-lg-12">
+    <div class="text-center">
+        <p></p>
+    </div>
+    {% set count = 50 %}
+    <div class=" row">
+        <form action="{{ path('cv_publications') }}" method="post">
+            <div class="repeat">
+
+                <table class="wrapper table table-striped table-bordered" id="table_mot_cle">
+                    <thead>
+                    <tr>
+                       <td colspan="4">
+                           <div class="text-right">
+                               <a href="#" id="ajout_ligne" class="add btn btn-primary btn-xs"><i class="fa fa-plus"></i> Ajouter une publication </a>
+                           </div>
+                          </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th colspan="col">  Titre de la publication </th>
+
+                        <th colspan="col"> Pourquoi estimez-vous que cette publication est majeure ?</th>
+
+                        <td colspan="4">
+
+                        </td>
+                    </tr>
+
+
+                    </thead>
+                    <tbody class="container">
+
+                    {%  for publi in  tlPubl %}
+                        <tr class="row">
+                            <td>
+                            <textarea style="background-color: #DFDFDF" class="form-control"
+                                      name="lb_titre[{{ publi.idPublication.idPublication  + count }}]">{{ publi.idPublication.lbTitre }}</textarea>
+                            </td>
+                            <td>
+                             <textarea style="background-color: #DFDFDF" class="form-control"
+                                       name="lb_justificatif[{{ publi.idPublication.idPublication  + count}}]">{{ publi.idPublication.lbJustification }}</textarea>
+                            </td>
+                            <td><a href="#" class="remove  fa fa-trash-o text-danger"></a></td>
+                        </tr>
+                        {% set count = count + 1 %}
+                    {% endfor %}
+                    <tr class="template row">
+                        <td>
+                            <textarea style="background-color: #DFDFDF" class="form-control"
+                                      name="lb_titre[{{ order_max +1}}]" required></textarea>
+                        </td>
+                        <td>
+                            <textarea style="background-color: #DFDFDF" class="form-control"
+                                      name="lb_justificatif[{{ order_max +1}}]" required></textarea>
+                        </td>
+                        <td><a href="#" class="remove  fa fa-trash-o text-danger"></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-lg-2 col-lg-offset-8">
+                <button type="submit" id="submit_McErc" class="btn btn-primary ">Enregistrer</button>
+            </div><br>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% block jquery %}
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+{% endblock %}
+{% block javascripts1 %}
+    <script src="{{ asset('js/repeatable-fields.js') }}"></script>
+{% endblock %}
+ {% block javascripts_add %}
+     <script>
+         $(document).ready(function () {
+             $('.add').click(function (e) {
+                 var rowCount = $(".wrapper .row").length;
+                            // alert(rowCount);
+                 if(rowCount > 5){
+                     // $('.add').prop('disabled', true);
+                     alert('vous avez atteint le nombre maximum de publications');
+                     return false
+                 }
+             });
+
+         });
+
+         jQuery(function () {
+             jQuery('.repeat').each(function () {
+                 jQuery(this).repeatable_fields({
+                     wrapper: '.wrapper',
+                     container: '.container',
+                     row: '.row',
+                     add: '.add',
+                     remove: '.remove',
+                     move: '.move',
+                     move_up: '.move-up',
+                     move_down: '.move-down',
+                     move_steps: '.move-steps',
+                     template: '.template',
+                     is_sortable: true,
+                     before_add: null,
+                     after_add: self.after_add,
+                     before_remove: null,
+                     after_remove: null,
+                     sortable_options: null,
+                     row_count_placeholder: {{ order_max + 1 }},
+
+                 });
+
+             });
+
+         });
+
+     </script>
+ {% endblock %}

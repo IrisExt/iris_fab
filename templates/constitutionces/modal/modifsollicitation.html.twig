@@ -1,0 +1,6 @@
+{{ form_start(form, {'action': path('changer_sollicit', {'idParticipation' : participation.idParticipation})}) }}
+{{ form_widget(form) }}
+<div class="footer-text-right">
+    <button class="btn btn-primary">{{ button_label|default('Modifier') }}</button>
+</div>
+{{ form_end(form) }}

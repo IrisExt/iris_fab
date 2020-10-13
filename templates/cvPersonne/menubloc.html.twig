@@ -1,0 +1,203 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets1 %}
+{#      <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">#}
+{#      <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.min.css') }}">#}
+{% endblock %}
+{% block style_base %}
+      <style>
+          .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+              border-width: 0;
+          }
+          .nav-stacked > li + li {
+              margin-top: 0px;
+          }
+          .nav-tabs > li > a {
+              /*padding: 50px 100px 50px 100px !important;*/
+              color: #AAAAAA;
+              background-color: #E3F2FD;
+              border: 0px;
+              border-radius: 9px;
+              margin: 15px;
+          }
+          .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+              background-color: #448AFF;
+              color: #FFFFFF;
+              z-index: 99;
+              transition: all 0.5s ease 0s;
+          }
+          .nav-tabs > li.active > a {
+              color: #FFFFFF;
+              background-color: #2962FF;
+              box-shadow: 0 0px 5px rgba(0, 0, 0, .6);
+              z-index: 100;
+          }
+          .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+              color: #FFFFFF;
+              background-color: #2962FF;
+              box-shadow: 0 0px 5px rgba(0, 0, 0, .6);
+              transition: all 0.5s ease 0s;
+          }
+          .iris_cv { color: #7c795d; font-family: 'Trocchi', serif; font-size: 35px; font-weight: normal; line-height: 48px; margin: 0; }
+          .iris_titre {
+              color: #999;
+              font-size: 18px;
+          /*{ color: #2962ff; font-family: 'Droid serif', serif; font-size: 18px; font-weight: 400; font-style: italic; line-height: 44px; margin: 0 0 12px; text-align: center;*/
+          /*    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 1px rgba(0, 0, 0, 0.5); */
+              text-transform: uppercase}
+
+      </style>
+{% block style_menu_cv %}{% endblock %}
+{% endblock %}
+
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="sparkline7-list profile-online-mg-t-30 shadow-reset">
+                        <div class="sparkline7-hd">
+                            <div class="main-spark7-hd">
+                                <h1>Menu CV</h1>
+                                <div class="sparkline7-outline-icon">
+                                    <span class="sparkline7-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="info"></div>
+                        <div class="sparkline7-graph" style="padding: 5px">
+                            <div class="user-profile-contact" id="tabs">
+                                <ul class="nav nav-tabs nav-stacked text-center" role="tablist">
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_dispo' ? 'active' }}">
+                                        <a href="{{ path('cv_dispo')}}"  data-toggle="tabajax">Disponibilité</a></li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_langues' ? 'active' }}">
+                                        <a href="{{ path('cv_langues')}}" data-toggle="tabajax">Langues</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_ddrec' ? 'active' }}">
+                                        <a href="{{ path('cv_ddrec')}}" data-toggle="tabajax">Mot-Clés ERC</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_mot_cle_libre' ? 'active' }}">
+                                        <a href="{{ path('cv_mot_cle_libre')}}"  data-toggle="tabajax">Mots Clés Libres</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'org_add_cv_poste' ? 'active' }}">
+                                        <a href="{{ path('org_add_cv_poste')}}" data-toggle="tabajax">Fonctions</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_fonc_post' ? 'active' }}">
+                                        <a href="{{ path('cv_fonc_post')}}" data-toggle="tabajax">Poste(s) actuel(s)</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_autre_activ' ? 'active' }}">
+                                        <a id="3" href="{{ path('cv_autre_activ')}}" data-toggle="tabajax">Autres activités</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_poste_anter' ? 'active' }}">
+                                        <a id="3" href="{{ path('cv_poste_anter')}}" data-toggle="tabajax">Poste(s) antérieur(s)</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_formation_sup' ? 'active' }}">
+                                        <a href="{{ path('cv_formation_sup')}}" data-toggle="tabajax">Formation supérieure</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_projet_recherche' ? 'active' }}">
+                                        <a href="{{ path('cv_projet_recherche')}}" data-toggle="tabajax">Projet(s) de recherche</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_publications' ? 'active' }}">
+                                        <a href="{{ path('cv_publications')}}" data-toggle="tabajax">Publication(s) Majeure(s)</a>
+                                    </li>
+                                    <li role="presentation" class="{{ app.request.get('_route') == 'cv_valo' ? 'active' }}">
+                                        <a href="{{ path('cv_valo')}}" data-toggle="tabajax">Valorisation</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-sm-10">
+                    <div class="sparkline11-list shadow-reset">
+                        <div class="sparkline11-hd">
+                            <div class="main-spark7-hd text-center" style="color: #4162ff">
+                                <h3>Curriculum Vitae</h3>
+                                <small class="iris_titre">{% block titre_cv %}{% endblock %}</small>
+                            </div>
+                        </div>
+                        <div class="sparkline11-hd" >
+                            <div class="tab-content">
+                                {% block cv %} {% endblock %}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <ul class="list-inline pull-right">
+                                            {% if  app.request.get('_route') != 'cv_dispo'  %}
+                                            <li>
+                                                <button type="button" class="btn btn-success prev-step">Précédent</button>
+                                            </li>
+                                            {%  endif %}
+                                            {% if  app.request.get('_route') != 'cv_valo'  %}
+                                            <li>
+                                                <button type="button" class="btn btn-success next-step">Suivant</button>
+                                            </li>
+                                            {%  endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts1 %}
+    <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+
+        $('[data-toggle="tabajax"]').click(function(e) {
+
+            var $this = $(this),
+                loadurl = $this.attr('href');
+            targ = $this.attr('data-target');
+
+            $.get(loadurl, function(data) {
+                $(targ).html(data);
+            });
+            $this.tab('show');
+            return false;
+        });
+
+        // $(".liste-scrollbar").mCustomScrollbar({
+        //     setHeight: 600,
+        //     autoHideScrollbar: true,
+        //     scrollbarPosition: "outside",
+        //     theme: "light-1"
+        // });
+
+
+        $(document).ready(function () {
+            $(".next-step").click(function (e) {
+                var $active = $('.nav-tabs li.active');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+
+            });
+            $(".prev-step").click(function (e) {
+                var $active = $('.nav-tabs li.active');
+                prevTab($active);
+
+            });
+        });
+
+        function nextTab(elem) {
+            // window.location.href = $prev.find('a.nav-button').attr('href');
+            window.location.href =  $(elem).next().find('a[data-toggle="tabajax"]').attr('href');
+        }
+        function prevTab(elem) {
+            window.location.href = $(elem).prev().find('a[data-toggle="tabajax"]').attr('href');
+        }
+    </script>
+
+    {% block javascripts_add %}{% endblock %}
+
+{% endblock %}

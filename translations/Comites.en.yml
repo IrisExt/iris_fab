@@ -1,0 +1,27 @@
+comite:
+  form:
+    acron: 'Acronym'
+    text: 'Title'
+    desc: 'Description'
+    pres: 'President'
+    cps:  'CPS'
+    cpsSec: 'CPS Sec.'
+    creer: 'Create'
+    modif: 'Edit'
+    supprimer: 'Delete'
+    retour: 'Return'
+    departement: 'Department'
+    appelprojet: 'Call for projects'
+    action: 'Action'
+    delete: 'Delete'
+    cpsPrin: 'CPS Main'
+    cpsSecondaire: 'CPS Secondaires'
+    presi: 'Président'
+    membre: 'Membres'
+    tous: 'Tous'
+  liste:
+    listecomite: 'List of committees'
+    modifcomite: 'Edit a committee'
+    creercomite: 'Create a committee'
+  message:
+    suppression: 'Do you want to remove this committee'

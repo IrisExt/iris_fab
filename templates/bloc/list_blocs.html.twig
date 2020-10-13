@@ -1,0 +1,274 @@
+{% block stylesheets %}
+<style>
+.tree, .tree ul {
+margin:0 0 30px 0;
+padding:0;
+list-style:none
+}
+.tree ul {
+margin-left:2em;
+position:relative
+}
+.tree ul ul {
+margin-left:.5em
+}
+.tree ul:before {
+content:"";
+display:block;
+width:0;
+position:absolute;
+top:0;
+bottom:0;
+left:0;
+border-left:1px solid
+}
+.tree li {
+margin-top:15px;
+padding:0 1em;
+line-height:2em;
+color:#303030;
+font-weight:400;
+position:relative
+}
+.tree ul li:before {
+content:"";
+display:block;
+width:10px;
+height:0;
+border-top:1px solid;
+margin-top:-1px;
+position:absolute;
+top:1em;
+left:0
+}
+.tree ul li:last-child:before {
+background:#fff;
+height:auto;
+top:1em;
+bottom:0
+}
+.indicator {
+margin-right:5px;
+font-size: 25px;
+}
+.tree li a {
+text-decoration: none;
+color:#303030;
+}
+.tree li button, .tree li button:active, .tree li button:focus {
+text-decoration: none;
+color:#369;
+border:none;
+background:transparent;
+margin:0px 0px 0px 0px;
+padding:0px 0px 0px 0px;
+outline: 0;
+}
+
+    .projet_name {
+        font-size: large;
+        color: #000;
+    }
+
+    .menu_projet {
+        background-color: #fff;
+        padding: 15px;
+        margin-left: 15px;
+    }
+    .project {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+.btn-disabled,
+.btn-disabled[disabled] {
+    opacity: .4;
+    cursor: default !important;
+    pointer-events: none;
+}
+</style>
+{% endblock %}
+{% block list_blocs %}
+<div class="breadcome-area mg-b-30 small-dn">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcome-list shadow-reset">
+                    <div class="row">
+                       <h3 align="center">{{ lbAppel }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row">
+    <div class="col-sm-3">
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd">
+                        <div class="main-sparkline8-hd">
+                            <h1><i class="indicator fa big-icon fa-folder-open-o"></i>Projet :<br><br><p style="text-align: center">{{ projet }}</p>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <ul id="tree2">
+                            <ul>
+                                {% for bloc in list_bloc %}
+                                        {% if bloc.form_type == 'BlPartenariatType' %}
+                                            <li id="partenaire"
+                                                class="{% if(idBloc == bloc.id_bloc) %}opened{% endif %}">
+                                                <a class="first {% if '' == id_instrument %} othersBloc {% endif %}"
+                                                   href="{{ path('bloc', { tgAppelProj: idAppel, tgFormulaire: formulaire.idFormulaire, tgBloc: bloc.id_bloc, idProjet:idProjet }) }}">
+                                                    {{ bloc.libelle }}
+                                                </a>
+                                                {% for key, validation in blocValidation %}
+                                                    {% if(bloc.id_bloc == key) %}
+                                                        {% if validation %}<i class="fa fa-check"
+                                                                              style="color: green"></i>{% else %}<i
+                                                                class="fa fa-times" style="color: red"></i>{% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <ul class="vide">
+                                                    {% for key, partenaires in listePartenaires %}
+                                                        <li class="{% if(app.request.get('p') == key) %}opened{% endif %}">
+                                                            <a class="first"
+                                                               href="?p={{ key }}">
+                                                                {{ partenaires }}
+                                                            </a>
+                                                            <ul class="vide"></ul>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {%  else %}
+                                            <li class="{% if(idBloc == bloc.id_bloc) %}opened{% endif %}">
+                                                <a class="first {% if bloc.form_type != 'BlInstFiType' and '' == id_instrument %} othersBloc {% endif %}"
+                                                   href="{{ path('bloc', { tgAppelProj: idAppel, tgFormulaire: formulaire.idFormulaire, tgBloc: bloc.id_bloc, idProjet:idProjet }) }}">
+                                                    {{ bloc.libelle }}
+                                                </a>
+                                                {#                                        <a href="#" data-id="{{ path('enreg_projet',{'idProjet' :  idProjet, })  }}" class="first" >#}
+                                                {#                                        {{ bloc.libelle }}#}
+                                                {#                                        </a>#}
+                                                {% for key, validation in blocValidation %}
+                                                    {% if(bloc.id_bloc == key) %}
+                                                        {% if validation %}<i class="fa fa-check"
+                                                                              style="color: green"></i>{% else %}<i
+                                                                class="fa fa-times" style="color: red"></i>{% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <ul class="vide"></ul>
+                                            </li>
+                                        {%  endif %}
+                                {% endfor %}
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<script src="{{ asset('js/duallistbox/jquery.bootstrap-duallistbox.js') }}"></script>
+<script src="{{ asset('js/duallistboxcustom.js') }}"></script>
+<script>
+
+    $(function(){
+        $('.opened').before("<i class='indicator fa big-icon " + openedClass + "'></i>");
+    });
+
+    $.fn.extend({
+        treed: function (o) {
+
+            var openedClass = 'glyphicon-minus-sign';
+            var closedClass = 'glyphicon-plus-sign';
+
+            if (typeof o != 'undefined'){
+                if (typeof o.openedClass != 'undefined'){
+                    openedClass = o.openedClass;
+                }
+                if (typeof o.closedClass != 'undefined'){
+                    closedClass = o.closedClass;
+                }
+            };
+
+            //initialize each of the top levels
+            var tree = $(this);
+            tree.addClass("tree");
+
+            tree.find('li').has(".plein").each(function () {
+                var branch = $(this); //li with children ul
+
+                if(branch.hasClass('opened')) {
+                    branch.prepend("<i class='indicator fa big-icon " + openedClass + "'></i>");
+                }
+                 else{
+                     branch.prepend("<i class='indicator fa big-icon " + closedClass + "'></i>");
+                 }
+
+                branch.addClass('branch');
+                branch.on('click', function (e) {
+                    if (this == e.target) {
+                        var icon = $(this).children('i:first');
+                        icon.toggleClass(openedClass + " " + closedClass);
+                        $(this).children().children().toggle();
+                    }
+                });
+                branch.children().children().toggle();
+            });
+
+            tree.find('li').has(".vide").each(function () {
+                var branch = $(this);
+                if(branch.hasClass('opened')){
+                    branch.prepend("<i class='indicator fa big-icon " + openedClass + "'></i>");
+                    if(branch.has('#partenaire')) {
+                        $(this).children().children().toggle();
+                    }
+                }else{
+                    branch.prepend("<i class='indicator fa big-icon " + closedClass + "'></i>");
+                }
+                branch.addClass('notbranch');
+                branch.children().children().toggle();
+            });
+
+            tree.find('li').has(".othersBloc").each(function () {
+                var branch = $(this);
+              branch.children().addClass('btn-disabled');
+            });
+
+            //fire event from the dynamically added icon
+            tree.find('.branch .indicator').each(function(){
+                $(this).on('click', function () {
+                    $(this).closest('li').click();
+                });
+            });
+            //fire event to open branch if the li contains an anchor instead of text
+            tree.find('.branch').each(function () {
+                $(this).on('click', function (e) {
+                        $(this).closest('li').click();
+                        e.preventDefault();
+                });
+            });
+            //fire event to open branch if the li contains a button instead of text
+            tree.find('.branch>button').each(function () {
+                $(this).on('click', function (e) {
+                    $(this).closest('li').click();
+                    e.preventDefault();
+                });
+            });
+
+        }
+    });
+
+    //Initialization of treeviews
+    $('#tree2').treed({openedClass:'fa-folder-open-o', closedClass:'fa-folder-o'});
+
+    </script>
+{% endblock %}

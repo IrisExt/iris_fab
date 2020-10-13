@@ -1,0 +1,124 @@
+{% extends "base.html.twig" %}
+{% block stylesheets1 %}
+    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+    <!-- modals CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="password-meter-area mg-b-40">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                <div class="sparkline12-list password-mt-b shadow-reset">
+                    <div class="sparkline12-hd">
+                        <div class="main-sparkline12-hd">
+                            <h1>Sélection des formulaire pour l' {{ appel }} {{ phases }} <span class="password-mt-none"></span></h1>
+                            <div class="sparkline12-outline-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline12-graph">
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-8">
+                                {% if action == 'disabled' %}
+                                    <p class="text-center" style="color: #9f5811">Impossible d'ajouter, modifier ou supprimer ces formulaires ! </p>
+                                {% endif %}
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                    <tr style="color: #00acee">
+                                        <th>Classe</th>
+                                        <th>Public cible</th>
+                                        <th>Formulaire</th>
+                                        <th>Affectation</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody
+                                    {% for classe in classes %}
+                                        {% set modif = false %}
+                                        {% set formAppel = false %}
+                                        <tr>
+                                            <td>{{ classe }}</td>
+                                            <td>  {% for prof in classe.idProfil %}
+                                                    {{ prof }}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for form in forms %}
+                                                    {% if form.idFormulaire.idClasseFormulaire.idClasseFormulaire == classe.idClasseFormulaire %}
+                                                        {{ form.idFormulaire }}
+                                                        {% set formAppel = form.idFormulaire.idFormulaire %}
+                                                        {% set modif = true %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                            <td> {% set disabled = '' %}{% if true == projetForm and classe == 'Soumission'  %}{% set disabled = 'disabled' %}{% endif %}
+                                                {% if action != 'disabled' %}
+                                                    {% if modif == true %}
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <button {{ disabled }} id="update-formulaire" class="btn btn-warning"
+                                                                                       data-toggle="modal"
+                                                                                       data-target="#addform" rel="tooltip"
+                                                                                       data-id="{{ path('form-appel', {'idAppel' : appel.idAppel , 'idClasseFormulaire' : classe.getIdClasseFormulaire, 'idPhase' :phases.idPhase,  'updateForm': formAppel  }) }}">
+                                                                    <i class="fa fa-pencil fa-fw"></i> Modifier
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <form method="post"
+                                                                      action="{{ path('delete-form', {'idAppel' : appel.idAppel, 'idFormulaire' : formAppel, 'idPhase' :phases.idPhase } ) }}"
+                                                                      onsubmit="return confirm('voulez vous supprimer ce formulaire ?');">
+                                                                    <input type="hidden" name="_token"
+                                                                           value="{{ csrf_token('delete' ~ formAppel) }}">
+                                                                    <button {{ disabled }}  class="btn btn-danger"><i class="fa fa-trash-o fa-fw"> </i> supprimer
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <a href="#" id="add-formulaire" class="btn btn-primary"
+                                                           data-toggle="modal"
+                                                           data-target="#addform" rel="tooltip"
+                                                           data-id="{{ path('form-appel', {'idAppel' : appel.idAppel , 'idClasseFormulaire' : classe.getIdClasseFormulaire, 'idPhase' :phases.idPhase }) }}">
+                                                            <i class="fa fa-plus fa-fw"></i> Ajouter
+                                                        </a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% include 'paramform/modalAddFormulaire.html.twig' %}
+                                {% include 'paramform/modalUpdateFormulaire.html.twig' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts1 %}
+    <script>
+        $('#addform').on('show.bs.modal', function (e) {
+            var path = $(e.relatedTarget).data('id');
+            var modal = $(this);
+            $.ajax({
+                'url': path,
+                success: function (data) {
+                    modal.find('.modal-body').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        });
+    </script>
+    <script src="{{ asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js') }}"></script>
+    <!-- modal JS
+           ============================================ -->
+    <script src="{{ asset('js/modal-active.js') }}"></script>
+
+{% endblock %}

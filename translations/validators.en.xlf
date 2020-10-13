@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="tgprojet.id_agence_fi.not_blank">
+                <source>tgprojet.id_agence_fi.not_blank</source>
+                <target>Please enter a valid agence name.</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mnt_aide_prev.not_blank">
+                <source>tgprojet.mnt_aide_prev.not_blank</source>
+                <target>Please enter a valid Estimated amount of aid</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mnt_aide_prev.min_length">
+                <source>tgprojet.mnt_aide_prev.min_length</source>
+                <target>Estimated amount of aid must be at least {{ limit }} characters long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mnt_aide_prev.max_length">
+                <source>tgprojet.mnt_aide_prev.max_length</source>
+                <target>Estimated amount of aid cannot be longer than {{ limit }} characters</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.cat_rd.not_blank">
+                <source>tgprojet.cat_rd.not_blank</source>
+                <target>Category type is required</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.comite.not_blank">
+                <source>tgprojet.comite.not_blank</source>
+                <target>CES is required</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.no_duree.not_blank">
+                <source>tgprojet.no_duree.not_blank</source>
+                <target>La durée doit être renseignée</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.id_pole_comp.not_blank">
+                <source>tgprojet.id_pole_comp.not_blank</source>
+                <target>Le pôle de compétitivité doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_doc_sc.not_blank">
+                <source>tgprojet.lb_doc_sc.not_blank</source>
+                <target>Le document scientifique doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.annex_prep.not_blank">
+                <source>tgprojet.annex_prep.not_blank</source>
+                <target>L'annexe à la pré-proposition doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.resume.not_blank">
+                <source>tgprojet.resume.not_blank</source>
+                <target>Le résumé doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mclibrefr.not_blank">
+                <source>tgprojet.mclibrefr.not_blank</source>
+                <target>Le terme français doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mclibreen.not_blank">
+                <source>tgprojet.mclibreen.not_blank</source>
+                <target>Le terme anglais doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mclibrefr.min_length">
+                <source>tgprojet.mclibrefr.min_length</source>
+                <target>Le terme français doit avoir au minimum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mclibrefr.max_length">
+                <source>tgprojet.mclibrefr.max_length</source>
+                <target>Le terme français doit avoir au maximum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mclibreen.min_length">
+                <source>tgprojet.mclibreen.min_length</source>
+                <target>Le terme anglais doit avoir au minimum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mclibreen.max_length">
+                <source>tgprojet.mclibreen.max_length</source>
+                <target>Le terme anglais doit avoir au maximum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_acro.min_length">
+                <source>tgprojet.lb_acro.min_length</source>
+                <target>L'acronyme doit avoir au minimum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_acro.max_length">
+                <source>tgprojet.lb_acro.max_length</source>
+                <target>L'acronyme doit avoir au maximum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_acro.not_blank">
+                <source>tgprojet.lb_acro.not_blank</source>
+                <target>L'acronyme doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_titre_fr.not_blank">
+                <source>tgprojet.lb_titre_fr.not_blank</source>
+                <target>Le titre du projet doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_titre_fr.min_length">
+                <source>tgprojet.lb_titre_fr.min_length</source>
+                <target>Le titre du projet doit avoir au minimum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_titre_fr.max_length">
+                <source>tgprojet.lb_titre_fr.max_length</source>
+                <target>Le titre du projet doit avoir au maximum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_titre_en.min_length">
+                <source>tgprojet.lb_titre_en.min_length</source>
+                <target>Le titre du projet anglais doit avoir au minimum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.lb_titre_en.max_length">
+                <source>tgprojet.lb_titre_en.max_length</source>
+                <target>Le titre du projet anglais doit avoir au maximum {{ limit }} caractères de longue</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.mc_ces.not_blank">
+                <source>tgprojet.mc_ces.not_blank</source>
+                <target>Mot clé CES doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.nnsouhaite.min_length">
+                <source>tgprojet.nnsouhaite.min_length</source>
+                <target>Ce champ doit avoir au minimum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.nnsouhaite.max_length">
+                <source>tgprojet.nnsouhaite.max_length</source>
+                <target>Ce champ doit avoir au maximum {{ limit }} caractères de long</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.nnsouhaiteNom.not_blank">
+                <source>tgprojet.nnsouhaiteNom.not_blank</source>
+                <target>Le nom doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgprojet.nnsouhaiteEmail.not_blank">
+                <source>tgprojet.nnsouhaiteEmail.not_blank</source>
+                <target>Le mail doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgpersonne.lbnomusage.not_blank">
+                <source>tgpersonne.lbnomusage.not_blank</source>
+                <target>Le nom doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgpersonne.lbprenom.not_blank">
+                <source>tgpersonne.lbprenom.not_blank</source>
+                <target>Le prénom doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgadrmail.adrmail.not_blank">
+                <source>tgadrmail.adrmail.not_blank</source>
+                <target>Le mail doit être renseigné</target>
+            </trans-unit>
+            <trans-unit id="tgorganisme.rnsr.not_blank">
+                <source>tgorganisme.rnsr.not_blank</source>
+                <target>RNSR doit être renseigné</target>
+            </trans-unit>
+                        <trans-unit id="tgorganisme.siret.not_blank">
+                                        <source>tgorganisme.siret.not_blank</source>
+                                        <target>Siret doit être renseigné</target>
+                                    </trans-unit>
+                                    <trans-unit id="tgorganisme.lbnom.not_blank">
+                                                    <source>tgorganisme.lbnom.not_blank</source>
+                                                    <target>Name is required</target>
+                                                </trans-unit>
+            <trans-unit id="tgorganisme.cdPays.not_blank">
+                 <source>tgorganisme.cdPays.not_blank</source>
+                 <target>Country is required</target>
+            </trans-unit>
+            <!-- TG_COMITE -->
+            <trans-unit id="tgcomite.lbacr.not_blank">
+                <source>tgcomite.lbacr.not_blank</source>
+                <target>L'acronyme doit être renseigné</target>
+            </trans-unit>
+              <trans-unit id="tgcomite.lbacr.max_length">
+                <source>tgcomite.lbacr.max_length</source>
+                <target>L'acronyme cannot be longer than {{ limit }} characters</target>
+            </trans-unit>
+             <trans-unit id="tgcomite.lbacr.min_length">
+                <source>tgcomite.lbacr.min_length</source>
+                <target>L'acronyme must be at least {{ limit }} characters long</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

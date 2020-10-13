@@ -1,0 +1,18 @@
+{% extends 'widgets/base_widget.html.twig' %}
+{% block javascripts %}
+{% endblock %}
+{% block name_profil %}{{ 'widget.porteurAppel'|trans }}{% endblock %}
+{% block text_profil %}{{ 'widget.porteurSoumettreProjet'|trans }}{% endblock %}
+{% block container_profil %}
+    {% for tlformAppel  in soumAppels %}
+        <div class="income-rate-total">
+            <p>{{ tlformAppel.idAppel }}</p>
+            <span class="price-graph">
+                <a href="{{ path('bloc', { tgAppelProj:  tlformAppel.getIdAppel().getIdAppel(), tgFormulaire: tlformAppel.getIdFormulaire().getIdFormulaire(), tgBloc: bloc, idProjet: '' }) }}"
+                   class="btn btn-outline-primary btn-sm soumissionPs">{{ 'widget.porteurSoumettreProjet'|trans }}
+                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                </a>
+            </span>
+        </div>
+    {% endfor %}
+{% endblock %}

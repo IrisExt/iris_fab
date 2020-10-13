@@ -1,0 +1,36 @@
+{%  extends 'cvPersonne/menubloc.html.twig' %}
+      {% block titre_cv %}disponibilité {% endblock %}
+   {% block cv %}
+{#       {%  if appel.lbAppel == '' %}{% set disabled = 'disabled' %} {% endif %}#}
+<div class="col-lg-12">
+{{ form_start(form) }}
+    <p class="text-center"> Seriez-vous disponible pour être expert de l'ANR sur la période  avril - mail 2020 ?</p>
+    {{ form_row(form.choixDispoExp) }}
+    <p class="text-center"> Seriez-vous intéressé(e) de faire partie d'un comité d'évaluation de l'ANR lors d'une édition future ? </p>
+    {{ form_row(form.choixComite) }}
+    <div class="col-lg-2 col-lg-offset-8">
+        <button type="submit" class="btn btn-primary" id="submit_disp">Enregistrer</button>
+    </div>
+    <br>
+    {{ form_end(form) }}
+</div>
+   {% endblock %}
+{% block footer_cv %}{% endblock %}
+{% block javascripts1 %}
+    <!-- chosen JS
+      ============================================ -->
+{#        <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>#}
+{#        <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>#}
+    <script>
+        // $('#submit_disp').click(function(even) {
+        //     // even.preventDefault();
+        //     var choixDispoExp = $("#disponible_choixDispoExp option:selected").val();
+        //     var choixComite = $("#disponible_choixComite option:selected").val();
+        //     if (!choixDispoExp && !choixComite) {
+        //         alert("Aucune données à enregistrer");
+        //         return false
+        //     }
+        //     $('#submit_disp').submit();
+        // });
+    </script>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% block cofinancement %}
+    <div id="bl_co" class="infocompl" >
+{#        <div class="title_sous_bloc">#}
+{#            <h4>Cofinancement</h4>#}
+{#        </div>#}
+        <div class="row">
+            <p class="col-sm-7" style="font-size: 15px">
+                Prévoyez vous de solliciter un cofinancement avec un partenaire de l'ANR
+                <i id="CHOIX_CO" class="fa fa-question-circle"></i>
+            </p>
+            <div class="col-sm-5" style="float: left">
+                {{ form_row(bloc.blDemCofi) }}
+            </div>
+        </div>
+        <br><br>
+        <div id="cofis">
+            {{ form_widget(bloc.idCoFi, {'label_attr': {'class': 'required'}}) }}
+            {% if NbCOMax %}<p style="font-size: 13px;color: #a23e3e"><span>*</span> Le nombre de co financeurs sélectionnés doit être inférieur ou égal à {{NbCOMax}}</p>{% endif %}
+        </div>
+    </div>
+{% endblock %}

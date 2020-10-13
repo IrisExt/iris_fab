@@ -1,0 +1,354 @@
+{#{% extends 'base.html.twig' %}#}
+{#{% block stylesheets %}#}
+    <link rel="stylesheet" href="http://localhost:8080/build/vendors~app.css"><link rel="stylesheet" href="http://localhost:8080/build/app.css">
+
+    <link rel="stylesheet" href="{{ asset('https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder/dist/css/query-builder.default.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}"/>
+    <link href='https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <style>
+        .badge {
+            background-color : #7a7f84;
+            font-weight: normal;
+            white-space: break-spaces;
+            margin: 3px 0px;
+        }
+    </style>
+{#{% endblock %}#}
+
+{% block body %}
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="text-center">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="sparkline8-list shadow-reset">
+                <div class="sparkline8-hd" style="background-color: #dfdfdf">
+                    <div class="main-sparkline8-hd">
+                        <h1>Recherche</h1>
+                        <div class="sparkline9-outline-icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline8-graph">
+                    <div class="row">
+                        <div class="text-center form-group row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6" style="">
+                                <label>
+                                    <a href="#" data-toggle="modal" data-backdrop="static" data-keyboard="false"
+                                          data-target="#favoriteSearch">Personnes <i class="fa fa-star"></i>
+                                    </a>
+                                </label>
+                                <div class="row">
+                                    <div class="col-sm-11">
+                                        <select id="favorite_rules" class="form-control favorites">
+                                            <option value="">Ma recherche</option>
+                                            {% for fav in listFavoris %}
+                                                <option value="{{ fav.getIdFavoris }}"
+                                                        data-role="{{ fav.getParametre }}">{{ fav.getLbNom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a href="#" data-toggle="modal" data-backdrop="static" data-keyboard="false"
+                                           data-target="#editFavoriteSearch">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="footer-text-center">
+                        <p>
+                            <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+                               aria-controls="collapseExample">
+                                Recherche avancée
+                            </a>
+                        </p>
+                    </div>
+                    <div class="collapse in" id="collapseExample">
+                        <div class="card card-body">
+                            <div id="builder-basic"></div>
+                            <div class="footer-text-center">
+                                <a href="#" id="recherche-person" class="recherche btn btn-primary col-sm">Recherche</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="sparkline8-graph">
+                    <div class="row">
+                        <table id='personnesTable' class="table table-striped table-bordered display dataTable"
+                               style="width:100%">
+                            <thead>
+                            <tr>
+{#                                <a class='addPers' href='#' data-id="tetst_u"><span class='badge badge-pill badge-light'> </span><a>#}
+                                <th>Genre</th>
+                                <th>Nom complet</th>
+                                <th>Courriels</th>
+                                <th>Langue</th>
+                                <th>Organismes</th>
+                                <th>Mots clés Libre</th>
+                                <th>Mots clés Erc</th>
+                                <th>Affectation Ces</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <th>Genre</th>
+                                <th>Nom complet</th>
+                                <th>Courriels</th>
+                                <th>Langue</th>
+                                <th>Organismes</th>
+                                <th>Mots clés Libre</th>
+                                <th>Mots clés Erc</th>
+                                <th>Affectation Ces</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Table -->
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    {% include 'searchPersonnes/modalFavoriteSearch.html.twig' %}
+    {% include 'searchProjets/modalEditFavoriteSearch.html.twig' with {listFavoris:listFavoris} %}
+{% endblock %}
+{#{% block javascripts1 %}#}
+    <script src="http://localhost:8080/build/vendors~app.js"></script><script src="http://localhost:8080/build/app.js"></script>
+    <script src="{{ asset('js/queryBuilder.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/modal-active.js') }}"></script>
+    <script src="{{ asset('https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+{#{% endblock %}#}
+{#{% block javascripts %}#}
+
+    <script>
+
+        $('#favorite_rules').select2({
+            placeholder: "Sélectionner favoris"
+        });
+
+      var rules_basic = {
+          condition: 'AND',
+          rules: [{
+              id: 'tg_personne.lbNomUsage',
+              operator: 'is_not_null',
+              value: ''
+          }
+          ]
+      };
+
+        $('#builder-basic').queryBuilder({
+            plugins: ['bt-tooltip-errors'],
+            filters : [{
+                id: 'tg_personne.lbNomUsage',
+                label: 'Nom',
+                type: 'string'
+            }],
+            rules: rules_basic
+        });
+
+        {% for listFilter in listFilters %}
+        var operateurs = [];
+        {% for operateurs in listFilter.getIdOperateur() %}  operateurs.push('{{ operateurs.getCdOperateur() }}');  {% endfor %}
+        var  objArr = [
+            {
+                id: '{{ listFilter.getLbNomTableValeur() }}',
+                label: '{{ listFilter.getLbNomFr() }}',
+                type: '{{ listFilter.getTypCritere() }}',
+                input: '{{ listFilter.getInputCritere() }}',
+                operators: operateurs,
+            },
+       ];
+        $('#builder-basic').queryBuilder('addFilter',objArr,1); // To add new filters object.
+        {% endfor %}
+
+      function updateFilters() {
+            var sql_raw = $('#builder-basic').queryBuilder('getSQL', 'named');
+            return sql_raw;
+        }
+
+        $(document).ready(function () {
+            // favorite search selected
+            $('#favorite_rules').on('change', function() {
+               var rules =  $(this).find(':selected').data('role')
+                var customRules = decodeURIComponent(rules);
+                $('#builder-basic').queryBuilder('setRules', JSON.parse(customRules) );
+            });
+
+            updateFilters();
+
+            var dataTable =    $('#personnesTable').DataTable({
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'orderCellsTop': true,
+                //  'searching': false, // Remove default Search Control
+                'ajax': {
+                    'url': "/fr/personnes/advancedsearch",
+                    'data': function(data){
+
+                        // Read values
+                        var nom = $('#Nomcomplet').val();
+                        var email = $('#Courriels').val();
+                        var gender = $('#Genre').val();
+                        var langue = $('#Langue').val();
+                        var organisme = $('#Organismes').val();
+                        var mclibre = $('#MotsclésLibre').val();
+                        var mcerc = $('#MotsclésErc').val();
+                        var comite = $('#AffectationCes').val();
+
+                        // Append to data
+                        data.sql = updateFilters();
+                        data.searchByEmail = email;
+                        data.searchByName = nom;
+                        data.searchByGender = gender;
+                        data.searchByLangue = langue;
+                        data.searchByOrganisme = organisme;
+                        data.searchByMcLibre = mclibre;
+                        data.searchByMcErc = mcerc;
+                        data.searchByComite = comite;
+                        data.action = comite;
+                        data.action = null;
+                    }
+                },
+                'columns': [
+                    { data: 'idGenre' },
+                    { data: 'lbNomUsage' },
+                    { data: 'email' },
+                    { data: 'lbLangue' },
+                    { data: 'organismes' },
+                    { data: 'mcLibres' },
+                    { data: 'mcErcs' },
+                    { data: 'lbAcr' },
+                    { data: 'action' },
+                ],
+                columnDefs: [
+                    {
+                        targets: 4,
+                        render: function (data, type, row)
+                        {
+                            var buttons = '';
+                            for (i=0; i<data.length; i++) {
+                                buttons += '<span class="badge badge-pill badge-light">' + data[i] + '</span>'
+                            }
+                            return buttons;
+                        },
+
+                    },
+                    {
+                        targets: 5,
+                        render: function (data, type, row)
+                        {
+                            var buttons = '';
+                            for (i=0; i<data.length; i++) {
+                                buttons += '<span class="badge badge-pill badge-light">' + data[i] + '</span>'
+                            }
+                            return buttons;
+                        },
+
+                    },
+                    {
+                        targets: 6,
+                        render: function (data, type, row)
+                        {
+                            var buttons = '';
+                            for (i=0; i<data.length; i++) {
+                                buttons += '<span class="badge badge-pill badge-light">' + data[i] + '</span>'
+                            }
+                            return buttons;
+                        },
+
+                    },
+
+                    {
+                        targets: 8,
+                        render: function (data, type, row)
+                        {
+                            var url = "{{ path("module_pers", { personne : "pers" }) }}";
+                            url = url.replace("pers", data);
+                            var buttons = '';
+                            buttons += "<a class='addPers' href='#' data-id="+ url +"><span class='glyphicon glyphicon-arrow-right'></span><a>"
+
+                            return buttons;
+                        },
+
+                    },
+                ]
+            });
+
+            $('#personnesTable thead tr:eq(1) th').each( function () {
+                var title = $(this).text();
+                var idSearch =  title.replace(/\s/g, '');
+                $(this).html( '<input type="text" id="' + idSearch + '" placeholder="Rechercher '+title+'" class="form-control searchColumn" />' );
+            } );
+
+            $('.searchColumn').on('keyup change clear', function () {
+                    dataTable.draw();
+            });
+
+            $('#recherche-person').on('click', function () {
+                dataTable.draw();
+            });
+
+            $('#favorisSaved').click(function (e) {
+                var sql_raw = $('#builder-basic').queryBuilder('getRules');
+                 var rules = encodeURIComponent(JSON.stringify(sql_raw, null, 2));
+                var name_rules = $('#nom').val();
+
+                $.ajax({
+                    url: "/fr/personnes/favoritesave",
+                    type: 'post',
+                    data: {
+                        rules: rules,
+                        name_rules: name_rules
+                    },
+                    success: function (data) {
+                        if(data.result == 0) {
+                                $('#nom').after('<span class="invalid-feedback d-block ExpertNsError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.data+'</span></span></span>');
+                        } else {
+                            $('#nom').val('');
+                            location.reload();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+
+            });
+            $(document).on("click", ".addPers", function(){
+                var path = $(this).data('id');
+                var referer = "{{ referer }}";
+                // AJAX request
+                $.ajax({
+                    'url': path,
+                    type: 'POST',
+                    data: {
+                        referer :  referer
+                    },
+                    success: function (data) {
+                    }
+                });
+            });
+        });
+    </script>
+{#{% endblock %}#}

@@ -1,0 +1,13 @@
+<form method="post" action="{{ path('cv_org_pub_fr_delete', {'idOrganisme': idOrganisme}) }}">
+
+    <div class="alert alert-danger" > <p>Êtes-vous sûr de vouloir supprimer cet organisme ?</p></div>
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ idOrganisme) }}">
+
+    <div class="modal-footer">
+        <button data-dismiss="modal" class="btn btn-warning" >Annuler </button>
+        <button  class="btn btn-danger" type="submit">
+            <span class="adminpro-icon adminpro-danger-error"></span> {{ 'action.delete'|trans }}
+        </button>
+    </div>
+</form>

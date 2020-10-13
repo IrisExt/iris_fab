@@ -1,0 +1,172 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/duallistbox/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/craueformflow/css/buttons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <style>
+        .duallistbox{
+            width: 100%;
+        }
+        .rightButton {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            float: right;
+        }
+        .d-block {
+            color: crimson;
+            font-size: 11px;
+            display: ruby-base;
+        }
+        .badge {
+            background-color: #dd1717;
+            font-size: 10px;
+        }
+        .form-check {
+            display: flex;
+            margin-right: 20px;
+        }
+        .form-check-input {
+            margin-right: 10px !important;
+            margin-bottom: auto !important;
+        }
+        .title_sous_bloc {
+            background: #E2E7F0;
+            padding: 15px 0px 5px 15px;
+            margin-bottom: 50px;
+        }
+        fieldset {
+            border: 0 !important;
+        }
+        .select_sousblock {
+            text-decoration: none;
+            background-color: #eee;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+
+{% block body %}
+        {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+        <div class="col-sm-9">
+            {% block content %}
+            <div class="advanced-form-area mg-b-15">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="sparkline8-list shadow-reset">
+                            <div class="sparkline8-hd">
+                                <div class="main-sparkline8-hd">
+                                    <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                                </div>
+                            </div>
+
+                            <div class="sparkline8-graph">
+                                <div class="sparkline8-graph">
+                                {{ form_start(bloc) }}
+                                    <div id="bl_BlMotCleCesType">
+                                        <div id="McCes">
+                                            {{ form_widget(bloc.idMcCes, {'label_attr': {'class': 'required'}}) }}
+                                            {% if NbCesMax %}<div id="info_limit_mcces"><p style="font-size: 13px;color: #a23e3e" ><span>*</span> Le nombre de mot clé CES sélectionnés doit être inférieur ou égal à {{NbCesMax}}</p></div>{% endif %}
+                                        </div>
+                                    </div>
+
+                                    <br><br><br>
+                                    <div>
+                                        <div class="col-md-6 col-sm-3"></div>
+                                        <div class="col-md-2 col-sm-3">  <a href="{{ previousblock }}" class="btn btn-primary pull-right"><< Précédent</a> </div>
+                                        <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBlocWithoutRedirect) }} </div>
+                                        <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                                        </div>
+                                    </div>
+                                {{ form_end(bloc) }}
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="{{ asset('js/duallistbox/jquery.bootstrap-duallistbox.js') }}"></script>
+    <script src="{{ asset('js/duallistboxcustom.js') }}"></script>
+    <script>
+        $(function(){
+            {% if(errors) %}
+            {% for error in errors %}
+            var error_bloc = '<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> {{ error.message }}</span></span></span>';
+            if('idMcCes[id_mc_ces]' === "{{ error.field }}"){
+                $( error_bloc ).insertAfter( $( "#BlMotCleCesType_idMcCes" ) );
+            }
+            {% endfor %}
+            {% endif %}
+
+
+            if(!$('#BlMotCleCesType_idMcCes').hasClass('hidden_1')){
+                var demo4 = $('select[name="BlMotCleCesType[idMcCes][]"]').bootstrapDualListbox({
+                    moveAllLabel: 'move all',
+                    filterPlaceHolder: 'Rechercher...',
+                    nonSelectedListLabel: 'Les mots clés CES',
+                    selectedListLabel: 'Les mots clés CES du comité choisi par le porteur du projet',
+                    preserveSelectionOnMove: false,
+                    moveOnSelect: false,
+                    infoTextEmpty : 'Liste vide',
+                    infoText: 'Liste contient {0} éléments',
+                    selectorMinimalHeight: 190,
+                });
+            }else {
+                $('#McCes').append('<span>Vérifier si vous avez l\'accès à ce bloc ou choisir un comité sous la rubrique "identité du projet" !</span>');
+                $("#info_limit_mcces").hide();
+            }
+
+
+            function dualBoxChange(name, maxLimit, bloc) {
+                var demo = $('select[name="BlMotCleCesType[' + name + '][]"]');
+                demo.on('change', function(){
+                    var size = demo.find(":selected").size();
+                    if(size > maxLimit-1){
+
+                        demo.find(":selected").each(function(ind, sel){
+                            $('#' + bloc + '').find('.moveall').attr("hidden", true);
+                            $('#' + bloc + '').find('.move').attr("hidden", true);
+                            if(ind > maxLimit-1)
+                                $(this).prop("selected", false)
+                        })
+                        demo.bootstrapDualListbox('refresh', true);
+                    } else {
+                        $('#' + bloc + '').find('.moveall').attr("hidden", false);
+                        $('#' + bloc + '').find('.move').attr("hidden", false);
+                        demo.bootstrapDualListbox('refresh', true);
+                    }
+                });
+
+            }
+
+            dualBoxChange('idMcCes', {{ NbCesMax }}, 'McCes');
+
+        $(function () {
+            $('[data-toggle=tooltip]').tooltip();
+        });
+
+        });
+    </script>
+{% endblock %}

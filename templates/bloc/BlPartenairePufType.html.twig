@@ -1,0 +1,202 @@
+{% block bl_PUF %}
+
+<div id="bl_PUF"  class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1">
+                    <h4 class="ml14 modal-title">
+                    <span class="text-wrapper">
+                     <span class="letters">Création d'un partenaire public français</span>
+                    </span>
+                    </h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+
+                <div class="modal-body" id="scrollmodal">
+                    {{ form_start(partenairePuf) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd">
+                            <h1 data-toggle="tooltip" title="Lieu de réalisation de travaux du partenaire">Tutelle hébergeante</h1>
+                        </div>
+                    </div>
+                <div class="ui-widget">
+                    {{ form_row(partenairePuf.rnsr_puf) }}
+                </div>
+                    {{ form_row(partenairePuf.siret_tut_heb_puf) }}
+                    {{ form_row(partenairePuf.name_tut_heb_puf) }}
+                    {{ form_row(partenairePuf.delegation_tut_heb_puf) }}
+                    {{ form_row(partenairePuf.laboratoire_puf) }}
+                    {{ form_row(partenairePuf.code_unite_puf) }}
+                    {{ form_row(partenairePuf.adress_tut_heb_puf) }}
+                    {{ form_row(partenairePuf.compl_adress_tut_heb_puf) }}
+                    {{ form_row(partenairePuf.postal_code_tut_heb_puf) }}
+                    {{ form_row(partenairePuf.city_tut_hub_puf) }}
+                    {{ form_row(partenairePuf.country_tut_hub_puf, {attr: { value : "France" }}) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd"><h1>Directeur du laboratoire</h1>
+                        </div>
+                    </div>
+                    {{ form_row(partenairePuf.lastname_direct_lab_puf) }}
+                    {{ form_row(partenairePuf.firstname_direct_lab_puf) }}
+                    {{ form_row(partenairePuf.courriel_direct_lab_puf) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd">
+                            <h1 data-toggle="tooltip" title="Tutelle gestionnaire du partenaire habilitée à recevoir l'acte attributif" >Tutelle gestionnaire</h1>
+                        </div>
+                    </div>
+
+                    {{ form_row(partenairePuf.siret_tut_gest_puf) }}
+                    {{ form_row(partenairePuf.name_tut_gest_puf) }}
+                    {{ form_row(partenairePuf.sigle_puf) }}
+                    {{ form_row(partenairePuf.adress_tut_gest_puf) }}
+                    {{ form_row(partenairePuf.compl_adress_tut_gest_puf) }}
+                    {{ form_row(partenairePuf.postal_code_tut_gest_puf) }}
+                    {{ form_row(partenairePuf.city_tut_g_puf) }}
+                    {{ form_row(partenairePuf.country_tut_g_puf, {attr: { value : "France" }}) }}
+                    {{ form_row(partenairePuf.banque_tut_g_puf) }}
+                    {{ form_row(partenairePuf.rib_puf) }}
+                    {{ form_row(partenairePuf.iban_puf) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd">
+                            <h1 data-toggle="tooltip" title="Personne habilitée à représenter juridiquement l'établissement gestionnaire">Représentant légal</h1>
+                        </div>
+                    </div>
+
+                    {{ form_row(partenairePuf.lastname_rep_juridique_puf) }}
+                    {{ form_row(partenairePuf.firstname_rep_juridique_puf) }}
+                    {{ form_row(partenairePuf.function_rep_juridique_puf) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd">
+                            <h1 data-toggle="tooltip" title="Personne chargée du suivi administratif et financier de la tutelle gestionnaire">Responsable administratif de l'établissement gestionnaire</h1>
+                        </div>
+                    </div>
+
+{#                    {{ form_row(partenairePuf.gender_gest_admin_puf) }}#}
+                    {{ form_row(partenairePuf.lastname_gest_admin_puf) }}
+                    {{ form_row(partenairePuf.firstname_gest_admin_puf) }}
+                    {{ form_row(partenairePuf.mail_gest_admin_puf) }}
+{#                    {{ form_row(partenairePuf.phone_gest_admin_puf) }}#}
+
+                    {{ form_end(partenairePuf) }}
+
+                </div>
+                <div class="modal-footer">
+                    <a id="annulerPuf" data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('puf_add', {'idProjet' : idProjet}) }}" id="submitPuf" data-title="add"
+                       class="puf add-part-puf">Ajouter</a>
+                    <a href="#" data-id="" id="submitPufEdit" data-title="edit"
+                       class="puf edit-part-puf">Modifier</a>
+{#                    <a id="nextTutHeb" data-dismiss="modal" data-toggle="modal" href="#tutGest">Suivant</a>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+ {% block javascripts %}
+
+<script>
+    $('#annulerPuf').click(function (e) {
+        $('.PartError').hide();
+        $('.EtrError').hide();
+        $('.PrfError').hide();
+        $("#select2-BlPartenairePufType_name_tut_heb_puf-container") .html('');
+        $('form[name="BlPartenairePufType"]').trigger("reset");
+        $("#BlPartenairePufType_name_tut_heb_prf").select2({
+            dropdownParent: $("#bl_PRF"),
+            placeholder: "Sélectionner un numéro RNSR",
+            data: null,
+        });
+        $("#BlPartenairePufType_delegation_tut_heb_prf").select2({
+            dropdownParent: $("#bl_PRF"),
+            placeholder: "Sélectionner un numéro RNSR",
+            data: null,
+        });
+    });
+
+    $('.puf').click(function (e) {
+        var path = $(e.target).data('id');
+        delegation = $("#select2-BlPartenairePufType_delegation_tut_heb_puf-container").html();
+        if("add" == $(e.target).data('title')) delegation = $("#BlPartenairePufType_delegation_tut_heb_puf").val();
+
+        name_tut_heb = $("#select2-BlPartenairePufType_name_tut_heb_puf-container").html();
+        if("add" == $(e.target).data('title')) name_tut_heb = $("#BlPartenairePufType_name_tut_heb_puf").val();
+
+        $.ajax({
+            'url': path,
+            type: 'POST',
+            data: {
+                'rnsr': $("#BlPartenairePufType_rnsr_puf").val(),
+                'siret': $("#BlPartenairePufType_siret_tut_heb_puf").val(),
+                'delegation': delegation,
+                'name_tut_heb': name_tut_heb,
+                'laboratoire': $("#BlPartenairePufType_laboratoire_puf").val(),
+                'code_unite': $("#BlPartenairePufType_code_unite_puf").val(),
+
+                'adress_tut_heb': $("#BlPartenairePufType_adress_tut_heb_puf").val(),
+                'compl_adress_tut_heb': $("#BlPartenairePufType_compl_adress_tut_heb_puf").val(),
+                'postal_code_tut_heb': $("#BlPartenairePufType_postal_code_tut_heb_puf").val(),
+                'country_tut_heb': $("#BlPartenairePufType_country_tut_hub_puf").val(),
+                'city_tut_heb': $("#BlPartenairePufType_city_tut_hub_puf").val(),
+                'firstname_direct_lab': $("#BlPartenairePufType_firstname_direct_lab_puf").val(),
+                'lastname_direct_lab': $("#BlPartenairePufType_lastname_direct_lab_puf").val(),
+                'courriel_direct_lab': $("#BlPartenairePufType_courriel_direct_lab_puf").val(),
+
+                'siret_tut_gest': $("#BlPartenairePufType_siret_tut_gest_puf").val(),
+                'name_tut_gest': $("#BlPartenairePufType_name_tut_gest_puf").val(),
+                'sigle': $("#BlPartenairePufType_sigle_puf").val(),
+                'adress_tut_gest': $("#BlPartenairePufType_adress_tut_gest_puf").val(),
+                'compl_adress_tut_gest': $("#BlPartenairePufType_compl_adress_tut_gest_puf").val(),
+                'postal_code_tut_gest': $("#BlPartenairePufType_postal_code_tut_gest_puf").val(),
+                'city_tut_gest': $("#BlPartenairePufType_city_tut_g_puf").val(),
+                'country_tut_gest': $("#BlPartenairePufType_country_tut_g_puf").val(),
+                'banque_tut_g_puf': $("#BlPartenairePufType_banque_tut_g_puf").val(),
+                'rib_tut_g_puf': $("#BlPartenairePufType_rib_puf").val(),
+                'iban_tut_g_puf': $("#BlPartenairePufType_iban_puf").val(),
+
+               // 'gender_gest_admin':  $("input[name='BlPartenairePufType[gender_gest_admin_puf]']:checked").val(),
+                'lastname_gest_admin': $("#BlPartenairePufType_lastname_gest_admin_puf").val(),
+                'firstname_gest_admin': $("#BlPartenairePufType_firstname_gest_admin_puf").val(),
+                'mail_gest_admin': $("#BlPartenairePufType_mail_gest_admin_puf").val(),
+               // 'phone_gest_admin': $("#BlPartenairePufType_phone_gest_admin_puf").val(),
+
+                'firstname_rep_juridique': $("#BlPartenairePufType_firstname_rep_juridique_puf").val(),
+                'lastname_rep_juridique': $("#BlPartenairePufType_lastname_rep_juridique_puf").val(),
+                'function_rep_juridique': $("#BlPartenairePufType_function_rep_juridique_puf").val(),
+
+                'type_part': $("#BlPartenariatType_type_part").val(),
+            },
+            success: function (data) {
+
+                $('.PartError').html('');
+                if(data.result == 0) {
+                    for (var key in data.errors) {
+                        if("cdRnsr" == data.errors[key].field) $('#BlPartenairePufType_rnsr_puf').after('<span class="invalid-feedback d-block PartError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.errors[key].message+'</span></span></span>');
+                        if("siret" == data.errors[key].field) $('#BlPartenairePufType_siret_tut_heb_puf').after('<span class="invalid-feedback d-block PartError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.errors[key].message+'</span></span></span>');
+                        if("lbNomFr" == data.errors[key].field) $('#BlPartenairePufType_name_tut_heb_puf').next().after('<span class="invalid-feedback d-block PartError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.errors[key].message+'</span></span></span>');
+                    }
+                }  else {
+               // Submit OK
+                $("#BlPartenariatType_id_part").val(data.partenaireId);
+                $('form[name="BlPartenairePufType"]').trigger("reset");
+                location.href = location.href + 'PUF';
+                location.reload();
+            }
+          },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+
+</script>
+ {% endblock %}

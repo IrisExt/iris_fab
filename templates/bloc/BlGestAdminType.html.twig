@@ -1,0 +1,77 @@
+{% block gestAdmin %}
+    <div id="gestAd" class="modal modal-adminpro-general default-popup-PrimaryModal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-close-area modal-close-df">
+                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                </div>
+                <div class="modal-body" id="scrollmodal">
+
+                    <div class="add-part-label">
+                        <div class="main-sparkline8-hd">
+                            <h1>Personne chargée du suivi administratif et financier de la tutelle gestionnaire</h1>
+                        </div>
+                    </div>
+                    {{ form_start(gestAdmin) }}
+
+                    {{ form_row(gestAdmin.gender_gest_admin) }}
+                    {{ form_row(gestAdmin.lastname_gest_admin) }}
+                    {{ form_row(gestAdmin.firstname_gest_admin) }}
+                    {{ form_row(gestAdmin.mail_gest_admin) }}
+                    {{ form_row(gestAdmin.phone_gest_admin) }}
+
+                    {{ form_end(gestAdmin) }}
+
+                </div>
+                <div class="modal-footer">
+                    <a data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('gestAd_add', {'idProjet' : idProjet}) }}" id="submitGestAd"
+                       class="add-part">Ajouter</a>
+                    <a id="nextGestAd" data-dismiss="modal" data-toggle="modal" href="#coutPuf">Suivant</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    {% block javascripts1 %}
+        <script src="{{ asset('js/modal-active.js') }}"></script>
+
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+
+    {% endblock %}
+ {% block javascripts %}
+     <script>
+
+         $('#submitGestAd').click(function (e) {
+             var path = $(e.target).data('id');
+             $.ajax({
+                 'url': path,
+                 type: 'POST',
+                 data:{
+                     'gender_gest_admin':  $("input[name='BlGestAdminType[gender_gest_admin]']:checked").val(),
+                     'lastname_gest_admin': $("#BlGestAdminType_lastname_gest_admin").val(),
+                     'firstname_gest_admin': $("#BlGestAdminType_firstname_gest_admin").val(),
+                     'mail_gest_admin': $("#BlGestAdminType_mail_gest_admin").val(),
+                     'phone_gest_admin': $("#BlGestAdminType_phone_gest_admin").val(),
+
+                     'type_part': $("#BlPartenariatType_type_part").val(),
+                     'id_part': $("#BlPartenariatType_id_part").val(),
+                 },
+                 success: function (data) {
+                     $("#BlPartenariatType_id_part").val(data['partenaireId']);
+                     $('form[name="BlGestAdminType"]').trigger("reset");
+
+                     $('#gestAd').modal('hide');
+                     $('#coutPuf').modal('show');
+
+                     $('#typPartenaire').modal('hide');
+                     location.reload();
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                     alert('Error : ' + errorThrown);
+                 }
+             });
+         });
+
+     </script>
+ {% endblock %}

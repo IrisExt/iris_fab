@@ -1,0 +1,150 @@
+{% block bl_PRF %}
+    <div id="bl_PRF"  class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1">
+                    <h4 class="ml14 modal-title">
+                    <span class="text-wrapper">
+                     <span class="letters">Création d'un partenaire privé français</span>
+                    </span>
+                    </h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+
+                <div class="modal-body" id="scrollmodal">
+                    {{ form_start(partenairePrf) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd">
+                            <h1 data-toggle="tooltip" title="Tutelle gestionnaire du partenaire habilitée à recevoir l'acte attributif" >Tutelle gestionnaire</h1>
+                        </div>
+                    </div>
+
+                    {{ form_row(partenairePrf.siret_tut_gest_prf) }}
+                    {{ form_row(partenairePrf.name_tut_gest_prf) }}
+                    {{ form_row(partenairePrf.sigle_prf) }}
+                    {{ form_row(partenairePrf.adress_tut_gest_prf) }}
+                    {{ form_row(partenairePrf.compl_adress_tut_gest_prf) }}
+                    {{ form_row(partenairePrf.postal_code_tut_gest_prf) }}
+                    {{ form_row(partenairePrf.city_tut_g_prf) }}
+                    {{ form_row(partenairePrf.country_tut_g_prf, {attr: { value : "France" }}) }}
+                    {{ form_row(partenairePrf.banque_tut_g_prf) }}
+                    {{ form_row(partenairePrf.rib_tut_g_prf) }}
+                    {{ form_row(partenairePrf.iban_tut_g_prf) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd">
+                            <h1 data-toggle="tooltip" title="Personne habilitée à représenter juridiquement l'établissement gestionnaire">Représentant légal</h1>
+                        </div>
+                    </div>
+
+                    {{ form_row(partenairePrf.lastname_rep_juridique_prf) }}
+                    {{ form_row(partenairePrf.firstname_rep_juridique_prf) }}
+                    {{ form_row(partenairePrf.function_rep_juridique_prf) }}
+
+                    <div class="add-part-label nom-rubrique">
+                        <div class="main-sparkline8-hd">
+                            <h1 data-toggle="tooltip" title="Personne chargée du suivi administratif et financier de la tutelle gestionnaire">Responsable administratif de l'établissement gestionnaire</h1>
+                        </div>
+                    </div>
+
+                    {{ form_row(partenairePrf.lastname_gest_admin_prf) }}
+                    {{ form_row(partenairePrf.firstname_gest_admin_prf) }}
+                    {{ form_row(partenairePrf.mail_gest_admin_prf) }}
+
+                    {{ form_end(partenairePrf) }}
+
+                </div>
+                <div class="modal-footer">
+                    <a  id="annulerPrf" data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('prf_add', {'idProjet' : idProjet}) }}" id="submitPrf"
+                       class="prf add-part-prf">Ajouter</a>
+                    <a href="#" data-id="" id="submitPrfEdit"
+                       class="prf edit-part-prf">Modifier</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+ {% block javascripts %}
+<script>
+
+    $('#annulerPrf').click(function () {
+        $('.PartError').hide();
+        $('.EtrError').hide();
+        $('.PrfError').hide();
+        $('form[name="BlPartenairePrfType"]').trigger("reset");
+        $('form[name="BlPartenairePufType"]').trigger("reset");
+        $("#BlPartenairePufType_name_tut_heb_puf").select2({
+            dropdownParent: $("#bl_PUF"),
+            placeholder: "Sélectionner un numéro RNSR",
+            data: null,
+        });
+
+        $("#BlPartenairePufType_delegation_tut_heb_puf").select2({
+            dropdownParent: $("#bl_PUF"),
+            placeholder: "Sélectionner un numéro RNSR",
+            data: null,
+        });
+    });
+
+    $('.prf').click(function (e) {
+        var path = $(e.target).data('id');
+        $.ajax({
+            'url': path,
+            type: 'POST',
+            data: {
+
+                'siret_tut_gest': $("#BlPartenairePrfType_siret_tut_gest_prf").val(),
+                'name_tut_gest': $("#BlPartenairePrfType_name_tut_gest_prf").val(),
+                'sigle': $("#BlPartenairePrfType_sigle_prf").val(),
+                'adress_tut_gest': $("#BlPartenairePrfType_adress_tut_gest_prf").val(),
+                'compl_adress_tut_gest': $("#BlPartenairePrfType_compl_adress_tut_gest_prf").val(),
+                'postal_code_tut_gest': $("#BlPartenairePrfType_postal_code_tut_gest_prf").val(),
+                'city_tut_gest': $("#BlPartenairePrfType_city_tut_g_prf").val(),
+                'country_tut_gest': $("#BlPartenairePrfType_country_tut_g_prf").val(),
+                'banque_tut_g_prf': $("#BlPartenairePufType_banque_tut_g_prf").val(),
+                'rib_tut_g_prf': $("#BlPartenairePufType_rib_tut_g_prf").val(),
+                'iban_tut_g_prf': $("#BlPartenairePufType_iban_tut_g_prf").val(),
+
+               // 'gender_gest_admin':  $("input[name='BlPartenairePrfType[gender_gest_admin_prf]']:checked").val(),
+                'lastname_gest_admin': $("#BlPartenairePrfType_lastname_gest_admin_prf").val(),
+                'firstname_gest_admin': $("#BlPartenairePrfType_firstname_gest_admin_prf").val(),
+                'mail_gest_admin': $("#BlPartenairePrfType_mail_gest_admin_prf").val(),
+               // 'phone_gest_admin': $("#BlPartenairePrfType_phone_gest_admin_prf").val(),
+
+                'firstname_rep_juridique': $("#BlPartenairePrfType_firstname_rep_juridique_prf").val(),
+                'lastname_rep_juridique': $("#BlPartenairePrfType_lastname_rep_juridique_prf").val(),
+                'function_rep_juridique': $("#BlPartenairePrfType_function_rep_juridique_prf").val(),
+
+                'type_part': $("#BlPartenariatType_type_part").val(),
+            },
+            success: function (data) {
+                $('.PrfError').html('');
+                if(data.result === 0) {
+                    if(data.errors) {
+                        for (var key in data.errors) {
+                            if("siret_tut_gest_prf" === data.errors[key].field) $('#BlPartenairePrfType_siret_tut_gest_prf').after('<span class="invalid-feedback d-block PrfError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.errors[key].message+'</span></span></span>');
+                            if("name_tut_gest_prf" === data.errors[key].field) $('#BlPartenairePrfType_name_tut_gest_prf').after('<span class="invalid-feedback d-block PrfError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.errors[key].message+'</span></span></span>');
+                       }
+                    }
+                } else {
+                    // Submit OK
+                   $("#BlPartenariatType_id_part").val(data.partenaireId);
+                   $('form[name="BlPartenairePrfType"]').trigger("reset");
+                    location.href = location.href + 'PRF';
+                    location.reload();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+</script>
+ {% endblock %}

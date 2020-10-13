@@ -1,0 +1,24 @@
+appel:
+  form:
+    millesim: 'Millesime'
+    edition: 'Edition'
+    lbappel: 'Libellé'
+    titre: 'Titre'
+    desc: 'Déscription'
+    lbacronyme: 'Acronyme'
+    dtclofin: 'Date fin'
+    pilote: 'Pilote'
+    save: 'Créer'
+    retour: 'Retour'
+    edit: 'Modifier'
+    show: 'Voir'
+    formulaire: 'Formulaire'
+    action: 'Action'
+    delete: 'Supprimer'
+
+
+  projet:
+    appelpro: 'Appel à Projets'
+    action: 'Action'
+    creenewproj: 'Créer un appel à projet'
+    modifierproj: 'Modifier un appel à projet'

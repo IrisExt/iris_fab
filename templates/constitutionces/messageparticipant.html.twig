@@ -1,0 +1,5 @@
+{%  for message in messages|reverse %}
+    {{ message.dhEnvoi|date('d/m H:i') }}  :
+    <b>{{ message.emetteur.lbprenom|slice(0,1)|upper }}.{{ message.emetteur.lbnomusage }}</b> : <span class="text-primary">{{ message.texte }}</span>
+    </br>
+{% endfor %}

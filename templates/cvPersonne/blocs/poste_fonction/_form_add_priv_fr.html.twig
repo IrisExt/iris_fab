@@ -1,0 +1,16 @@
+{{ form_start(form_siret) }}
+    {{ form_widget(form_siret) }}
+    <input type="hidden" name="idOrganisme" id="idOrganisme" value="">
+    <div class="footer-text-right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <span id="add_p">
+            <a href="#" data-id="{{ path('cv_org_priv_fr') }}" id="submitOrPrivFr"
+               class="btn btn-primary">Ajouter</a>
+        </span>
+        <span id="modif_p">
+            <a href="#" id="updateOrPrivFr"  class="btn btn-warning">Modifier</a>
+        </span>
+
+        {#            <button type="submit" class="add_org_pub_fr btn btn-primary">Ajouter</button>#}
+    </div>
+{{ form_end(form_siret) }}

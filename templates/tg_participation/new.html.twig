@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TgParticipation{% endblock %}
+
+{% block body %}
+    <h1>Create new TgParticipation</h1>
+
+    {{ include('tg_participation/_form.html.twig') }}
+
+    <a href="{{ path('tg_participation_index') }}">back to list</a>
+{% endblock %}

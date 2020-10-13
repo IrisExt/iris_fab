@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Personne' %}
+{% block title %}{{ 'personne.liste.modifpers'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-6">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd">
+                        <div class="main-sparkline8-hd">
+                            <h1>{{ 'personne.liste.modifpers'|trans }}</h1>
+                            <div class="sparkline8-outline-icon">
+                                <a href="{{ path('tg_personne_index') }}">{{ 'personne.from.retour'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <div class="sparkline8-graph">
+                            {{ include('tg_personne/_form.html.twig', {'button_label': 'personne.from.modifier'|trans}) }}
+                            {{ include('tg_personne/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

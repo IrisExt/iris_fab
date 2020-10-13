@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="password-meter-area mg-b-40">
+        <div class="container-fluid">
+            <div class="col-lg-4">
+                <div class="sparkline12-list password-mt-b shadow-reset">
+                    <div class="sparkline12-hd">
+                        <div class="main-sparkline12-hd">
+                            <h1>Formulaire <span class="password-mt-none"></span> <a href="{{ path('new_form') }}"> +
+                                    nouveau</a></h1>
+                            <div class="sparkline12-outline-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline12-graph">
+                        <table class="table table-adminpro">
+                            <thead>
+                            <tr>
+                                <th>Formulaire</th>
+                                <th>action</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for formulaire in formulaires %}
+                                <tr>
+                                    <td> {{ formulaire }} </td>
+                                    <td>
+
+                                        <a href="{{ path('update-formulaire',{'idFormulaire' : formulaire.idFormulaire })}}">
+                                            {% if not is_granted('ROLE_DOS_EM') %}
+                                                <i class="fa fa-edit text-warning"></i> Modifier
+                                            {% else %} <i class="fa fa-eye text-primary"> Consultation </i> {% endif %}
+                                        </a>
+                                    </td>
+                                    {% if not is_granted('ROLE_DOS_EM') %}
+                                    <td>
+                                        <form id="delete_form" method="post"
+                                              action="{{ path('delete_form', {'idFormulaire' : formulaire.idFormulaire  }) }}"
+                                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce formulaire ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token"
+                                                   value="{{ csrf_token('delete' ~ formulaire.idFormulaire) }}">
+                                            <button class="btn btn-link"><i class="fa fa-trash-o text-danger"> Supprimer</i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts1 %}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}

@@ -1,0 +1,156 @@
+ {% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/duallistbox/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+    <style>
+        .duallistbox{
+            width: 100%;
+        }
+        /*.form-group .col-sm-3 {*/
+        /*    width: 0px;*/
+        /*}*/
+        .form-group.row .col-sm-6 {
+            width: 30%;
+        }
+        .tooltip{
+            max-width:200%;
+            padding:5px;
+            min-height:2px;
+            background:#000;/*change accordingly*/
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd" style="background: #b7b8e1">
+                        <div class="main-sparkline8-hd">
+                            <h1>Créer un formulaire</h1>
+                            <div class="sparkline8-outline-icon">
+                                <a href="{{ path('index_soumission') }}">{{ 'action.list'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <div class="text-right">
+                            <a href="#" class="text-right"  data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                              visualisation Blocs
+                            </a>
+                        </div>
+                        <section>
+                            <div class="collapse" id="collapseExample">
+                                            {% for bloc in blocs %}
+                                                <td><a href="#" class="btn btn-light" data-id="{{ bloc.idbloc }}" data-toggle="modal" data-target="#imageModal"><span class="fa fa-image"></span> {{ bloc.lbbloc }}</a> </td>
+                                            {% endfor %}
+                            </div>
+                        </section>
+
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+
+                        <div id="block1" >
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <select id="lbbloc_lbbloc" multiple="multiple" size="10"  name="bloc[lbbloc][]" >
+                                            {% for bloc in blocs %}
+                                                <option  value="{{ bloc.idbloc }}">   {{ bloc.lbbloc }}  </option><br>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                            <input type="hidden" name="DataFrom" value="null" id="setState">
+                            <button type="submit" class="btn btn-primary btn-block">Créer formulaire</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include 'paramform/modalImage/modalVisu.html.twig' %}
+    {% block javascripts1 %}
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+        <script src="{{ asset('js/duallistbox/jquery.bootstrap-duallistbox.js') }}"></script>
+
+        <script>
+            document.getElementById('block1').style.display = "none";
+            // document.getElementById('block2').style.display = "none";
+
+            function changerSelect()
+            {
+                if (document.getElementById("formulaire_idClasseFormulaire").value != 0) {
+                    document.getElementById("block1").style.display = "block";
+                    // document.getElementById("block2").style.display = "block";
+                // } else if (document.getElementById("formulaire_idClasseFormulaire").value == 2) {
+                //     document.getElementById("block1").style.display = "block";
+                //     document.getElementById("block2").style.display = "none";
+                } else {
+                    document.getElementById("block1").style.display = "none";
+                    // document.getElementById("block2").style.display = "none";
+                }
+            }
+        </script>
+
+        <script>
+
+            var list_= $('.list_').bootstrapDualListbox({
+
+                // nonSelectedFilter: 'ion ([7-9]|[1][0-2])',
+                nonSelectedListLabel: 'Non-selected',
+                selectedListLabel: 'Selected',
+                preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+            });
+            var list_ = $('select[name="bloc[lbbloc][]"]').bootstrapDualListbox({
+                nonSelectedListLabel: 'Blocs',
+                selectedListLabel: 'Formulaires pour l\'appel',
+                preserveSelectionOnMove: 'moved',
+                moveOnSelect: false,
+                selectorMinimalHeight: 170,
+                showFilterInputs: false,
+                filterTextClear: 'show all',
+                filterPlaceHolder: 'Filter',
+                moveSelectedLabel: 'Move selected',
+                moveAllLabel: 'Move all',
+                removeSelectedLabel: 'Remove selected',
+                removeAllLabel: 'supprimer tous',
+                infoText: '{0} Blocs ',
+                infoTextEmpty: 'Formulaire vide',
+
+            });
+            $(function () {
+                $('[data-toggle=tooltip]').tooltip();
+            });
+
+            $('[name="formulaire"]').submit(function() {
+                var formBox = $('[name="bloc[lbbloc][]"]').val();
+
+                $(function(){
+                    $('#setState').val(formBox);
+                });
+                $( '[name="formulaire"]').submit(); //and here submit your form
+                return false;
+            });
+
+                $('#imageModal').on('show.bs.modal', function (e) {
+                  var id = $(e.relatedTarget).data('id');
+                  var image = '<img id="myImg" src="/img/bloc/'+ id +'.JPG"  style="width:200%;max-width:100%">';
+                        document.getElementById("visuImage").innerHTML = image;
+                        }
+                    );
+
+
+        </script>
+        <!-- chosen JS
+       ============================================ -->
+        <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+        <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+    {% endblock %}
+{% endblock %}
+

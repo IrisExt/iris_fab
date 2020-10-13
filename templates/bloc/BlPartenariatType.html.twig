@@ -1,0 +1,469 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/craueformflow/css/buttons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partenariat.css') }}">
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+    <div class="col-sm-9">
+        {% block content %}
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+ {% include 'bloc/BlPartenaireTypPartType.html.twig' with {typPartenaires:typPartenaires} %}
+ {% include 'bloc/BlPartenairePufType.html.twig' with {partenairePuf:partenairePuf} %}
+ {% include 'bloc/BlPartenairePrfType.html.twig' with {partenairePrf:partenairePrf} %}
+ {% include 'bloc/BlPartenaireEtrType.html.twig' with {partenaireEtr:partenaireEtr} %}
+ {% include 'bloc/BlParticipantsType.html.twig' with {bloc:participantsForm} %}
+ {% include 'bloc/BlCoutPType.html.twig' %}
+
+{% if is_granted('ROLE_PORTEUR_PROJET') == true %}
+   <div class="row">
+      <div class="col-sm-10"> </div>
+      <div class="col-sm-2">
+           <a href="#" data-toggle="modal" data-target="#typPartenaire" data-backdrop="static" data-keyboard="false" class="btn btn-sm btn-primary add-partenaire" rel="tooltip" >
+               <i class="fa fa-plus"></i>{{ 'bloc.form.partenariat.add'|trans }}
+            </a>
+       </div>
+    </div>
+{% endif %}
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        {% for key,typPart in typParts %}
+            <li class="nav-item {% if 0 == key %}active{% endif %}">
+                <a class="nav-link" id="{{typPart.getTypPart()}}-tab" data-toggle="tab" href="#{{typPart.getTypPart()}}" role="tab" aria-controls="{{typPart.getTypPart()}}" aria-selected="true">
+                    {% if typPart.getTypPart() == 'PUF' %} <img src="/img/public.png" class="img-fluid" alt="Responsive image" width="20" height="15"> {% endif %}
+                    {% if typPart.getTypPart() == 'PRF' %} <i class="fa fa-building"></i> {% endif %}
+                    {% if typPart.getTypPart() == 'ETR' %} <img src="/img/web.ico" class="img-fluid" alt="Responsive image" data-toggle="tooltip" width="15" height="15"> {% endif %}
+                    {{typPart.getLbNomFr()}}
+                </a>
+             </li>
+        {% endfor %}
+        </ul>
+<div class="tab-content" id="myTabContent">
+{% for key,typPart in typParts %}
+  <div class="tab-pane fade {% if 0 == key %}active in{% endif %}" id="{{typPart.getTypPart()}}" role="tabpanel" aria-labelledby="{{typPart.getTypPart()}}-tab">
+                              <table id="table" class="table table-striped" data-toggle="table" data-pagination="true"
+                                                                               data-search="true" data-show-columns="true"
+                                                                               data-show-pagination-switch="true" data-show-refresh="true"
+                                                                               data-key-events="true" data-show-toggle="true" data-resizable="true"
+                                                                               data-cookie="true" data-cookie-id-table="saveId" data-click-to-select="true"
+                                                                               data-toolbar="#toolbar">
+                                                                            <thead>
+                                                                            <tr>
+                                                                             {% if 'PUF' == typPart.getTypPart() %}
+                                                                                         <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.coordFr'|trans() }}</th>
+                                                                              <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.hebergeur'|trans() }}</th>
+                                                                                <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.laboratoire'|trans() }}</th>
+                                                                                      {% if idPhase == 2 %}
+                                                                              <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.tutelle'|trans() }}</th>
+                                                                                     {% endif %}
+                                                                                <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.personnel'|trans() }}</th>
+                                                                                      {% if idPhase == 2 %}
+                                                                                      <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.montantAide'|trans() }}</th>
+                                                                                <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.tauxAide'|trans() }}</th>
+                                                                                     {% endif %}
+                                                                                <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.respScientifique'|trans() }}</th>
+                                                                                      <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.dirLabo'|trans() }}</th>
+                                                                                     {% if idPhase == 2 %}
+                                                                                <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.respJuridique'|trans() }}</th>
+                                                                                      {% endif %}
+                                                                                <th data-field="puf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.respAdmin'|trans() }}</th>
+
+                                                                             {% endif %}
+                                                                             {% if 'PRF' == typPart.getTypPart() %}
+                                                                               <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.coordFr'|trans() }}</th>
+                                                                              <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.tutelle'|trans() }}</th>
+                                                                                <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.personnel'|trans() }}</th>
+                                                                                     {% if idPhase == 2 %}
+                                                                                      <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.montantAide'|trans() }}</th>
+                                                                                <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.tauxAide'|trans() }}</th>
+                                                                                     {% endif %}
+                                                                                <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.respScientifique'|trans() }}</th>
+
+                                                                                     {% if idPhase == 2 %}
+                                                                                <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.respJuridique'|trans() }}</th>
+                                                                                      {% endif %}
+                                                                                <th data-field="prf"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.respAdmin'|trans() }}</th>
+
+                                                                             {% endif %}
+                                                                             {% if 'ETR' == typPart.getTypPart() %}
+                                                                                <th data-field="etr"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.coordEtr'|trans() }}</th>
+                                                                             <th data-field="etr"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.etab'|trans() }}</th>
+                                                                                <th data-field="etr"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.laboratoire'|trans() }}</th>
+
+                                                                                <th data-field="etr"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.personnel'|trans() }}</th>
+                                                                                       <th data-field="etr"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.pays'|trans() }}</th>
+                                                                                        <th data-field="etr"
+                                                                                    data-editable="true">{{ 'bloc.form.blpartenaire.ville'|trans() }}</th>
+
+                                                                            {% endif %}
+                                                                                <th data-field="action">Action</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                          {% for key,partenaire in partenaires %}
+
+                                                                          {% if typPart.getTypPart() == partenaire.getTypPart().getTypPart() %}
+                                                                            <tr id="{{ partenaire.getIdPartenaire() }}" class="partenaireRow">
+                                                                          {% if 'PUF' == typPart.getTypPart() %}
+                                                                                 <td>
+                                                                                     <input type="checkbox" class="CoordinatFr" name="coordFr_{{ partenaire.getIdPartenaire }}" id="coordFr_{{ partenaire.getIdPartenaire }}"
+                                                                                     {% if (coordFr) and (coordFr.getIdOrganisme() == partenaire.getHebergeur()) %}checked{% endif %}
+                                                                                      onclick="showOneCoordinateurFr({{ partenaire.getIdPartenaire }})"
+                                                                                     >
+                                                                                 </td>
+                                                                                 <td>{% if partenaire.getHebergeur() %}{{ partenaire.getHebergeur().getLbNomFr() }}{% if (coordFr) and (coordFr.getIdOrganisme()) and (coordFr.getIdOrganisme() == partenaire.getHebergeur()) %} <br><span class="text-danger">(Coord. Fr)</span> {% endif %}{% endif %}</td>
+                                                                                 <td>{{ partenaire.getLaboratoire() }}</td>
+                                                                                  {% if idPhase == 2 %}
+                                                                                 <td>{{ partenaire.getTutGest() }}</td>
+                                                                                 {% endif %}
+                                                                                    <td style="color: dodgerblue;font-size: unset;"><a href="#" class="participants" title="Ajouter/modifier participants" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#participants{{ partenaire.getIdPartenaire() }}"><i class="fa fa-users" ></i> {{ partenaire.getIdPersonne()|length }}</a></td>
+                                                                                  {% if idPhase == 2 %}
+                                                                                 <td style="color: steelblue;font-size: unset;">{% if partenaire.getMntAide() %}<i class="fa fa-euro"></i> {{ partenaire.getMntAide() }}{% endif %}</td>
+                                                                                 <td style="color:brown;font-size: unset;">{% if partenaire.getTxAide() %}<i class="fa fa-balance-scale"></i>{{ partenaire.getTxAide() }}%{% endif %}</td>
+                                                                                      {% endif %}
+                                                                                 <td>{{ partenaire.getRespScient() }}{% if (coordFr) and (coordFr.getIdPersonne()) and (coordFr.getIdPersonne() == partenaire.getRespScient()) %} <br><span class="text-danger">(Coord. projet)</span> {% endif %}</td>
+                                                                                 <td>{{ partenaire.getDirLabo() }}</td>
+                                                                                      {% if idPhase == 2 %}
+                                                                                 <td>{{ partenaire.getRepJuridique() }}</td>
+                                                                                     {% endif %}
+                                                                                 <td>{{ partenaire.getGestAdm() }}</td>
+
+                                                                          {% endif %}
+                                                                          {% if 'PRF' == typPart.getTypPart() %}
+                                                                                    <td>
+                                                                                     <input type="checkbox" class="CoordinatFr" name="coordFr_{{ partenaire.getIdPartenaire }}" id="coordFr_{{ partenaire.getIdPartenaire }}"
+                                                                                     {% if (coordFr) and (coordFr.getIdOrganisme() == partenaire.getTutGest()) %}checked{% endif %}
+                                                                                      onclick="showOneCoordinateurFr({{ partenaire.getIdPartenaire }})"
+                                                                                     >
+                                                                                     </td>
+                                                                                    <td>{{ partenaire.getTutGest() }}{% if (coordFr) and (coordFr.getIdOrganisme()) and (coordFr.getIdOrganisme() == partenaire.getTutGest()) %} <br><span class="text-danger">(Coord. Fr)</span> {% endif %}</td>
+                                                                                    <td style="color: dodgerblue;font-size: unset;"><a href="#" class="participants" title="Ajouter/modifier participants" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#participants{{ partenaire.getIdPartenaire() }}"><i class="fa fa-users" ></i> {{ partenaire.getIdPersonne()|length }}</a></td>
+                                                                                     {% if idPhase == 2 %}
+                                                                                    <td style="color: steelblue;font-size: unset;">{% if partenaire.getMntAide() %}<i class="fa fa-euro"></i> {{ partenaire.getMntAide() }}{% endif %}</td>
+                                                                                    <td style="color:brown;font-size: unset;">{% if partenaire.getTxAide() %}<i class="fa fa-balance-scale"></i> {{ partenaire.getTxAide() }}%{% endif %}</td>
+                                                                                     {% endif %}
+                                                                                    <td>{{ partenaire.getRespScient() }}{% if (coordFr) and (coordFr.getIdPersonne()) and (coordFr.getIdPersonne() == partenaire.getRespScient()) %} <br><span class="text-danger">(Coord. projet)</span> {% endif %}</td>
+
+                                                                                     {% if idPhase == 2 %}
+                                                                                    <td>{{ partenaire.getRepJuridique() }}</td>
+                                                                                     {% endif %}
+                                                                                    <td>{{ partenaire.getGestAdm() }}</td>
+                                                                          {% endif %}
+                                                                          {% if 'ETR' == typPart.getTypPart() %}
+                                                                         {% if partenaire.getLaboratoire %}
+                                                                         {% set country = partenaire.getLaboratoire.getCdPays.getCdPays %}
+                                                                         {% set country_lb = partenaire.getLaboratoire.getCdPays.getLbPays %}
+                                                                          {% set city =   partenaire.getLaboratoire.getVille %}
+                                                                         {% else %}
+                                                                         {% set country = null %}
+                                                                           {% set country_lb = null %}
+                                                                          {% set city = null %}
+                                                                         {% endif %}
+                                                                            <td>
+                                                                                      <input type="checkbox" class="CoordinatEtr_{{ country }}" name="coordEtr_{{ partenaire.getIdPartenaire }}" id="coordEtr_{{ partenaire.getIdPartenaire }}"
+                                                                                         {% for key,coord in coordsEtr %}
+                                                                                     {% if (coord.getIdOrganisme() == partenaire.getLaboratoire()) and
+                                                                                     (coord.getCdPays() == partenaire.getLaboratoire().getCdPays())
+                                                                                      %}
+                                                                                     checked
+                                                                                    {% endif %}
+
+                                                                                    {% endfor %}
+                                                                                    onclick="showOneCoordinateur({{ partenaire.getIdPartenaire }}, {{ country }})"
+                                                                                      >
+                                                                                      </td>
+                                                                                    <td>{% if partenaire.getLaboratoire() %}{{ partenaire.getLaboratoire().getLbNomFr() }}{% for key,coord in coordsEtr %}{% if (coord.getIdOrganisme() == partenaire.getLaboratoire()) and (coord.getCdPays() == partenaire.getLaboratoire().getCdPays()) %}<br><span class="text-danger">(Coord)</span>{% endif %}{% endfor %}{% endif %}</td>
+                                                                                <td>{{ partenaire.getLaboratoire() }}</td>
+                                                                                    <td style="color: dodgerblue;font-size: unset;"><a href="#" class="participants" title="Ajouter/modifier participants" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#participants{{ partenaire.getIdPartenaire() }}"><i class="fa fa-users" ></i> {{ partenaire.getIdPersonne()|length }}</a></td>
+                                                                                      <td>{{ country_lb }}</td>
+                                                                                         <td>{{ city }}</td>
+
+                                                                          {% endif %}
+
+                                                                                    <td style="min-width: 10%;">
+                                                                                     <a href="#" title="Ajouter/modifier participants" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#participants{{ partenaire.getIdPartenaire() }}">
+                                                                                    <span class="fa fa-users" ></span></a>
+                                                                                     |
+
+                                                                                    {% if idPhase == 1 %}
+                                                                                       {% if 'PUF' == partenaire.getTypPart().getTypPart() %}
+                                                                                          <a href="#{{ partenaire.getTypPart().getTypPart() }}" title="Coût Prévisionelles - Publique français" data-id="{{ partenaire.getIdPartenaire }}" class="edit-cout-puf">
+                                                                                          <span class="fa fa-euro"></span>
+                                                                                          </a>
+                                                                                          |
+                                                                                       {% elseif 'PRF' == partenaire.getTypPart().getTypPart() %}
+                                                                                           <a href="#{{ partenaire.getTypPart().getTypPart() }}" title="Coût Prévisionelles - Privée français" data-id="{{ partenaire.getIdPartenaire }}" class="edit-cout-prf">
+                                                                                           <span class="fa fa-euro"></span>
+                                                                                           </a>
+                                                                                           |
+                                                                                       {% endif %}
+                                                                                    {% endif %}
+                                                                                        <a href="#{{ partenaire.getTypPart().getTypPart() }}" title="Modifier partenaire" data-id="{{ partenaire.getIdPartenaire() }}" data-backdrop="static" data-keyboard="false" data-role="{{ partenaire.getTypPart().getTypPart() }}" class="edit-partenaire" >
+                                                                                        <span class="fa fa-edit" ></span></a>
+                                                                                         {% if is_granted('ROLE_PORTEUR_PROJET') == true %}
+                                                                                        |
+                                                                                        <a href="#{{ partenaire.getTypPart().getTypPart() }}" class="delete-part" title="Supprimer partenaire">
+                                                                                            <span class="fa fa-trash-o text-danger" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#deletePartenaire{{ partenaire.getIdPartenaire() }}"></span></a>
+                                                                                        {% endif %}
+                                                                                    </td>
+                                                                                </tr>
+<div id="deletePartenaire{{ partenaire.getIdPartenaire() }}" class="modal modal-adminpro-general FullColor-popup-DangerModal fade bounceInRight animated" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1" style="background: #f45846;">
+                    <h4 class="modal-title">Suppression partenaire</h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <span class="adminpro-icon adminpro-danger-error modal-check-pro information-icon-pro"></span>
+                <h4>Attention</h4>
+                <p>Etes vous sur de vouloir supprimer le partenaire <b>
+                 {% if "PRF" == partenaire.getTypPart().getTypPart() %}
+                  {% if partenaire.getTutGest() %}{{ partenaire.getTutGest().getLbNomFr() }}{% endif %}
+                 {% else %}
+                    {% if partenaire.getHebergeur() %}{{ partenaire.getHebergeur().getLbNomFr() }}{% endif %}
+                 {% endif %}
+                </b> ?</p>
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" href="#">Annuler</a>
+                <a href="#{{ partenaire.getTypPart().getTypPart() }}" data-id="{{ path('partenaire_del',{'idPartenaire' : partenaire.getIdPartenaire()})  }}" class="delete-partenaire" >Supprimer</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="participants{{ partenaire.getIdPartenaire() }}"  class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1">
+                    <h4 class="ml14 modal-title">
+                    <span class="text-wrapper">
+                     <span class="letters">Participants pour le partenaire :
+                       {% if "PRF" == partenaire.getTypPart().getTypPart() %}
+                          {% if partenaire.getTutGest() %}{{ partenaire.getTutGest().getLbNomFr() }}{% endif %}
+                       {% else %}
+                          {% if partenaire.getHebergeur() %}{{ partenaire.getHebergeur().getLbNomFr() }}{% endif %}
+                       {% endif %}
+                     </span>
+                    </span>
+                    </h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body" id="scrollmodal" style=" padding: 40px 25px !important;">
+  <div class="row">
+                         <div class="col-sm-9">  </div>
+                    <div class="col-sm-3">
+                        <a href="#{{ partenaire.getTypPart().getTypPart() }}" data-browse="{{ partenaire.getTypPart().getTypPart() }}" class="btn btn-sm btn-primary add-participant" data-id="{{ partenaire.getIdPartenaire }}" data-respsc="{{ partenaire.getRespScient }}" rel="tooltip"  >
+                            <i class="fa fa-plus"></i>
+                            {{ 'bloc.form.blparticipants.add'|trans }}
+                        </a>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="fixed-table-container">
+                            <div class="fixed-table-body">
+
+                                <div class="rTable">
+                                    <div id="table-to-participants"  class="rTableRow">
+                                        <div class="rTableHead">{{ 'bloc.form.blparticipants.resp'|trans() }}</div>
+                                        <div class="rTableHead">{{ 'bloc.form.blparticipants.civ'|trans() }}</div>
+                                        <div class="rTableHead">{{ 'bloc.form.blparticipants.nom'|trans() }}</div>
+                                        <div class="rTableHead">{{ 'bloc.form.blparticipants.prenom'|trans() }}</div>
+                                        <div class="rTableHead">{{ 'bloc.form.blparticipants.email'|trans() }}</div>
+                                        <div class="rTableHead">{{ 'bloc.form.blparticipants.orcid'|trans() }}</div>
+                                        <div class="rTableHead">Action</div>
+                                    </div>
+
+                                    {% for ns in partenaire.getIdPersonne %}
+                                        <div id="tr_{{ ns.getIdPersonne() }}" class="rTableRow">
+                                            <div id="resp_{{ ns.getIdPersonne() }}" class="rTableCell">
+                                                {% if partenaire.getRespScient %}
+                                                    {% if (partenaire.getRespScient.getIdPersonne() == ns.getIdPersonne()) %}
+                                                        <input type="hidden" id="respsc_{{ ns.getIdPersonne() }}" value="true">
+                                                        <i class="fa fa-user"></i> {{ 'bloc.form.blparticipants.resp'|trans() }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                            <div id="civ_{{ ns.getIdPersonne() }}" class="rTableCell">{{ ns.getIdCivilite() }}</div>
+                                            <div id="nom_{{ ns.getIdPersonne() }}" class="rTableCell">{{ ns.getLbNomUsage() }}</div>
+                                            <div id="prenom_{{ ns.getIdPersonne() }}" class="rTableCell">{{ ns.getLbPrenom() }}</div>
+                                            <div id="mail_{{ ns.getIdPersonne() }}" class="rTableCell">{% for mail in ns.getIdAdrMail %} {{ mail.getAdrMail() }} {% endfor %}</div>
+                                            <div id="orcid_{{ ns.getIdPersonne() }}" class="rTableCell">{% for orcid in ns.getIdIdentExt %} {{ orcid.getNumIdentifiant() }} {% endfor %}</div>
+                                            <div id="action" class="rTableCell">
+                                                <input type="hidden" id="idPartenaire_{{ ns.getIdPersonne() }}" value="{{ partenaire.getIdPartenaire }}">
+                                                <a href="#{{ partenaire.getTypPart().getTypPart() }}" data-browse="{{ partenaire.getTypPart().getTypPart() }}" data-id="{{ ns.getIdPersonne() }}" class="edit-participant"><span class="fa fa-edit"></span></a>|
+                                                <a href="#{{ partenaire.getTypPart().getTypPart() }}" class="delete-parti"><span class="fa fa-trash-o text-danger" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#deleteParticipant{{ ns.getIdPersonne() }}"></span></a>
+                                            </div>
+                                        </div>
+                                          {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <a data-dismiss="modal" href="#">Annuler</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% for ns in partenaire.getIdPersonne %}
+<div id="deleteParticipant{{ ns.getIdPersonne() }}" class="modal modal-adminpro-general FullColor-popup-DangerModal fade bounceInRight animated" style="z-index:1055" role="dialog">
+
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div class="modal-header header-color-modal bg-color-1" style="background: #f45846;">
+                                                            <h4 class="modal-title">Suppression partenaire</h4>
+                                                            <div class="modal-close-area modal-close-df">
+                                                                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <span class="adminpro-icon adminpro-danger-error modal-check-pro information-icon-pro"></span>
+                                                        <h4>Attention !</h4>
+                                                        <p>Etes vous sur de vouloir supprimer le participants <b>{{ ns.getLbNomUsage() }} {{ ns.getLbPrenom() }}</b> ?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a data-dismiss="modal" href="#">Annuler</a>
+                                                        <a href="#{{ partenaire.getTypPart().getTypPart() }}" data-id="{{ path('participant_del',{'idPersonne' :  ns.getIdPersonne(), 'idPartenaire' : partenaire.getIdPartenaire()})  }}" class="delete-participant" >Supprimer</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+{% endfor %}
+
+                                                                               {% endif %}
+                                                                            {% endfor %}
+
+                                                                            </tbody>
+                                                                        </table>
+</div>
+{% endfor %}
+</div>
+                                                            </div>
+
+                                                            </div>
+                                                            <br><br><br>
+
+                                                           {{ form_start(bloc) }}
+                                                           <div class="form-group row">
+                                                                <input type="hidden" value="" id="BlPartenariatType_id_part" >
+                                                                <input type="hidden" value="" id="BlPartenariatType_type_part" >
+                                                            </div>
+  <br><br><br>
+                          <div>
+                          {% if(access_respsc or access_respad) %}
+                           <div class="col-md-2 col-sm-3">  <a href="{{ path('accueil') }}" class="btn btn-primary pull-right">Retour</a> </div>
+                          {% else %}
+                                  <div class="col-md-6 col-sm-3"></div>
+                                  <div class="col-md-2 col-sm-3">  <a href="{{ previousblock }}" class="btn btn-primary pull-right"><< Précédent</a> </div>
+                                  <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBlocWithoutRedirect) }} </div>
+                                  <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                                   <div class="form-group row">
+                                                                     <div class="col-sm-12">
+                                                                   {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                                                                 </div>
+                                                            </div>
+                                  {% endif %}
+                              </div>
+
+
+                                                            {{ form_end(bloc) }}
+
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts1 %}
+<script src="{{ asset('js/fontawesome.js') }}"></script>
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>#}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('js/modal-active.js') }}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script src="{{ asset('js/partenaires.js') }}"></script>
+<script>
+ function addError(idPartenaire) {
+    $("#"+idPartenaire).addClass('error_part');
+     $("#"+idPartenaire).find('.participants').addClass('error_part');
+ }
+
+  $(".partenaireRow").removeClass('error_part');
+
+  {% for error in errors %}
+   var error_bloc = '<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span></span></span>';
+   addError("{{ error.field }}");
+//  $("#{{ error.field }} td:empty").html(error_bloc);
+  {% endfor %}
+</script>
+{% endblock %}

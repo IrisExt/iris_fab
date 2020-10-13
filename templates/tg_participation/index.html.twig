@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Participation' %}
+{% block title %}Participation{% endblock %}
+
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'partic.form.participation'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a class="btn btn-primary">
+
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>{{ 'partic.form.participant'|trans }}</th>
+                                <th>{{ 'partic.form.role'|trans }}</th>
+                                <th>{{ 'partic.form.comite'|trans }}</th>
+                                <th>{{ 'partic.form.Lbgroupe'|trans }}</th>
+                                <th>{{ 'partic.form.PrioGrp'|trans }}</th>
+{#                                <th>{{ 'partic.form.DhMaj'|trans }}</th>#}
+                                <th>{{ 'partic.form.LbRespMaj'|trans }}</th>
+{#                                <th>{{ 'partic.form.BlSupprime'|trans }}</th>#}
+                                <th>{{ 'partic.form.action'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tg_participation in tg_participations %}
+                                <tr>
+                                    <td>{{ tg_participation.idPersonne }}</td>
+                                    <td>{{ tg_participation.idRole.lbRole }}</td>
+                                    <td>{{ tg_participation.idComite }}</td>
+{#                                    <td>{{ tg_participation.idPersonne }}</td>#}
+                                    <td>{{ tg_participation.lbGroupe }}</td>
+                                    <td>{{ tg_participation.prioGrp }}</td>
+{#                                    <td>{{ tg_participation.dhMaj ? tg_participation.dhMaj|date('Y-m-d') : '' }}</td>#}
+                                    <td>{{ tg_participation.lbRespMaj }}</td>
+{#                                    <td>{{ tg_participation.blSupprime }}</td>#}
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <a href="{{ path('tg_participation_show', {'idParticipation': tg_participation.idParticipation}) }}">
+                                                    <span class="fa fa-eye"></span> </a>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <a href="{{ path('tg_participation_edit', {'idParticipation': tg_participation.idParticipation}) }}">
+                                                    <span class="fa fa-edit"></span> </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <a href="{{ path('tg_participation_new') }}">Create new</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

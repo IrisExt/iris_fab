@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+{% trans_default_domain 'Menu' %}
+{#{% trans_default_domain 'AppelProjet' %}#}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <title>{% block title %}Bienvenue dans IRIS!{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon
+     ============================================ -->
+    {#        <link rel="shortcut icon" type="image/x-icon" href="proad/img/favicon.ico">#}
+    <!-- Google Fonts
+        ============================================ -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i,800" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+    <!-- adminpro icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/adminpro-custon-icon.css') }}">
+    <!-- meanmenu icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/meanmenu.min.css') }}">
+
+    <!-- animate CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+    <!-- normalize CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/normalize.css') }}">
+    <!-- style CSS
+    ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/alerts.css') }}">
+
+    <!-- form CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+    <!-- style CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <!-- responsive CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <!-- modernizr JS
+        ============================================ -->
+    <script src="{{ asset('js/vendor/modernizr-2.8.3.min.js') }}"></script>
+    <style>
+        html, body.materialdesign {
+            background: #d0e5ff
+        }
+    </style>
+</head>
+
+<body class="materialdesign">
+<div class="wrapper-pro">
+    <div class="left-sidebar-pro">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="#"><img src="{{ asset('img/logo_iris.png') }}" alt=""/>
+                </a>
+                <strong>IRIS</strong>
+            </div>
+            <div class="left-custom-menu-adp-wrap">
+                <ul class="nav navbar-nav left-sidebar-menu-pro">
+                    <li class="nav-item">
+                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                           class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Accueil</span>
+                            <span class="indicator-right-menu mini-dn"><i
+                                        class="fa indicator-mn fa-angle-left"></i></span></a>
+                        <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                            <a href="{{ path('accueil') }}"
+                               class="dropdown-item">{{ 'menu.barrehoriz.accueil'|trans }}</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="content-inner-all">
+        <div class="header-top-area">
+            <div class="fixed-header-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12">
+                            <button type="button" id="sidebarCollapse"
+                                    class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <div class="admin-logo logo-wrap-pro">
+                                <a href="#"><img src="{{ asset('img/logo/logo_iris_150.png') }}" alt=""/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-1 col-sm-1 col-xs-12">
+                            <div class="header-top-menu tabl-d-n">
+                                <ul class="nav navbar-nav mai-top-nav">
+
+                                    <!-- Acceuil -->
+                                    <li class="nav-item">
+                                        <a href="{{ path('accueil') }}"
+                                           class="nav-link">{{ 'menu.barrehoriz.accueil'|trans }}</a>
+                                    </li>
+                                    {% if is_granted('ROLE_DOS_EM') == true %}
+                                        <li class="nav-item dropdown">
+                                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                               class="nav-link dropdown-toggle">{{ 'menu.barrehoriz.appelprojet'|trans }}
+                                                <span class="angle-down-topmenu"><i
+                                                            class="fa fa-angle-down"></i></span></a>
+                                            <div role="menu" class="dropdown-menu animated flipInX">
+                                                <a href="{{ path('accueil') }}"
+                                                   class="dropdown-item">{{ 'menu.barrehoriz.appelprojet'|trans }}</a>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                            <div class="header-right-info">
+                                <ul class="nav navbar-nav mai-top-nav header-right-menu">
+                                    <!-- switcher langue -->
+                                    {% include '_local_switcher.html.twig' %}
+                                    <li class="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                           class="nav-link dropdown-toggle"><span
+                                                    class="adminpro-icon adminpro-chat-pro"></span><span
+                                                    class="indicator-ms"></span></a>
+                                        <div role="menu" class="author-message-top dropdown-menu animated flipInX">
+                                            <div class="message-single-top">
+                                                <h1>Message </h1>
+                                            </div>
+                                            <div class="message-view">
+                                                <a href="#">{{ render(controller('App\\Controller\\MessageController:consultMessagePers')) }}</a>
+                                                <!-- chercher les messages depuis le controlleur -->
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                           class="nav-link dropdown-toggle">
+                                            <span class="adminpro-icon adminpro-user-rounded header-riht-inf"></span>
+                                            <span class="admin-name">{% if app.user.idpersonne != null %}{{ app.user.idpersonne.lbprenom }} {{ app.user.idpersonne.lbnomusage|slice(0, 1) }} {% endif %}</span>
+                                            <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
+                                        </a>
+                                        <ul role="menu"
+                                            class="dropdown-header-top author-log dropdown-menu animated flipInX">
+                                            <li><a href="{{ path('mon_profil') }}"><span
+                                                            class="adminpro-icon adminpro-user-rounded author-log-ic"></span>Mon
+                                                    Profil</a>
+                                            </li>
+                                            <li><a href="{{ path('cv_dispo') }}"><span class="adminpro-icon adminpro-money author-log-ic"></span>Mon CV</a>
+                                            </li>
+                                            <li><a href="{{ path('fos_user_security_logout') }}"><span
+                                                            class="adminpro-icon adminpro-locked author-log-ic"></span>Déconnexion</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item nav-setting-open"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"></a>
+{#                                        <div role="menu"#}
+{#                                             class="admintab-wrap menu-setting-wrap menu-setting-wrap-bg dropdown-menu animated flipInX">#}
+{#                                            <ul class="nav nav-tabs custon-set-tab">#}
+{#                                                <li class="active"><a data-toggle="tab" href="#Notes">Notes</a>#}
+{#                                                </li>#}
+{#                                                <li><a data-toggle="tab" href="#Projects">Projets</a>#}
+{#                                                </li>#}
+{#                                            </ul>#}
+
+{#                                            <div class="tab-content">#}
+{#                                                <div id="Notes" class="tab-pane fade in active">#}
+{#                                                    <div class="notes-area-wrap">#}
+{#                                                        <div class="note-heading-indicate">#}
+{#                                                            <h2><i class="fa fa-comments-o"></i> Notes</h2>#}
+{#                                                            <p>Message </p>#}
+{#                                                        </div>#}
+{#                                                        <div class="notes-list-area notes-menu-scrollbar">#}
+
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div id="Projects" class="tab-pane fade">#}
+{#                                                    <div class="projects-settings-wrap">#}
+{#                                                        <div class="note-heading-indicate">#}
+{#                                                            <h2><i class="fa fa-cube"></i> projets </h2>#}
+{#                                                            <p></p>#}
+{#                                                        </div>#}
+{#                                                        <div class="project-st-list-area project-st-menu-scrollbar">#}
+{#                                                            <!-- -->#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<br><br>
+        {% include 'navig/mobile.header.html.twig' %}
+        {% include 'messagesflash.html.twig' %}
+        {% block body %}{% endblock %}
+    </div>
+</div>
+<!-- jquery
+    ============================================ -->
+<script src="{{ asset('js/vendor/jquery-1.11.3.min.js') }}"></script>
+<!-- bootstrap JS
+    ============================================ -->
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<!-- meanmenu JS
+    ============================================ -->
+<script src="{{ asset('js/jquery.meanmenu.js') }}"></script>
+<!-- mCustomScrollbar JS
+    ============================================ -->
+<script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+
+{% block javascripts1 %}{% endblock %}
+
+<!-- sticky JS
+    ============================================ -->
+<script src="{{ asset('js/jquery.sticky.js') }}"></script>
+<!-- scrollUp JS
+    ============================================ -->
+<script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>
+<!-- form validate JS
+    ============================================ -->
+<script src="{{ asset('js/jquery.form.min.js') }}"></script>
+<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('js/form-active.js') }}"></script>
+<!-- main JS
+    ============================================ -->
+<script src="{{ asset('js/main.js') }}"></script>
+
+</body>
+</html>

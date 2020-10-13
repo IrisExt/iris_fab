@@ -1,0 +1,125 @@
+{% trans_default_domain 'Menu' %}
+<div class="header-top-area">
+    <div class="fixed-header-top">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12">
+                    <button type="button" id="sidebarCollapse"
+                            class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="admin-logo logo-wrap-pro">
+{#                        <a href="#"><img src="{{ asset('img/logo/logo_iris_150.png') }}" alt=""/>#}
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-1 col-sm-1 col-xs-12">
+                    <div class="header-top-menu tabl-d-n">
+                        <ul class="nav navbar-nav mai-top-nav">
+                            <!-- Acceuil -->
+                            <li class="nav-item">
+                                <a href="{{ path('accueil') }}"
+                                   class="nav-link">{{ 'menu.barrehoriz.accueil'|trans }}</a>
+                            </li>
+
+
+                            {% if app.user.idpersonne is not null %}     <!-- si user est rattaché à personne" -->
+                                <!-- Appel à projet -->
+                                {% if accesMenuRole(app.token.roles, "Appel_a_projets") %}
+                                    <li class="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                           class="nav-link dropdown-toggle">{{ 'menu.barrehoriz.appelprojet'|trans }}
+                                            <span class="angle-down-topmenu"><i
+                                                        class="fa fa-angle-down"></i></span></a>
+                                        <div role="menu" class="dropdown-menu animated flipInX">
+                                            <a href="{{ path('tg_appel_proj_index') }}"
+                                               class="dropdown-item">{{ 'menu.barrehoriz.appelprojet'|trans }}</a>
+                                              <a href="{{ path('index_soumission') }}" class="dropdown-item">Gestion des formulaires</a>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                 <!-- Comite -->
+                                {% if accesMenuRole(app.token.roles, "comites") %}
+                                    <li class="nav-item dropdown">
+                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                       class="nav-link dropdown-toggle">{{ 'menu.barrehoriz.comites'|trans }}<span
+                                                class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+                                    <div role="menu" class="dropdown-menu animated flipInX">
+                                        <a href="{{ path('list_comite') }}"
+                                           class="dropdown-item">{{ 'menu.barrehoriz.lstcomite'|trans }}</a>
+                                    </div>
+                                </li>
+                                    {% endif %}
+                                <!-- CES -->
+                                {% if accesMenuRole(app.token.roles, "ces") %}
+                                <li class="nav-item dropdown">
+                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                       class="nav-link dropdown-toggle">{{ 'menu.barrehoriz.ces'|trans }}<span
+                                                class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+                                    <div role="menu" class="dropdown-menu animated flipInX">
+                                        <a href="{{ path('select_comite') }}" class="dropdown-item">{{ 'menu.barrehoriz.comite'|trans }}
+                                        </a>
+                                    </div>
+                                </li>
+                                    {% endif %}
+
+                                <!-- Administration -->
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"> {{ 'menu.barrehoriz.administrateur'|trans }}
+                                            <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
+                                        <div role="menu" class="dropdown-menu animated flipInX">
+                                            <a href="{{ path('tg_personne_index') }}" class="dropdown-item">{{ 'menu.barrehoriz.utilisateur'|trans }}</a>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                <!-- fin "si user est rattaché à personne" -->
+                            {% endif %}
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
+                    <div class="header-right-info">
+                        <ul class="nav navbar-nav mai-top-nav header-right-menu">
+                            <!-- switcher langue -->
+                            {% include '_local_switcher.html.twig' %}
+                            <li class="nav-item dropdown">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="adminpro-icon adminpro-chat-pro"></span><span class="indicator-ms"></span></a>
+                                <div role="menu" class="author-message-top dropdown-menu animated flipInX" style="padding:6px 12px">
+                                    <div class="message-single-top">
+                                        <h1>Messages</h1>
+                                    </div>
+{#                                    <div class="message-view">#}
+
+                                     {{ render(controller('App\\Controller\\MessageController:consultMessagePers')) }}
+                                        <!-- chercher les messages depuis le controlleur -->
+{#                                    </div>#}
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                   class="nav-link dropdown-toggle">
+                                    <span class="adminpro-icon adminpro-user-rounded header-riht-inf"></span>
+                                    <span class="admin-name">{% if app.user.idpersonne != null %}{{ app.user.idpersonne.lbprenom }} {{ app.user.idpersonne.lbnomusage|slice(0, 1) }} {% endif %}</span>
+                                    <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
+                                </a>
+                                <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
+                                    <li><a href="{{ path('mon_profil') }}"><span
+                                                    class="adminpro-icon adminpro-user-rounded author-log-ic"></span>Mon Profil</a>
+                                    </li>
+                                    <li><a href="{{ path('cv_dispo') }}"><span class="adminpro-icon adminpro-money author-log-ic"></span>Mon CV</a>
+                                    </li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}"><span
+                                                    class="adminpro-icon adminpro-locked author-log-ic"></span>Déconnexion</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item nav-setting-open"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

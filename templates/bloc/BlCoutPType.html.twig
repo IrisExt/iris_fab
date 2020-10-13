@@ -1,0 +1,111 @@
+{% block coutP %}
+    {% block stylesheets %}
+        <style>
+            .modal-body {
+                padding: 20px 20px !important;
+            }
+
+            .total {
+                background-color: dimgray;
+                color: white;
+                text-align: center;
+            }
+            td, th { text-align: center; vertical-align: initial !important;  text-align: right;}
+            #coutP input { border: none; text-align: center; text-align: right;max-width: 100px;}
+
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            /* Firefox */
+            input[type=number] {
+                -moz-appearance:textfield;
+            }
+        </style>
+    {% endblock %}
+
+    <div id="coutP"  class="modal modal-adminpro-general default-popup-PrimaryModal fade"  role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header header-color-modal bg-color-1">
+                        <h4 class="modal-title coutProvTitle">Coût prévisionelles</h4>
+                        <div class="modal-close-area modal-close-df">
+                            <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body" id="scrollmodal">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="tbl_user_data"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="" id="submitCout"
+                       class="add-cp">Enregistrer</a>
+                    {#                    <a id="nextCoutPuf" data-dismiss="modal" data-toggle="modal" href="#">Suivant</a>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+   {% block javascripts1 %}
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+   {% endblock %}
+ {% block javascripts %}
+     <script>
+         $('#submitCout').click(function (e) {
+             var path = $(e.target).data('id');
+             $.ajax({
+                 'url': path,
+                 type: 'POST',
+                 data:{
+                     'ct_personnels_permanents':  $("#cout_1").val(),
+                     'ct_personnels_non_permanents_ss_fin': $("#cout_2").val(),
+                     'ct_personnels_non_permanents': $("#cout_3").val(),
+                     'ct_decharge': $("#cout_4").val(),
+                     'ct_instruments': $("#cout_5").val(),
+                     'ct_batiments': $("#cout_6").val(),
+                     'ct_prestation_service': $("#cout_7").val(),
+                     'ct_frais_gen': $("#cout_8").val(),
+                     'pt_personnels_permanents': $("#pers_1").val(),
+                     'pt_personnels_non_permanents_ss_fin': $("#pers_2").val(),
+                     'pt_personnels_non_permanents': $("#pers_3").val(),
+                     'pt_decharge': $("#pers_4").val(),
+                     'taux_aide_dde': $("#tad").val(),
+                     'mnt_aide_dde': $("#total_ad").html(),
+                     'taux_frais_pers': $("#tfp").val(),
+                     'autres_dep': $("#adep").val(),
+                     'taux_frais_env': $("#tfe").val(),
+
+                     'type_part': $("#BlPartenariatType_type_part").val(),
+                     'id_part': $("#BlPartenariatType_id_part").val(),
+                 },
+                 success: function (data) {
+
+                     $('.Error').html('');
+                     if(data.result == 0) {
+                         for (var key in data.data) {
+                             $('#'+data.data[key].field+'').closest( "tr" ).after('<tr class="Error"><td><span class="invalid-feedback d-block Error"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.data[key].message+'</span></span></span></td></tr>');
+                         }
+                     } else {
+                         $("#BlPartenariatType_id_part").val(data['partenaireId']);
+                         $('#coutP').modal('hide');
+                         $('#typPartenaire').modal('hide');
+                         location.reload();
+                     }
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                     alert('Error : ' + errorThrown);
+                 }
+             });
+         });
+     </script>
+ {% endblock %}

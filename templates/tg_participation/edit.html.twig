@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Participation' %}
+{% block title %}Modifier participation{% endblock %}
+{% block stylesheets1 %}
+    <!-- modals CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <!-- tabs CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/datapicker/datepicker3.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+
+{% endblock %}
+
+{% block body %}
+<div class="advanced-form-area mg-b-15">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd">
+                        <div class="main-sparkline8-hd">
+                            <h1>{{ 'partic.form.edit'|trans }}</h1>
+                            <div class="sparkline8-outline-icon">
+                                <a href="{{ path('tg_participation_index') }}">{{ 'partic.form.retour'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        {{ include('tg_participation/_form.html.twig', {'button_label': 'Update'}) }}
+
+                        <a href="{{ path('tg_participation_index') }}">back to list</a>
+
+                        {{ include('tg_participation/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% block javascripts %}
+        <!-- chosen JS
+              ============================================ -->
+        <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+        <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+
+        <!-- datapicker JS
+            ============================================ -->
+        <script src="{{ asset('js/datapicker/bootstrap-datepicker.js') }}"></script>
+        <script src="{{ asset('js/datapicker/datepicker-active.js') }}"></script>
+    {% endblock %}
+    {% endblock %}

@@ -1,0 +1,6 @@
+{% trans_default_domain 'Comites' %}
+<form method="post" action="{{ path('tg_comite_delete', {'idComite': tg_comite.idComite}) }}" onsubmit="return confirm('{{ 'comite.message.suppression'|trans }}');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tg_comite.idComite) }}">
+    <button class="btn btn-danger"><span class="adminpro-icon adminpro-danger-error"></span> {{ 'comite.form.supprimer'|trans }}</button>
+</form>

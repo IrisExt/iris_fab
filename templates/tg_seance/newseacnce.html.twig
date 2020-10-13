@@ -1,0 +1,6 @@
+{{ form_start(form, {'attr': {'id': 'submitSeance'}}) }}
+    {{ form_widget(form) }}
+<div class="footer-text-right">
+    <button class="btn btn-primary" data-dismiss="modal">{{ button_label|default('personne.from.cree'|trans) }}</button>
+</div>
+{{ form_end(form) }}

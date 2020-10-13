@@ -1,0 +1,338 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <style>
+     .rightButton {
+	     color: #fff;
+	     background-color: #337ab7;
+	     border-color: #2e6da4;
+	     float: right;
+     }
+     .d-block {
+         color: crimson;
+         font-size: 11px;
+         display: ruby-base;
+     }
+     .badge {
+         background-color: #dd1717;
+         font-size: 10px;
+     }
+        h2 {
+            text-align: center;
+            color: white;
+            background-color: #286090;
+            padding: 5px 0px;
+        }
+     fieldset {
+         border:2px solid darkred;
+         -moz-border-radius:8px;
+         -webkit-border-radius:8px;
+         border-radius:8px;
+         padding: 20px;
+     }
+        th, td { border: 1px solid #ddd; font-size: 12px}
+        th {background-color: #369; color: white;}
+        label {color: darkgray;}
+    </style>
+
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+    <div class="col-sm-9">
+        {% block content %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a href="{{ path('export',  {'tgProjet': tgProjet.getIdProjet}) }}" >Export Excel</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                             <div class="form-group row">
+                                 <div class="col-sm-1"></div>
+                                <div class="col-sm-11">
+                                    <h2>Identité du projet</h2><br>
+                                        <div id="BlIdentProjType_Acr">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Acronyme</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getLbAcro }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="BlIdentProjType_TitFr">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Titre projet Fr</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getLbTitreFr }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="BlIdentProjType_TitEn">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Titre projet En</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getLbTitreEn }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="BlIdentProjType_Duree">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Durée du projet</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getNoDuree }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="BlIdentProjType_TypeRech">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Type recherche</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getIdCatRd }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="BlIdentProjType_Inst">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Instrument</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getIdInfraFi }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="BlIdentProjType_Ces">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">CES selectionné</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getIdComite }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="BlIdentProjType_MntPrev">
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Montant provisionnel d’aide (en K€)</label>
+                                                <div class="col-sm-6"><input type="text" class="form-control" value="{{ tgProjet.getMntAidePrev }}" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <br><br><br>
+
+                                        <div id="PoleComp" >
+                                            <div class="form-group row"><label class="col-form-label col-sm-3">Pôle de compétitivité</label>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control" multiple disabled>
+                                                        {% for key,polComp in tgProjet.getIdPoleComp().getValues() %}
+                                                        <option>{{ polComp.lbPolComp }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div id="Infra" >
+                                        <div class="form-group row"><label class="col-form-label col-sm-3">Infrastructure de recherche</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" multiple disabled>
+                                                    {% for key,Infra in tgProjet.getIdInfRech().getValues() %}
+                                                        <option>{{ Infra.lbNomLong }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="CoFi" >
+                                        <div class="form-group row"><label class="col-form-label col-sm-3">Cofinanceur</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" multiple disabled>
+                                                    {% for key,cofi in  tgProjet.getIdCoFi().getValues() %}
+                                                        <option>{{ cofi.lbCoFi }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                             </div>
+                               <div class="form-group row">
+                                   <div class="col-sm-1"></div>
+                                   <div class="col-sm-11">
+                                       <h2>Partenaires</h2><br>
+                                       {% if (partenaires) %}
+                                       <table id="table" class="table table-striped" >
+                                    <thead>
+                                    <tr>
+                                        <th style="border: 0;background-color:white;"></th>
+                                        <th style="border: 0;background-color:white;"></th>
+                                        <th colspan="1">Tutelle Gestionnaire</th>
+                                        <th rowspan="2">Laboratoire</th>
+                                        <th rowspan="2">Participants</th>
+                                        <th rowspan="2">Montant d'aide</th>
+                                        <th rowspan="2">Taux d'aide</th>
+                                        <th rowspan="2">Resp. Scientifique</th>
+                                        <th rowspan="2">Dir. Unité</th>
+                                        <th colspan="2">Resp. administratif</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="border: 0;background-color:white;"></th>
+                                        <th style="border: 0;background-color:white;"></th>
+                                        <th >SIRET / RNSR</th>
+                                        <th >Nom</th>
+                                        <th >Courriel</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for key,partenaire in partenaires %}
+
+                                    <tr>
+                                        <td width="13%">
+                                            {% if partenaire.getTypPart().getTypPart() == 'PUF' %} <img src="/img/public.png" class="img-fluid" alt="Responsive image" width="20" height="15">
+                                            {% elseif partenaire.getTypPart().getTypPart() == 'PRF' %} <i class="fa fa-building"></i>
+                                            {% elseif partenaire.getTypPart().getTypPart() == 'ETR' %} <img src="/img/web.ico" class="img-fluid" alt="Responsive image" data-toggle="tooltip" width="15" height="15">
+                                            {% endif %}
+                                        {{ partenaire.getTypPart.getLbNomFr() }}
+                                        </td>
+                                        <td style="font-weight: bold;">{% if partenaire.getHebergeur() %}{{ partenaire.getHebergeur().getLbNomFr() }}{% endif %}</td>
+                                            <td>
+                                                {% if 'PUF' == partenaire.getTypPart().getTypPart() %}
+                                                {% if partenaire.getTutGest() %}
+                                                    {{ partenaire.getTutGest().getSiret() }} /
+                                                    {{ partenaire.getTutGest().getCdRnsr() }}
+                                                {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        <td>
+                                            {% if 'PUF' == partenaire.getTypPart().getTypPart() %}
+                                                {% if partenaire.getLaboratoire() %} {{ partenaire.getLaboratoire() }}{% endif %}
+                                            {% endif %}
+                                        </td>
+                                        <td style="color: dodgerblue;font-size: unset;">
+                                            {% if partenaire.getIdPersonne() %}
+                                                <i class="fa fa-users"></i> {{ partenaire.getIdPersonne()|length }}
+                                            {% endif %}
+                                        </td>
+                                        <td style="color: steelblue;font-size: unset;">
+                                           {% if partenaire.getMntAide() %}
+                                               <i class="fa fa-euro"></i> {{ partenaire.getMntAide() }}€
+                                            {% endif %}
+                                        </td>
+                                        <td style="color:brown;font-size: unset;">
+                                            {% if partenaire.getTxAide() %}
+                                                <i class="fa fa-balance-scale"></i> {{ partenaire.getTxAide() }}%
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if partenaire.getRespScient() %}{{ partenaire.getRespScient() }} {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if partenaire.getRepJuridique() %}{{ partenaire.getRepJuridique() }} {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if partenaire.getGestAdm() %}{{ partenaire.getGestAdm().getLbNomUsage() }} {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if partenaire.getGestAdm() %}
+                                                {% for mail in partenaire.getGestAdm().getIdAdrMail() %}
+                                                    <a href="mailto:{{ mail.getAdrMail() }}">{{ mail.getAdrMail() }}</a>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                       <h2>Coûts prévisionnels</h2><br>
+                                       <table id="table" class="table table-striped" >
+                                           <thead>
+                                           <tr>
+
+                                               <th style="border: 0;background-color:white;"></th>
+                                               <th style="border: 0;background-color:white;"></th>
+                                               <th colspan="3">Personnel</th>
+                                               <th rowspan="4">Décharge d'enseignement</th>
+                                               <th rowspan="4">Instrument / Matériel</th>
+                                               <th rowspan="4">Bâtiments et terrains</th>
+                                               <th rowspan="4">Prestation de services et de droit PI</th>
+                                               <th rowspan="4">Taux d'aide</th>
+                                               <th rowspan="4">Aide demandée</th>
+                                           </tr>
+                                           <tr>
+                                               <th style="border: 0;background-color:white;"></th>
+                                               <th style="border: 0;background-color:white;"></th>
+                                               <th rowspan="3">Permanent</th>
+                                               <th colspan="2">Non permanent</th>
+                                           <tr>
+                                           <tr>
+                                               <th style="border: 0;background-color:white;"></th>
+                                               <th style="border: 0;background-color:white;"></th>
+                                               <th>financé</th>
+                                               <th >non financé</th>
+                                           <tr>
+                                           </thead>
+                                           <tbody>
+                                           {% for key,partenaire in partenaires %}
+                                               <tr>
+                                                   <td width="13%">
+                                                       {% if partenaire.getTypPart().getTypPart() == 'PUF' %} <img src="/img/public.png" class="img-fluid" alt="Responsive image" width="20" height="15">
+                                                       {% elseif partenaire.getTypPart().getTypPart() == 'PRF' %} <i class="fa fa-building"></i>
+                                                       {% elseif partenaire.getTypPart().getTypPart() == 'ETR' %} <img src="/img/web.ico" class="img-fluid" alt="Responsive image" data-toggle="tooltip" width="15" height="15">
+                                                       {% endif %}
+                                                       {{ partenaire.getTypPart.getLbNomFr() }}
+                                                   </td>
+                                                   <td style="font-weight: bold;">{% if partenaire.getHebergeur() %}{{ partenaire.getHebergeur().getLbNomFr() }}{% endif %}</td>
+
+                                                   <td>{% if(partenaire.getIdCoutPrv()) %}{{ partenaire.getIdCoutPrv().getMntPersPerm() }}{% endif %}</td>
+                                                   <td>{% if(partenaire.getIdCoutPrv()) %}{{ partenaire.getIdCoutPrv().getMntPersNp() }}{% endif %}</td>
+                                                   <td>{% if(partenaire.getIdCoutPrv()) %}{{ partenaire.getIdCoutPrv().getMntPersNpNf() }}{% endif %}</td>
+                                                   <td>{% if(partenaire.getIdCoutPrv()) %}{{ partenaire.getIdCoutPrv().getMntDechEns() }}{% endif %}</td>
+                                                   <td>{% if(partenaire.getIdCoutPrv()) %}{{ partenaire.getIdCoutPrv().getMntInstMat() }}{% endif %}</td>
+                                                   <td>{% if(partenaire.getIdCoutPrv()) %}{{ partenaire.getIdCoutPrv().getMntBatTer() }}{% endif %}</td>
+                                                   <td>{% if(partenaire.getIdCoutPrv()) %}{{ partenaire.getIdCoutPrv().getMntPrest() }}{% endif %}</td>
+                                                   <td>{{ partenaire.getMntAide() }}</td>
+                                                   <td>{{ partenaire.getTxAide() }}</td>
+                                               </tr>
+
+                                           {% endfor %}
+                                           </tbody>
+                                       </table>
+                                       {% else %}
+                                           <h3>Aucun partenaire</h3>
+                                       {% endif %}
+                                    </div>
+                               </div>
+
+                            {{ form_start(bloc) }}
+                            <br><br><br>
+                            <div class="row">
+                                <div class="col-md-8 col-sm-6"></div>
+                                <div class="col-md-2 col-sm-3">  <a href="{{ previousblock }}" class="btn btn-primary pull-right"><< Précédent</a> </div>
+                                <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                            </div>
+                                    {{ form_widget(bloc.saveBlocWithoutRedirect, { 'attr': {'class': 'hidden'} }) }}
+                                    {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                            {{ form_end(bloc) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% endblock %}
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $('.export-synthese').click(function (e) {
+        var idProjet = $(this).data("id");
+        $.ajax({
+            'url': "/fr/soumission/export/" + idProjet,
+            type: 'POST',
+            success: function (data) {
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,92 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'fr'
+    app_locales: en|fr
+    files_directory_doc_sc: '%kernel.project_dir%/public/uploads/doc_sc'
+    files_directory_an_pre_proposition: '%kernel.project_dir%/public/uploads/an_pre_proposition'
+    session_max_idle_time: 604800 // set to whatever value you want in seconds
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+    # fetching services directly from the container via $container->get() won't work.
+    # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $locales: '%app_locales%'
+            $defaultLocale: '%locale%'
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    app.blocs:
+        class: App\Controller\BlocController
+
+    formulaire_service:
+        class: App\Service\FormulaireService
+        autowire: true
+        public: true
+        arguments:
+            - '@form.factory'
+            - '@router'
+            - '@session'
+            - '@swiftmailer.mailer.default'
+            - '@twig'
+
+
+    App\Service\GeoDBService:
+        autowire: true
+        arguments:
+            - '@csa_guzzle.client.geo_client'
+            - '%env(resolve:RAPIDAPI_HOST)%'
+            - '%env(resolve:RAPIDAPI_KEY)%'
+
+    App\Service\ReferentielService:
+        autowire: true
+        arguments:
+            - '@csa_guzzle.client.geo_client'
+            - '%env(resolve:REFAPI_HOST)%'
+            - '%env(resolve:REFAPI_KEY)%'
+            - '%env(resolve:REFAPI_HOST2)%'
+
+    app.consumer.mails_queue:
+        class: App\Consumer\EmailConsumer
+        autowire: true
+
+    swiftmailer.mailer.default.spool.rabbitmq:
+        class: App\Consumer\RabbitMqSpool
+        autowire: true
+
+#    swiftmailer.transport.simplemailinvoker:
+#        class:
+
+    swiftmailer.transport.eventdispatcher:
+        class: Swift_Events_SimpleEventDispatcher
+
+    swiftmailer.transport.real:
+        class: Swift_Transport
+        public: true
+        arguments:
+#            - '@swiftmailer.transport.simplemailinvoker'
+            - '@swiftmailer.transport.eventdispatcher'
+
+    App.Handler.SessionIdle:
+        class: App\Security\SessionIdleHandler
+        arguments: [ '%session_max_idle_time%' ]
+        tags: [ { name: kernel.event_listener, event: kernel.request } ]

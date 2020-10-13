@@ -1,0 +1,549 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Comites' %}
+
+  {% block stylesheets1 %}
+      <style>
+          .ui-tooltip {
+              border-radius: 20px;
+              border: 2px solid green;
+              font: bold 12px"Open Sans", Sans-Serif;
+          }
+          .modal-xl-xl {
+              width: 1100px;
+          }
+          .modal-xl-large {
+              width: 90%;
+          }
+          .sort {
+              cursor: move;
+          }
+
+          #sortable {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+              width: 80%;
+          }
+
+          #sortable li {
+              margin: 0 3px 3px 3px;
+              padding: 0.4em;
+              padding-left: 1.5em;
+              font-size: 1.4em;
+          }
+
+          #sortable li span {
+              position: absolute;
+              margin-left: -1.3em;
+          }
+      </style>
+      <!-- modals CSS
+          ============================================ -->
+      <link rel="stylesheet" href="{{ asset('http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css') }}">
+      <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+      <!-- Preloader CSS
+    ============================================ -->
+      <link rel="stylesheet" href="{{ asset('css/preloader/preloader-style.css') }}">
+
+      <!-- tabs CSS
+          ============================================ -->
+      <link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
+      <link rel="stylesheet" href="{{ asset('css/datapicker/datepicker3.css') }}">
+      <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+
+  {% endblock %}
+
+  {% block navmenu %}
+      <span class="bread-slash">/</span>
+      {#      <li><a href={{ path('list_comite') }}><b>{{ 'comite.liste.listecomite'|trans }}</b></a></li>#}
+  {% endblock %}
+{% block body %}
+    {%  if apstatut == true %} {% set disabled = '' %}{% else %}{% set disabled = 'disabled' %}{% endif %}       <!-- statut appel encours or clos -->
+    <div class="loader">
+        <h1>Veuillez patientez pendant le chargement de la page.</h1>
+    </div>
+    <div class="breadcome-area mg-b-30 small-dn">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcome-list shadow-reset">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h4> <b>{{ comite.lbAcr }}</b> <span>
+                                        <span class="text-primary">: </span>
+                                        {{ comite.lbTitre }}
+                                    </h4>
+                                </div>
+{#                                <div class="text-right">#}
+                                    <div class="col-md-5">
+                                    {% if (is_granted('ROLE_CPS') == true) or (is_granted('ROLE_PRES') == true) or (is_granted('ROLE_VISE_PRES') == true) %}
+{#                                        {% if participComite == true %}#}
+                                            <!-- MODAL POUR AJOUTER EVALUATEUR -->
+                                            <button class="btn btn-primary" data-toggle="modal"
+                                               data-target="#ajoummbreModal" rel="tooltip"
+                                               data-id="{{ path('enregistrer_evalua_comite',{'idComite' : comite.idComite }) }}" {{ disabled }}>
+                                                <i class="fa fa-plus"></i>
+                                                {{ 'comite.form.ajouterEvaluateur'|trans }}
+                                            </button>
+
+                                       <a class="btn btn-success {{ disabled }}" href="{{ path('recherche_memebre',{'idComite' : comite.idComite }) }}">  <i class="fa fa-plus"></i> Rechercher un evaluateur</a>
+
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalRecherche">Recherche</button>
+
+                                        <div class="modal fade" id="modalRecherche" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-xl-large" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                            <div class="modal-close-area modal-close-df">
+                                                                <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                                                            </div>
+                                                    </div>
+                                                    <div class="modal-body mb-0 p-0">
+                                                        <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+                                                            <iframe class="embed-responsive-item" src="{{ path('search_personnes') }}" allowfullscreen></iframe>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                            {% include 'constitutionces/modal/modalMembre.html.twig' %} <!-- ajouter le modal -->
+                                    <!-- MODAL POUR AJOUTER EVALUATEUR -->
+                                            <button  href="#" class="btn btn-warning " data-toggle="modal"
+                                                data-target="#ordGrpModal" rel="tooltip"
+                                                data-id="{{ path('ord_grp',{'idComite' : comite.idComite }) }}" {{ disabled }}>
+                                                <i class="fa fa-sort"></i>
+                                                Ordonner
+                                            </button>
+{#                                        {% endif %} <!-- fin participe au comite -->#}
+                                    {% endif %} <!-- fin condition Roles -->
+                                    <!-- statistique -->
+                                        <a tabindex="0" id="stat" class="btn btn-sm btn-light" role="button" data-toggle="popover" data-placement="left" data-trigger="focus" data-html="true"
+                                           title="Statistique" data-content="<b>Evaluateurs contactés </b>: {{ statContacte }} <br> <b>Evaluateurs accéptés </b>:  {{ statAccepte }}">
+                                            <span class="fa fa-bar-chart">Stat.</span> </a>                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <div class="data-table-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sparkline13-list shadow-reset">
+                        <div class="sparkline12-hd">
+
+                                <div class="datatable-dashv1-list custom-datatable-overright">
+                                    <!-- tableau -->
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Evaluateurs</th>
+                                            <th class="text-center">Mots clé</th>
+                                            <th class="text-center">Groupe</th>
+                                            <th class="col-xs-1 text-center">Sollicitation
+                                                <a tabindex="0" id="info-etats" role="button" data-toggle="popover" data-trigger="focus"
+                                                   title="Signification des états" data-html="true" data-content="
+                                                       <p>
+                                                    - <b>Impossible</b> : la personne ne peut participer à ce comité (renouvellement obligatoire, porteur de projet, …)<br>
+                                                    - <b>Contrainte / Refus</b> : la personne ne souhaite ou ne peut pas participer au comité<br>
+                                                    - <b>Neutre </b>: état par défaut<br>
+                                                    - <b>A contacter</b> : personne que l'on souhaite contacter (via IRIS)<br>
+                                                    - <b>Contacter/é </b>: <strong><u>Attention</u></strong> déclenche une sollicitation immédiate par mail depuis IRIS<br>
+                                                    - <b>Accepté </b>: personne qui a donné son accord pour participer au comité <br>
+                                                    (via IRIS : a donc pris connaissance de la charte de déontologie et signé un accord de confidentialité)
+                                                      </p>
+                                                        "><span class="fa fa-question-circle"></span></a>
+
+                                                 </th>
+                                            <th class="text-center"> Notes</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for mbcmte in mmbreComites %}
+                                        <tr>
+                                            <td>
+                                                <div class="col-lg-12"  style="max-width:900%;  overflow-wrap:break-word;">
+                                                    <div class="contact-client-single ct-client-b-mg-20 ct-client-b-mg-30-n shadow-reset">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <!-- sexe pers cps -->
+                                                                {% if mbcmte.idPersonne.idGenre.idGenre is defined and mbcmte.idPersonne.idGenre.idGenre == 1 %}
+                                                                    <span class="fa fa-male"></span>
+                                                                {% elseif mbcmte.idPersonne.idGenre.idGenre is defined and mbcmte.idPersonne.idGenre.idGenre == 2 %}
+                                                                    <span class="fa fa-female"></span>
+                                                                {% endif %}
+                                                                    {% if is_granted('ROLE_CPS') == true or is_granted('ROLE_PRES') == true or is_granted('ROLE_VISE_PRES') == true %}
+                                                                        <b> {{ mbcmte.idProfil.cdProfil }} :</b>
+                                                                        <a href="#" data-toggle="modal" class="{{ disabled }}"
+                                                                           data-target="#modifmmbreModal" rel="tooltip" title="Modifier"
+                                                                           data-id="{{ path('modif_evalua', {'idPersonne' : mbcmte.idpersonne.idPersonne ,'idProfil' : mbcmte.idProfil.idProfil, 'idParticipation' : mbcmte.idParticipation, 'idComite' : comite.idComite  }) }}">
+                                                                            <b>    {{ mbcmte.idpersonne.idperscps.lbprenom|default('')|capitalize }}
+                                                                                {{ mbcmte.idpersonne.idperscps.lbnomfr|default('')|upper }}
+                                                                            </b>
+                                                                            <i class="fa fa-edit text-primary"></i>
+                                                                         </a>
+                                                                    {% else %}
+                                                                        <b> {{ mbcmte.idProfil.cdProfil }} :
+                                                                            {{ mbcmte.idpersonne.idperscps.lbprenom|default('')|capitalize }}
+                                                                            {{ mbcmte.idpersonne.idperscps.lbnomfr|default('')|upper }}
+                                                                        </b>
+                                                                    {% endif %}
+                                                                <a class="text-primary" style="border-bottom: 2px solid #c3c3c3;color:#1d6aff; " href="mailto:{{ mbcmte.idpersonne.idperscps.lbadrmail|default('') }}">{{ mbcmte.idpersonne.idperscps.lbadrmail|default('') }}</a>
+                                                                {{ mbcmte.idpersonne.idperscps.lbvilleheberg|default('') }}
+                                                                {{ mbcmte.idpersonne.idperscps.lbOrganisme|default('') }}
+                                                                {{ mbcmte.idpersonne.idperscps.lbWebPerso|default('') }}
+                                                                {{ mbcmte.idpersonne.idperscps.lblangue|default('') }}
+                                                            </div>
+                                                            <div class="col-sm-2 text-right">
+                                                                {% if mbcmte.idpersonne.idperscps.lblangue|default('') == 'Fr' %}
+                                                                    <img src="{{ asset('img/fr.png') }}"  width="15" height="15" class="img-fluid" alt="Responsive image">
+                                                                {% elseif mbcmte.idpersonne.idperscps.lblangue|default('') == 'En' %}
+                                                                    <img src="{{ asset('img/En.png') }}"  width="15" height="15" class="img-fluid" alt="Responsive image">
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                              <div class="col-sm-10">
+                                                                  {% if mbcmte.idPersonne.cvrenseigne == true %} <!-- si cv renseigné  true -->
+                                                                {% if mbcmte.idPersonne.idperscps.idgenre.idgenre|default('') == 1 %}
+                                                                    <span class="fa fa-male"></span>
+                                                                {% elseif  mbcmte.idPersonne.idperscps.idgenre.idgenre|default('') == 2 %}
+                                                                    <span class="fa fa-female"></span>
+                                                                {% endif %}
+                                                                  {% endif %} <!-- fin cv renseigné -->
+
+                                                           <!-- CV -->
+                                                                  CV :
+                                                                  {% if mbcmte.idPersonne.cvrenseigne == true %}
+                                                                <b>
+                                                                    {{ mbcmte.idpersonne.lbprenom|capitalize }}
+                                                                    {{ mbcmte.idpersonne.lbNomUsage|upper }}
+                                                                </b>
+                                                                <!-- organisme -->
+                                                                  {% set virgule = 0 %}
+                                                                {% for organisme in mbcmte.idpersonne.tlPersOrg %}
+                                                                    {% if virgule == 1 %} , {% endif %}
+                                                                    {{ organisme|default('') }}
+                                                                    {% set virgule = 1 %}
+                                                                {% endfor %}
+                                                                <!-- ville-->
+                                                                {% for adresse in mbcmte.idpersonne.idAdresse %}
+                                                                    {{ adresse.ville }}
+                                                                {% endfor %}
+                                                                <!-- adresse mail prefer -->
+                                                                {% for adrmail in mbcmte.idpersonne.idadrmail %}
+                                                                    {% if adrmail.adrpref == true %}
+                                                                        <a href=mailto:{{ adrmail }}">{{ adrmail }}</a>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                            <div class="col-sm-2 text-right">
+                                                                {% if mbcmte.idpersonne.lbwebperso != null %}
+                                                                    <a href="http://{{ mbcmte.idpersonne.lbwebperso }}"
+                                                                       target="_blank"> <img
+                                                                                src="{{ asset('img/web.ico') }}"
+                                                                                width="15" height="15" class="img-fluid" alt=""
+                                                                                data-toggle="tooltip"
+                                                                                title="http://{{ mbcmte.idpersonne.lbwebperso }}"></a>
+                                                                {% endif %}
+                                                            </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- Mot clé -->
+                                                <div class="col-lg-12" style="max-width:700px;  overflow-wrap:break-word;">
+                                                    <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
+                                                        {% set virgule = 0 %}
+                                                        {% for motclecps in mbcmte.idPersonne.idmccps %}
+                                                            {% if virgule == 1 %} , {% endif %}
+                                                            {{ motclecps }}
+                                                            {% set virgule = 1 %}
+                                                        {% endfor %} <br>
+                                                        CV:
+                                                        {% for motclecv in mbcmte.idPersonne.idmccv %}
+                                                            {% if virgule == 1 %} , {% endif %}
+                                                            {% set virgule = 0 %}
+                                                            {{ motclecv }}
+                                                            {% set virgule = 1 %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- groupe -->
+                                                <div class="col-lg-12">
+                                                    <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
+                                                        {{ mbcmte.lbgroupe }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+{#                                                <div class="footer-text-right">#}
+{#                                                    <a href="#" class="btn btn-light"#}
+{#                                                       data-toggle="modal"#}
+{#                                                       data-target="{{dataId}}" rel="tooltip"#}
+{#                                                       data-id="{{ path('new_message_comite',{'idComite' : comite.idComite, 'idParticipation' : mbcmte.idParticipation }) }}"#}
+{#                                                       title="Envoyer un message">#}
+{#                                                        <i class="fa fa-edit"></i>#}
+{#                                                    </a>#}
+{#                                                </div>#}
+
+                                                    <!-- Sollitation -->
+                                                {% if is_granted('ROLE_CPS') == true  %}
+                                                    {% set dataId = "#sollicitModal" %}
+                                                {% else %}
+                                                    {% set dataId = '' %}
+                                                {% endif %}
+                                                    <div class="col-lg-11">
+                                                        {% if  mbcmte.cdetatsollicitation.cdetatsollicitation == 1 %}
+                                                            <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal" data-target="{{dataId}}" rel="tooltip"
+                                                               data-id="{{ path('changer_sollicit',{'idParticipation' : mbcmte.idParticipation }) }}">
+                                                                <img src="{{ asset('img/sol-icon/impossible.ico') }} " height="30" width="30" data-toggle="toolti" title="{{mbcmte.cdetatsollicitation}}">
+                                                            </a>
+                                                        {% elseif mbcmte.cdetatsollicitation.cdetatsollicitation == 2 %}
+                                                            <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal" data-target="{{dataId}}" rel="tooltip"
+                                                               data-id="{{ path('changer_sollicit',{'idParticipation' : mbcmte.idParticipation }) }}">
+                                                                <img src="{{ asset('img/sol-icon/refus.ico') }} " height="30" width="30" data-toggle="toolti" title="{{mbcmte.cdetatsollicitation}}">
+                                                            </a>
+                                                        {% elseif mbcmte.cdetatsollicitation.cdetatsollicitation == 6 %}
+                                                            <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal" data-target="{{dataId}}" rel="tooltip"
+                                                               data-id="{{ path('changer_sollicit',{'idParticipation' : mbcmte.idParticipation }) }}">
+                                                                <img  src="{{ asset('img/sol-icon/ok.ico') }} " height="30" width="30" data-toggle="toolti" title="{{mbcmte.cdetatsollicitation}}">
+                                                            </a>
+                                                        {% elseif mbcmte.cdetatsollicitation.cdetatsollicitation == 4 %}
+                                                            <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal" data-target="{{dataId}}" rel="tooltip"
+                                                               data-id="{{ path('changer_sollicit',{'idParticipation' : mbcmte.idParticipation }) }}">
+                                                                <img src="{{ asset('img/sol-icon/acontacter.ico') }} " height="30" width="30" data-toggle="toolti" title="{{mbcmte.cdetatsollicitation}}">
+                                                            </a>
+                                                        {% elseif mbcmte.cdetatsollicitation.cdetatsollicitation == 5 %}
+                                                            <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal" data-target="{{dataId}}" rel="tooltip"
+                                                               data-id="{{ path('changer_sollicit',{'idParticipation' : mbcmte.idParticipation }) }}">
+                                                                <img src="{{ asset('img/sol-icon/contacter.ico') }} " height="30" width="30" data-toggle="toolti" title="{{mbcmte.cdetatsollicitation}}">
+                                                            </a>
+                                                        {% else %}
+                                                            <a href="#" class="btn btn-light {{ disabled }}" data-toggle="modal" data-target="{{dataId}}" rel="tooltip"
+                                                               data-id="{{ path('changer_sollicit',{'idParticipation' : mbcmte.idParticipation }) }}">
+                                                                <img src="{{ asset('img/sol-icon/neutre.ico') }} " height="30" width="30" data-toggle="toolti" title="{{mbcmte.cdetatsollicitation}}">
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                            </td>
+                                            <td>
+
+                                                <!-- Messages -->
+
+                                                <div class="col-lg-12">
+                                                    <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
+                                                        <div class="row">
+                                                            <div class="col-lg-10" style="max-width:600px;  overflow-wrap:break-word;">
+                                                                {{ render(controller('App\\Controller\\MessageController:consultMessageConstitutionCes', {'idParticipation' : mbcmte.idParticipation} )) }}
+                                                            </div>
+                                                            <div class="col-lg-2">
+                                                                <!-- Modal pour les messages -->
+                                                            {% if (is_granted('ROLE_CPS') == true) or (is_granted('ROLE_PRES') == true) or (is_granted('ROLE_VISE_PRES') == true) %}
+{#                                                                {% if droitE == true %}#}
+                                                                    <div class="footer-text-right">
+                                                                        <a href="#" class="btn btn-light  {{ disabled }}"
+                                                                           data-toggle="modal"
+                                                                           data-target="#messageCesModal" rel="tooltip"
+                                                                           data-id="{{ path('new_message_comite',{'idComite' : comite.idComite, 'idParticipation' : mbcmte.idParticipation }) }}"
+                                                                           title="Envoyer un message">
+                                                                            <i class="fa fa-comments"></i>
+                                                                        </a>
+                                                                    </div>
+{#                                                                {% endif %}#}
+                                                            {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {% if mbcmte.idProfil.idProfil not in "4"  %}
+                                                    {% if is_granted('ROLE_CPS') == true or is_granted('ROLE_PRES') == true or is_granted('ROLE_VISE_PRES') == true %}
+{#                                                        {% if droitE == true %}#}
+                                                    <form method="post" action="{{ path('pers_cps_delete_pers', {'idPersCps':  mbcmte.idPersonne.idPersCps.idPersCps, 'idProfil' : mbcmte.idProfil.idProfil , 'idParticipation' : mbcmte.idParticipation }) }}" onsubmit="return confirm('Vous êtes sur de supprimer ce membre ?');">
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ mbcmte.idPersonne.idPersCps.idPersCps) }}">
+                                                        <button class="btn btn-link" aria-hidden="true"><i class="fa fa-trash-o text-danger"></i> </button>
+                                                    </form>
+{#                                                        {% endif %}#}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% include 'tg_message/modal/modalMessageCes.html.twig' %} <!-- modal message cps ... -->
+                                    <div class="footer-text-center">
+                                        {{ knp_pagination_render(mmbreComites) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}
+
+    {% block javascripts1 %}
+        <script src="{{ asset('https://code.jquery.com/ui/1.12.1/jquery-ui.js') }}"></script>
+        <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+        <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+
+    {% endblock %}
+
+    {% block javascripts %}
+        <script>
+            $('#searchPersonne').on('shown.bs.modal', function (e) {
+                var path = $(e.relatedTarget).data('id');
+                var modal_recherche = $(this);
+                $.ajax({
+                    'url': path,
+                    success: function (data) {
+                        modal_recherche.find('.modal-body').html(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+            // modal pour ajouter membre
+            $('#ajoummbreModal').on('shown.bs.modal', function (e) {
+                var path = $(e.relatedTarget).data('id');
+                var modal_reunion = $(this);
+                $.ajax({
+                    'url': path,
+                    success: function (data) {
+                        modal_reunion.find('.modal-body').html(data);
+                        $('.chosen-select').chosen();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+            // modal pour modifier membre
+            $('#modifmmbreModal').on('shown.bs.modal', function (e) {
+                var path = $(e.relatedTarget).data('id');
+                var modal_reunion = $(this);
+                $.ajax({
+                    'url': path,
+                    success: function (data) {
+                        modal_reunion.find('.modal-body').html(data);
+                        $('.chosen-select').chosen();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+            $('#ordGrpModal').on('shown.bs.modal', function (e) {
+                var path = $(e.relatedTarget).data('id');
+                var modal_reunion = $(this);
+                $.ajax({
+                    'url': path,
+                    success: function (data) {
+                        modal_reunion.find('.modal-body').html(data);
+                        $(document).ready(function () {
+                            $('ul').sortable({
+                                axis: 'y',
+                                stop: function (event, ui) {
+                                    var datas = $(this).sortable('serialize');
+                                }
+                            });
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+            //modal pour la création message participation
+            $('#messageCesModal').on('show.bs.modal', function (e) {
+                // récuperer la route du lien modal  data-id
+                var path = $(e.relatedTarget).data('id');
+                var modal_message = $(this);
+                $.ajax({
+                    'url': path,
+                    success: function (data) {
+                        modal_message.find('.modal-body').html(data);
+                        $('#ajouterMessage').submit(function(e){
+                            e.preventDefault();
+                            $('#ajouterMessage #submitBtn').prop('disabled', true);
+                            $(this).unbind('submit').submit();
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+            //modal pour changer Soliccitation
+            $('#sollicitModal').on('show.bs.modal', function (e) {
+                // récuperer la route du lien modal  data-id
+                var path = $(e.relatedTarget).data('id');
+                var modal_message = $(this);
+                $.ajax({
+                    'url': path,
+                    success: function (data) {
+                        modal_message.find('.modal-body').html(data);
+                        $('#ajouterMessage').submit(function(e){
+                            e.preventDefault();
+                            $('#ajouterMessage #submitBtn').prop('disabled', true);
+                            $(this).unbind('submit').submit();
+                        });
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+
+            $(document).ready(function () {
+                $('[rel="tooltip"]').tooltip({
+                    trigger: "hover",
+                    tooltipClass: 'tooltipclass'
+                });
+                $('[data-toggle="toolti"]').tooltip({
+                    trigger: "hover",
+                    tooltipClass: 'tooltipclass'
+                });
+
+            $('#info-etats').popover({
+                trigger: 'focus'
+
+            });
+                $(function () {
+                    $('#stat').popover({
+                        // container: 'body',
+                        trigger: 'focus'
+
+                    })
+                })
+            });
+            $(window).on('load', function (){ jQuery(".loader").fadeOut("200"); });
+
+            $('#modalRecherche').on('hidden.bs.modal', function () {
+                location.reload();
+            })
+
+        </script>
+    {% endblock %}
+

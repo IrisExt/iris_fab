@@ -1,0 +1,78 @@
+{% for habilProfil in habilProfils %}
+    <div class="widget col-lg-3">
+        <div class="sparkline12-list password-mt-b shadow-reset">
+            <div class="sparkline13-hd">
+                <div class="main-sparkline12-hd">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>{{ habilProfil }} <span class="password-mt-none"></span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline12-outline-icon">
+                </div>
+            </div>
+            <!-- personne mmbre du comite -->
+            {% if habilProfil.idComite[0] is defined %}
+                <div class="sparkline12-hd">
+                    <div class="row">
+                        {% for comite  in habilProfil.idComite %}
+                            {% set statut = '' %}
+                            {% set btn = '' %}
+
+                            <div class="col-lg-6">
+                                {{ comite.idAppel }} : {{ comite }}
+                            </div>
+                            <div class="col-lg-6">
+                                {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : comite.idAppel})) == 1 %} <!-- return true / false -->
+                                    {% set statut = 'En cours ' %}
+                                    {% set btn = 'primary' %}
+                                {% else %}
+                                    {% set statut = 'Fermé ' %}
+                                    {% set btn = 'danger' %}
+                                {% endif %}
+                                <a class="btn btn-{{ btn }} btn-sm"
+                                   href="{{ path('profil_user',
+                                       {'idAppel': comite.idAppel.idAppel, 'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase, 'idProfil' : habilProfil.idProfil.idProfil, 'idComite' : comite.idComite}
+                                   ) }}"> {{ statut }}
+                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                            </div>
+                            <br><br>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- personne pilote de l'appel -->
+            {% if habilProfil.idAppel[0] is defined %}
+                <div class="sparkline12-hd">
+                    <div class="row">
+                        {% for appel  in habilProfil.idAppel %}
+
+                            <div class="col-lg-6">
+                                {{ appel }}
+                            </div>
+                            <div class="col-lg-6">
+                                {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : appel.idAppel})) == 1 %} <!-- return true / false -->
+                                    {% set statut = 'En cours ' %}
+                                    {% set btn = 'primary' %}
+                                {% else %}
+                                    {% set statut = 'Fermé ' %}
+                                    {% set btn = 'danger' %}
+                                {% endif %}
+                                <a class="btn btn-{{ btn }} btn-sm"
+                                   href="{{ path('profil_user',
+                                       {'idAppel': appel.idAppel, 'idNiveauphase' : appel.niveauEnCours.idNiveauPhase, 'idProfil' : habilProfil.idProfil.idProfil}
+                                   ) }}"> {{ statut }}
+                                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                            <br><br>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,8 @@
+{% trans_default_domain 'Comites' %}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<div class="footer-text-right">
+    <a class="btn" href="{{ path('tg_appel_proj_index') }}">Retour</a>
+    <button class="btn btn-primary">{{ button_label|default('Créer') }}</button>
+</div>
+{{ form_end(form) }}

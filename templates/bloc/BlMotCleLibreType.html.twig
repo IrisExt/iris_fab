@@ -1,0 +1,270 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/craueformflow/css/buttons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <style>
+   .rightButton {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            float: right;
+        }
+   .d-block {
+       color: crimson;
+       font-size: 11px;
+       display: ruby-base;
+   }
+   .badge {
+       background-color: #dd1717;
+       font-size: 10px;
+   }
+        .form-check {
+            display: flex;
+            margin-right: 20px;
+        }
+        .form-check-input {
+            margin-right: 10px !important;
+            margin-bottom: auto !important;
+        }
+
+        th {
+             background-color: #369;
+             color: white;
+        }
+        table { margin-bottom: 0 !important;}
+        .modal-content {min-width: 700px;}
+        .modal-body {padding: 35px 35px; !important;}
+    </style>
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+    <div class="col-sm-9">
+        {% block content %}
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                            {{ form_start(bloc) }}
+<div id="mclibre"  class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1">
+                    <h4 class="modal-title">Ajouter les termes</h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+
+                                                                        <div class="modal-body">
+                                                                            {{ form_row(bloc.lbNomFr, {'label_attr': {'class': 'required'}}) }}
+                                                                            {{ form_row(bloc.lbNomEn, {'label_attr': {'class': 'required'}}) }}
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <a data-dismiss="modal" href="#">Annuler</a>
+                                                                            <a href="#" data-id=""  id="submitTerme" class="add-edit-ns">Ajouter</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                  <div class="row">
+                                                            <div class="col-sm-1"></div>
+                                                            <div class="col-sm-8">
+
+                                                                <div class="fixed-table-container">
+                                                                    <div class="fixed-table-body">
+ <table class="table table-striped">
+                                     <thead>
+                                         <tr>
+                                              <th scope="col">Terme Français</th>
+
+                                              <th scope="col">English Term</th>
+                                              <th data-field="action">Action</th>
+                                          </tr>
+                                     </thead>
+                                    <tbody>
+                                        {% for terme in tgMcLibre %}
+                                            <tr>
+                                                <td>{{ terme.lbNom }}</td>
+
+                                                <td>{{ terme.lbNomEn }}</td>
+                                                <td>
+                                                   <a href="#" data-id="{{ terme.idMcLibre }}" class="edit-mclibre">
+                                                          <span class="fa fa-edit" ></span></a>
+                                                              |
+                                                    <a href="#" class="delete-nonsouhaite">
+                                                          <span class="fa fa-trash-o text-danger" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#deleteNotif{{ loop.index }}"></span></a>
+                                                </td>
+                                            </tr>
+
+
+                                                <div id="deleteNotif{{ loop.index }}" class="modal modal-adminpro-general FullColor-popup-DangerModal fade bounceInRight animated deleteNotif" role="dialog">
+                                                                                      <div class="modal-dialog modal-lg" role="document">
+                                                                                         <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1" style="background: #f45846;">
+                    <h4 class="modal-title">Suppression du terme  <b>{{ terme.lbNom }}</b></h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+
+                                                                                            <div class="modal-body">
+{#                                                                                                <span class="adminpro-icon adminpro-danger-error modal-check-pro information-icon-pro"></span>#}
+                                                                                                <h4>Attention !</h4>
+                                                                                                <p>Etes vous sur de vouloir supprimer le terme <b>{{ terme.lbNom }}</b> ?</p>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <a data-dismiss="modal" href="#">Annuler</a>
+                                                                                                <a href="#" data-id="{{ path('mc_libre_del',{'idProjet' :  idProjet, 'idMcLibre' : terme.idMcLibre})  }}" class="delete-ns" >Supprimer</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                        {% endfor %}
+                                    </tbody>
+                                 </table>
+
+                        </div>
+                         </div>
+
+   </div>
+                                                                <div class="col-sm-3">
+                                                                    <a href="#" class="btn btn-sm btn-primary add_mclibre" rel="tooltip">
+                                                                        <i class="fa fa-plus"></i>
+                                                                        {{ 'bloc.form.mclibre.add'|trans }}
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                    <br><br><br>
+                            <div>
+                                <div class="col-md-8 col-sm-3"></div>
+                                <div class="col-md-2 col-sm-3">  <a href="{{ previousblock }}" class="btn btn-primary pull-right"><< Précédent</a> </div>
+                                <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBlocWithoutRedirect, { 'attr': {'class': 'hidden'} }) }} </div>
+                                <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                            </div>
+
+                   <div class="form-group row">
+                        <div class="col-sm-12">
+                           {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                        </div>
+                    </div>
+                    {{ form_end(bloc) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+    $('.add_mclibre').click(function (e) {
+               $('form[name="BlMotCleLibreType"]').trigger("reset");
+               $('.add-edit-ns').data("id", "/fr/soumission/tglibre/{{ idProjet }}");
+               $('#mclibre').modal(
+                   {  backdrop: 'static',
+			          keyboard: false
+		           },
+                   'show');
+           });
+
+   $('#submitTerme').click(function (e) {
+            var path = $(e.target).data('id');
+
+            $.ajax({
+                'url': path,
+                type: 'POST',
+                data:{
+                    'lbNomFr': $("#BlMotCleLibreType_lbNomFr").val(),
+                    'lbNomEn': $("#BlMotCleLibreType_lbNomEn").val(),
+                },
+                  async: true,
+                success: function (data) {
+                    $('.mcLibreFrError').html('');
+                     $('.mcLibreEnError').html('');
+                     if(data.result == 0) {
+                    for (var key in data.data) {
+                      if("lbNom" == data.data[key].field) {
+                          $('#BlMotCleLibreType_lbNomFr').after('<span class="invalid-feedback d-block mcLibreFrError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.data[key].message+'</span></span></span>');
+                      } else {
+                          $('#BlMotCleLibreType_lbNomEn').after('<span class="invalid-feedback d-block mcLibreEnError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.data[key].message+'</span></span></span>');
+                      }
+                    }
+                } else {
+                // Submit OK
+                $('form[name="BlMotCleLibreType"]').trigger("reset");
+                 location.reload();
+                }
+
+                },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  alert('Error : ' + errorThrown);
+                }
+            });
+        });
+
+         $('.edit-mclibre').click(function (e) {
+          var mclibre_id = $(this).data("id");
+          var currentRow=$(this).closest("tr");
+
+          var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+          var col2=currentRow.find("td:eq(1)").text(); // get current row 1st TD value
+
+            $('#BlMotCleLibreType_lbNomFr').val(col1);
+            $('#BlMotCleLibreType_lbNomEn').val(col2);
+
+         $("#submitTerme").text('Modifier');
+         $('.add-edit-ns').data("id", "/fr/soumission/mclibreedit/"+mclibre_id);
+         $('#mclibre').modal(
+              {  backdrop: 'static',
+			     keyboard: false
+		      },
+             'show');
+      });
+
+ $('.delete-ns').click(function (e) {
+            var path = $(e.target).data('id');
+
+            $.ajax({
+                'url': path,
+                type: 'POST',
+                success: function (data) {
+                    console.log(data);
+                    location.reload();
+                },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  alert('Error : ' + errorThrown);
+                }
+            });
+        });
+</script>
+{% endblock %}

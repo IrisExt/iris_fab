@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <title>{% block title %}Bienvenue dans IRIS!{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- favicon
+  ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
+
+    {{ encore_entry_link_tags('app') }}
+
+    {% block stylesheets1 %}{% endblock %}
+    {% block stylesheets %}{% endblock %}
+    {% block style_base %}{% endblock %}
+</head>
+
+<body class="materialdesign">
+<div class="wrapper-pro">
+    <!-- navigateur verticale -->
+    {% include 'navig/leftmenu.html.twig' %}
+    <div class="content-inner-all">
+        <!-- Navigateur Horizontal  user,notification ... -->
+        {# {% if app.session.get('profil') != null %} #}
+        {% include 'navig/header.horiz.html.twig' %}
+        <!-- Navigateur Horizontal bas , page/ ... -->
+        {% include 'navig/header.horiz.bas.html.twig' %}
+        {# {% endif %} #}
+
+        {% include 'navig/mobile.header.html.twig' %}
+        {% include 'navig/header.horiz.non.html.twig' %}
+        {% include 'messagesflash.html.twig' %}
+
+        {% block body %}
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        {% endblock %}
+    </div>
+</div>
+{{ encore_entry_script_tags('app') }}
+{% block jquery %}{% endblock %}
+{% block javascripts1 %}{% endblock %}
+
+{% block javascripts %}{% endblock %}
+
+</body>

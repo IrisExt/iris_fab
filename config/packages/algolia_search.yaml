@@ -1,0 +1,15 @@
+# All available configuration can be found here:
+# https://www.algolia.com/doc/api-client/symfony/configuration/
+algolia_search:
+    prefix: '%env(APP_ENV)%_'
+
+    nbResults: 8                  # Retrieve less results on search (default: 20)
+#    prefix: %env(SEARCH_PREFIX)%  # Use a prefix for index names based en env var
+    doctrineSubscribedEvents: []  # disable doctrine events (turn off realtime sync)
+    indices:
+        - name: lbAcr
+          class: App\Entity\TgComite
+          enable_serializer_groups: true
+
+        - name: idGenre
+          class: App\Entity\TgPersonne

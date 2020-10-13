@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Comites' %}
+{% block title %}{{ 'comite.form.modif'|trans }}{% endblock %}
+  {% block stylesheets1 %}
+      <!-- tabs CSS
+          ============================================ -->
+      <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
+
+  {% endblock %}
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+{#                    <div class="sparkline8-list shadow-reset">#}
+{#                        <div class="sparkline8-hd">#}
+{#                            <div class="main-sparkline8-hd">#}
+{#                                <h1>Membres</h1>#}
+{#                                <div class="sparkline8-outline-icon">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="sparkline8-graph">#}
+{#                            <table class="table">#}
+{#                                <tbody>#}
+{#                                {% for participation in partici %}#}
+{#                                    <tr>#}
+{#                                        <th>{{ participation.idrole }} : </th>#}
+{#                                        <td>#}
+{#                                            <a href="{{ path('tg_participation_edit', {'idParticipation': participation.idParticipation}) }}">{{ participation.idpersonne }}</a>#}
+{#                                        </td>#}
+{#                                        <td> <a href="{{ path('comite_show', {'idComite': tg_comite.idComite}) }}">#}
+{#                                                <span class="fa fa-eye"></span> </a>#}
+{#                                        </td>#}
+{#                                        <td>  <a href="{{ path('comite_edit', {'idComite': tg_comite.idComite}) }}">#}
+{#                                                <span class="fa fa-edit"></span> </a>#}
+{#                                        </td>#}
+{#                                        <td>  <a href="{{ path('comite_edit', {'idComite': tg_comite.idComite}) }}">#}
+{#                                                <span class="fa "></span> </a>#}
+{#                                        </td>#}
+{#                                    </tr>#}
+
+{#                                {% endfor %}#}
+{#                                </tbody>#}
+{#                            </table>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+                <div class="col-lg-6">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'comite.liste.modifcomite'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a href="{{ path('list_comite') }}">{{ 'comite.form.retour'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+
+                            {{ form_start(form, {'attr' : {'methode': 'POST' , 'action' : path('comite_edit', {'idComite' : tg_comite.idComite }) } } ) }}
+                            {{ form_widget(form) }}
+                            <div class="footer-text-right">
+                                <button class="btn btn-primary">{{ 'comite.form.modif'|trans }}</button>
+                            </div>
+                            {{ form_end(form) }}
+
+
+                            {#                            {{ include('comite/gestioncomite/_form.html.twig', {'button_label': 'Modifier'}) }}#}
+                            {#                            {{ include('comite/gestioncomite/_delete_form.html.twig') }}#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block javascripts %}
+        <!-- chosen JS
+              ============================================ -->
+        <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
+        <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,95 @@
+{% trans_default_domain 'Menu' %}
+<!-- Header top area start-->
+{#<div class="wrapper-pro">#}
+    <div class="left-sidebar-pro">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="#"><img src="{{ asset('img/logo_iris.png') }}" alt=""/>
+                </a>
+                <strong>IRIS</strong>
+            </div>
+            <div class="left-custom-menu-adp-wrap">
+                <ul class="nav navbar-nav left-sidebar-menu-pro">
+                    <li class="nav-item">
+                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                           class="nav-link dropdown-toggle">
+                            <i class="fa big-icon fa-home"></i> <span class="mini-dn">Accueil</span>
+                            <span class="indicator-right-menu mini-dn"><i
+                                        class="fa indicator-mn fa-angle-left"></i></span>
+                        </a>
+                        <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                            <a href="{{ path('accueil') }}"
+                               class="dropdown-item">{{ 'menu.barrehoriz.accueil'|trans }}</a>
+                        </div>
+                    </li>
+                    {% if app.user.idpersonne is not null %}     <!-- si user est rattaché à personne" -->
+
+                        {% if accesMenuRole(app.token.roles, "Appel_a_projets") %}
+                            <li class="nav-item">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                   class="nav-link dropdown-toggle">
+                                    <i class="fa big-icon fa-cube"></i> <span class="mini-dn">{{ 'menu.barrehoriz.appelprojet'|trans }}</span>
+                                    <span class="indicator-right-menu mini-dn"><i
+                                                class="fa indicator-mn fa-angle-left"></i></span>
+                                </a>
+                                <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                    <a href="{{ path('tg_appel_proj_index') }}"
+                                       class="dropdown-item">{{ 'menu.barrehoriz.appelprojet'|trans }}</a>
+                                </div>
+                            </li>
+                        {% endif %}
+
+                        <!-- Comite -->
+                        {% if accesMenuRole(app.token.roles, "comites") %}
+                            <li class="nav-item">
+                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                               class="nav-link dropdown-toggle">
+                                <i class="fa big-icon fa-group"></i> <span class="mini-dn">{{ 'menu.barrehoriz.comites'|trans }}</span>
+                                <span class="indicator-right-menu mini-dn"><i
+                                            class="fa indicator-mn fa-angle-left"></i></span>
+                            </a>
+                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                <a href="{{ path('list_comite') }}"
+                                   class="dropdown-item">{{ 'menu.barrehoriz.lstcomite'|trans }}</a>
+                            </div>
+                        </li>
+                        <!-- CES -->
+                        {% if accesMenuRole(app.token.roles, "ces") %}
+                            <li class="nav-item">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                   class="nav-link dropdown-toggle">
+                                    <i class="fa big-icon fa-list-ul"></i> <span class="mini-dn">CES - {{ 'menu.barrehoriz.comite'|trans }}</span>
+                                    <span class="indicator-right-menu mini-dn"><i
+                                                class="fa indicator-mn fa-angle-left"></i></span>
+                                </a>
+                                <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                    <a href="{{ path('select_comite') }}"
+                                       class="dropdown-item">CES - {{ 'menu.barrehoriz.comite'|trans }}</a>
+                                </div>
+                            </li>
+                    {% endif %}
+                        <!-- Administration -->
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                   class="nav-link dropdown-toggle">
+                                    <i class="fa big-icon fa-desktop"></i> <span class="mini-dn">{{ 'menu.barrehoriz.administrateur'|trans }}</span>
+                                    <span class="indicator-right-menu mini-dn"><i
+                                                class="fa indicator-mn fa-angle-left"></i></span>
+                                </a>
+                                <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                    <a href="{{ path('tg_personne_index') }}"
+                                       class="dropdown-item">{{ 'menu.barrehoriz.utilisateur'|trans }}</a>
+                                    <a href="{{ path('index_soumission') }}"
+                                       class="dropdown-item">{{ 'menu.barrehoriz.gestionform'|trans }}</a>
+                                </div>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+{#</div>#}

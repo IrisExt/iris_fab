@@ -1,0 +1,61 @@
+{#x#}{#{% extends 'base.html.twig' %}#}
+{#{% block stylesheets %}#}
+{#    <style>#}
+{#        html, body.materialdesign {#}
+{#            background: #d0e5ff#}
+{#        }#}
+{#    </style>#}
+{#{% endblock %}#}
+{#{% block body %}#}
+
+{#    <div class="col-lg-3">#}
+{#        <div class="sparkline12-list password-mt-b shadow-reset">#}
+{#            <div class="sparkline12-hd">#}
+{#                <div class="main-sparkline12-hd">#}
+{#                    <h1>DOS EM <span class="password-mt-none"></span></h1>#}
+{#                    <div class="sparkline12-outline-icon">#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="sparkline12-graph">#}
+{#                {% for appel in appels %}#}
+{#                    <div class="row">#}
+{#                        <div class="col-lg-8">#}
+{#                            {{ appel }}#}
+{#                        </div>#}
+{#                        <div class="col-lg-4">#}
+{#                            {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : appel.idAppel})) == 1 %} <!-- return true / false -->#}
+{#                                {% set statut = 'En cours ' %}#}
+{#                                {% set btn = 'primary' %}#}
+{#                            {% else %}#}
+{#                                {% set statut = 'Fermé ' %}#}
+{#                                {% set btn = 'danger' %}#}
+{#                            {% endif %}#}
+{#                            <a class="btn btn-{{ btn }} btn-sm"#}
+{#                               href="{{ path('profil_user',#}
+{#                                   {'idAppel': appel.idAppel, 'idNiveauphase' : appel.niveauEnCours.idNiveauPhase, 'idProfil' : 10}#}
+{#                               ) }}"> {{ statut }}#}
+{#                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div><br>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{#    {% for appel in appels %}#}
+{#        <div class="row">#}
+{#            <div class="col-lg-8">#}
+{#                {{ appel }}#}
+{#            </div>#}
+{#            <div class="col-lg-4">#}
+{#                <a class="btn btn-primary btn-sm"#}
+{#                   href="{{ path('assignment_appel', {'idAppel': appel.idAppel}) }}">#}
+{#                    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>#}
+{#            </div>#}
+{#        </div><br>#}
+{#    {% endfor %}#}
+
+{#{{ render(controller('App\\Controller\\WidgetController:widgetAppel')) }}#}
+{#{% endblock %}#}

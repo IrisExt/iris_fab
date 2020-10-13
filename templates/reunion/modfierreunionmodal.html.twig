@@ -1,0 +1,74 @@
+{% trans_default_domain 'Reunion' %}
+
+{{ form_start(form, {'id': 'modifreunion', 'action': path('modif_reunion', { 'idReunion' : idReunion}), 'attr': {'id': 'modifierReu'}, 'method': 'POST'}) }}
+
+    {{ form_widget(form.idAppel) }}
+    {{ form_row(form.idPhase) }}
+    {{ form_row(form.lbTitre) }}
+    {{ form_row(form.idPhase) }}
+    {{ form_row(form.idTypeReunion) }}
+    {{ form_row(form.txComment) }}
+<div class="form-group row">
+    <div class="col-sm-3">
+        <label class=""> Période autorisée</label>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group data-custon-pick data-custom-mg" id="data_periode">
+            <div class="input-daterange input-group" id="datepicker">
+                <span class="input-group-addon">du</span> {{ form_widget(form.dtDebPeriode) }}
+                <span class="input-group-addon">au</span>
+                {{ form_widget(form.dtFinPeriode) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-3">
+        <label class=""> Durée max. </label>
+    </div>
+    <div class="col-sm-4">
+        {{ form_widget(form.nbDureeMax) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-1">
+        <div class="i-checks pull-left">
+            {{ form_row(form.blObligatoire) }}  </label>
+        </div>
+    </div>
+    <div class="col-sm-4"><b>Obligatoire</b> </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    <button type="submit" name="update"  id="submitBtn" class="btn btn-primary">modifier</button>
+</div>
+{{ form_end(form) }}
+{#<script>#}
+
+{#    $('#modifierReu').submit(function(e){#}
+{#        e.preventDefault();#}
+{#            var date1 = document.getElementById("#modifierReu .reunion_dtDebPeriode").value.split("/").reverse().join("-");#}
+{#            var date2 = document.getElementById("reunion_dtFinPeriode").value.split("/").reverse().join("-");#}
+{#            var dateMax = document.getElementById("reunion_nbDureeMax").value;#}
+{#            var datedb = new Date(date1);#}
+{#            var datefn = new Date(date2);#}
+{#            var diffDays = parseInt((datefn - datedb) / (1000 * 60 * 60 * 24), 10);#}
+
+{#            if(datedb > datefn){#}
+{#                alert('La date début est supérieure à la date fin');#}
+{#                return false;#}
+{#            }#}
+{#            if(diffDays < dateMax) {#}
+{#                alert("La duréee Max. est supérieure à la période autorisée");#}
+{#                return false;#}
+{#            }#}
+
+{#        $('#modifierReu #submitBtn').prop('disabled', true);#}
+{#        $(this).unbind('submit').submit();#}
+{#    });#}
+
+
+{#</script>#}

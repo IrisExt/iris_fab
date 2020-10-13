@@ -1,0 +1,23 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<img src="{{ absolute_url(asset('img/logo/logo_iris_150.png')) }}">
+<h3>[ANR] : Email de confirmation de création d'un compte IRIS.</h3>
+
+Bonjour,<br>
+Vous venez de créer un compte sur IRIS.<br>
+<i>You recently created an account at IRIS.</i>
+<br><br>
+
+Afin d'activer votre compte,<br>
+<i>To activate your account,</i><br><br>
+
+Veuillez d'abord confirmer votre adresse email en cliquant sur le lien d'activation .<br>
+<i>Please confirm your email address by clicking the activation link from the confirmation e-mail.</i><br><br>
+
+{{ confirmation_email }}
+
+<br><br>
+Merci<br>
+<i>Thanks!</i>
+
+

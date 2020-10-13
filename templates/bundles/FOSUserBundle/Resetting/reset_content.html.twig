@@ -1,0 +1,71 @@
+{#{% trans_default_domain 'FOSUserBundle' %}#}
+{#{% block body %}#}
+{#    <main class="login-form">#}
+{#        <div class="cotainer">#}
+{#            <div class="row justify-content-center">#}
+{#                <div class="col-md-6">#}
+{#                    <div class="card">#}
+{#                        <div class="card-header">Connexion</div>#}
+{#                        <div class="card-body">#}
+{#                            {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}#}
+{#                            {{ form_widget(form) }}#}
+{#                            <div>#}
+{#                                <input type="submit" value="{{ 'resetting.reset.submit'|trans }}"/>#}
+{#                            </div>#}
+{#                            {{ form_end(form) }}#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </main>#}
+{#{% endblock %}#}
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends 'bundles/FOSUserBundle/base.login.html.twig' %}
+  {% block stylesheets %}
+      <style>
+          body{
+              background-color: #d0e5ff;
+          }
+      </style>
+  {% endblock %}
+{% block body %}
+    <div class="text-center">
+        <div class="sidebar-header">
+            <a href="#"><img src="{{ asset('img/logo_iris.png') }}" alt="irsi" width="8%" />
+            </a>
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'en'}))) }}">
+                <img width="15" src="{{ asset('img/en.png') }}" alt="en" title="English">
+            </a>
+
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'fr'}))) }}">
+                <img width="15" src="{{ asset('img/fr.png') }}" alt="fr" title="Français">
+            </a>
+            <div class="col-lg-2 offset-lg-7 text-right"><a href="{{ path('accueil') }}">retour</a></div>
+            <div class="col-lg-2 offset-lg-7 text-right">
+            </div>
+        </div>
+    </div>
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">{{ 'resetting.request.submit'|trans }} </div>
+                        <div class="card-body">
+                            {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+                            {{ form_widget(form) }}
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                    <input type="submit" class="btn btn-primary" value="{{ 'resetting.request.submit'|trans }}"/>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

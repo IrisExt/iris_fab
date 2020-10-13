@@ -1,0 +1,81 @@
+{% extends 'cvPersonne/menubloc.html.twig' %}
+
+{% block titre_cv %}Fonction et identifiants chercheurs {% endblock %}
+{% block cv %}
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="text-center">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="sparkline8-list shadow-reset">
+{#                <div class="sparkline8-hd" style="background-color: #dfdfdf">#}
+{#                    <div class="main-sparkline8-hd">#}
+{#                        <h1> Fonction et identifiants chercheurs</h1>#}
+{#                        <div class="sparkline9-outline-icon">#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="sparkline8-graph">
+
+                    {{ form_start(form_fonct) }}
+                    {{ form_widget(form_fonct) }}
+                    {{ form_row(form_fonct.orcid) }}
+
+                    <div class="footer-text-right">
+                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    </div>
+
+                    {{ form_end(form_fonct) }}
+
+{#                    <form method="post" action="{{ path('org_add_cv_poste') }}">#}
+{#                        <div class="input-knob-dial-wrap">#}
+{#                            <div class="form-group row">#}
+{#                                <label class="col-form-label col-sm-4 required">Fonction: </label>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <select class="fonction_cv" id="tr_fonction" name="tr_fonction[idfonction]" required="required" >#}
+{#                                        <option value="{{ cv_fonction.idFonction.idFonction|default('') }}" selected>{{ cv_fonction.idFonction|default('Choisir une fonction') }}</option>#}
+{#                                        {% for fonction in fonctions %}#}
+{#                                            <option value="{{ fonction.idFonction }}">{{ fonction.lbNomFr }}</option>#}
+{#                                        {% endfor%}#}
+{#                                    </select>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="form-group row">#}
+{#                                <label class="col-form-label col-sm-4">Identifiant ORCID : </label>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <input class="form-control" type="text" name="identif_orcid" value="{{ personne.orcid }}">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="form-group row">#}
+{#                                <label class="col-form-label col-sm-4">Identifiant Chercheur : </label>#}
+{#                                <div class="col-sm-6">#}
+{#                                    <input class="form-control" type="text" name="identif_chercher" value="{{ cv_fonction.idChercheur }}">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="footer-text-right">#}
+{#                                <button type="submit" class="btn btn-primary btn-xs">Enregistrer</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </form>#}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts_add %}
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script>
+    $(function() {
+        $("#tg_cv_fonction_idHal").keyup(function() {
+            $(this).val($(this).val().replace(/\s/g, '-'));
+        });
+        $("#tg_cv_fonction_idRef").keyup(function() {
+            $(this).val($(this).val().replace(/\s/g, '-'));
+        });
+    });
+</script>
+{% endblock %}
+

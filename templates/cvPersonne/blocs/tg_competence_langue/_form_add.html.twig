@@ -1,0 +1,14 @@
+{% if langueNotInUser is empty %}
+<div class="alert alert-warning"><p>Aucune langue à ajouter</p></div>
+    <div class="modal-footer">
+         <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+    </div>
+{% else %}
+{{ form_start(form, { 'action': path('cv_add_ddrec')} ) }}
+{{ form_widget(form) }}
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+</div>
+{{ form_end(form) }}
+{% endif %}

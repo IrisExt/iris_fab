@@ -1,0 +1,41 @@
+<div class="breadcome-area mg-b-30 small-dn">
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sparkline8-list shadow-reset">
+                <div class="sparkline8-hd" style="background: #b7b8e1">
+                    <div class="main-sparkline8-hd">
+                        <h1> Appel à projet : <b> {{ appel }} </b></h1>
+                        <div class="sparkline8-outline-icon">
+                            <a href="{{ path('assignment_appel', {'idAppel' : appel.idAppel}) }}">{{ 'action.list'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline8-graph">
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Classe </th>
+                                <th>Formulaire</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for form in formulaire %}
+                                <tr>
+                                    <td>{{ form.idClasseFormulaire }}</td>
+                                    <td>{{ form.lbFormulaire }}</td>
+                                    <td><a  href="{{ path('add-form', {'idAppel' : appel.idAppel, 'idFormulaire' : form.idFormulaire })}}"> Ajouter </a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

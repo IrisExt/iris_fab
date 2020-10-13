@@ -1,0 +1,76 @@
+{% if nbseance == false %}
+    <div class="modal-body">
+        <span class="adminpro-icon adminpro-warning-error modal-check-pro information-icon-pro">
+            <h2 class="modal-title">Attention</h2></span>
+        <div class="text-center">Impossible d'ajouter une séance <br> la durée maximum est de<b> {{ dureemax }} </b> Jour(s)</div>
+    </div>
+    <div class="footer-text-right">
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#seanceModal" data-dismiss="modal" data-id="{{ path('show_seance',{'idComite' : idcomite.idComite }) }}">Fermer</button>
+    </div>
+
+{% else %}
+
+    {{ form_start(form, {'action': path('add_seance', {'idReunion' : idreunion.idReunion, 'idComite' : idcomite.idComite}), 'attr': {'id': 'ajouterSeance'} ,'method': 'POST'}) }}
+
+    <input type="hidden" id="idReunion_" value="{{ idreunion.idReunion }}">
+    <input type="hidden" id="idcomite_" value="{{ idcomite.idComite }}">
+    <input type="hidden" id="datdebut" value="{{ datedebut|date('Y-m-d') }}">
+    <input type="hidden" id="dateFin" value="{{ datefin|date('Y-m-d') }}">
+    <p class="text-center text-danger"> <b>Période Autorisée : {{ datedebut|date('d/m/Y') }}</b> Au <b>{{ datefin|date('d/m/Y') }}  </b></p><br>
+
+    <!-- variable envoyées vers JS controller debut et fin date-->
+    <a href="#" data-id="{{ datedebut|date('Y-m-d') }}" id="date-debut"></a>
+    <a href="#" data-id="{{ datefin|date('Y-m-d') }}" id="date-fin"></a>
+    <!-- fin -->
+    {{ form_row(form.idReunion) }}
+    <div class="form-group row">
+        <label class="col-form-label col-sm-3 required" for="seance_idReunion">Date</label>
+
+        <div class="col-lg-6">
+            <div class="form-group data-custon-pick" id="data_1">
+                <div class="input-group date">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    {{ form_widget(form.dtSeance) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% if demiJ == true %}
+        <div class="text-center"><p class="text-danger"> Il vous reste une demi journée ! </p></div>
+        <input id="demi" type="hidden" value="demiJ">
+    {% endif %}
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3">
+            <div class="i-checks pull-left">
+                <label>{{ form_widget(form.matin) }}  </label>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="i-checks pull-left">
+                <label>{{ form_widget(form.apresMidi) }}  </label>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container1">
+    </div>
+
+    <div class="footer-text-right">
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#seanceModal" data-dismiss="modal" data-id="{{ path('show_seance',{'idComite' : idcomite.idComite }) }}">Fermer</button>
+        <button class="btn btn-primary" id="submitBtn" type="submit" >Ajouter</button>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endif %}
+
+<script>
+    $('*[id*=close_addSeance]').click(function(){
+        var path = $(this).data('id');
+        // alert('ok');
+    });
+</script>
+

@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+
+{% endblock %}
+{% block body %}
+
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="text-center">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="sparkline8-list shadow-reset">
+                <div class="sparkline8-hd" style="background-color: #dfdfdf">
+                    <div class="main-sparkline8-hd">
+                        <h1>{{ comite }} : Paramétrage du questionnaire du choix des projets par les membres du comité</h1>
+                        <div class="sparkline9-outline-icon">
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline8-graph">
+                    {% if avisComites == null %}
+                    <div class="alert alert-warning"> Le questionnaire n'est pas disponible !  </div>
+                        <div class="footer-text-right"> <a class="btn btn-secondary" href="{{ path('accueil') }}">Retour</a></div>
+                    {% else %}
+                    <form method="post" action="{{ path('quest_mmbre', {'idComite': comite.idComite }) }}">
+                        <table class="table table-responsive table-bordered">
+                            <tr>
+                                <th rowspan="2" colspan="2" class="text-center">Avis possible</th>
+                                <th colspan="2" class="text-center">% Cible</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">min</th>
+                                <th class="text-center">Max</th>
+                            </tr>
+                            {% for avisComite in avisComites %}
+                                <tr>
+                                    {% if  avisComite.cdAvis.lbNomFr != 'Conflit' %}
+                                    <td class="text-center">{{ avisComite.cdAvis.lbNomFr|capitalize }}</td>
+                                    <td class="text-center"
+                                        style="background-color: {{ avisComite.cdAvis.cdCouleur }}">{% if avisComite.cdAvis.codeAvis != '=' %}{{ avisComite.cdAvis.codeAvis }}{% endif %}</td>
+                                    <td class="text-center">{{ avisComite.pourcentMin }} </td>
+                                    <td class="text-center">{{ avisComite.pourcentMax }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <div class="footer-text-right">
+                            <a class="btn btn-secondary" href="{{ path('accueil') }}">Retour</a>
+                            {% if comite.questPublie != true %}
+                            <a id="publier"  class="btn btn-primary" data-id="{{ path('quest_mmbre', {idComite : comite.idComite}) }}" >Publier le questionnaire</a>
+                            {% else %}
+                            <a class="btn btn-primary" disabled="disabled">Publier le questionnaire</a>
+                            {% endif %}
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/emodal/eModal.js')}}"></script>
+<script>
+    $(document).on("click", "#publier", function () {
+        var path = $(this).data('id');
+        var options = {
+            url: path,
+            message: "Voulez-vous publier ce questionnaire ?",
+            title: 'Confirmation',
+            size: eModal.size.sm,
+            subtitle: 'smaller text header',
+            label: "Valider"
+        };
+        eModal.confirm(options)
+            .then(function(){ $("form").submit(); },
+                function(){  }
+            );
+    });
+</script>
+{% endblock %}

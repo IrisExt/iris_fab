@@ -1,0 +1,77 @@
+{% block tutGes %}
+    <div id="tutGest" class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-close-area modal-close-df">
+                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                </div>
+                <div class="modal-body" id="scrollmodal">
+                    <div class="add-part-label">
+                        <div class="main-sparkline8-hd">
+                            <h1>Tutelle Gestionnaire du partenaire habilitée à recevoir l'acte attributif</h1>
+                        </div>
+                    </div>
+
+                    {{ form_start(tutGesForm) }}
+
+                    {{ form_row(tutGesForm.siret) }}
+                    {{ form_row(tutGesForm.name_tut_gest) }}
+                    {{ form_row(tutGesForm.sigle) }}
+                    {{ form_row(tutGesForm.adress_tut_gest) }}
+                    {{ form_row(tutGesForm.compl_adress_tut_gest) }}
+                    {{ form_row(tutGesForm.postal_code_tut_gest) }}
+                    {{ form_row(tutGesForm.country_tut_g) }}
+                    {{ form_row(tutGesForm.city_tut_g) }}
+
+                    {{ form_end(tutGesForm) }}
+
+                </div>
+                <div class="modal-footer">
+                    <a data-dismiss="modal" href="#">Annuler</a>
+                    <a href="#" data-id="{{ path('tutGest_add', {'idProjet' : idProjet}) }}" id="submitTutGest"
+                       class="add-part">Ajouter</a>
+                    <a id="nextTutGest" data-dismiss="modal" data-toggle="modal" href="#respSc">Suivant</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+ {% block javascripts %}
+     <script>
+
+         $('#submitTutGest').click(function (e) {
+             var path = $(e.target).data('id');
+             $.ajax({
+                 'url': path,
+                 type: 'POST',
+                 data:{
+                     'siret_tut_gest': $("#BlTutGesType_siret").val(),
+                     'name_tut_gest': $("#BlTutGesType_name_tut_gest").val(),
+                     'sigle': $("#BlTutGesType_sigle").val(),
+                     'adress_tut_gest': $("#BlTutGesType_adress_tut_gest").val(),
+                     'compl_adress_tut_gest': $("#BlTutGesType_compl_adress_tut_gest").val(),
+                     'postal_code_tut_gest': $("#BlTutGesType_postal_code_tut_gest").val(),
+                     'city_tut_gest': $("#BlTutGesType_country_tut_g").val(),
+                     'country_tut_gest': $("#BlTutGesType_city_tut_g").val(),
+
+                     'type_part': $("#BlPartenariatType_type_part").val(),
+                     'id_part': $("#BlPartenariatType_id_part").val(),
+
+                 },
+                 success: function (data) {
+                     $("#BlPartenariatType_id_part").val(data['partenaireId']);
+                     $('form[name="BlTutGesType"]').trigger("reset");
+
+                     $('#tutGest').modal('hide');
+                     $('#respSc').modal('show');
+
+                 },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                     alert('Error : ' + errorThrown);
+                 }
+             });
+         });
+
+     </script>
+ {% endblock %}

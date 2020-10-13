@@ -1,0 +1,16 @@
+menu:
+  barrehoriz:
+    accueil: 'Homepage'
+    creerAppelPro: 'Créer un Appel à projet'
+    appelprojet: 'Calls for Projects'
+    parameterForm : 'paramétrage formulaires'
+    comite: 'Committee'
+    creercomite: 'Create a committee'
+    lstcomite: 'List of committees'
+    administrateur: 'Administration'
+  compte:
+    profil: 'Mon profils'
+    role: 'Roles'
+    deconnexion: 'Disconnection'
+
+

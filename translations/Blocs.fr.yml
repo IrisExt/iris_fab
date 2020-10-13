@@ -1,0 +1,86 @@
+bloc:
+  title: 'Soumission'
+  form:
+    blinstfi:
+      title: 'Instrument'
+      instrument: 'Instrument (obligatoire)'
+      cooperation: "Coopération internationale dans le cadre d'un accord bilatéral"
+      instrumentHolder: 'Veuillez choisir un instrument'
+      agenceHolder:  'Veuillez choisir une agence'
+    blidentproj:
+      title: 'Identité du projet'
+      acronyme: 'Acronyme (40 car max.)'
+      titre_fr: 'Titre projet Fr'
+      titre_en: 'Titre projet En'
+      duree: 'Durée du projet'
+      type_recherche: 'Type recherche'
+      instrument: 'Instrument'
+      ces_selectionne: 'CES selectionné'
+      montant_prov: 'Montant provisionnel d’aide (en K€)'
+      comite: 'Veuillez choisir un comité'
+    blpolcompt:
+      title: 'pôles de compétitivité'
+      dem_label: 'Souhaitez vous que votre projet soit labelisé par un ou des poles de compétitivité'
+    blinfrarech:
+      title: 'Infrastructure(s) de recherche'
+      choix_infra: 'Le projet fait il appel à une ou plusieurs infrastructure de recherche'
+    blcofin:
+      title: 'Cofinancement'
+      choix_cof: "Prévoyez vous de soliciter un cofinancement avec un partenaire de l'ANR"
+    blnonsouh:
+      add: 'Ajouter un Expert/Organisme non souhaité'
+      title: 'Experts non souhaités'
+      nom: 'Nom'
+      prenom: 'Prènom'
+      courriel: 'Courriel'
+      organisme: 'Nom complet du laboratoire/Entreprise'
+      'motif': 'Motif'
+    blparticipants:
+      respsc: 'Responsable scientifique'
+      resp: 'Resp. sc'
+      add: 'Ajouter une personne'
+      civ: 'Civilité'
+      nom: 'Nom'
+      prenom: 'Prènom'
+      email: 'Courriel'
+      orcid: 'ORCID'
+    mcle:
+      fr: 'Terme français'
+      en: 'Terme anglais'
+    resume:
+      fr: 'Résumé (non confidentiel) en français'
+      en: 'Résumé (non confidentiel) en anglais'
+    docsc:
+      inflang: 'Information sur la langue de rédaction de la pré-proposition'
+      file: 'Fichier'
+    blpartenaire:
+      etab: "Nom de l'établissement"
+      hebergeur: 'Organisme hébergeur'
+      laboratoire: 'Laboratoire'
+      tutelle: 'Tutelle Gestionnaire'
+      personnel: 'Participants'
+      montantAide: "Montant d'aide"
+      tauxAide: "Taux d'aide"
+      respScientifique: 'R. Scientifique'
+      dirLabo: 'Dir. Unité'
+      respAdmin: 'R. administratif and Financier'
+      coordFr: 'Coord. Fr'
+      coordEtr: 'Coord. Etr'
+      pays: 'Pays'
+      ville: 'Ville'
+      respJuridique: 'R. Juridique'
+    mclibre:
+      add: 'Ajouter un terme'
+    partenariat:
+      add: 'Ajouter un partenaire'
+  booklet:
+    outil: 'Outil de financement'
+    category: 'Catégorie R&D'
+    aide: 'Aide'
+    duree: 'Durée'
+    Exp_recuse: Expert recusés
+    resume: Résumé
+    motCleErc: Mot clé ERC
+    motCleCmte: Mot clé Comité
+    motCleLibre: Mot clé libre
+    consortium: Consortium

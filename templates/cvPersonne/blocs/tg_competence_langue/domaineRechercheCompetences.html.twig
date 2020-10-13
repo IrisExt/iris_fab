@@ -1,0 +1,147 @@
+{% extends 'cvPersonne/menubloc.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/duallistbox/bootstrap-duallistbox.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+    <!-- modals CSS
+        ============================================ -->
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/tree-multiselect/jquery.tree-multiselect.min.css') }}" />
+{% endblock %}
+    {% block style_menu_cv %}
+<style>
+    div.select-all-container {
+        visibility: hidden;
+    }
+    th {
+        background-color: #369;
+        color: white;
+    }
+    div.tree-multiselect div.title {
+        background: #369 !important;
+    }
+    div.tree-multiselect span.remove-selected, div.tree-multiselect span.description{
+        background: #88a5c1;
+    }
+    div.tree-multiselect > div.selected > div.item{
+        background: #369;
+        color:#fff;
+    }
+    div.tree-multiselect .auxiliary {padding-bottom: 15px;}
+    div.tree-multiselect span.remove-selected, div.tree-multiselect span.description {
+        background:
+                #ce5454;
+    }
+</style>
+    {% endblock %}
+  {% block titre_cv %}domaine de recherche et compétence {% endblock %}
+   {% block cv %}
+       <div class="col-lg-12">
+                   <div class="sparkline8-graph">
+                       <div class="col-lg-8 col-lg-offset-2">
+                           <div class="text-center">
+                               <p>Mot-clés disciplinaires (issus de l'ERC)<br>
+                               {{ NbErcMax }}  mots clés ERC ordonnés au maximum<br>
+                               <small>(Pour ordonner vos mots clés, amenez la souris sur les blocs à droite et effectuez un glissé-déposé pour effectuer votre tri)</small>
+                               </p>
+                           </div>
+                       </div>
+                       {{ form_start(form) }}
+                       {% if CatMcErcs|length > 0 %}
+                           <select id="test-select" multiple="multiple" >
+                               {% for CatMcErc in CatMcErcs %}
+                                   {% for DiscMcErc in CatMcErc.TrDiscErcs %}
+                                       {% for TgMcErc in DiscMcErc.TgMcErcs %}
+                                           <option value="{{ TgMcErc.idMcErc }}"
+                                                   {% if tlPersonneMcErc|length > 0 %}
+                                                       {% for PersMcS in tlPersonneMcErc %}
+                                                           {% if PersMcS.idMcErc.idMcErc == TgMcErc.idMcErc %}
+                                                               selected
+                                                            name="bloc[McErc][]"
+                                                           {% endif %}
+                                                       {% endfor %}
+                                                   {% endif %}
+                                                   data-section="{{ CatMcErc.lbCatErc }}/{{ DiscMcErc.lbDiscErc }}">{{ TgMcErc.lbNomFr }}
+                                           </option>
+                                       {% endfor %}
+                                   {% endfor %}
+                               {% endfor %}
+                           </select>
+                           <br>
+                           <small class="text-danger"><span> * </span>Le nombre de mot clé ERC sélectionnés doit être inférieur ou égal à {{NbErcMax}} </small>
+                       {% else %}
+                           <i class="indicator glyphicon glyphicon-folder-close"></i>
+                           <p>Aucun mot clé Erc n'a été trouvé...</p>
+                       {% endif %}
+                       {{ form_row(form.DataForm, {'label_attr': {'class': 'required'}, 'attr':{'value' : 'null', 'type' : 'hidden'} }) }}
+                       <div class="col-lg-2 col-lg-offset-8">
+                           <button type="submit" id="submit_McErc" class="btn btn-primary ">Enregistrer</button>
+                       </div>
+                       {{ form_end(form) }}
+                   </div>
+               <br/>
+           </div>
+       </div>
+   {% endblock %}
+ {% block javascripts_add %}
+           <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+           <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+           <script src="{{ asset('js/tree-multiselect/jquery.tree-multiselect.min.js') }}"></script>
+
+{#           <script src="{{ asset('js/jquery-ui.js') }}"></script>#}
+           <!-- modal JS
+                  ============================================ -->
+           <script src="{{ asset('js/modal-active.js') }}"></script>
+
+
+
+           <script>
+               $(document).ready(function () {
+                   $('[name="mot_cle_erc"]').submit(function() {
+                       var formBox = $('#test-select').val();
+                       if(formBox == null){
+                           alert('Aucun mot clé Erc séléctionné !');
+                           return false                       }
+                       $(function(){
+                       $('#mot_cle_erc_DataForm').val(formBox);
+                       });
+
+                   });
+                   var tree4 = $("#test-select").treeMultiselect({
+                       allowBatchSelection: false,
+                       enableSelectAll: true,
+                       maxSelections: {{NbErcMax}},
+                       searchable: true,
+                       sortable: true,
+                       startCollapsed: true,
+                       selectAllText: false,
+                       unselectAllText: false
+                       // freeze: true
+                   });
+                   $('#test-select').change(function (e) {
+                       var selectobject = $("[id*=treemultiselect-0-]:checked");
+
+                       $('#mot_cle_ers_idMcErc').val( '' );
+
+                       for(i=0;i<selectobject.length;i++) {
+                           var item = $(selectobject[i]).parent().data("value");
+
+                           $('#mot_cle_ers_idMcErc option[value='+item+']').prop('selected','selected');
+
+                       }
+
+                       var size = $('#test-select').find(":selected").size();
+                       if(size >= {{NbErcMax}}){
+                           $('input[id*="treemultiselect"]').attr('disabled', true);
+                           tree4.treeMultiselect('refresh', true);
+                       } else {
+                           $('input[id*="treemultiselect"]').attr('disabled', false);
+                           tree4.treeMultiselect('refresh', true);
+                       }
+                   });
+
+            })
+           </script>
+       {% endblock %}

@@ -1,0 +1,80 @@
+{#{% trans_default_domain 'Personne' %}#}
+{#{% trans_default_domain 'FOSUserBundle' %}#}
+{% trans_default_domain 'projetPorteur' %}
+{% extends "bundles/FOSUserBundle/layout.html.twig" %}
+  {% block stylesheets %}
+<style>
+    body{
+        background-color: #d0e5ff;
+    }
+    .coin {
+        background-color:#E4EFFF;
+        border:1px solid #ff0022;
+        padding:5px;
+        /*arrondir les coins en haut à gauche et en bas à droite*/
+        -moz-border-radius:10px 0;
+        -webkit-border-radius:10px 0;
+        border-radius:10px 0;
+    }
+</style>
+  {% endblock %}
+{% block body %}
+
+    <br>
+    <div class="text-center">
+        <div class="sidebar-header">
+            <a href="#"><img src="{{ asset('img/logo_iris.png') }}" alt="irsi" width="8%" />
+            </a>
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'en'}))) }}">
+                            <img width="15" src="{{ asset('img/en.png') }}" alt="en" data-title="English">
+                        </a>
+
+                        <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'fr'}))) }}">
+                            <img width="15" src="{{ asset('img/fr.png') }}" alt="fr" data-title="Français">
+                        </a>
+            <div class="col-lg-2 offset-lg-7 text-right">
+                <a class="btn btn-link" href="{{ path('accueil') }}">{{ 'enregistrement.compte.login'|trans }} >></a>
+            </div>
+
+
+            <strong> </strong>
+        </div>
+        <br>
+        <div class="col-md-6 offset-md-3">
+        <p class="coin text-danger" style="font-size:13px"> A noter:<br><br>
+
+            - Les données saisies sur cette page doivent être correctement renseignées. Elles ne seront pas modifiables.
+            <br><br>
+            - Vous recevrez un email de création de compte, il est possible que ce dernier se retrouve dans votre boîte de courriers indésirables (SPAM) et/ou que vous deviez activer les liens qu'il contient.
+        </p>
+            <p style="font-size:11px">{{'enregistrement.compte.note'|trans}}</p>
+        </div>
+    </div>
+    <main class="login-form">
+        <div class="cotainer">
+
+            <div class="row justify-content-center">
+
+                <div class="col-md-6">
+                    {{ include('messagesflash.html.twig') }}
+                    <div class="card">
+                        <div class="card-header text-center" style="background-color:#007bff;">{{'enregistrement.compte.titreform'|trans}}</div>
+                        <div class="card-body">
+
+                            {{ form_start(form, {'method': 'post', 'action': path('register_sc', {token:token}), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                            {{ form_row(form.email, { 'attr':{'disabled':'disabled'} }) }}
+                            {{ form_row(form.nom, {'value' : nom} ) }}
+                            {{ form_row(form.prenom) }}
+                            {{ form_row(form.plainPassword) }}
+                            <div class="col-md-3 offset-md-7">
+                                <input class="btn btn-primary" type="submit" value="{{ 'enregistrement.compte.enregistrer'|trans }}" />
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+

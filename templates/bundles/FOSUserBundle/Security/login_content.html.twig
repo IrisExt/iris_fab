@@ -1,0 +1,93 @@
+{% extends "bundles/FOSUserBundle/layout.html.twig" %}
+{% trans_default_domain 'projetPorteur' %}
+  {% block stylesheets %}
+      <style>
+          body{
+              background-color: #d0e5ff;
+          }
+      </style>
+  {% endblock %}
+{% block body %}
+    <div class="text-center">
+        <div class="sidebar-header">
+            <a href="#"><img src="{{ asset('img/logo_iris.png') }}" alt="irsi" width="8%" />
+            </a>
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'en'}))) }}">
+                <img width="15" src="{{ asset('img/en.png') }}" alt="en" title="English">
+            </a>
+
+            <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge(app.request.query.all|merge({_locale: 'fr'}))) }}">
+                <img width="15" src="{{ asset('img/fr.png') }}" alt="fr" title="Français">
+            </a>
+            <div class="col-lg-2 offset-lg-7 text-right">
+
+            </div>
+        </div>
+    </div>
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header text-center">{{'layout.login'|trans}}</div>
+                            <div class="card-body">
+                                    {% if error %}
+                                <div class="alert alert-danger" role="alert">
+                                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                                </div>
+                                    {% endif %}
+
+                                    <form action="{{ path("fos_user_security_check") }}" method="post">
+                                        {% if csrf_token %}
+                                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                                        {% endif %}
+                                        <div class="form-group row">
+                                                   <label for="username" class="col-md-4 col-form-label text-md-right" >{{ 'form.email'|trans }}</label>
+                                             <div class="col-md-6">
+                                                   <input type="text"  class="form-control" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+                                                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ 'security.login.password'|trans }}</label>
+                                            <div class="col-md-6">
+                                                    <input type="password" class="form-control" id="password" name="_password" required="required" autocomplete="current-password" />
+                                            </div>
+                                        </div>
+{#                                        <div class="form-group row">#}
+{#                                            <div class="col-md-6 offset-md-4">#}
+{#                                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />#}
+{#                                                 <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>#}
+{#                                            </div>#}
+{#                                        </div>#}
+                                        <div class="row">
+                                            <div class="col-md-3 offset-md-4">
+                                                 <span> <a href="{{ path('fos_user_resetting_request') }}" style="font-size: 11px">Mot de passe oublié ?</a></span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input type="submit" class="btn btn-primary" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                <div class="col-md-10 offset-md-2">
+                               <p style="font-size: 11px"> {{ 'loginCust.depo'|trans }} <a href="http://www.agence-nationale-recherche.fr/AAPProjetsOuverts"> {{ 'loginCust.siteAnr'|trans }} </a> .</p>
+                                <p style="font-size: 11px">
+{#                                    Pour tout renseignement, veuillez contacter la personne responsable de l'Appel à projets :  Contacts   FAQ  <br><br>#}
+                                   {{ 'loginCust.depotProjet'|trans}} <a href="{{ path('register_ext') }}" > {{'loginCust.creerCompte'|trans}} </a> <br>
+                                </p>
+
+{#                                <p style="font-size: 10px"><b>Remarques :</b><br>#}
+{#                                    * Il est conseillé d'autoriser les popups pour ce site depuis le paramétrage de votre navigateur.<br>#}
+{#                                    * Les cookies et Javascript doivent être autorisés pour ce site pour un fonctionnement normal.</p>#}
+
+
+                              </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+{% endblock %}

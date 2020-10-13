@@ -1,0 +1,175 @@
+{% if count_reun != 0 %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Phase</th>
+            <th>Type</th>
+            <th>Oblig.</th>
+            <th colspan="2">Période Autorisée</th>
+            <th>Durée Max (j)</th>
+            <th>Date réunion</th>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for reunion in reunions %}
+
+            <tr>
+                <td>{{ reunion.idphase.idPhaseRef.lbNom }}</td>
+                <td>{{ reunion.idtypereunion }}</td>
+                <td>{{ reunion.blobligatoire ? 'Oui' : 'Non' }}</td>
+                <td>{{ reunion.dtdebperiode|date("d/m/Y") }}</td>
+                <td>{{ reunion.dtfinperiode|date("d/m/Y") }}</td>
+
+                <!-- affichage des dates séance et actions -->
+                <td><b><i style="color: blue"> {{ reunion.nbdureemax }} </i></b> Jour(s) </td>
+                <td>
+
+                    {% set seanceExiste = "" %} <!-- initialiser une variable pour verifier si une séance existe -->
+                    {{ render(controller('App\\Controller\\SeanceController:listSeanceReunionParComite',{'reunion' : reunion, 'comite' : comite.idcomite} )) }}
+                </td>
+                <td> <!-- Large modal -->
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <a href="#" class="btn" data-toggle="modal"
+                               data-backdrop="static" data-keyboard="false"
+                               id="ajouterSeanceModalClick{{ reunion.idreunion }}"
+                               data-id="{{ path('ajouter_seance',{'idReunion' : reunion.idreunion , 'idComite' : comite.idcomite}) }}">
+                                <i class="fa fa-plus text-primary"></i>
+                            </a>
+                        </div>
+
+                        {% if seanceExiste == 1 %}
+                            <div class="col-xs-2">
+                                <form method="post" action="{{ path('supprimer_seances_reunion', {'idReunion': reunion.idreunion, 'idComite' : comite.idcomite}) }}"
+                                      onsubmit="return confirm('Souhaitez-vous supprimer vos dates de réunion ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reunion.idreunion) }}">
+                                    <button id="suppSeance" class="btn btn-link" aria-hidden="true"><i class="fa fa-trash-o text-danger"></i> </button>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="footer-text-right">
+            <button class="btn btn-warning"  data-dismiss="modal">Fermer</button>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <strong>Info!</strong> Aucune réunion pour ce comité.
+    </div>
+    <div class="footer-text-right">
+        <button class="btn btn-warning"  data-dismiss="modal">Fermer</button>
+    </div>
+{% endif %}
+    {% block javascripts1 %}
+        {#        <script src="{{ asset('js/modal-active.js') }}"></script>#}
+    {% endblock %}
+{% block javascripts %}
+    <script>
+
+        $('*[id*=ajouterSeanceModalClick]').click( function () {
+            var path = $(this).data('id');
+            $('#seanceModal').modal('hide');// cacher le modal prècédent
+            $('#seanceModalMaj').modal('hide');
+            $.ajax({
+                type: 'POST',
+                'url': path,
+                success: function (response) {
+                    $('#ajouterSeanceModal').find('.modal-body').html(response);
+                    $('#ajouterSeanceModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('#ajouterSeanceModal').modal('show');
+                    var dateDebut = $('#date-debut').data('id'); // debut date
+                    var dateFin   = $('#date-fin').data('id');  // fin date
+
+                    $('#ajouterSeance').submit(function(even) {
+                        even.preventDefault();
+                        var matin = document.getElementById("seance_matin").checked;
+                        var midi = document.getElementById("seance_apresMidi").checked;
+                        if (!matin && !midi) {
+                            alert("Aucune case n'est cochée (Matin, Après Midi)");
+                            return false
+                        }
+                        let formResult = {};
+                        $(this).serializeArray().forEach((object) => {
+                            formResult[object.name] = object.value;
+                        });
+                        $.ajax({
+                            url: '/fr/sea/ajax/addSeance/' + document.getElementById("idReunion_").value + '/' + document.getElementById("idcomite_").value,
+                            type: 'POST',
+                            data: JSON.stringify(formResult),
+                            success: function (data) {
+                                $('.js-periode-ajouter').show();
+                                $('.js-success-seance').hide();
+                                $('.js-error-seance').hide();
+                                if (data.succes != '') {
+                                    $('#ajouterSeance').trigger("reset");
+                                    $('.js-success-seance').show().delay(5000).hide("slow");
+                                    $('.js-success-seance').html('<div class="alert alert-success text-center">' +
+                                        ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                        ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                        ' </button>' +
+                                        '<p class="message-alert-none"><strong>Succès ! </strong>' + data.succes + '</p>' +
+                                        '</div>');
+                                    $('.js-periode-ajouter').show().delay(5000).hide("slow");
+                                    $('.js-periode-ajouter').html('<div class="col-lg-8 offset-3>"><ul><li>Date Ajoutée : <b>'+ data.dateS + '</b></li></ul></div>')
+
+                                } else {
+                                    $('.js-error-seance').show().delay(5000).hide("slow");
+                                    $('.js-error-seance').html('<div class="alert alert-danger text-center">' +
+                                        ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                        ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                        ' </button>' +
+                                        '<p class="message-alert-none"><strong>Erreur ! </strong>' + data.errors + '</p>' +
+                                        '</div>');
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert('Error : ' + errorThrown);
+                            }
+                        });
+                    });
+
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
+                    $(".readonly").keydown(function(e){
+                        e.preventDefault();
+                    });
+                    $('#data_1 .input-group.date').datepicker({
+                        dateFormat: "dd/mm/yyyy",
+                        startDate: new Date(dateDebut),
+                        endDate: new Date(dateFin),
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        autoclose: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+                    });
+
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        });
+
+    </script>
+
+
+{% endblock %}

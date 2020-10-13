@@ -1,0 +1,24 @@
+partic:
+  form:
+    Lbgroupe: 'Groupe'
+    PrioGrp: 'Priorité Groupe'
+    DhMaj: 'Mise à jour date'
+    LbRespMaj: 'Resp. mise à jour'
+    BlSupprime: 'Bl supprimé'
+    save: 'Créer'
+    retour: 'Retour'
+    edit: 'Modifier'
+    show: 'Voir'
+    formulaire: 'Formulaire'
+    action: 'Action'
+    delete: 'Supprimer'
+    role: 'Role'
+    participation: 'participation'
+    participant: 'Participant'
+    president: 'Président'
+    cps: 'CPS Principal'
+    cpsS: 'CPS Secondaire'
+    comite: 'Comite'
+    phase: 'Phase'
+
+

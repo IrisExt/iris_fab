@@ -1,0 +1,4100 @@
+/*==============================================================*/
+/* Nom de SGBD :  PostgreSQL 9.x                                */
+/* Date de création :  28/11/2019 10:54:06                      */
+/*==============================================================*/
+
+
+drop index ADR_PAYS_FK;
+
+drop index TL_ADR_PERS_FK;
+
+drop index TG_ADRESSE_PK;
+
+drop table TG_ADRESSE;
+
+drop index TL_PERS_ADR_MAIL_FK;
+
+drop index TG_ADR_MAIL_PK;
+
+drop table TG_ADR_MAIL;
+
+drop index NIVEAU_EN_COURS_FK;
+
+drop index A_POUR_CODE_FK;
+
+drop index EST_PILOTE_FK;
+
+drop index TG_APPEL_PROJ_PK;
+
+drop table TG_APPEL_PROJ;
+
+drop index TG_BLOC_PK;
+
+drop table TG_BLOC;
+
+drop index EST_TYPE_OTP_FK;
+
+drop index EST_CONSTITUE_DANS_LE_CADRE_FK;
+
+drop index TG_COMITE_PK;
+
+drop table TG_COMITE;
+
+drop index TG_COMPTE_BANCAIRE_PK;
+
+drop table TG_COMPTE_BANCAIRE;
+
+drop index EST_COORDINATEUR_FK;
+
+drop index PERSONNE_COORDONNE_FK;
+
+drop index PROJET_COORDINATION_FK;
+
+drop index TL_COORDINATEUR_FK;
+
+drop index TG_COORDINATION_PROJ_PK;
+
+drop table TG_COORDINATION_PROJ;
+
+drop index A_POUR_COUT2_FK;
+
+drop index TG_COUT_PREV_PK;
+
+drop table TG_COUT_PREV;
+
+drop index EST_RATTACHE_A_FK;
+
+drop index TG_FINANCEUR_PK;
+
+drop table TG_FINANCEUR;
+
+drop index A_POUR_CLASSE_FK;
+
+drop index FORMULAIRE_PK;
+
+drop table TG_FORMULAIRE;
+
+drop index DEFINI_POUR_PROFIL_FK;
+
+drop index DETIENT_FK;
+
+drop index TG_HABILITATION_PK;
+
+drop table TG_HABILITATION;
+
+drop index MC_ASSOCIE_AU_CES_FK;
+
+drop index TG_MC_CES_PK;
+
+drop table TG_MC_CES;
+
+drop index EST_ASSOCIE_A_PROJET_FK;
+
+drop index TG_MC_LIBRE_PK;
+
+drop table TG_MC_LIBRE;
+
+drop index EST_PREVU_POUR_COMITE_FK;
+
+drop index POUR_FK;
+
+drop index EST_EMETTEUR_FK;
+
+drop index EST_DEST_FK;
+
+drop index TG_MESSAGE_PK;
+
+drop table TG_MESSAGE;
+
+drop index EST_PREVU_FK;
+
+drop index TG_MOT_CLE_CPS_PK;
+
+drop table TG_MOT_CLE_CPS;
+
+drop index MOT_CLE_PAR_CV_FK;
+
+drop index TG_MOT_CLE_CV_PK;
+
+drop table TG_MOT_CLE_CV;
+
+drop index MOT_CLE_FAIT_PARTIE_FK;
+
+drop index TG_MOT_CLE_ERC_PK;
+
+drop table TG_MOT_CLE_ERC;
+
+drop index A_POUR_FK;
+
+drop index A_POUR_NIVEAU_FK;
+
+drop index PROJET_PHASE_FK;
+
+drop index TG_NIVEAU_PHASE_PK;
+
+drop table TG_NIVEAU_PHASE;
+
+drop index TL_PROJ_NON_SOUHAIT_FK;
+
+drop index TG_NON_SOUHAITE_PK;
+
+drop table TG_NON_SOUHAITE;
+
+drop index A_POUR_COMPTE_FK;
+
+drop index ORGANISME_A_POUR_ADRESSE_FK;
+
+drop index TG_ORGANISME_PK;
+
+drop table TG_ORGANISME;
+
+drop index TG_PARAMETRE_APPLICATION_PK;
+
+drop table TG_PARAMETRE_APPLICATION;
+
+drop index TUTELLE_GESTIONNAIRE_FK;
+
+drop index EST_HEBERGEUR_FK;
+
+drop index DIRECTEUR_DE_LABO_FK;
+
+drop index A_POUR_LABORATOIRE_FK;
+
+drop index A_POUR_COUT_FK;
+
+drop index A_POUR_TYPE_FK;
+
+drop index EST_RESP_SCIENTIFIQUE_FK;
+
+drop index GEST_ADM_FI_FK;
+
+drop index EST_REPRESENTANT_JURIDIQUE_FK;
+
+drop index PARTICIPE_AU_PROJET_FK;
+
+drop index TG_PARTENARIAT_PK;
+
+drop table TG_PARTENARIAT;
+
+drop index PARTICIPE_DURANT_LA_PHASE_FK;
+
+drop index EST_EN_ETAT_SOLLICITATION_FK;
+
+drop index PARTICIPE_FK;
+
+drop index CONTIENT_PART_FK;
+
+drop index TG_PARTICIPATION_COMITE_PK;
+
+drop table TG_PARTICIPATION_COMITE;
+
+drop index EST_AFFECTE_A_FK;
+
+drop index A_POUR_GENRE_FK;
+
+drop index EST_SAISI_PAR_CPS2_FK;
+
+drop index A_POUR_CIVILITE_FK;
+
+drop index TG_PERSONNE_PK;
+
+drop table TG_PERSONNE;
+
+drop index TG_PERS_CPS_PK;
+
+drop table TG_PERS_CPS;
+
+drop index APOUR_TYPE_PHASE_FK;
+
+drop index TG_PHASE_PK;
+
+drop table TG_PHASE;
+
+drop index EST_PORTEUR_FK;
+
+drop index A_POUR_AVANCEMENT_FK;
+
+drop index EVAL_COMITE_FK;
+
+drop index CAT_RECH_FK;
+
+drop index UTILISE_L_INSTRUMENT_FK;
+
+drop index EST_PROPOSE_POUR_FK;
+
+drop index TG_PROJET_PK;
+
+drop table TG_PROJET;
+
+drop index TG_RESUME2_FK;
+
+drop index TG_RESUME_FK;
+
+drop index TG_RESUME_PK;
+
+drop table TG_RESUME;
+
+drop index REUNION_PREVUE_POUR_PHASE_FK;
+
+drop index TL_COM_REU_FK;
+
+drop index A_POUR_TYPE_REUNION_FK;
+
+drop index TG_REUNION_PK;
+
+drop table TG_REUNION;
+
+drop index TL_REU_SEANCE_FK;
+
+drop index TG_SEANCE_PK;
+
+drop table TG_SEANCE;
+
+drop index EST_POUR_TEL_FK;
+
+drop index TG_TELEPHONE_PK;
+
+drop table TG_TELEPHONE;
+
+drop index TG_UTILISATEUR_PK;
+
+drop table TG_UTILISATEUR;
+
+drop index TL_ACCES_FORMULAIRE3_FK;
+
+drop index TL_ACCES_FORMULAIRE2_FK;
+
+drop index TL_ACCES_FORMULAIRE_FK;
+
+drop index TL_ACCES_FORMULAIRE_PK;
+
+drop table TL_ACCES_FORMULAIRE;
+
+drop index TL_APPEL_CLASSE_FORMULAIRE2_FK;
+
+drop index TL_APPEL_CLASSE_FORMULAIRE_FK;
+
+drop index TL_APPEL_CLASSE_FORMULAIRE_PK;
+
+drop table TL_APPEL_CLASSE_FORMULAIRE;
+
+drop index TL_BLOC_FORM2_FK;
+
+drop index TL_BLOC_FORM_FK;
+
+drop index TL_BLOC_FORM_PK;
+
+drop table TL_BLOC_FORM;
+
+drop index TL_CATRD_APPEL2_FK;
+
+drop index TL_CATRD_APPEL_FK;
+
+drop index TL_CATRD_APPEL_PK;
+
+drop table TL_CATRD_APPEL;
+
+drop index TL_COMITE_AGENCE2_FK;
+
+drop index TL_COMITE_AGENCE_FK;
+
+drop index TL_COMITE_AGENCE_PK;
+
+drop table TL_COMITE_AGENCE;
+
+drop index TL_COMITE_DEP2_FK;
+
+drop index TL_COMITE_DEP_FK;
+
+drop index TL_COMITE_DEP_PK;
+
+drop table TL_COMITE_DEP;
+
+drop index TL_FINANCEUR_PROJET2_FK;
+
+drop index TL_FINANCEUR_PROJET_FK;
+
+drop index TL_FINANCEUR_PROJET_PK;
+
+drop table TL_FINANCEUR_PROJET;
+
+drop index TL_FORMULAIRE_APPEL2_FK;
+
+drop index TL_FORMULAIRE_APPEL_FK;
+
+drop index TL_FORMULAIRE_APPEL_PK;
+
+drop table TL_FORMULAIRE_APPEL;
+
+drop index TL_HAB_APPEL2_FK;
+
+drop index TL_HAB_APPEL_FK;
+
+drop index TL_HAB_APPEL_PK;
+
+drop table TL_HAB_APPEL;
+
+drop index TL_HAB_COMITE2_FK;
+
+drop index TL_HAB_COMITE_FK;
+
+drop index TL_HAB_COMITE_PK;
+
+drop table TL_HAB_COMITE;
+
+drop index TL_HAB_PHASE2_FK;
+
+drop index TL_HAB_PHASE_FK;
+
+drop index TL_HAB_PHASE_PK;
+
+drop table TL_HAB_PHASE;
+
+drop index A_ACCES_AU_PROJET2_FK;
+
+drop index A_ACCES_AU_PROJET_FK;
+
+drop index A_ACCES_AU_PROJET_PK;
+
+drop table TL_HAB_PROJET;
+
+drop index TL_INFRA_PROJ2_FK;
+
+drop index TL_INFRA_PROJ_FK;
+
+drop index TL_INFRA_PROJ_PK;
+
+drop table TL_INFRA_PROJ;
+
+drop index TL_INST_FI_APPEL2_FK;
+
+drop index TL_INST_FI_APPEL_FK;
+
+drop index TL_INST_FI_APPEL_PK;
+
+drop table TL_INST_FI_APPEL;
+
+drop index TL_LANGUE_PROPOSEE_DS2_FK;
+
+drop index TL_LANGUE_PROPOSEE_DS_FK;
+
+drop index TL_LANGUE_PROPOSEE_DS_PK;
+
+drop table TL_LANGUE_PROPOSEE_DS;
+
+drop index A_POUR_MAITRISE_EN_LANGUE_FK;
+
+drop index PRATIQUE_LANGUE_FK;
+
+drop index PERSONNE_PRATIQUE_FK;
+
+drop index TL_LANG_PERS_PK;
+
+drop table TL_LANG_PERS;
+
+drop index TL_MC_ERC_APPEL2_FK;
+
+drop index TL_MC_ERC_APPEL_FK;
+
+drop index TL_MC_ERC_APPEL_PK;
+
+drop table TL_MC_ERC_APPEL;
+
+drop index TL_MC_ERC_PROJ2_FK;
+
+drop index TL_MC_ERC_PROJ_FK;
+
+drop index TL_MC_ERC_PROJ_PK;
+
+drop table TL_MC_ERC_PROJ;
+
+drop index TL_PERS_ORG2_FK;
+
+drop index TL_PERS_ORG_FK;
+
+drop index TL_PERS_ORG_PK;
+
+drop table TL_PERS_ORG;
+
+drop index TL_PERS_PART2_FK;
+
+drop index TL_PERS_PART_FK;
+
+drop index TL_PERS_PART_PK;
+
+drop table TL_PERS_PART;
+
+drop index TL_POL_PROJ2_FK;
+
+drop index TL_POL_PROJ_FK;
+
+drop index TL_POL_PROJ_PK;
+
+drop table TL_POL_PROJ;
+
+drop index TL_PROFIL_CLASSE2_FK;
+
+drop index TL_PROFIL_CLASSE_FK;
+
+drop index TL_PROFIL_CLASSE_PK;
+
+drop table TL_PROFIL_CLASSE;
+
+drop index TL_PROJ_MC_CES2_FK;
+
+drop index TL_PROJ_MC_CES_FK;
+
+drop index TL_PROJ_MC_CES_PK;
+
+drop table TL_PROJ_MC_CES;
+
+drop index TL_REU_PERS2_FK;
+
+drop index TL_REU_PERS_FK;
+
+drop index TL_REU_PERS_PK;
+
+drop table TL_REU_PERS;
+
+drop index TL_SEANCE_PERS2_FK;
+
+drop index TL_SEANCE_PERS_FK;
+
+drop index TL_SEANCE_PERS_PK;
+
+drop table TL_SEANCE_PERS;
+
+drop index TR_CAT_ERC_PK;
+
+drop table TR_CAT_ERC;
+
+drop index TR_CAT_RD_PK;
+
+drop table TR_CAT_RD;
+
+drop index TR_CD_CONVENTION_PK;
+
+drop table TR_CD_CONVENTION;
+
+drop index TR_CIVILITE_PK;
+
+drop table TR_CIVILITE;
+
+drop index TR_CLASSE_FORMULAIRE_PK;
+
+drop table TR_CLASSE_FORMULAIRE;
+
+drop index TR_DEPARTEMENT_PK;
+
+drop table TR_DEPARTEMENT;
+
+drop index DISCIPLINE_FAIT_PARTIE_FK;
+
+drop index TR_DISC_ERC_PK;
+
+drop table TR_DISC_ERC;
+
+drop index A_POUR_DUREES_ADMISSIBLES_FK;
+
+drop index TR_DUREE_PROJET_PK;
+
+drop table TR_DUREE_PROJET;
+
+drop index TR_ETAT_SOL_PK;
+
+drop table TR_ETAT_SOL;
+
+drop index TR_GENRE_PK;
+
+drop table TR_GENRE;
+
+drop index TR_INFO_PK;
+
+drop table TR_INFO;
+
+drop index TR_INF_RECH_PK;
+
+drop table TR_INF_RECH;
+
+drop index TR_INST_FI_PK;
+
+drop table TR_INST_FI;
+
+drop index TR_LANGUE_PK;
+
+drop table TR_LANGUE;
+
+drop index TR_NIVEAU_PK;
+
+drop table TR_NIVEAU;
+
+drop index TR_NIVEAU_LANGUE_PK;
+
+drop table TR_NIVEAU_LANGUE;
+
+drop index TR_PAYS_PK;
+
+drop table TR_PAYS;
+
+drop index TR_PHASE_PK;
+
+drop table TR_PHASE;
+
+drop index TR_POL_COMP_PK;
+
+drop table TR_POL_COMP;
+
+drop index TR_PROFIL_PK;
+
+drop table TR_PROFIL;
+
+drop index TR_STATUT_PROJET_PK;
+
+drop table TR_STATUT_PROJET;
+
+drop index TR_TYPE_OTP_PK;
+
+drop table TR_TYPE_OTP;
+
+drop index TR_TYPE_PART_PK;
+
+drop table TR_TYPE_PART;
+
+drop index TR_TYPE_REUNION_PK;
+
+drop table TR_TYPE_REUNION;
+
+drop domain DATE;
+
+drop domain IDENTIFIANT;
+
+drop domain LIBELLE;
+
+/*==============================================================*/
+/* Domaine : DATE                                               */
+/*==============================================================*/
+create domain DATE as INT8;
+
+/*==============================================================*/
+/* Domaine : IDENTIFIANT                                        */
+/*==============================================================*/
+create domain IDENTIFIANT as INT8;
+
+/*==============================================================*/
+/* Domaine : LIBELLE                                            */
+/*==============================================================*/
+create domain LIBELLE as VARCHAR(50);
+
+/*==============================================================*/
+/* Table : TG_ADRESSE                                           */
+/*==============================================================*/
+create table TG_ADRESSE (
+   ID_ADRESSE           INT8                 not null,
+   CD_PAYS              VARCHAR(3)           not null,
+   ID_PERSONNE          INT8                 not null,
+   LB_ADRESSE           VARCHAR(50)          not null,
+   LB_COMPL_ADRESSES    VARCHAR(100)         not null,
+   CD                   VARCHAR(10)          not null,
+   VILLE                VARCHAR(100)         not null,
+   BL_ADR_PRINC         BOOL                 null,
+   TYP_ADR              VARCHAR(3)           not null,
+   constraint PK_TG_ADRESSE primary key (ID_ADRESSE)
+);
+
+comment on table TG_ADRESSE is
+'Adresse générique';
+
+comment on column TG_ADRESSE.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_ADRESSE_PK                                        */
+/*==============================================================*/
+create unique index TG_ADRESSE_PK on TG_ADRESSE (
+ID_ADRESSE
+);
+
+/*==============================================================*/
+/* Index : TL_ADR_PERS_FK                                       */
+/*==============================================================*/
+create  index TL_ADR_PERS_FK on TG_ADRESSE (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : ADR_PAYS_FK                                          */
+/*==============================================================*/
+create  index ADR_PAYS_FK on TG_ADRESSE (
+CD_PAYS
+);
+
+/*==============================================================*/
+/* Table : TG_ADR_MAIL                                          */
+/*==============================================================*/
+create table TG_ADR_MAIL (
+   ADR_MAIL             VARCHAR(50)          not null,
+   ID_PERSONNE          INT8                 not null,
+   ADR_PREF             BOOL                 null,
+   constraint PK_TG_ADR_MAIL primary key (ADR_MAIL)
+);
+
+comment on column TG_ADR_MAIL.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_ADR_MAIL_PK                                       */
+/*==============================================================*/
+create unique index TG_ADR_MAIL_PK on TG_ADR_MAIL (
+ADR_MAIL
+);
+
+/*==============================================================*/
+/* Index : TL_PERS_ADR_MAIL_FK                                  */
+/*==============================================================*/
+create  index TL_PERS_ADR_MAIL_FK on TG_ADR_MAIL (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TG_APPEL_PROJ                                        */
+/*==============================================================*/
+create table TG_APPEL_PROJ (
+   ID_APPEL             IDENTIFIANT          not null,
+   NIVEAU_EN_COURS      INT8                 not null,
+   ID_CD_CONVENTION     INT8                 null,
+   ID_PERSONNE          INT8                 null,
+   DT_EDITION           DATE                 not null,
+   LB_APPEL             LIBELLE              not null,
+   LB_ACRONYME          LIBELLE              not null,
+   NB_PAGE_MAX_DS       INT4                 null,
+   BL_ANNEXE_AUTORISE   BOOL                 null,
+   BL_DEMANDE_DEPOT_PREC BOOL                 null,
+   BL_DEMANDE_FI_PREC   BOOL                 null,
+   DT_NAISS_MAX_RS      DATE                 null,
+   NB_TAILLE_MAX_ANN_DS INT4                 null,
+   FMT_AUTORISE_ANNEXE_DS VARCHAR(200)         null,
+   NB_MIN_MC_LIBRE      INT4                 null,
+   NB_MAX_MC_LIBRE      INT4                 null,
+   SEUIL_MIN_AIDE       MONEY                null,
+   SEUIL_MAX_AIDE       MONEY                null,
+   DH_SAUVE             DATE                 null,
+   constraint PK_TG_APPEL_PROJ primary key (ID_APPEL)
+);
+
+comment on table TG_APPEL_PROJ is
+'Appel à projets lancé par l''ANR
+';
+
+comment on column TG_APPEL_PROJ.ID_APPEL is
+'identifiant de l''appel à projet';
+
+comment on column TG_APPEL_PROJ.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_APPEL_PROJ.DT_EDITION is
+'millesime de l''appel à projet; communement aussi appelé "edition " par le metier';
+
+comment on column TG_APPEL_PROJ.LB_APPEL is
+'Désignation de l''appel a projet , titre
+';
+
+comment on column TG_APPEL_PROJ.LB_ACRONYME is
+'Désignation abrégée du projet ';
+
+comment on column TG_APPEL_PROJ.NB_PAGE_MAX_DS is
+'Nombre de pages maximum pour le document scientifique
+';
+
+comment on column TG_APPEL_PROJ.BL_DEMANDE_DEPOT_PREC is
+'Demander si le projet a déjà été déposé lors d''une édition précédente :';
+
+comment on column TG_APPEL_PROJ.BL_DEMANDE_FI_PREC is
+'Demander si le projet fait suite à un projet précédemment financé';
+
+comment on column TG_APPEL_PROJ.NB_TAILLE_MAX_ANN_DS is
+'Taille maximum du document scientifique (en Mo)';
+
+comment on column TG_APPEL_PROJ.FMT_AUTORISE_ANNEXE_DS is
+'Formats autorisés pour les annexes au document scientifique';
+
+comment on column TG_APPEL_PROJ.NB_MIN_MC_LIBRE is
+'Nombre minimum de mots-clés en saisie libre';
+
+comment on column TG_APPEL_PROJ.NB_MAX_MC_LIBRE is
+'Nombre maximum de mots-clés en saisie libre';
+
+comment on column TG_APPEL_PROJ.SEUIL_MIN_AIDE is
+'Seuil minimum de l''aide demandée sur le projet : ';
+
+comment on column TG_APPEL_PROJ.SEUIL_MAX_AIDE is
+'Seuil max de l''aide demandée sur le projet : ';
+
+/*==============================================================*/
+/* Index : TG_APPEL_PROJ_PK                                     */
+/*==============================================================*/
+create unique index TG_APPEL_PROJ_PK on TG_APPEL_PROJ (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : EST_PILOTE_FK                                        */
+/*==============================================================*/
+create  index EST_PILOTE_FK on TG_APPEL_PROJ (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : A_POUR_CODE_FK                                       */
+/*==============================================================*/
+create  index A_POUR_CODE_FK on TG_APPEL_PROJ (
+ID_CD_CONVENTION
+);
+
+/*==============================================================*/
+/* Index : NIVEAU_EN_COURS_FK                                   */
+/*==============================================================*/
+create  index NIVEAU_EN_COURS_FK on TG_APPEL_PROJ (
+NIVEAU_EN_COURS
+);
+
+/*==============================================================*/
+/* Table : TG_BLOC                                              */
+/*==============================================================*/
+create table TG_BLOC (
+   ID_BLOC              INT8                 not null,
+   LB_BLOC              VARCHAR(50)          not null,
+   CLASS_NAME           VARCHAR(50)          null,
+   constraint PK_TG_BLOC primary key (ID_BLOC)
+);
+
+comment on table TG_BLOC is
+'Bloc d''information unitaire constituant les différentes rubriques d''un formulaire. prévu notamment pour la soumission des projets par les porteurs';
+
+/*==============================================================*/
+/* Index : TG_BLOC_PK                                           */
+/*==============================================================*/
+create unique index TG_BLOC_PK on TG_BLOC (
+ID_BLOC
+);
+
+/*==============================================================*/
+/* Table : TG_COMITE                                            */
+/*==============================================================*/
+create table TG_COMITE (
+   ID_COMITE            INT8                 not null,
+   ID_APPEL             IDENTIFIANT          null,
+   ID_TYPE_OTP          INT8                 null,
+   LB_ACR               VARCHAR(10)          not null,
+   LB_TITRE             VARCHAR(50)          not null,
+   BL_ACTIF             INT8                 not null,
+   LB_DESC              VARCHAR(200)         null,
+   constraint PK_TG_COMITE primary key (ID_COMITE)
+);
+
+comment on table TG_COMITE is
+'Correspond aux comités d''études scientifique (CES) constitués pour un appel à projet
+Ces comités ont pour but premier d''évaluer les projets soumis.
+Un comité perdure tout au long de l''appel. il n''y pas de copie de comité entre phases. C''est la constitution des membres qui evolue en fonction des phases de l''appel.';
+
+comment on column TG_COMITE.ID_APPEL is
+'identifiant de l''appel à projet';
+
+comment on column TG_COMITE.LB_ACR is
+'acronyme , Code unique du comité ex: CE01, CE02 ';
+
+comment on column TG_COMITE.LB_TITRE is
+'Titre du comité';
+
+comment on column TG_COMITE.BL_ACTIF is
+'Précise si le comité est actif ou supprimé (valeur 0)';
+
+comment on column TG_COMITE.LB_DESC is
+'Description du contenu du comité';
+
+/*==============================================================*/
+/* Index : TG_COMITE_PK                                         */
+/*==============================================================*/
+create unique index TG_COMITE_PK on TG_COMITE (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Index : EST_CONSTITUE_DANS_LE_CADRE_FK                       */
+/*==============================================================*/
+create  index EST_CONSTITUE_DANS_LE_CADRE_FK on TG_COMITE (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : EST_TYPE_OTP_FK                                      */
+/*==============================================================*/
+create  index EST_TYPE_OTP_FK on TG_COMITE (
+ID_TYPE_OTP
+);
+
+/*==============================================================*/
+/* Table : TG_COMPTE_BANCAIRE                                   */
+/*==============================================================*/
+create table TG_COMPTE_BANCAIRE (
+   ID_COMPTE            INT8                 not null,
+   IBAN                 VARCHAR(40)          null,
+   RIB                  VARCHAR(40)          null,
+   BANQUE               VARCHAR(40)          null,
+   constraint PK_TG_COMPTE_BANCAIRE primary key (ID_COMPTE)
+);
+
+/*==============================================================*/
+/* Index : TG_COMPTE_BANCAIRE_PK                                */
+/*==============================================================*/
+create unique index TG_COMPTE_BANCAIRE_PK on TG_COMPTE_BANCAIRE (
+ID_COMPTE
+);
+
+/*==============================================================*/
+/* Table : TG_COORDINATION_PROJ                                 */
+/*==============================================================*/
+create table TG_COORDINATION_PROJ (
+   ID_COORDINATION      INT8                 not null,
+   CD_PAYS              VARCHAR(3)           not null,
+   ID_ORGANISME         INT8                 null,
+   ID_PROJET            INT8                 not null,
+   ID_PERSONNE          INT8                 null,
+   constraint PK_TG_COORDINATION_PROJ primary key (ID_COORDINATION)
+);
+
+comment on table TG_COORDINATION_PROJ is
+'table de coordination des projets';
+
+comment on column TG_COORDINATION_PROJ.ID_PROJET is
+'identifiant du projet';
+
+comment on column TG_COORDINATION_PROJ.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_COORDINATION_PROJ_PK                              */
+/*==============================================================*/
+create unique index TG_COORDINATION_PROJ_PK on TG_COORDINATION_PROJ (
+ID_COORDINATION
+);
+
+/*==============================================================*/
+/* Index : TL_COORDINATEUR_FK                                   */
+/*==============================================================*/
+create  index TL_COORDINATEUR_FK on TG_COORDINATION_PROJ (
+CD_PAYS
+);
+
+/*==============================================================*/
+/* Index : PROJET_COORDINATION_FK                               */
+/*==============================================================*/
+create  index PROJET_COORDINATION_FK on TG_COORDINATION_PROJ (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : PERSONNE_COORDONNE_FK                                */
+/*==============================================================*/
+create  index PERSONNE_COORDONNE_FK on TG_COORDINATION_PROJ (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : EST_COORDINATEUR_FK                                  */
+/*==============================================================*/
+create  index EST_COORDINATEUR_FK on TG_COORDINATION_PROJ (
+ID_ORGANISME
+);
+
+/*==============================================================*/
+/* Table : TG_COUT_PREV                                         */
+/*==============================================================*/
+create table TG_COUT_PREV (
+   ID_COUT_PRV          INT8                 not null,
+   ID_PARTENAIRE        IDENTIFIANT          not null,
+   MNT_PERS_PERM        MONEY                null,
+   MNT_PERS_PERM_MOIS   MONEY                null,
+   MNT_PERS_NP_NF       MONEY                null,
+   MNT_PERS_NP_NF_MOIS  MONEY                null,
+   MNT_PERS_NP          MONEY                null,
+   MNT_PERS_NP_MOIS     MONEY                null,
+   MNT_DECH_ENS         MONEY                null,
+   MNT_DECH_ENS_MOIS    MONEY                null,
+   MNT_INST_MAT         MONEY                null,
+   MNT_BAT_TER          MONEY                null,
+   MNT_PREST            MONEY                null,
+   MNT_FRAIS_G          MONEY                null,
+   constraint PK_TG_COUT_PREV primary key (ID_COUT_PRV)
+);
+
+comment on table TG_COUT_PREV is
+'cout previsionnel decaré pour le partenaire';
+
+/*==============================================================*/
+/* Index : TG_COUT_PREV_PK                                      */
+/*==============================================================*/
+create unique index TG_COUT_PREV_PK on TG_COUT_PREV (
+ID_COUT_PRV
+);
+
+/*==============================================================*/
+/* Index : A_POUR_COUT2_FK                                      */
+/*==============================================================*/
+create  index A_POUR_COUT2_FK on TG_COUT_PREV (
+ID_PARTENAIRE
+);
+
+/*==============================================================*/
+/* Table : TG_FINANCEUR                                         */
+/*==============================================================*/
+create table TG_FINANCEUR (
+   ID_FINANCEUR         INT8                 not null,
+   CD_PAYS              VARCHAR(3)           not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   COD_FI               VARCHAR(3)           null,
+   constraint PK_TG_FINANCEUR primary key (ID_FINANCEUR)
+);
+
+comment on table TG_FINANCEUR is
+'Table générale regroupe les agences nationales de financement, les cofinaceurs francais';
+
+comment on column TG_FINANCEUR.COD_FI is
+'Code du type de financeur (co financeur, agence nationale,...)';
+
+/*==============================================================*/
+/* Index : TG_FINANCEUR_PK                                      */
+/*==============================================================*/
+create unique index TG_FINANCEUR_PK on TG_FINANCEUR (
+ID_FINANCEUR
+);
+
+/*==============================================================*/
+/* Index : EST_RATTACHE_A_FK                                    */
+/*==============================================================*/
+create  index EST_RATTACHE_A_FK on TG_FINANCEUR (
+CD_PAYS
+);
+
+/*==============================================================*/
+/* Table : TG_FORMULAIRE                                        */
+/*==============================================================*/
+create table TG_FORMULAIRE (
+   ID_FORMULAIRE        IDENTIFIANT          not null,
+   ID_CLASSE_FORMULAIRE INT8                 null,
+   LB_FORMULAIRE        VARCHAR(50)          not null,
+   constraint PK_TG_FORMULAIRE primary key (ID_FORMULAIRE)
+);
+
+/*==============================================================*/
+/* Index : FORMULAIRE_PK                                        */
+/*==============================================================*/
+create unique index FORMULAIRE_PK on TG_FORMULAIRE (
+ID_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Index : A_POUR_CLASSE_FK                                     */
+/*==============================================================*/
+create  index A_POUR_CLASSE_FK on TG_FORMULAIRE (
+ID_CLASSE_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Table : TG_HABILITATION                                      */
+/*==============================================================*/
+create table TG_HABILITATION (
+   ID_HABILITATION      INT8                 not null,
+   ID_PERSONNE          INT8                 not null,
+   ID_PROFIL            INT8                 not null,
+   DH_MAJ               DATE                 null,
+   LB_RESP_MAJ          VARCHAR(50)          null,
+   BL_SUPPRIME          INT2                 null,
+   constraint PK_TG_HABILITATION primary key (ID_HABILITATION)
+);
+
+comment on table TG_HABILITATION is
+'La table donne les rôles applicatifs des utilisateurs et les habilitations perimetrique (appels, phases, comité)
+';
+
+comment on column TG_HABILITATION.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_HABILITATION.ID_PROFIL is
+'idnetifiant du profil de l''utilisateur';
+
+comment on column TG_HABILITATION.BL_SUPPRIME is
+'booleen qui indique que la participation de la personne au comité a été supprimée';
+
+/*==============================================================*/
+/* Index : TG_HABILITATION_PK                                   */
+/*==============================================================*/
+create unique index TG_HABILITATION_PK on TG_HABILITATION (
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Index : DETIENT_FK                                           */
+/*==============================================================*/
+create  index DETIENT_FK on TG_HABILITATION (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : DEFINI_POUR_PROFIL_FK                                */
+/*==============================================================*/
+create  index DEFINI_POUR_PROFIL_FK on TG_HABILITATION (
+ID_PROFIL
+);
+
+/*==============================================================*/
+/* Table : TG_MC_CES                                            */
+/*==============================================================*/
+create table TG_MC_CES (
+   ID_MC_CES            INT8                 not null,
+   ID_COMITE            INT8                 not null,
+   LB_MC_CES            VARCHAR(50)          not null,
+   constraint PK_TG_MC_CES primary key (ID_MC_CES)
+);
+
+comment on table TG_MC_CES is
+'Mot cles liés a chaque comité elaboré par le pilote pour chaque comité';
+
+/*==============================================================*/
+/* Index : TG_MC_CES_PK                                         */
+/*==============================================================*/
+create unique index TG_MC_CES_PK on TG_MC_CES (
+ID_MC_CES
+);
+
+/*==============================================================*/
+/* Index : MC_ASSOCIE_AU_CES_FK                                 */
+/*==============================================================*/
+create  index MC_ASSOCIE_AU_CES_FK on TG_MC_CES (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Table : TG_MC_LIBRE                                          */
+/*==============================================================*/
+create table TG_MC_LIBRE (
+   ID_MC_LIBRE          INT8                 not null,
+   ID_PROJET            INT8                 not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   LB_NOM_EN_2          VARCHAR(50)          null,
+   constraint PK_TG_MC_LIBRE primary key (ID_MC_LIBRE)
+);
+
+comment on table TG_MC_LIBRE is
+'Mot clé libre liés à un projet , renseigné par le porteur';
+
+comment on column TG_MC_LIBRE.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : TG_MC_LIBRE_PK                                       */
+/*==============================================================*/
+create unique index TG_MC_LIBRE_PK on TG_MC_LIBRE (
+ID_MC_LIBRE
+);
+
+/*==============================================================*/
+/* Index : EST_ASSOCIE_A_PROJET_FK                              */
+/*==============================================================*/
+create  index EST_ASSOCIE_A_PROJET_FK on TG_MC_LIBRE (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Table : TG_MESSAGE                                           */
+/*==============================================================*/
+create table TG_MESSAGE (
+   ID_MESSAGE           INT8                 not null,
+   DESTINATAIRE         INT8                 not null,
+   EMETTEUR             INT8                 not null,
+   ID_COMITE            INT8                 null,
+   ID_PARTICIPATION     INT8                 null,
+   DH_ENVOI             DATE                 not null,
+   TEXTE                VARCHAR(200)         not null,
+   constraint PK_TG_MESSAGE primary key (ID_MESSAGE)
+);
+
+comment on table TG_MESSAGE is
+'Message de l''application';
+
+comment on column TG_MESSAGE.DESTINATAIRE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_MESSAGE.EMETTEUR is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_MESSAGE_PK                                        */
+/*==============================================================*/
+create unique index TG_MESSAGE_PK on TG_MESSAGE (
+ID_MESSAGE
+);
+
+/*==============================================================*/
+/* Index : EST_DEST_FK                                          */
+/*==============================================================*/
+create  index EST_DEST_FK on TG_MESSAGE (
+DESTINATAIRE
+);
+
+/*==============================================================*/
+/* Index : EST_EMETTEUR_FK                                      */
+/*==============================================================*/
+create  index EST_EMETTEUR_FK on TG_MESSAGE (
+EMETTEUR
+);
+
+/*==============================================================*/
+/* Index : POUR_FK                                              */
+/*==============================================================*/
+create  index POUR_FK on TG_MESSAGE (
+ID_PARTICIPATION
+);
+
+/*==============================================================*/
+/* Index : EST_PREVU_POUR_COMITE_FK                             */
+/*==============================================================*/
+create  index EST_PREVU_POUR_COMITE_FK on TG_MESSAGE (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Table : TG_MOT_CLE_CPS                                       */
+/*==============================================================*/
+create table TG_MOT_CLE_CPS (
+   ID_MC_CPS            IDENTIFIANT          not null,
+   ID_PERSONNE          INT8                 not null,
+   LB_MC_CPS_FR         VARCHAR(50)          null,
+   LB_MC_CPS_EN         VARCHAR(50)          null,
+   constraint PK_TG_MOT_CLE_CPS primary key (ID_MC_CPS)
+);
+
+comment on table TG_MOT_CLE_CPS is
+'Mot cle lié à une personne et saisi par le cps';
+
+comment on column TG_MOT_CLE_CPS.ID_MC_CPS is
+'identifiant du mot cle';
+
+comment on column TG_MOT_CLE_CPS.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_MOT_CLE_CPS_PK                                    */
+/*==============================================================*/
+create unique index TG_MOT_CLE_CPS_PK on TG_MOT_CLE_CPS (
+ID_MC_CPS
+);
+
+/*==============================================================*/
+/* Index : EST_PREVU_FK                                         */
+/*==============================================================*/
+create  index EST_PREVU_FK on TG_MOT_CLE_CPS (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TG_MOT_CLE_CV                                        */
+/*==============================================================*/
+create table TG_MOT_CLE_CV (
+   ID_MC2               IDENTIFIANT          not null,
+   ID_PERSONNE          INT8                 not null,
+   LB_MC_FR             LIBELLE              null,
+   LB_MC_EN             VARCHAR(50)          null,
+   constraint PK_TG_MOT_CLE_CV primary key (ID_MC2)
+);
+
+comment on table TG_MOT_CLE_CV is
+'Mot clé renseigné par les personnes rédigeant leur cv';
+
+comment on column TG_MOT_CLE_CV.ID_MC2 is
+'identifiant du mot cle';
+
+comment on column TG_MOT_CLE_CV.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_MOT_CLE_CV.LB_MC_FR is
+'libellé du mot clé';
+
+/*==============================================================*/
+/* Index : TG_MOT_CLE_CV_PK                                     */
+/*==============================================================*/
+create unique index TG_MOT_CLE_CV_PK on TG_MOT_CLE_CV (
+ID_MC2
+);
+
+/*==============================================================*/
+/* Index : MOT_CLE_PAR_CV_FK                                    */
+/*==============================================================*/
+create  index MOT_CLE_PAR_CV_FK on TG_MOT_CLE_CV (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TG_MOT_CLE_ERC                                       */
+/*==============================================================*/
+create table TG_MOT_CLE_ERC (
+   ID_MC_ERC            IDENTIFIANT          not null,
+   ID_DISC_ERC          IDENTIFIANT          not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   constraint PK_TG_MOT_CLE_ERC primary key (ID_MC_ERC)
+);
+
+comment on table TG_MOT_CLE_ERC is
+'Mot clé en provenance du référentiel ERC. Ces mots clés sont millesimés (une ensemble de mots clés par année)';
+
+/*==============================================================*/
+/* Index : TG_MOT_CLE_ERC_PK                                    */
+/*==============================================================*/
+create unique index TG_MOT_CLE_ERC_PK on TG_MOT_CLE_ERC (
+ID_MC_ERC
+);
+
+/*==============================================================*/
+/* Index : MOT_CLE_FAIT_PARTIE_FK                               */
+/*==============================================================*/
+create  index MOT_CLE_FAIT_PARTIE_FK on TG_MOT_CLE_ERC (
+ID_DISC_ERC
+);
+
+/*==============================================================*/
+/* Table : TG_NIVEAU_PHASE                                      */
+/*==============================================================*/
+create table TG_NIVEAU_PHASE (
+   ID_NIVEAU_PHASE      INT8                 not null,
+   ID_APPEL             IDENTIFIANT          null,
+   ID_PHASE_APPEL       INT8                 not null,
+   ID_TYPE_NIVEU        INT8                 not null,
+   LB_NOM               VARCHAR(50)          null,
+   CD_NIVEAU            VARCHAR(4)           not null,
+   DH_DEBUT             DATE                 null,
+   DH_FIN               DATE                 null,
+   ORD_PHASE            INT4                 not null,
+   constraint PK_TG_NIVEAU_PHASE primary key (ID_NIVEAU_PHASE)
+);
+
+comment on table TG_NIVEAU_PHASE is
+'Table des niveaux (étapes ) de procédures d''appel.
+Les niveaux d''un appel sont regroupés par phase.
+Dans AAPG
+trois type de niveaux: soumission, evaluation, publication des résultats pour chaque phase traduit par le champ code
+';
+
+comment on column TG_NIVEAU_PHASE.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TG_NIVEAU_PHASE_PK                                   */
+/*==============================================================*/
+create unique index TG_NIVEAU_PHASE_PK on TG_NIVEAU_PHASE (
+ID_NIVEAU_PHASE
+);
+
+/*==============================================================*/
+/* Index : PROJET_PHASE_FK                                      */
+/*==============================================================*/
+create  index PROJET_PHASE_FK on TG_NIVEAU_PHASE (
+ID_PHASE_APPEL
+);
+
+/*==============================================================*/
+/* Index : A_POUR_NIVEAU_FK                                     */
+/*==============================================================*/
+create  index A_POUR_NIVEAU_FK on TG_NIVEAU_PHASE (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : A_POUR_FK                                            */
+/*==============================================================*/
+create  index A_POUR_FK on TG_NIVEAU_PHASE (
+ID_TYPE_NIVEU
+);
+
+/*==============================================================*/
+/* Table : TG_NON_SOUHAITE                                      */
+/*==============================================================*/
+create table TG_NON_SOUHAITE (
+   ID_NON_SOUHAITE      INT8                 not null,
+   ID_PROJET            INT8                 not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   LB_PRENOM            VARCHAR(50)          not null,
+   LB_COURRIEL          VARCHAR(50)          null,
+   LB_MOTIF             VARCHAR(50)          null,
+   constraint PK_TG_NON_SOUHAITE primary key (ID_NON_SOUHAITE)
+);
+
+comment on table TG_NON_SOUHAITE is
+'entité (personne ou organisme) non souhaité par le porteur du projet en tant qu''expert pour l''évaluation';
+
+comment on column TG_NON_SOUHAITE.ID_PROJET is
+'identifiant du projet';
+
+comment on column TG_NON_SOUHAITE.LB_PRENOM is
+'Prénom d''usage de la personne (créé provisoirement en attendant le rapprochement du référentiel personne 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_NON_SOUHAITE_PK                                   */
+/*==============================================================*/
+create unique index TG_NON_SOUHAITE_PK on TG_NON_SOUHAITE (
+ID_NON_SOUHAITE
+);
+
+/*==============================================================*/
+/* Index : TL_PROJ_NON_SOUHAIT_FK                               */
+/*==============================================================*/
+create  index TL_PROJ_NON_SOUHAIT_FK on TG_NON_SOUHAITE (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Table : TG_ORGANISME                                         */
+/*==============================================================*/
+create table TG_ORGANISME (
+   ID_ORGANISME         INT8                 not null,
+   ID_COMPTE            INT8                 null,
+   ID_ADRESSE           INT8                 null,
+   CD_RNSR              VARCHAR(20)          null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   SIRET                VARCHAR(50)          null,
+   SIGLE                VARCHAR(40)          null,
+   constraint PK_TG_ORGANISME primary key (ID_ORGANISME)
+);
+
+/*==============================================================*/
+/* Index : TG_ORGANISME_PK                                      */
+/*==============================================================*/
+create unique index TG_ORGANISME_PK on TG_ORGANISME (
+ID_ORGANISME
+);
+
+/*==============================================================*/
+/* Index : ORGANISME_A_POUR_ADRESSE_FK                          */
+/*==============================================================*/
+create  index ORGANISME_A_POUR_ADRESSE_FK on TG_ORGANISME (
+ID_ADRESSE
+);
+
+/*==============================================================*/
+/* Index : A_POUR_COMPTE_FK                                     */
+/*==============================================================*/
+create  index A_POUR_COMPTE_FK on TG_ORGANISME (
+ID_COMPTE
+);
+
+/*==============================================================*/
+/* Table : TG_PARAMETRE_APPLICATION                             */
+/*==============================================================*/
+create table TG_PARAMETRE_APPLICATION (
+   ID_PARAMETRE         INT8                 not null,
+   LB_CODE              VARCHAR(20)          not null,
+   LB_VALEUR            VARCHAR(50)          null,
+   constraint PK_TG_PARAMETRE_APPLICATION primary key (ID_PARAMETRE)
+);
+
+comment on table TG_PARAMETRE_APPLICATION is
+'Parametres de toute l''application
+les noms et les valeurs das paramètres sont enregistrés
+les éléments liés sont sous forme de champs référencé (exemple cle vers l''appel à projet concerné)';
+
+comment on column TG_PARAMETRE_APPLICATION.LB_CODE is
+'Code 4 lettres utilisé dans le n° de la convention
+n° de la convention (financement)';
+
+/*==============================================================*/
+/* Index : TG_PARAMETRE_APPLICATION_PK                          */
+/*==============================================================*/
+create unique index TG_PARAMETRE_APPLICATION_PK on TG_PARAMETRE_APPLICATION (
+ID_PARAMETRE
+);
+
+/*==============================================================*/
+/* Table : TG_PARTENARIAT                                       */
+/*==============================================================*/
+create table TG_PARTENARIAT (
+   ID_PARTENAIRE        IDENTIFIANT          not null,
+   TUT_GEST             INT8                 null,
+   GEST_ADM             INT8                 null,
+   ID_PROJET            INT8                 not null,
+   LABORATOIRE          INT8                 null,
+   REP_JURIDIQUE        INT8                 null,
+   TYP_PART             VARCHAR(3)           not null,
+   DIR_LABO             INT8                 null,
+   HEBERGEUR            INT8                 null,
+   ID_COUT_PRV          INT8                 null,
+   RESP_SCIENT          INT8                 null,
+   BL_ACTIF             INT8                 null,
+   LB_DELEGUATION       VARCHAR(40)          null,
+   MNT_AIDE             MONEY                null,
+   TX_AIDE              DECIMAL(4)           null,
+   constraint PK_TG_PARTENARIAT primary key (ID_PARTENAIRE)
+);
+
+comment on table TG_PARTENARIAT is
+'partenariat pour un projet';
+
+comment on column TG_PARTENARIAT.GEST_ADM is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PARTENARIAT.ID_PROJET is
+'identifiant du projet';
+
+comment on column TG_PARTENARIAT.REP_JURIDIQUE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PARTENARIAT.DIR_LABO is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PARTENARIAT.RESP_SCIENT is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PARTENARIAT.BL_ACTIF is
+'Précise si le comité est actif ou supprimé (valeur 0)';
+
+/*==============================================================*/
+/* Index : TG_PARTENARIAT_PK                                    */
+/*==============================================================*/
+create unique index TG_PARTENARIAT_PK on TG_PARTENARIAT (
+ID_PARTENAIRE
+);
+
+/*==============================================================*/
+/* Index : PARTICIPE_AU_PROJET_FK                               */
+/*==============================================================*/
+create  index PARTICIPE_AU_PROJET_FK on TG_PARTENARIAT (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : EST_REPRESENTANT_JURIDIQUE_FK                        */
+/*==============================================================*/
+create  index EST_REPRESENTANT_JURIDIQUE_FK on TG_PARTENARIAT (
+REP_JURIDIQUE
+);
+
+/*==============================================================*/
+/* Index : GEST_ADM_FI_FK                                       */
+/*==============================================================*/
+create  index GEST_ADM_FI_FK on TG_PARTENARIAT (
+GEST_ADM
+);
+
+/*==============================================================*/
+/* Index : EST_RESP_SCIENTIFIQUE_FK                             */
+/*==============================================================*/
+create  index EST_RESP_SCIENTIFIQUE_FK on TG_PARTENARIAT (
+RESP_SCIENT
+);
+
+/*==============================================================*/
+/* Index : A_POUR_TYPE_FK                                       */
+/*==============================================================*/
+create  index A_POUR_TYPE_FK on TG_PARTENARIAT (
+TYP_PART
+);
+
+/*==============================================================*/
+/* Index : A_POUR_COUT_FK                                       */
+/*==============================================================*/
+create  index A_POUR_COUT_FK on TG_PARTENARIAT (
+ID_COUT_PRV
+);
+
+/*==============================================================*/
+/* Index : A_POUR_LABORATOIRE_FK                                */
+/*==============================================================*/
+create  index A_POUR_LABORATOIRE_FK on TG_PARTENARIAT (
+LABORATOIRE
+);
+
+/*==============================================================*/
+/* Index : DIRECTEUR_DE_LABO_FK                                 */
+/*==============================================================*/
+create  index DIRECTEUR_DE_LABO_FK on TG_PARTENARIAT (
+DIR_LABO
+);
+
+/*==============================================================*/
+/* Index : EST_HEBERGEUR_FK                                     */
+/*==============================================================*/
+create  index EST_HEBERGEUR_FK on TG_PARTENARIAT (
+HEBERGEUR
+);
+
+/*==============================================================*/
+/* Index : TUTELLE_GESTIONNAIRE_FK                              */
+/*==============================================================*/
+create  index TUTELLE_GESTIONNAIRE_FK on TG_PARTENARIAT (
+TUT_GEST
+);
+
+/*==============================================================*/
+/* Table : TG_PARTICIPATION_COMITE                              */
+/*==============================================================*/
+create table TG_PARTICIPATION_COMITE (
+   ID_PARTICIPATION     INT8                 not null,
+   CD_ETAT_SOLLICITATION INT8                 not null,
+   ID_PERSONNE          INT8                 not null,
+   ID_COMITE            INT8                 not null,
+   ID_PHASE_REF         INT8                 not null,
+   LB_GROUPE            VARCHAR(400)         null,
+   PRIO_GRP             INT2                 null,
+   DH_MAJ               DATE                 null,
+   LB_RESP_MAJ          VARCHAR(50)          null,
+   BL_SUPPRIME          INT2                 null,
+   constraint PK_TG_PARTICIPATION_COMITE primary key (ID_PARTICIPATION)
+);
+
+comment on table TG_PARTICIPATION_COMITE is
+'La table donne les participation des membres d''un comité
+';
+
+comment on column TG_PARTICIPATION_COMITE.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PARTICIPATION_COMITE.BL_SUPPRIME is
+'booleen qui indique que la participation de la personne au comité a été supprimée';
+
+/*==============================================================*/
+/* Index : TG_PARTICIPATION_COMITE_PK                           */
+/*==============================================================*/
+create unique index TG_PARTICIPATION_COMITE_PK on TG_PARTICIPATION_COMITE (
+ID_PARTICIPATION
+);
+
+/*==============================================================*/
+/* Index : CONTIENT_PART_FK                                     */
+/*==============================================================*/
+create  index CONTIENT_PART_FK on TG_PARTICIPATION_COMITE (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Index : PARTICIPE_FK                                         */
+/*==============================================================*/
+create  index PARTICIPE_FK on TG_PARTICIPATION_COMITE (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : EST_EN_ETAT_SOLLICITATION_FK                         */
+/*==============================================================*/
+create  index EST_EN_ETAT_SOLLICITATION_FK on TG_PARTICIPATION_COMITE (
+CD_ETAT_SOLLICITATION
+);
+
+/*==============================================================*/
+/* Index : PARTICIPE_DURANT_LA_PHASE_FK                         */
+/*==============================================================*/
+create  index PARTICIPE_DURANT_LA_PHASE_FK on TG_PARTICIPATION_COMITE (
+ID_PHASE_REF
+);
+
+/*==============================================================*/
+/* Table : TG_PERSONNE                                          */
+/*==============================================================*/
+create table TG_PERSONNE (
+   ID_PERSONNE          INT8                 not null,
+   ID_DEPARTEMENT       IDENTIFIANT          null,
+   CD_CIVILITE          VARCHAR(4)           null,
+   CD_GENRE             VARCHAR(3)           null,
+   PERSONNE_CPS         INT8                 null,
+   LB_NOM_USAGE         VARCHAR(50)          null,
+   LB_PRENOM            VARCHAR(50)          null,
+   CD_FRANCOPHONE       VARCHAR(3)           null,
+   LB_WEB_PERSO         VARCHAR(100)         null,
+   FONCTION             VARCHAR(50)          null,
+   ID_EXTERNE           VARCHAR(150)         null,
+   ORCID                VARCHAR(30)          null,
+   AN_SOUTENANCE_THESE  INT8                 null,
+   constraint PK_TG_PERSONNE primary key (ID_PERSONNE)
+);
+
+comment on table TG_PERSONNE is
+'Table provisoire en attendant la conception dr''un référentiel personne unique (personne ou en anglais profile)';
+
+comment on column TG_PERSONNE.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PERSONNE.ID_DEPARTEMENT is
+'Identifiant du département ';
+
+comment on column TG_PERSONNE.CD_CIVILITE is
+'Code civilité court: M;, Me, Mlle. ';
+
+comment on column TG_PERSONNE.PERSONNE_CPS is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PERSONNE.LB_NOM_USAGE is
+'Nom d''usage de la personne (créé provisoirement en attendant le rapprochement du référentiel personne 14/05/2019)';
+
+comment on column TG_PERSONNE.LB_PRENOM is
+'Prénom d''usage de la personne (créé provisoirement en attendant le rapprochement du référentiel personne 14/05/2019)';
+
+comment on column TG_PERSONNE.CD_FRANCOPHONE is
+'precise si la personne est francophone, non francophone ou de langue inconnue';
+
+comment on column TG_PERSONNE.LB_WEB_PERSO is
+'Site web peson de la personne saisi par le cps';
+
+comment on column TG_PERSONNE.ID_EXTERNE is
+'Identifiant de la personne dans un système externe (par exemple NSI)';
+
+/*==============================================================*/
+/* Index : TG_PERSONNE_PK                                       */
+/*==============================================================*/
+create unique index TG_PERSONNE_PK on TG_PERSONNE (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : A_POUR_CIVILITE_FK                                   */
+/*==============================================================*/
+create  index A_POUR_CIVILITE_FK on TG_PERSONNE (
+CD_CIVILITE
+);
+
+/*==============================================================*/
+/* Index : EST_SAISI_PAR_CPS2_FK                                */
+/*==============================================================*/
+create  index EST_SAISI_PAR_CPS2_FK on TG_PERSONNE (
+PERSONNE_CPS
+);
+
+/*==============================================================*/
+/* Index : A_POUR_GENRE_FK                                      */
+/*==============================================================*/
+create  index A_POUR_GENRE_FK on TG_PERSONNE (
+CD_GENRE
+);
+
+/*==============================================================*/
+/* Index : EST_AFFECTE_A_FK                                     */
+/*==============================================================*/
+create  index EST_AFFECTE_A_FK on TG_PERSONNE (
+ID_DEPARTEMENT
+);
+
+/*==============================================================*/
+/* Table : TG_PERS_CPS                                          */
+/*==============================================================*/
+create table TG_PERS_CPS (
+   ID_PERSONNE          INT8                 not null,
+   LB_WEB_PERSO         VARCHAR(100)         null,
+   BL_SEXE              BOOL                 not null,
+   LB_LANGUE            VARCHAR(50)          null,
+   LB_NOM_FR            VARCHAR(50)          null,
+   LB_PRENOM            VARCHAR(50)          null,
+   LB_ADR_MAIL          LIBELLE              null,
+   LB_VILLE_HEBERG      VARCHAR(50)          null,
+   LB_ORGANISME         VARCHAR(50)          null,
+   constraint PK_TG_PERS_CPS primary key (ID_PERSONNE)
+);
+
+comment on table TG_PERS_CPS is
+'information sur la personne saisie par le cps (différente des identification de personnes en provenance des dsaisie de cv)';
+
+comment on column TG_PERS_CPS.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PERS_CPS.LB_WEB_PERSO is
+'Site web peson de la personne saisi par le cps';
+
+comment on column TG_PERS_CPS.LB_PRENOM is
+'Prénom d''usage de la personne (créé provisoirement en attendant le rapprochement du référentiel personne 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_PERS_CPS_PK                                       */
+/*==============================================================*/
+create unique index TG_PERS_CPS_PK on TG_PERS_CPS (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TG_PHASE                                             */
+/*==============================================================*/
+create table TG_PHASE (
+   ID_PHASE_APPEL       INT8                 not null,
+   ID_PHASE_REF         INT8                 not null,
+   constraint PK_TG_PHASE primary key (ID_PHASE_APPEL)
+);
+
+comment on table TG_PHASE is
+'Phase des appels ';
+
+/*==============================================================*/
+/* Index : TG_PHASE_PK                                          */
+/*==============================================================*/
+create unique index TG_PHASE_PK on TG_PHASE (
+ID_PHASE_APPEL
+);
+
+/*==============================================================*/
+/* Index : APOUR_TYPE_PHASE_FK                                  */
+/*==============================================================*/
+create  index APOUR_TYPE_PHASE_FK on TG_PHASE (
+ID_PHASE_REF
+);
+
+/*==============================================================*/
+/* Table : TG_PROJET                                            */
+/*==============================================================*/
+create table TG_PROJET (
+   ID_PROJET            INT8                 not null,
+   ID_APPEL             IDENTIFIANT          null,
+   ID_CAT_RD            INT8                 null,
+   ID_COMITE            INT8                 null,
+   ID_INST_FI           IDENTIFIANT          null,
+   PORTEUR              INT8                 null,
+   ID_STS_PROJET        VARCHAR(5)           not null,
+   LB_ACRO              VARCHAR(10)          null,
+   LB_TITRE_FR          VARCHAR(50)          null,
+   LB_TITRE_EN          VARCHAR(50)          null,
+   NO_DUREE             INT2                 null,
+   MNT_AIDE_PREV        INT8                 null,
+   BL_DEM_LABEL         BOOL                 null,
+   BL_DEM_COFI          BOOL                 null,
+   BL_INFRA_RECHERCHE   BOOL                 null,
+   LB_DOC_SC            VARCHAR(50)          null,
+   LB_ANNEXE_PREPROPOSITION VARCHAR(50)          null,
+   BL_DEPOT_PREC        BOOL                 null,
+   BL_FINANCEMENT_PREC  BOOL                 null,
+   BL_PROGRAMME_INVEST  BOOL                 null,
+   ORD_PHASE            INT4                 null,
+   RANG                 INT4                 null,
+   TYP_ADM              VARCHAR(3)           null,
+   constraint PK_TG_PROJET primary key (ID_PROJET)
+);
+
+comment on table TG_PROJET is
+'Offre de Projet soumis par les porteurs externes à l''ANR. avec l''ensemble des informations relatives au projet';
+
+comment on column TG_PROJET.ID_PROJET is
+'identifiant du projet';
+
+comment on column TG_PROJET.ID_APPEL is
+'identifiant de l''appel à projet';
+
+comment on column TG_PROJET.PORTEUR is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TG_PROJET.LB_ACRO is
+'acronyme du projet';
+
+comment on column TG_PROJET.LB_TITRE_EN is
+'titre du projet en anglais';
+
+comment on column TG_PROJET.NO_DUREE is
+'durée du projet exprimé en mois';
+
+comment on column TG_PROJET.MNT_AIDE_PREV is
+'Montant d''aide prévisionnel';
+
+comment on column TG_PROJET.BL_DEM_LABEL is
+'souhait du porteur de labelisation du projet par des pôles de compétitivité';
+
+comment on column TG_PROJET.BL_DEM_COFI is
+'booleen precisant si le projet prevoit des cofinanceurs';
+
+comment on column TG_PROJET.BL_INFRA_RECHERCHE is
+'Précise si le projet fait appel a un ou plusieurs infrastructures de recherche';
+
+comment on column TG_PROJET.BL_DEPOT_PREC is
+'le projet a déjà été déposé lors d''une édition précédente';
+
+comment on column TG_PROJET.BL_FINANCEMENT_PREC is
+'le projet fait suite à un projet précédemment financé';
+
+comment on column TG_PROJET.TYP_ADM is
+'prend pour valeur codée: liste principale, liste complémentaire et rejeté';
+
+/*==============================================================*/
+/* Index : TG_PROJET_PK                                         */
+/*==============================================================*/
+create unique index TG_PROJET_PK on TG_PROJET (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : EST_PROPOSE_POUR_FK                                  */
+/*==============================================================*/
+create  index EST_PROPOSE_POUR_FK on TG_PROJET (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : UTILISE_L_INSTRUMENT_FK                              */
+/*==============================================================*/
+create  index UTILISE_L_INSTRUMENT_FK on TG_PROJET (
+ID_INST_FI
+);
+
+/*==============================================================*/
+/* Index : CAT_RECH_FK                                          */
+/*==============================================================*/
+create  index CAT_RECH_FK on TG_PROJET (
+ID_CAT_RD
+);
+
+/*==============================================================*/
+/* Index : EVAL_COMITE_FK                                       */
+/*==============================================================*/
+create  index EVAL_COMITE_FK on TG_PROJET (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Index : A_POUR_AVANCEMENT_FK                                 */
+/*==============================================================*/
+create  index A_POUR_AVANCEMENT_FK on TG_PROJET (
+ID_STS_PROJET
+);
+
+/*==============================================================*/
+/* Index : EST_PORTEUR_FK                                       */
+/*==============================================================*/
+create  index EST_PORTEUR_FK on TG_PROJET (
+PORTEUR
+);
+
+/*==============================================================*/
+/* Table : TG_RESUME                                            */
+/*==============================================================*/
+create table TG_RESUME (
+   ID_LANGUE            INT2                 not null,
+   ID_PROJET            INT8                 not null,
+   LB_TEXTE             TEXT                 not null,
+   constraint PK_TG_RESUME primary key (ID_LANGUE, ID_PROJET)
+);
+
+comment on table TG_RESUME is
+'résumé dans les différentes langues';
+
+comment on column TG_RESUME.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : TG_RESUME_PK                                         */
+/*==============================================================*/
+create unique index TG_RESUME_PK on TG_RESUME (
+ID_LANGUE,
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : TG_RESUME_FK                                         */
+/*==============================================================*/
+create  index TG_RESUME_FK on TG_RESUME (
+ID_LANGUE
+);
+
+/*==============================================================*/
+/* Index : TG_RESUME2_FK                                        */
+/*==============================================================*/
+create  index TG_RESUME2_FK on TG_RESUME (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Table : TG_REUNION                                           */
+/*==============================================================*/
+create table TG_REUNION (
+   ID_REUNION           INT8                 not null,
+   ID_COMITE            INT8                 not null,
+   ID_PHASE_REF         INT8                 not null,
+   ID_TYPE_REUNION      INT8                 not null,
+   LB_TITRE             VARCHAR(50)          not null,
+   TX_COMMENTAIRE       TEXT                 null,
+   DT_DEB_PERIODE       DATE                 null,
+   DT_FIN_PERIODE       DATE                 null,
+   BL_OBLIGATOIRE       BOOL                 null,
+   NB_DUREE_MAX         INT4                 null,
+   BL_ACTIF             INT8                 null,
+   constraint PK_TG_REUNION primary key (ID_REUNION)
+);
+
+comment on table TG_REUNION is
+'réunion et période planifiée par le pilote de l''appel
+.
+';
+
+comment on column TG_REUNION.ID_REUNION is
+'identifiant de la réunion du comité';
+
+comment on column TG_REUNION.ID_TYPE_REUNION is
+'identifiant de la réunion';
+
+comment on column TG_REUNION.LB_TITRE is
+'Titre du comité';
+
+comment on column TG_REUNION.DT_FIN_PERIODE is
+'Date de fin de période pour programmer les réunions';
+
+comment on column TG_REUNION.BL_ACTIF is
+'Précise si le comité est actif ou supprimé (valeur 0)';
+
+/*==============================================================*/
+/* Index : TG_REUNION_PK                                        */
+/*==============================================================*/
+create unique index TG_REUNION_PK on TG_REUNION (
+ID_REUNION
+);
+
+/*==============================================================*/
+/* Index : A_POUR_TYPE_REUNION_FK                               */
+/*==============================================================*/
+create  index A_POUR_TYPE_REUNION_FK on TG_REUNION (
+ID_TYPE_REUNION
+);
+
+/*==============================================================*/
+/* Index : TL_COM_REU_FK                                        */
+/*==============================================================*/
+create  index TL_COM_REU_FK on TG_REUNION (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Index : REUNION_PREVUE_POUR_PHASE_FK                         */
+/*==============================================================*/
+create  index REUNION_PREVUE_POUR_PHASE_FK on TG_REUNION (
+ID_PHASE_REF
+);
+
+/*==============================================================*/
+/* Table : TG_SEANCE                                            */
+/*==============================================================*/
+create table TG_SEANCE (
+   ID_SEANCE            DATE                 not null,
+   ID_REUNION           INT8                 not null,
+   MATIN                BOOL                 null,
+   APRES_MIDI           BOOL                 null,
+   DT_SEANCE            DATE                 not null,
+   constraint PK_TG_SEANCE primary key (ID_SEANCE)
+);
+
+comment on table TG_SEANCE is
+'Séances de réunion effectivement programmées par le cps dans le cadre d''un comité. une réunion peut s''étaler sur plusieurs jours et donc plusieurs séances ';
+
+comment on column TG_SEANCE.ID_REUNION is
+'identifiant de la réunion du comité';
+
+/*==============================================================*/
+/* Index : TG_SEANCE_PK                                         */
+/*==============================================================*/
+create unique index TG_SEANCE_PK on TG_SEANCE (
+ID_SEANCE
+);
+
+/*==============================================================*/
+/* Index : TL_REU_SEANCE_FK                                     */
+/*==============================================================*/
+create  index TL_REU_SEANCE_FK on TG_SEANCE (
+ID_REUNION
+);
+
+/*==============================================================*/
+/* Table : TG_TELEPHONE                                         */
+/*==============================================================*/
+create table TG_TELEPHONE (
+   NO_TELEPHONE         VARCHAR(20)          not null,
+   ID_PERSONNE          INT8                 not null,
+   BL_TEL_PREF          BOOL                 null,
+   constraint PK_TG_TELEPHONE primary key (NO_TELEPHONE)
+);
+
+comment on table TG_TELEPHONE is
+'Numéro de téléphone (peuvent être internationnaux)';
+
+comment on column TG_TELEPHONE.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TG_TELEPHONE_PK                                      */
+/*==============================================================*/
+create unique index TG_TELEPHONE_PK on TG_TELEPHONE (
+NO_TELEPHONE
+);
+
+/*==============================================================*/
+/* Index : EST_POUR_TEL_FK                                      */
+/*==============================================================*/
+create  index EST_POUR_TEL_FK on TG_TELEPHONE (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TG_UTILISATEUR                                       */
+/*==============================================================*/
+create table TG_UTILISATEUR (
+   ID                   INT8                 not null,
+   USERNAME             VARCHAR(180)         not null,
+   USERNAME_CANONICAL   VARCHAR(180)         not null,
+   EMAIL                VARCHAR(180)         not null,
+   EMAIL_CANONICAL      VARCHAR(180)         not null,
+   ENABLED              BOOL                 not null,
+   SALT                 VARCHAR(255)         not null,
+   PASSWORD             VARCHAR(255)         not null,
+   LAST_LOGIN           DATE                 null,
+   CONFIRMATION_TOKEN   VARCHAR(180)         null,
+   PASSWORD_REQUESTED_AT DATE                 null,
+   ROLES                TEXT                 not null,
+   constraint PK_TG_UTILISATEUR primary key (ID)
+);
+
+comment on table TG_UTILISATEUR is
+'Table technique une occurence par utilisateur applicatif donnant les caractèristiques d''accès';
+
+/*==============================================================*/
+/* Index : TG_UTILISATEUR_PK                                    */
+/*==============================================================*/
+create unique index TG_UTILISATEUR_PK on TG_UTILISATEUR (
+ID
+);
+
+/*==============================================================*/
+/* Table : TL_ACCES_FORMULAIRE                                  */
+/*==============================================================*/
+create table TL_ACCES_FORMULAIRE (
+   ID_PROFIL            INT8                 not null,
+   ID_FORMULAIRE        IDENTIFIANT          not null,
+   ID_PHASE_REF         INT8                 not null,
+   TYPE_ACCES           CHAR(1)              not null,
+   constraint PK_TL_ACCES_FORMULAIRE primary key (ID_PROFIL, ID_FORMULAIRE, ID_PHASE_REF)
+);
+
+comment on column TL_ACCES_FORMULAIRE.ID_PROFIL is
+'idnetifiant du profil de l''utilisateur';
+
+/*==============================================================*/
+/* Index : TL_ACCES_FORMULAIRE_PK                               */
+/*==============================================================*/
+create unique index TL_ACCES_FORMULAIRE_PK on TL_ACCES_FORMULAIRE (
+ID_PROFIL,
+ID_FORMULAIRE,
+ID_PHASE_REF
+);
+
+/*==============================================================*/
+/* Index : TL_ACCES_FORMULAIRE_FK                               */
+/*==============================================================*/
+create  index TL_ACCES_FORMULAIRE_FK on TL_ACCES_FORMULAIRE (
+ID_PROFIL
+);
+
+/*==============================================================*/
+/* Index : TL_ACCES_FORMULAIRE2_FK                              */
+/*==============================================================*/
+create  index TL_ACCES_FORMULAIRE2_FK on TL_ACCES_FORMULAIRE (
+ID_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Index : TL_ACCES_FORMULAIRE3_FK                              */
+/*==============================================================*/
+create  index TL_ACCES_FORMULAIRE3_FK on TL_ACCES_FORMULAIRE (
+ID_PHASE_REF
+);
+
+/*==============================================================*/
+/* Table : TL_APPEL_CLASSE_FORMULAIRE                           */
+/*==============================================================*/
+create table TL_APPEL_CLASSE_FORMULAIRE (
+   ID_APPEL             IDENTIFIANT          not null,
+   ID_CLASSE_FORMULAIRE INT8                 not null,
+   constraint PK_TL_APPEL_CLASSE_FORMULAIRE primary key (ID_APPEL, ID_CLASSE_FORMULAIRE)
+);
+
+comment on table TL_APPEL_CLASSE_FORMULAIRE is
+'donne les classes de formulaire que doit contenir un appel particulier';
+
+comment on column TL_APPEL_CLASSE_FORMULAIRE.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TL_APPEL_CLASSE_FORMULAIRE_PK                        */
+/*==============================================================*/
+create unique index TL_APPEL_CLASSE_FORMULAIRE_PK on TL_APPEL_CLASSE_FORMULAIRE (
+ID_APPEL,
+ID_CLASSE_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Index : TL_APPEL_CLASSE_FORMULAIRE_FK                        */
+/*==============================================================*/
+create  index TL_APPEL_CLASSE_FORMULAIRE_FK on TL_APPEL_CLASSE_FORMULAIRE (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_APPEL_CLASSE_FORMULAIRE2_FK                       */
+/*==============================================================*/
+create  index TL_APPEL_CLASSE_FORMULAIRE2_FK on TL_APPEL_CLASSE_FORMULAIRE (
+ID_CLASSE_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Table : TL_BLOC_FORM                                         */
+/*==============================================================*/
+create table TL_BLOC_FORM (
+   ID_FORMULAIRE        IDENTIFIANT          not null,
+   ID_BLOC              INT8                 not null,
+   ORDRE                INT4                 not null,
+   BLOC_PARENT          INT8                 null,
+   constraint PK_TL_BLOC_FORM primary key (ID_FORMULAIRE, ID_BLOC)
+);
+
+comment on column TL_BLOC_FORM.ORDRE is
+'donne le numéro d''ordre de la phase ';
+
+/*==============================================================*/
+/* Index : TL_BLOC_FORM_PK                                      */
+/*==============================================================*/
+create unique index TL_BLOC_FORM_PK on TL_BLOC_FORM (
+ID_FORMULAIRE,
+ID_BLOC
+);
+
+/*==============================================================*/
+/* Index : TL_BLOC_FORM_FK                                      */
+/*==============================================================*/
+create  index TL_BLOC_FORM_FK on TL_BLOC_FORM (
+ID_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Index : TL_BLOC_FORM2_FK                                     */
+/*==============================================================*/
+create  index TL_BLOC_FORM2_FK on TL_BLOC_FORM (
+ID_BLOC
+);
+
+/*==============================================================*/
+/* Table : TL_CATRD_APPEL                                       */
+/*==============================================================*/
+create table TL_CATRD_APPEL (
+   ID_CAT_RD            INT8                 not null,
+   ID_APPEL             IDENTIFIANT          not null,
+   constraint PK_TL_CATRD_APPEL primary key (ID_CAT_RD, ID_APPEL)
+);
+
+comment on table TL_CATRD_APPEL is
+'Catégorie sélectionnables pou l''appel';
+
+comment on column TL_CATRD_APPEL.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TL_CATRD_APPEL_PK                                    */
+/*==============================================================*/
+create unique index TL_CATRD_APPEL_PK on TL_CATRD_APPEL (
+ID_CAT_RD,
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_CATRD_APPEL_FK                                    */
+/*==============================================================*/
+create  index TL_CATRD_APPEL_FK on TL_CATRD_APPEL (
+ID_CAT_RD
+);
+
+/*==============================================================*/
+/* Index : TL_CATRD_APPEL2_FK                                   */
+/*==============================================================*/
+create  index TL_CATRD_APPEL2_FK on TL_CATRD_APPEL (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Table : TL_COMITE_AGENCE                                     */
+/*==============================================================*/
+create table TL_COMITE_AGENCE (
+   ID_FINANCEUR         INT8                 not null,
+   ID_COMITE            INT8                 not null,
+   constraint PK_TL_COMITE_AGENCE primary key (ID_FINANCEUR, ID_COMITE)
+);
+
+/*==============================================================*/
+/* Index : TL_COMITE_AGENCE_PK                                  */
+/*==============================================================*/
+create unique index TL_COMITE_AGENCE_PK on TL_COMITE_AGENCE (
+ID_FINANCEUR,
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Index : TL_COMITE_AGENCE_FK                                  */
+/*==============================================================*/
+create  index TL_COMITE_AGENCE_FK on TL_COMITE_AGENCE (
+ID_FINANCEUR
+);
+
+/*==============================================================*/
+/* Index : TL_COMITE_AGENCE2_FK                                 */
+/*==============================================================*/
+create  index TL_COMITE_AGENCE2_FK on TL_COMITE_AGENCE (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Table : TL_COMITE_DEP                                        */
+/*==============================================================*/
+create table TL_COMITE_DEP (
+   ID_DEPARTEMENT       IDENTIFIANT          not null,
+   ID_COMITE            INT8                 not null,
+   constraint PK_TL_COMITE_DEP primary key (ID_DEPARTEMENT, ID_COMITE)
+);
+
+comment on table TL_COMITE_DEP is
+'Traduit l''affection d''un comité établi pour un parfois deux département scientifiues de l''anr';
+
+comment on column TL_COMITE_DEP.ID_DEPARTEMENT is
+'Identifiant du département ';
+
+/*==============================================================*/
+/* Index : TL_COMITE_DEP_PK                                     */
+/*==============================================================*/
+create unique index TL_COMITE_DEP_PK on TL_COMITE_DEP (
+ID_DEPARTEMENT,
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Index : TL_COMITE_DEP_FK                                     */
+/*==============================================================*/
+create  index TL_COMITE_DEP_FK on TL_COMITE_DEP (
+ID_DEPARTEMENT
+);
+
+/*==============================================================*/
+/* Index : TL_COMITE_DEP2_FK                                    */
+/*==============================================================*/
+create  index TL_COMITE_DEP2_FK on TL_COMITE_DEP (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Table : TL_FINANCEUR_PROJET                                  */
+/*==============================================================*/
+create table TL_FINANCEUR_PROJET (
+   ID_PROJET            INT8                 not null,
+   ID_FINANCEUR         INT8                 not null,
+   constraint PK_TL_FINANCEUR_PROJET primary key (ID_PROJET, ID_FINANCEUR)
+);
+
+comment on column TL_FINANCEUR_PROJET.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : TL_FINANCEUR_PROJET_PK                               */
+/*==============================================================*/
+create unique index TL_FINANCEUR_PROJET_PK on TL_FINANCEUR_PROJET (
+ID_PROJET,
+ID_FINANCEUR
+);
+
+/*==============================================================*/
+/* Index : TL_FINANCEUR_PROJET_FK                               */
+/*==============================================================*/
+create  index TL_FINANCEUR_PROJET_FK on TL_FINANCEUR_PROJET (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : TL_FINANCEUR_PROJET2_FK                              */
+/*==============================================================*/
+create  index TL_FINANCEUR_PROJET2_FK on TL_FINANCEUR_PROJET (
+ID_FINANCEUR
+);
+
+/*==============================================================*/
+/* Table : TL_FORMULAIRE_APPEL                                  */
+/*==============================================================*/
+create table TL_FORMULAIRE_APPEL (
+   ID_APPEL             IDENTIFIANT          not null,
+   ID_FORMULAIRE        IDENTIFIANT          not null,
+   constraint PK_TL_FORMULAIRE_APPEL primary key (ID_APPEL, ID_FORMULAIRE)
+);
+
+comment on column TL_FORMULAIRE_APPEL.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TL_FORMULAIRE_APPEL_PK                               */
+/*==============================================================*/
+create unique index TL_FORMULAIRE_APPEL_PK on TL_FORMULAIRE_APPEL (
+ID_APPEL,
+ID_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Index : TL_FORMULAIRE_APPEL_FK                               */
+/*==============================================================*/
+create  index TL_FORMULAIRE_APPEL_FK on TL_FORMULAIRE_APPEL (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_FORMULAIRE_APPEL2_FK                              */
+/*==============================================================*/
+create  index TL_FORMULAIRE_APPEL2_FK on TL_FORMULAIRE_APPEL (
+ID_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Table : TL_HAB_APPEL                                         */
+/*==============================================================*/
+create table TL_HAB_APPEL (
+   ID_APPEL             IDENTIFIANT          not null,
+   ID_HABILITATION      INT8                 not null,
+   constraint PK_TL_HAB_APPEL primary key (ID_APPEL, ID_HABILITATION)
+);
+
+comment on column TL_HAB_APPEL.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TL_HAB_APPEL_PK                                      */
+/*==============================================================*/
+create unique index TL_HAB_APPEL_PK on TL_HAB_APPEL (
+ID_APPEL,
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_APPEL_FK                                      */
+/*==============================================================*/
+create  index TL_HAB_APPEL_FK on TL_HAB_APPEL (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_APPEL2_FK                                     */
+/*==============================================================*/
+create  index TL_HAB_APPEL2_FK on TL_HAB_APPEL (
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Table : TL_HAB_COMITE                                        */
+/*==============================================================*/
+create table TL_HAB_COMITE (
+   ID_COMITE            INT8                 not null,
+   ID_HABILITATION      INT8                 not null,
+   constraint PK_TL_HAB_COMITE primary key (ID_COMITE, ID_HABILITATION)
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_COMITE_PK                                     */
+/*==============================================================*/
+create unique index TL_HAB_COMITE_PK on TL_HAB_COMITE (
+ID_COMITE,
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_COMITE_FK                                     */
+/*==============================================================*/
+create  index TL_HAB_COMITE_FK on TL_HAB_COMITE (
+ID_COMITE
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_COMITE2_FK                                    */
+/*==============================================================*/
+create  index TL_HAB_COMITE2_FK on TL_HAB_COMITE (
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Table : TL_HAB_PHASE                                         */
+/*==============================================================*/
+create table TL_HAB_PHASE (
+   ID_PHASE_APPEL       INT8                 not null,
+   ID_HABILITATION      INT8                 not null,
+   constraint PK_TL_HAB_PHASE primary key (ID_PHASE_APPEL, ID_HABILITATION)
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_PHASE_PK                                      */
+/*==============================================================*/
+create unique index TL_HAB_PHASE_PK on TL_HAB_PHASE (
+ID_PHASE_APPEL,
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_PHASE_FK                                      */
+/*==============================================================*/
+create  index TL_HAB_PHASE_FK on TL_HAB_PHASE (
+ID_PHASE_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_HAB_PHASE2_FK                                     */
+/*==============================================================*/
+create  index TL_HAB_PHASE2_FK on TL_HAB_PHASE (
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Table : TL_HAB_PROJET                                        */
+/*==============================================================*/
+create table TL_HAB_PROJET (
+   ID_HABILITATION      INT8                 not null,
+   ID_PROJET            INT8                 not null,
+   constraint PK_TL_HAB_PROJET primary key (ID_HABILITATION, ID_PROJET)
+);
+
+comment on column TL_HAB_PROJET.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : A_ACCES_AU_PROJET_PK                                 */
+/*==============================================================*/
+create unique index A_ACCES_AU_PROJET_PK on TL_HAB_PROJET (
+ID_HABILITATION,
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : A_ACCES_AU_PROJET_FK                                 */
+/*==============================================================*/
+create  index A_ACCES_AU_PROJET_FK on TL_HAB_PROJET (
+ID_HABILITATION
+);
+
+/*==============================================================*/
+/* Index : A_ACCES_AU_PROJET2_FK                                */
+/*==============================================================*/
+create  index A_ACCES_AU_PROJET2_FK on TL_HAB_PROJET (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Table : TL_INFRA_PROJ                                        */
+/*==============================================================*/
+create table TL_INFRA_PROJ (
+   ID_PROJET            INT8                 not null,
+   ID_INF_RECH          IDENTIFIANT          not null,
+   constraint PK_TL_INFRA_PROJ primary key (ID_PROJET, ID_INF_RECH)
+);
+
+comment on column TL_INFRA_PROJ.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : TL_INFRA_PROJ_PK                                     */
+/*==============================================================*/
+create unique index TL_INFRA_PROJ_PK on TL_INFRA_PROJ (
+ID_PROJET,
+ID_INF_RECH
+);
+
+/*==============================================================*/
+/* Index : TL_INFRA_PROJ_FK                                     */
+/*==============================================================*/
+create  index TL_INFRA_PROJ_FK on TL_INFRA_PROJ (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : TL_INFRA_PROJ2_FK                                    */
+/*==============================================================*/
+create  index TL_INFRA_PROJ2_FK on TL_INFRA_PROJ (
+ID_INF_RECH
+);
+
+/*==============================================================*/
+/* Table : TL_INST_FI_APPEL                                     */
+/*==============================================================*/
+create table TL_INST_FI_APPEL (
+   ID_APPEL             IDENTIFIANT          not null,
+   ID_INST_FI           IDENTIFIANT          not null,
+   constraint PK_TL_INST_FI_APPEL primary key (ID_APPEL, ID_INST_FI)
+);
+
+comment on table TL_INST_FI_APPEL is
+'donne les instruments de financement proposés (possible) dans le cadre d''un appel particulier';
+
+comment on column TL_INST_FI_APPEL.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TL_INST_FI_APPEL_PK                                  */
+/*==============================================================*/
+create unique index TL_INST_FI_APPEL_PK on TL_INST_FI_APPEL (
+ID_APPEL,
+ID_INST_FI
+);
+
+/*==============================================================*/
+/* Index : TL_INST_FI_APPEL_FK                                  */
+/*==============================================================*/
+create  index TL_INST_FI_APPEL_FK on TL_INST_FI_APPEL (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_INST_FI_APPEL2_FK                                 */
+/*==============================================================*/
+create  index TL_INST_FI_APPEL2_FK on TL_INST_FI_APPEL (
+ID_INST_FI
+);
+
+/*==============================================================*/
+/* Table : TL_LANGUE_PROPOSEE_DS                                */
+/*==============================================================*/
+create table TL_LANGUE_PROPOSEE_DS (
+   ID_APPEL             IDENTIFIANT          not null,
+   ID_LANGUE            INT2                 not null,
+   constraint PK_TL_LANGUE_PROPOSEE_DS primary key (ID_APPEL, ID_LANGUE)
+);
+
+comment on table TL_LANGUE_PROPOSEE_DS is
+'Langue(s) de rédaction du document scientifique proposée(s)';
+
+comment on column TL_LANGUE_PROPOSEE_DS.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TL_LANGUE_PROPOSEE_DS_PK                             */
+/*==============================================================*/
+create unique index TL_LANGUE_PROPOSEE_DS_PK on TL_LANGUE_PROPOSEE_DS (
+ID_APPEL,
+ID_LANGUE
+);
+
+/*==============================================================*/
+/* Index : TL_LANGUE_PROPOSEE_DS_FK                             */
+/*==============================================================*/
+create  index TL_LANGUE_PROPOSEE_DS_FK on TL_LANGUE_PROPOSEE_DS (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_LANGUE_PROPOSEE_DS2_FK                            */
+/*==============================================================*/
+create  index TL_LANGUE_PROPOSEE_DS2_FK on TL_LANGUE_PROPOSEE_DS (
+ID_LANGUE
+);
+
+/*==============================================================*/
+/* Table : TL_LANG_PERS                                         */
+/*==============================================================*/
+create table TL_LANG_PERS (
+   ID_PERSONNE          INT8                 not null,
+   ID_LANGUE            INT2                 not null,
+   ID_NIVEAU            INT2                 null,
+   CD_PRATIQUE          BOOL                 null,
+   constraint PK_TL_LANG_PERS primary key (ID_PERSONNE, ID_LANGUE)
+);
+
+comment on table TL_LANG_PERS is
+'Table de lien traduisant la maitrise d''une langue particuliere pour une personne ';
+
+comment on column TL_LANG_PERS.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+comment on column TL_LANG_PERS.CD_PRATIQUE is
+'Code précisant le niveau de pratique de la langue:
+lu, parlé, écrite..';
+
+/*==============================================================*/
+/* Index : TL_LANG_PERS_PK                                      */
+/*==============================================================*/
+create unique index TL_LANG_PERS_PK on TL_LANG_PERS (
+ID_PERSONNE,
+ID_LANGUE
+);
+
+/*==============================================================*/
+/* Index : PERSONNE_PRATIQUE_FK                                 */
+/*==============================================================*/
+create  index PERSONNE_PRATIQUE_FK on TL_LANG_PERS (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : PRATIQUE_LANGUE_FK                                   */
+/*==============================================================*/
+create  index PRATIQUE_LANGUE_FK on TL_LANG_PERS (
+ID_LANGUE
+);
+
+/*==============================================================*/
+/* Index : A_POUR_MAITRISE_EN_LANGUE_FK                         */
+/*==============================================================*/
+create  index A_POUR_MAITRISE_EN_LANGUE_FK on TL_LANG_PERS (
+ID_NIVEAU
+);
+
+/*==============================================================*/
+/* Table : TL_MC_ERC_APPEL                                      */
+/*==============================================================*/
+create table TL_MC_ERC_APPEL (
+   ID_MC_ERC            IDENTIFIANT          not null,
+   ID_APPEL             IDENTIFIANT          not null,
+   constraint PK_TL_MC_ERC_APPEL primary key (ID_MC_ERC, ID_APPEL)
+);
+
+comment on table TL_MC_ERC_APPEL is
+'Mot cle erc proposé pour l''appel';
+
+comment on column TL_MC_ERC_APPEL.ID_APPEL is
+'identifiant de l''appel à projet';
+
+/*==============================================================*/
+/* Index : TL_MC_ERC_APPEL_PK                                   */
+/*==============================================================*/
+create unique index TL_MC_ERC_APPEL_PK on TL_MC_ERC_APPEL (
+ID_MC_ERC,
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Index : TL_MC_ERC_APPEL_FK                                   */
+/*==============================================================*/
+create  index TL_MC_ERC_APPEL_FK on TL_MC_ERC_APPEL (
+ID_MC_ERC
+);
+
+/*==============================================================*/
+/* Index : TL_MC_ERC_APPEL2_FK                                  */
+/*==============================================================*/
+create  index TL_MC_ERC_APPEL2_FK on TL_MC_ERC_APPEL (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Table : TL_MC_ERC_PROJ                                       */
+/*==============================================================*/
+create table TL_MC_ERC_PROJ (
+   ID_MC_ERC            IDENTIFIANT          not null,
+   ID_PROJET            INT8                 not null,
+   constraint PK_TL_MC_ERC_PROJ primary key (ID_MC_ERC, ID_PROJET)
+);
+
+comment on column TL_MC_ERC_PROJ.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : TL_MC_ERC_PROJ_PK                                    */
+/*==============================================================*/
+create unique index TL_MC_ERC_PROJ_PK on TL_MC_ERC_PROJ (
+ID_MC_ERC,
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : TL_MC_ERC_PROJ_FK                                    */
+/*==============================================================*/
+create  index TL_MC_ERC_PROJ_FK on TL_MC_ERC_PROJ (
+ID_MC_ERC
+);
+
+/*==============================================================*/
+/* Index : TL_MC_ERC_PROJ2_FK                                   */
+/*==============================================================*/
+create  index TL_MC_ERC_PROJ2_FK on TL_MC_ERC_PROJ (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Table : TL_PERS_ORG                                          */
+/*==============================================================*/
+create table TL_PERS_ORG (
+   ID_PERSONNE          INT8                 not null,
+   ID_ORGANISME         INT8                 not null,
+   constraint PK_TL_PERS_ORG primary key (ID_PERSONNE, ID_ORGANISME)
+);
+
+comment on table TL_PERS_ORG is
+'orgnaisme déclaré dans le cv';
+
+comment on column TL_PERS_ORG.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TL_PERS_ORG_PK                                       */
+/*==============================================================*/
+create unique index TL_PERS_ORG_PK on TL_PERS_ORG (
+ID_PERSONNE,
+ID_ORGANISME
+);
+
+/*==============================================================*/
+/* Index : TL_PERS_ORG_FK                                       */
+/*==============================================================*/
+create  index TL_PERS_ORG_FK on TL_PERS_ORG (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : TL_PERS_ORG2_FK                                      */
+/*==============================================================*/
+create  index TL_PERS_ORG2_FK on TL_PERS_ORG (
+ID_ORGANISME
+);
+
+/*==============================================================*/
+/* Table : TL_PERS_PART                                         */
+/*==============================================================*/
+create table TL_PERS_PART (
+   ID_PARTENAIRE        IDENTIFIANT          not null,
+   ID_PERSONNE          INT8                 not null,
+   constraint PK_TL_PERS_PART primary key (ID_PARTENAIRE, ID_PERSONNE)
+);
+
+comment on table TL_PERS_PART is
+'donne tous les scientifiques partenaire, autres que le responsable scientifique ';
+
+comment on column TL_PERS_PART.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TL_PERS_PART_PK                                      */
+/*==============================================================*/
+create unique index TL_PERS_PART_PK on TL_PERS_PART (
+ID_PARTENAIRE,
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : TL_PERS_PART_FK                                      */
+/*==============================================================*/
+create  index TL_PERS_PART_FK on TL_PERS_PART (
+ID_PARTENAIRE
+);
+
+/*==============================================================*/
+/* Index : TL_PERS_PART2_FK                                     */
+/*==============================================================*/
+create  index TL_PERS_PART2_FK on TL_PERS_PART (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TL_POL_PROJ                                          */
+/*==============================================================*/
+create table TL_POL_PROJ (
+   ID_PROJET            INT8                 not null,
+   ID_POLE_COMP         IDENTIFIANT          not null,
+   constraint PK_TL_POL_PROJ primary key (ID_PROJET, ID_POLE_COMP)
+);
+
+comment on table TL_POL_PROJ is
+'relation pole de compétitivité , projet';
+
+comment on column TL_POL_PROJ.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : TL_POL_PROJ_PK                                       */
+/*==============================================================*/
+create unique index TL_POL_PROJ_PK on TL_POL_PROJ (
+ID_PROJET,
+ID_POLE_COMP
+);
+
+/*==============================================================*/
+/* Index : TL_POL_PROJ_FK                                       */
+/*==============================================================*/
+create  index TL_POL_PROJ_FK on TL_POL_PROJ (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : TL_POL_PROJ2_FK                                      */
+/*==============================================================*/
+create  index TL_POL_PROJ2_FK on TL_POL_PROJ (
+ID_POLE_COMP
+);
+
+/*==============================================================*/
+/* Table : TL_PROFIL_CLASSE                                     */
+/*==============================================================*/
+create table TL_PROFIL_CLASSE (
+   ID_CLASSE_FORMULAIRE INT8                 not null,
+   ID_PROFIL            INT8                 not null,
+   constraint PK_TL_PROFIL_CLASSE primary key (ID_CLASSE_FORMULAIRE, ID_PROFIL)
+);
+
+comment on table TL_PROFIL_CLASSE is
+'donne les habilitation d''accès d''un profil applicatif à une classe de formulaire.
+exemple: le profil "Porteur de projet" a accès au formulaire de classe "soumission"';
+
+comment on column TL_PROFIL_CLASSE.ID_PROFIL is
+'idnetifiant du profil de l''utilisateur';
+
+/*==============================================================*/
+/* Index : TL_PROFIL_CLASSE_PK                                  */
+/*==============================================================*/
+create unique index TL_PROFIL_CLASSE_PK on TL_PROFIL_CLASSE (
+ID_CLASSE_FORMULAIRE,
+ID_PROFIL
+);
+
+/*==============================================================*/
+/* Index : TL_PROFIL_CLASSE_FK                                  */
+/*==============================================================*/
+create  index TL_PROFIL_CLASSE_FK on TL_PROFIL_CLASSE (
+ID_CLASSE_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Index : TL_PROFIL_CLASSE2_FK                                 */
+/*==============================================================*/
+create  index TL_PROFIL_CLASSE2_FK on TL_PROFIL_CLASSE (
+ID_PROFIL
+);
+
+/*==============================================================*/
+/* Table : TL_PROJ_MC_CES                                       */
+/*==============================================================*/
+create table TL_PROJ_MC_CES (
+   ID_MC_CES            INT8                 not null,
+   ID_PROJET            INT8                 not null,
+   constraint PK_TL_PROJ_MC_CES primary key (ID_MC_CES, ID_PROJET)
+);
+
+comment on table TL_PROJ_MC_CES is
+'Lien entre les mots cles ces positionnés par les porteurs de projet';
+
+comment on column TL_PROJ_MC_CES.ID_PROJET is
+'identifiant du projet';
+
+/*==============================================================*/
+/* Index : TL_PROJ_MC_CES_PK                                    */
+/*==============================================================*/
+create unique index TL_PROJ_MC_CES_PK on TL_PROJ_MC_CES (
+ID_MC_CES,
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Index : TL_PROJ_MC_CES_FK                                    */
+/*==============================================================*/
+create  index TL_PROJ_MC_CES_FK on TL_PROJ_MC_CES (
+ID_MC_CES
+);
+
+/*==============================================================*/
+/* Index : TL_PROJ_MC_CES2_FK                                   */
+/*==============================================================*/
+create  index TL_PROJ_MC_CES2_FK on TL_PROJ_MC_CES (
+ID_PROJET
+);
+
+/*==============================================================*/
+/* Table : TL_REU_PERS                                          */
+/*==============================================================*/
+create table TL_REU_PERS (
+   ID_SEANCE            DATE                 not null,
+   ID_PERSONNE          INT8                 not null,
+   BL_PRESENT           INT2                 null,
+   constraint PK_TL_REU_PERS primary key (ID_SEANCE, ID_PERSONNE)
+);
+
+comment on column TL_REU_PERS.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TL_REU_PERS_PK                                       */
+/*==============================================================*/
+create unique index TL_REU_PERS_PK on TL_REU_PERS (
+ID_SEANCE,
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : TL_REU_PERS_FK                                       */
+/*==============================================================*/
+create  index TL_REU_PERS_FK on TL_REU_PERS (
+ID_SEANCE
+);
+
+/*==============================================================*/
+/* Index : TL_REU_PERS2_FK                                      */
+/*==============================================================*/
+create  index TL_REU_PERS2_FK on TL_REU_PERS (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TL_SEANCE_PERS                                       */
+/*==============================================================*/
+create table TL_SEANCE_PERS (
+   ID_SEANCE            DATE                 not null,
+   ID_PERSONNE          INT8                 not null,
+   BL_PRESENT           INT2                 not null,
+   constraint PK_TL_SEANCE_PERS primary key (ID_SEANCE, ID_PERSONNE)
+);
+
+comment on table TL_SEANCE_PERS is
+'Participation des membres d''un comité à une séance de réunion';
+
+comment on column TL_SEANCE_PERS.ID_PERSONNE is
+'Identifiant d'' une personne en lien avec le référentiel personne (en cours de développement 14/05/2019)';
+
+/*==============================================================*/
+/* Index : TL_SEANCE_PERS_PK                                    */
+/*==============================================================*/
+create unique index TL_SEANCE_PERS_PK on TL_SEANCE_PERS (
+ID_SEANCE,
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Index : TL_SEANCE_PERS_FK                                    */
+/*==============================================================*/
+create  index TL_SEANCE_PERS_FK on TL_SEANCE_PERS (
+ID_SEANCE
+);
+
+/*==============================================================*/
+/* Index : TL_SEANCE_PERS2_FK                                   */
+/*==============================================================*/
+create  index TL_SEANCE_PERS2_FK on TL_SEANCE_PERS (
+ID_PERSONNE
+);
+
+/*==============================================================*/
+/* Table : TR_CAT_ERC                                           */
+/*==============================================================*/
+create table TR_CAT_ERC (
+   ID_CAT_ERC           IDENTIFIANT          not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   constraint PK_TR_CAT_ERC primary key (ID_CAT_ERC)
+);
+
+comment on table TR_CAT_ERC is
+'premier niveau de regroupement des mots cles erc';
+
+/*==============================================================*/
+/* Index : TR_CAT_ERC_PK                                        */
+/*==============================================================*/
+create unique index TR_CAT_ERC_PK on TR_CAT_ERC (
+ID_CAT_ERC
+);
+
+/*==============================================================*/
+/* Table : TR_CAT_RD                                            */
+/*==============================================================*/
+create table TR_CAT_RD (
+   ID_CAT_RD            INT8                 not null,
+   LB_CATEGORIE         VARCHAR(40)          not null,
+   TX_AIDE              DECIMAL(4)           null,
+   constraint PK_TR_CAT_RD primary key (ID_CAT_RD)
+);
+
+comment on table TR_CAT_RD is
+'soumission:
+g.	Catégorie R&D
+Liste déroulante à choix unique obligatoire. Référentiel géré en base de données permettant de mettre à jour la liste de choix.
+La valeur sélectionnée pilote le taux d’aide applicable (étape 2).
+
+Les valeurs attendues sont :
+•	Recherche fondamentale
+•	Recherche industrielle
+•	Développement expérimental
+';
+
+/*==============================================================*/
+/* Index : TR_CAT_RD_PK                                         */
+/*==============================================================*/
+create unique index TR_CAT_RD_PK on TR_CAT_RD (
+ID_CAT_RD
+);
+
+/*==============================================================*/
+/* Table : TR_CD_CONVENTION                                     */
+/*==============================================================*/
+create table TR_CD_CONVENTION (
+   ID_CD_CONVENTION     INT8                 not null,
+   LB_NOM               VARCHAR(50)          not null,
+   constraint PK_TR_CD_CONVENTION primary key (ID_CD_CONVENTION)
+);
+
+comment on table TR_CD_CONVENTION is
+'Référentiel des codes de convention pour les appels
+';
+
+/*==============================================================*/
+/* Index : TR_CD_CONVENTION_PK                                  */
+/*==============================================================*/
+create unique index TR_CD_CONVENTION_PK on TR_CD_CONVENTION (
+ID_CD_CONVENTION
+);
+
+/*==============================================================*/
+/* Table : TR_CIVILITE                                          */
+/*==============================================================*/
+create table TR_CIVILITE (
+   CD_CIVILITE          VARCHAR(4)           not null,
+   CIVILITE_LONGUE      VARCHAR(20)          not null,
+   constraint PK_TR_CIVILITE primary key (CD_CIVILITE)
+);
+
+comment on table TR_CIVILITE is
+'table de référence des civilités';
+
+comment on column TR_CIVILITE.CD_CIVILITE is
+'Code civilité court: M;, Me, Mlle. ';
+
+comment on column TR_CIVILITE.CIVILITE_LONGUE is
+'Code civilité long: Monsieur, Madame , mademoiselle pour la gestion des courriers';
+
+/*==============================================================*/
+/* Index : TR_CIVILITE_PK                                       */
+/*==============================================================*/
+create unique index TR_CIVILITE_PK on TR_CIVILITE (
+CD_CIVILITE
+);
+
+/*==============================================================*/
+/* Table : TR_CLASSE_FORMULAIRE                                 */
+/*==============================================================*/
+create table TR_CLASSE_FORMULAIRE (
+   ID_CLASSE_FORMULAIRE INT8                 not null,
+   LB_NOM               VARCHAR(50)          not null,
+   constraint PK_TR_CLASSE_FORMULAIRE primary key (ID_CLASSE_FORMULAIRE)
+);
+
+comment on table TR_CLASSE_FORMULAIRE is
+'Classe de formulaire permet de "typer" les formulaire.
+- soumission
+- Grille L
+- Grille R
+- Grille expert,
+- Rebuttal,
+- Rapporteur final
+...
+';
+
+/*==============================================================*/
+/* Index : TR_CLASSE_FORMULAIRE_PK                              */
+/*==============================================================*/
+create unique index TR_CLASSE_FORMULAIRE_PK on TR_CLASSE_FORMULAIRE (
+ID_CLASSE_FORMULAIRE
+);
+
+/*==============================================================*/
+/* Table : TR_DEPARTEMENT                                       */
+/*==============================================================*/
+create table TR_DEPARTEMENT (
+   ID_DEPARTEMENT       IDENTIFIANT          not null,
+   LB_COURT             LIBELLE              not null,
+   LB_LONG              VARCHAR(50)          not null,
+   constraint PK_TR_DEPARTEMENT primary key (ID_DEPARTEMENT)
+);
+
+comment on table TR_DEPARTEMENT is
+'Département scientifique interne de l''ANR';
+
+comment on column TR_DEPARTEMENT.ID_DEPARTEMENT is
+'Identifiant du département ';
+
+comment on column TR_DEPARTEMENT.LB_COURT is
+'Désignation du département';
+
+comment on column TR_DEPARTEMENT.LB_LONG is
+'valeur littérales: homme, femme, ....';
+
+/*==============================================================*/
+/* Index : TR_DEPARTEMENT_PK                                    */
+/*==============================================================*/
+create unique index TR_DEPARTEMENT_PK on TR_DEPARTEMENT (
+ID_DEPARTEMENT
+);
+
+/*==============================================================*/
+/* Table : TR_DISC_ERC                                          */
+/*==============================================================*/
+create table TR_DISC_ERC (
+   ID_DISC_ERC          IDENTIFIANT          not null,
+   ID_CAT_ERC           IDENTIFIANT          not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   constraint PK_TR_DISC_ERC primary key (ID_DISC_ERC)
+);
+
+comment on table TR_DISC_ERC is
+'Deuxième niveau de regroupement des mots cles erc';
+
+/*==============================================================*/
+/* Index : TR_DISC_ERC_PK                                       */
+/*==============================================================*/
+create unique index TR_DISC_ERC_PK on TR_DISC_ERC (
+ID_DISC_ERC
+);
+
+/*==============================================================*/
+/* Index : DISCIPLINE_FAIT_PARTIE_FK                            */
+/*==============================================================*/
+create  index DISCIPLINE_FAIT_PARTIE_FK on TR_DISC_ERC (
+ID_CAT_ERC
+);
+
+/*==============================================================*/
+/* Table : TR_DUREE_PROJET                                      */
+/*==============================================================*/
+create table TR_DUREE_PROJET (
+   ID_DUREE             INT8                 not null,
+   ID_APPEL             IDENTIFIANT          not null,
+   NO_DUREE             INT2                 not null,
+   constraint PK_TR_DUREE_PROJET primary key (ID_DUREE)
+);
+
+comment on table TR_DUREE_PROJET is
+'Liste finie des durées possibles des projets définies pour un appel a projet particulier';
+
+comment on column TR_DUREE_PROJET.ID_APPEL is
+'identifiant de l''appel à projet';
+
+comment on column TR_DUREE_PROJET.NO_DUREE is
+'durée du projet exprimé en mois';
+
+/*==============================================================*/
+/* Index : TR_DUREE_PROJET_PK                                   */
+/*==============================================================*/
+create unique index TR_DUREE_PROJET_PK on TR_DUREE_PROJET (
+ID_DUREE
+);
+
+/*==============================================================*/
+/* Index : A_POUR_DUREES_ADMISSIBLES_FK                         */
+/*==============================================================*/
+create  index A_POUR_DUREES_ADMISSIBLES_FK on TR_DUREE_PROJET (
+ID_APPEL
+);
+
+/*==============================================================*/
+/* Table : TR_ETAT_SOL                                          */
+/*==============================================================*/
+create table TR_ETAT_SOL (
+   CD_ETAT_SOLLICITATION INT8                 not null,
+   LB_ETAT_SOLLICITATION VARCHAR(40)          not null,
+   constraint PK_TR_ETAT_SOL primary key (CD_ETAT_SOLLICITATION)
+);
+
+comment on table TR_ETAT_SOL is
+'table de référence prenant les etats de sollication des membres à un comité (accord, piste, neutre,...)
+';
+
+/*==============================================================*/
+/* Index : TR_ETAT_SOL_PK                                       */
+/*==============================================================*/
+create unique index TR_ETAT_SOL_PK on TR_ETAT_SOL (
+CD_ETAT_SOLLICITATION
+);
+
+/*==============================================================*/
+/* Table : TR_GENRE                                             */
+/*==============================================================*/
+create table TR_GENRE (
+   CD_GENRE             VARCHAR(3)           not null,
+   LB_LONG              VARCHAR(50)          not null,
+   constraint PK_TR_GENRE primary key (CD_GENRE)
+);
+
+comment on table TR_GENRE is
+'Genre ou sexe des personnes physiques. Valeurs possibles : Homme, Femme, eutre, ne souhaite pas répondre';
+
+comment on column TR_GENRE.LB_LONG is
+'valeur littérales: homme, femme, ....';
+
+/*==============================================================*/
+/* Index : TR_GENRE_PK                                          */
+/*==============================================================*/
+create unique index TR_GENRE_PK on TR_GENRE (
+CD_GENRE
+);
+
+/*==============================================================*/
+/* Table : TR_INFO                                              */
+/*==============================================================*/
+create table TR_INFO (
+   CD_INFO              VARCHAR(20)          not null,
+   LB_TEXTE_FR          TEXT                 not null,
+   LB_TEXTE_EN          TEXT                 null,
+   constraint PK_TR_INFO primary key (CD_INFO)
+);
+
+comment on table TR_INFO is
+'information pour l''application a afficher dans les aides';
+
+/*==============================================================*/
+/* Index : TR_INFO_PK                                           */
+/*==============================================================*/
+create unique index TR_INFO_PK on TR_INFO (
+CD_INFO
+);
+
+/*==============================================================*/
+/* Table : TR_INF_RECH                                          */
+/*==============================================================*/
+create table TR_INF_RECH (
+   ID_INF_RECH          IDENTIFIANT          not null,
+   LB_NOM_FR            VARCHAR(50)          null,
+   LB_NOM_LONG          VARCHAR(100)         null,
+   constraint PK_TR_INF_RECH primary key (ID_INF_RECH)
+);
+
+comment on table TR_INF_RECH is
+'Infrastructure de recherche ';
+
+/*==============================================================*/
+/* Index : TR_INF_RECH_PK                                       */
+/*==============================================================*/
+create unique index TR_INF_RECH_PK on TR_INF_RECH (
+ID_INF_RECH
+);
+
+/*==============================================================*/
+/* Table : TR_INST_FI                                           */
+/*==============================================================*/
+create table TR_INST_FI (
+   ID_INST_FI           IDENTIFIANT          not null,
+   LB_NOM               VARCHAR(50)          not null,
+   MNT_MAX              MONEY                null,
+   MNT_MIN              MONEY                null,
+   constraint PK_TR_INST_FI primary key (ID_INST_FI)
+);
+
+comment on table TR_INST_FI is
+'référentiel des unités
+ de financement (budegt specifique de financement)';
+
+/*==============================================================*/
+/* Index : TR_INST_FI_PK                                        */
+/*==============================================================*/
+create unique index TR_INST_FI_PK on TR_INST_FI (
+ID_INST_FI
+);
+
+/*==============================================================*/
+/* Table : TR_LANGUE                                            */
+/*==============================================================*/
+create table TR_LANGUE (
+   ID_LANGUE            INT2                 not null,
+   LB_LANGUE            VARCHAR(50)          not null,
+   constraint PK_TR_LANGUE primary key (ID_LANGUE)
+);
+
+comment on table TR_LANGUE is
+'Table de référence des langues';
+
+/*==============================================================*/
+/* Index : TR_LANGUE_PK                                         */
+/*==============================================================*/
+create unique index TR_LANGUE_PK on TR_LANGUE (
+ID_LANGUE
+);
+
+/*==============================================================*/
+/* Table : TR_NIVEAU                                            */
+/*==============================================================*/
+create table TR_NIVEAU (
+   ID_TYPE_NIVEU        INT8                 not null,
+   LB_NOM               VARCHAR(50)          not null,
+   constraint PK_TR_NIVEAU primary key (ID_TYPE_NIVEU)
+);
+
+comment on table TR_NIVEAU is
+'Table de référence des type de niveaux (etapes) pour les phases d''appel:
+"Soumission", "Evaluation",  "Publication"';
+
+/*==============================================================*/
+/* Index : TR_NIVEAU_PK                                         */
+/*==============================================================*/
+create unique index TR_NIVEAU_PK on TR_NIVEAU (
+ID_TYPE_NIVEU
+);
+
+/*==============================================================*/
+/* Table : TR_NIVEAU_LANGUE                                     */
+/*==============================================================*/
+create table TR_NIVEAU_LANGUE (
+   ID_NIVEAU            INT2                 not null,
+   LB_NIVEAU            VARCHAR(40)          not null,
+   constraint PK_TR_NIVEAU_LANGUE primary key (ID_NIVEAU)
+);
+
+comment on table TR_NIVEAU_LANGUE is
+'table de référence sur le niveau de maîtrise d''une langue par une personne (langue native, courant, bon , moyen,...)';
+
+/*==============================================================*/
+/* Index : TR_NIVEAU_LANGUE_PK                                  */
+/*==============================================================*/
+create unique index TR_NIVEAU_LANGUE_PK on TR_NIVEAU_LANGUE (
+ID_NIVEAU
+);
+
+/*==============================================================*/
+/* Table : TR_PAYS                                              */
+/*==============================================================*/
+create table TR_PAYS (
+   CD_PAYS              VARCHAR(3)           not null,
+   LB_PAYS              VARCHAR(100)         not null,
+   constraint PK_TR_PAYS primary key (CD_PAYS)
+);
+
+comment on table TR_PAYS is
+'Table de référence des pays
+';
+
+/*==============================================================*/
+/* Index : TR_PAYS_PK                                           */
+/*==============================================================*/
+create unique index TR_PAYS_PK on TR_PAYS (
+CD_PAYS
+);
+
+/*==============================================================*/
+/* Table : TR_PHASE                                             */
+/*==============================================================*/
+create table TR_PHASE (
+   ID_PHASE_REF         INT8                 not null,
+   LB_NOM               VARCHAR(50)          not null,
+   ORDRE                INT4                 not null,
+   constraint PK_TR_PHASE primary key (ID_PHASE_REF)
+);
+
+comment on table TR_PHASE is
+'Table de référence des types de phase. cette table reprend la liste des libellés (Phase 1, Phase 2,...)';
+
+comment on column TR_PHASE.ORDRE is
+'donne le numéro d''ordre de la phase ';
+
+/*==============================================================*/
+/* Index : TR_PHASE_PK                                          */
+/*==============================================================*/
+create unique index TR_PHASE_PK on TR_PHASE (
+ID_PHASE_REF
+);
+
+/*==============================================================*/
+/* Table : TR_POL_COMP                                          */
+/*==============================================================*/
+create table TR_POL_COMP (
+   ID_POLE_COMP         IDENTIFIANT          not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   constraint PK_TR_POL_COMP primary key (ID_POLE_COMP)
+);
+
+comment on table TR_POL_COMP is
+'Pole de compétitivité';
+
+/*==============================================================*/
+/* Index : TR_POL_COMP_PK                                       */
+/*==============================================================*/
+create unique index TR_POL_COMP_PK on TR_POL_COMP (
+ID_POLE_COMP
+);
+
+/*==============================================================*/
+/* Table : TR_PROFIL                                            */
+/*==============================================================*/
+create table TR_PROFIL (
+   ID_PROFIL            INT8                 not null,
+   LB_PROFIL            VARCHAR(50)          not null,
+   constraint PK_TR_PROFIL primary key (ID_PROFIL)
+);
+
+comment on table TR_PROFIL is
+'profil des utilisateurs de l''application';
+
+comment on column TR_PROFIL.ID_PROFIL is
+'idnetifiant du profil de l''utilisateur';
+
+comment on column TR_PROFIL.LB_PROFIL is
+'désignation du profil de l''utilisateur';
+
+/*==============================================================*/
+/* Index : TR_PROFIL_PK                                         */
+/*==============================================================*/
+create unique index TR_PROFIL_PK on TR_PROFIL (
+ID_PROFIL
+);
+
+/*==============================================================*/
+/* Table : TR_STATUT_PROJET                                     */
+/*==============================================================*/
+create table TR_STATUT_PROJET (
+   ID_STS_PROJET        VARCHAR(5)           not null,
+   LB_NOM               VARCHAR(50)          not null,
+   constraint PK_TR_STATUT_PROJET primary key (ID_STS_PROJET)
+);
+
+comment on table TR_STATUT_PROJET is
+'Statut d''avancement du projet dans le processus de soumission, évaluation (déposé, soumis, validé,...)';
+
+/*==============================================================*/
+/* Index : TR_STATUT_PROJET_PK                                  */
+/*==============================================================*/
+create unique index TR_STATUT_PROJET_PK on TR_STATUT_PROJET (
+ID_STS_PROJET
+);
+
+/*==============================================================*/
+/* Table : TR_TYPE_OTP                                          */
+/*==============================================================*/
+create table TR_TYPE_OTP (
+   ID_TYPE_OTP          INT8                 not null,
+   LB_NOM               VARCHAR(50)          not null,
+   constraint PK_TR_TYPE_OTP primary key (ID_TYPE_OTP)
+);
+
+comment on table TR_TYPE_OTP is
+'niveau du "comité" Code caratérisant le département (le centre de dépenses)';
+
+/*==============================================================*/
+/* Index : TR_TYPE_OTP_PK                                       */
+/*==============================================================*/
+create unique index TR_TYPE_OTP_PK on TR_TYPE_OTP (
+ID_TYPE_OTP
+);
+
+/*==============================================================*/
+/* Table : TR_TYPE_PART                                         */
+/*==============================================================*/
+create table TR_TYPE_PART (
+   TYP_PART             VARCHAR(3)           not null,
+   LB_NOM_FR            VARCHAR(50)          not null,
+   constraint PK_TR_TYPE_PART primary key (TYP_PART)
+);
+
+comment on table TR_TYPE_PART is
+'Public, francais, privé, etranger,...';
+
+/*==============================================================*/
+/* Index : TR_TYPE_PART_PK                                      */
+/*==============================================================*/
+create unique index TR_TYPE_PART_PK on TR_TYPE_PART (
+TYP_PART
+);
+
+/*==============================================================*/
+/* Table : TR_TYPE_REUNION                                      */
+/*==============================================================*/
+create table TR_TYPE_REUNION (
+   ID_TYPE_REUNION      INT8                 not null,
+   LB_TYPE_REUNION      VARCHAR(50)          not null,
+   constraint PK_TR_TYPE_REUNION primary key (ID_TYPE_REUNION)
+);
+
+comment on table TR_TYPE_REUNION is
+'Qualifie les réunion des comités. indique s''il s''agit de réunion pleniere , bureau,...';
+
+comment on column TR_TYPE_REUNION.ID_TYPE_REUNION is
+'identifiant de la réunion';
+
+comment on column TR_TYPE_REUNION.LB_TYPE_REUNION is
+'Désignation de la réunion';
+
+/*==============================================================*/
+/* Index : TR_TYPE_REUNION_PK                                   */
+/*==============================================================*/
+create unique index TR_TYPE_REUNION_PK on TR_TYPE_REUNION (
+ID_TYPE_REUNION
+);
+
+alter table TG_ADRESSE
+   add constraint FK_TG_ADRES_ADR_PAYS_TR_PAYS foreign key (CD_PAYS)
+      references TR_PAYS (CD_PAYS)
+      on delete restrict on update restrict;
+
+alter table TG_ADRESSE
+   add constraint FK_TG_ADRES_TL_ADR_PE_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_ADR_MAIL
+   add constraint FK_TG_ADR_M_TL_PERS_A_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_APPEL_PROJ
+   add constraint FK_TG_APPEL_A_POUR_CO_TR_CD_CO foreign key (ID_CD_CONVENTION)
+      references TR_CD_CONVENTION (ID_CD_CONVENTION)
+      on delete restrict on update restrict;
+
+alter table TG_APPEL_PROJ
+   add constraint FK_TG_APPEL_EST_PILOT_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_APPEL_PROJ
+   add constraint FK_TG_APPEL_NIVEAU_EN_TG_NIVEA foreign key (NIVEAU_EN_COURS)
+      references TG_NIVEAU_PHASE (ID_NIVEAU_PHASE)
+      on delete restrict on update restrict;
+
+alter table TG_COMITE
+   add constraint FK_TG_COMIT_EST_CONST_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TG_COMITE
+   add constraint FK_TG_COMIT_EST_TYPE__TR_TYPE_ foreign key (ID_TYPE_OTP)
+      references TR_TYPE_OTP (ID_TYPE_OTP)
+      on delete restrict on update restrict;
+
+alter table TG_COORDINATION_PROJ
+   add constraint FK_TG_COORD_EST_COORD_TG_ORGAN foreign key (ID_ORGANISME)
+      references TG_ORGANISME (ID_ORGANISME)
+      on delete restrict on update restrict;
+
+alter table TG_COORDINATION_PROJ
+   add constraint FK_TG_COORD_PERSONNE__TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_COORDINATION_PROJ
+   add constraint FK_TG_COORD_PROJET_CO_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TG_COORDINATION_PROJ
+   add constraint FK_TG_COORD_TL_COORDI_TR_PAYS foreign key (CD_PAYS)
+      references TR_PAYS (CD_PAYS)
+      on delete restrict on update restrict;
+
+alter table TG_COUT_PREV
+   add constraint FK_TG_COUT__A_POUR_CO_TG_PARTE foreign key (ID_PARTENAIRE)
+      references TG_PARTENARIAT (ID_PARTENAIRE)
+      on delete restrict on update restrict;
+
+alter table TG_FINANCEUR
+   add constraint FK_TG_FINAN_EST_RATTA_TR_PAYS foreign key (CD_PAYS)
+      references TR_PAYS (CD_PAYS)
+      on delete restrict on update restrict;
+
+alter table TG_FORMULAIRE
+   add constraint FK_TG_FORMU_A_POUR_CL_TR_CLASS foreign key (ID_CLASSE_FORMULAIRE)
+      references TR_CLASSE_FORMULAIRE (ID_CLASSE_FORMULAIRE)
+      on delete restrict on update restrict;
+
+alter table TG_HABILITATION
+   add constraint FK_TG_HABIL_DEFINI_PO_TR_PROFI foreign key (ID_PROFIL)
+      references TR_PROFIL (ID_PROFIL)
+      on delete restrict on update restrict;
+
+alter table TG_HABILITATION
+   add constraint FK_TG_HABIL_DETIENT_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_MC_CES
+   add constraint FK_TG_MC_CE_MC_ASSOCI_TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TG_MC_LIBRE
+   add constraint FK_TG_MC_LI_EST_ASSOC_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TG_MESSAGE
+   add constraint FK_TG_MESSA_EST_DEST_TG_PERSO foreign key (DESTINATAIRE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_MESSAGE
+   add constraint FK_TG_MESSA_EST_EMETT_TG_PERSO foreign key (EMETTEUR)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_MESSAGE
+   add constraint FK_TG_MESSA_EST_PREVU_TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TG_MESSAGE
+   add constraint FK_TG_MESSA_POUR_TG_PARTI foreign key (ID_PARTICIPATION)
+      references TG_PARTICIPATION_COMITE (ID_PARTICIPATION)
+      on delete restrict on update restrict;
+
+alter table TG_MOT_CLE_CPS
+   add constraint FK_TG_MOT_C_EST_PREVU_TG_PERS_ foreign key (ID_PERSONNE)
+      references TG_PERS_CPS (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_MOT_CLE_CV
+   add constraint FK_TG_MOT_C_MOT_CLE_P_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_MOT_CLE_ERC
+   add constraint FK_TG_MOT_C_MOT_CLE_F_TR_DISC_ foreign key (ID_DISC_ERC)
+      references TR_DISC_ERC (ID_DISC_ERC)
+      on delete restrict on update restrict;
+
+alter table TG_NIVEAU_PHASE
+   add constraint FK_TG_NIVEA_A_POUR_TR_NIVEA foreign key (ID_TYPE_NIVEU)
+      references TR_NIVEAU (ID_TYPE_NIVEU)
+      on delete restrict on update restrict;
+
+alter table TG_NIVEAU_PHASE
+   add constraint FK_TG_NIVEA_A_POUR_NI_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TG_NIVEAU_PHASE
+   add constraint FK_TG_NIVEA_PROJET_PH_TG_PHASE foreign key (ID_PHASE_APPEL)
+      references TG_PHASE (ID_PHASE_APPEL)
+      on delete restrict on update restrict;
+
+alter table TG_NON_SOUHAITE
+   add constraint FK_TG_NON_S_TL_PROJ_N_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TG_ORGANISME
+   add constraint FK_TG_ORGAN_A_POUR_CO_TG_COMPT foreign key (ID_COMPTE)
+      references TG_COMPTE_BANCAIRE (ID_COMPTE)
+      on delete restrict on update restrict;
+
+alter table TG_ORGANISME
+   add constraint FK_TG_ORGAN_ORGANISME_TG_ADRES foreign key (ID_ADRESSE)
+      references TG_ADRESSE (ID_ADRESSE)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_A_POUR_CO_TG_COUT_ foreign key (ID_COUT_PRV)
+      references TG_COUT_PREV (ID_COUT_PRV)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_A_POUR_LA_TG_ORGAN foreign key (LABORATOIRE)
+      references TG_ORGANISME (ID_ORGANISME)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_A_POUR_TY_TR_TYPE_ foreign key (TYP_PART)
+      references TR_TYPE_PART (TYP_PART)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_DIRECTEUR_TG_PERSO foreign key (DIR_LABO)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_EST_HEBER_TG_ORGAN foreign key (HEBERGEUR)
+      references TG_ORGANISME (ID_ORGANISME)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_EST_REPRE_TG_PERSO foreign key (REP_JURIDIQUE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_EST_RESP__TG_PERSO foreign key (RESP_SCIENT)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_GESTIONNA_TG_PERSO foreign key (GEST_ADM)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_PARTICIPE_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TG_PARTENARIAT
+   add constraint FK_TG_PARTE_TUTELLE_G_TG_ORGAN foreign key (TUT_GEST)
+      references TG_ORGANISME (ID_ORGANISME)
+      on delete restrict on update restrict;
+
+alter table TG_PARTICIPATION_COMITE
+   add constraint FK_TG_PARTI_CONTIENT__TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TG_PARTICIPATION_COMITE
+   add constraint FK_TG_PARTI_EST_EN_ET_TR_ETAT_ foreign key (CD_ETAT_SOLLICITATION)
+      references TR_ETAT_SOL (CD_ETAT_SOLLICITATION)
+      on delete restrict on update restrict;
+
+alter table TG_PARTICIPATION_COMITE
+   add constraint FK_TG_PARTI_PARTICIPE_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PARTICIPATION_COMITE
+   add constraint FK_TG_PARTI_PARTICIPE_TR_PHASE foreign key (ID_PHASE_REF)
+      references TR_PHASE (ID_PHASE_REF)
+      on delete restrict on update restrict;
+
+alter table TG_PERSONNE
+   add constraint FK_TG_PERSO_A_POUR_CI_TR_CIVIL foreign key (CD_CIVILITE)
+      references TR_CIVILITE (CD_CIVILITE)
+      on delete restrict on update restrict;
+
+alter table TG_PERSONNE
+   add constraint FK_TG_PERSO_A_POUR_GE_TR_GENRE foreign key (CD_GENRE)
+      references TR_GENRE (CD_GENRE)
+      on delete restrict on update restrict;
+
+alter table TG_PERSONNE
+   add constraint FK_TG_PERSO_EST_AFFEC_TR_DEPAR foreign key (ID_DEPARTEMENT)
+      references TR_DEPARTEMENT (ID_DEPARTEMENT)
+      on delete restrict on update restrict;
+
+alter table TG_PERSONNE
+   add constraint FK_TG_PERSO_EST_SAISI_TG_PERS_ foreign key (PERSONNE_CPS)
+      references TG_PERS_CPS (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PERS_CPS
+   add constraint FK_TG_PERS__EST_SAISI_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PHASE
+   add constraint FK_TG_PHASE_APOUR_TYP_TR_PHASE foreign key (ID_PHASE_REF)
+      references TR_PHASE (ID_PHASE_REF)
+      on delete restrict on update restrict;
+
+alter table TG_PROJET
+   add constraint FK_TG_PROJE_A_POUR_AV_TR_STATU foreign key (ID_STS_PROJET)
+      references TR_STATUT_PROJET (ID_STS_PROJET)
+      on delete restrict on update restrict;
+
+alter table TG_PROJET
+   add constraint FK_TG_PROJE_A_POUR_CA_TR_CAT_R foreign key (ID_CAT_RD)
+      references TR_CAT_RD (ID_CAT_RD)
+      on delete restrict on update restrict;
+
+alter table TG_PROJET
+   add constraint FK_TG_PROJE_EST_PORTE_TG_PERSO foreign key (PORTEUR)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TG_PROJET
+   add constraint FK_TG_PROJE_EST_PROPO_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TG_PROJET
+   add constraint FK_TG_PROJE_PASSE_EN__TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TG_PROJET
+   add constraint FK_TG_PROJE_UTILISE_L_TR_INST_ foreign key (ID_INST_FI)
+      references TR_INST_FI (ID_INST_FI)
+      on delete restrict on update restrict;
+
+alter table TG_RESUME
+   add constraint FK_TG_RESUM_TG_RESUME_TR_LANGU foreign key (ID_LANGUE)
+      references TR_LANGUE (ID_LANGUE)
+      on delete restrict on update restrict;
+
+alter table TG_RESUME
+   add constraint FK_TG_RESUM_TG_RESUME_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TG_REUNION
+   add constraint FK_TG_REUNI_A_POUR_TY_TR_TYPE_ foreign key (ID_TYPE_REUNION)
+      references TR_TYPE_REUNION (ID_TYPE_REUNION)
+      on delete restrict on update restrict;
+
+alter table TG_REUNION
+   add constraint FK_TG_REUNI_REUNION_P_TR_PHASE foreign key (ID_PHASE_REF)
+      references TR_PHASE (ID_PHASE_REF)
+      on delete restrict on update restrict;
+
+alter table TG_REUNION
+   add constraint FK_TG_REUNI_TL_COM_RE_TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TG_SEANCE
+   add constraint FK_TG_SEANC_TL_REU_SE_TG_REUNI foreign key (ID_REUNION)
+      references TG_REUNION (ID_REUNION)
+      on delete restrict on update restrict;
+
+alter table TG_TELEPHONE
+   add constraint FK_TG_TELEP_EST_POUR__TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TL_ACCES_FORMULAIRE
+   add constraint FK_TL_ACCES_TL_ACCES__TR_PROFI foreign key (ID_PROFIL)
+      references TR_PROFIL (ID_PROFIL)
+      on delete restrict on update restrict;
+
+alter table TL_ACCES_FORMULAIRE
+   add constraint FK_TL_ACCES_TL_ACCES__TG_FORMU foreign key (ID_FORMULAIRE)
+      references TG_FORMULAIRE (ID_FORMULAIRE)
+      on delete restrict on update restrict;
+
+alter table TL_ACCES_FORMULAIRE
+   add constraint FK_TL_ACCES_TL_ACCES__TR_PHASE foreign key (ID_PHASE_REF)
+      references TR_PHASE (ID_PHASE_REF)
+      on delete restrict on update restrict;
+
+alter table TL_APPEL_CLASSE_FORMULAIRE
+   add constraint FK_TL_APPEL_TL_APPEL__TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_APPEL_CLASSE_FORMULAIRE
+   add constraint FK_TL_APPEL_TL_APPEL__TR_CLASS foreign key (ID_CLASSE_FORMULAIRE)
+      references TR_CLASSE_FORMULAIRE (ID_CLASSE_FORMULAIRE)
+      on delete restrict on update restrict;
+
+alter table TL_BLOC_FORM
+   add constraint FK_TL_BLOC__TL_BLOC_F_TG_FORMU foreign key (ID_FORMULAIRE)
+      references TG_FORMULAIRE (ID_FORMULAIRE)
+      on delete restrict on update restrict;
+
+alter table TL_BLOC_FORM
+   add constraint FK_TL_BLOC__TL_BLOC_F_TG_BLOC foreign key (ID_BLOC)
+      references TG_BLOC (ID_BLOC)
+      on delete restrict on update restrict;
+
+alter table TL_CATRD_APPEL
+   add constraint FK_TL_CATRD_TL_CATRD__TR_CAT_R foreign key (ID_CAT_RD)
+      references TR_CAT_RD (ID_CAT_RD)
+      on delete restrict on update restrict;
+
+alter table TL_CATRD_APPEL
+   add constraint FK_TL_CATRD_TL_CATRD__TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_COMITE_AGENCE
+   add constraint FK_TL_COMIT_TL_COMITE_TG_FINAN foreign key (ID_FINANCEUR)
+      references TG_FINANCEUR (ID_FINANCEUR)
+      on delete restrict on update restrict;
+
+alter table TL_COMITE_AGENCE
+   add constraint FK_TL_COMIT_TL_COMITE_TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TL_COMITE_DEP
+   add constraint FK_TL_COMIT_TL_COMITE_TR_DEPAR foreign key (ID_DEPARTEMENT)
+      references TR_DEPARTEMENT (ID_DEPARTEMENT)
+      on delete restrict on update restrict;
+
+alter table TL_COMITE_DEP
+   add constraint FK_TL_COMIT_TL_COMITE_TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TL_FINANCEUR_PROJET
+   add constraint FK_TL_FINAN_TL_FINANC_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TL_FINANCEUR_PROJET
+   add constraint FK_TL_FINAN_TL_FINANC_TG_FINAN foreign key (ID_FINANCEUR)
+      references TG_FINANCEUR (ID_FINANCEUR)
+      on delete restrict on update restrict;
+
+alter table TL_FORMULAIRE_APPEL
+   add constraint FK_TL_FORMU_TL_FORMUL_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_FORMULAIRE_APPEL
+   add constraint FK_TL_FORMU_TL_FORMUL_TG_FORMU foreign key (ID_FORMULAIRE)
+      references TG_FORMULAIRE (ID_FORMULAIRE)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_APPEL
+   add constraint FK_TL_HAB_A_TL_HAB_AP_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_APPEL
+   add constraint FK_TL_HAB_A_TL_HAB_AP_TG_HABIL foreign key (ID_HABILITATION)
+      references TG_HABILITATION (ID_HABILITATION)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_COMITE
+   add constraint FK_TL_HAB_C_TL_HAB_CO_TG_COMIT foreign key (ID_COMITE)
+      references TG_COMITE (ID_COMITE)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_COMITE
+   add constraint FK_TL_HAB_C_TL_HAB_CO_TG_HABIL foreign key (ID_HABILITATION)
+      references TG_HABILITATION (ID_HABILITATION)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_PHASE
+   add constraint FK_TL_HAB_P_TL_HAB_PH_TG_PHASE foreign key (ID_PHASE_APPEL)
+      references TG_PHASE (ID_PHASE_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_PHASE
+   add constraint FK_TL_HAB_P_TL_HAB_PH_TG_HABIL foreign key (ID_HABILITATION)
+      references TG_HABILITATION (ID_HABILITATION)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_PROJET
+   add constraint FK_TL_HAB_P_TL_HAB_PR_TG_HABIL foreign key (ID_HABILITATION)
+      references TG_HABILITATION (ID_HABILITATION)
+      on delete restrict on update restrict;
+
+alter table TL_HAB_PROJET
+   add constraint FK_TL_HAB_P_TL_HAB_PR_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TL_INFRA_PROJ
+   add constraint FK_TL_INFRA_TL_INFRA__TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TL_INFRA_PROJ
+   add constraint FK_TL_INFRA_TL_INFRA__TR_INF_R foreign key (ID_INF_RECH)
+      references TR_INF_RECH (ID_INF_RECH)
+      on delete restrict on update restrict;
+
+alter table TL_INST_FI_APPEL
+   add constraint FK_TL_INST__TL_INST_F_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_INST_FI_APPEL
+   add constraint FK_TL_INST__TL_INST_F_TR_INST_ foreign key (ID_INST_FI)
+      references TR_INST_FI (ID_INST_FI)
+      on delete restrict on update restrict;
+
+alter table TL_LANGUE_PROPOSEE_DS
+   add constraint FK_TL_LANGU_TL_LANGUE_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_LANGUE_PROPOSEE_DS
+   add constraint FK_TL_LANGU_TL_LANGUE_TR_LANGU foreign key (ID_LANGUE)
+      references TR_LANGUE (ID_LANGUE)
+      on delete restrict on update restrict;
+
+alter table TL_LANG_PERS
+   add constraint FK_TL_LANG__A_POUR_MA_TR_NIVEA foreign key (ID_NIVEAU)
+      references TR_NIVEAU_LANGUE (ID_NIVEAU)
+      on delete restrict on update restrict;
+
+alter table TL_LANG_PERS
+   add constraint FK_TL_LANG__PERSONNE__TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TL_LANG_PERS
+   add constraint FK_TL_LANG__PRATIQUE__TR_LANGU foreign key (ID_LANGUE)
+      references TR_LANGUE (ID_LANGUE)
+      on delete restrict on update restrict;
+
+alter table TL_MC_ERC_APPEL
+   add constraint FK_TL_MC_ER_TL_MC_ERC_TG_MOT_C foreign key (ID_MC_ERC)
+      references TG_MOT_CLE_ERC (ID_MC_ERC)
+      on delete restrict on update restrict;
+
+alter table TL_MC_ERC_APPEL
+   add constraint FK_TL_MC_ER_TL_MC_ERC_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+
+alter table TL_MC_ERC_PROJ
+   add constraint FK_TL_MC_ER_TL_MC_ERC_TG_MOT_C foreign key (ID_MC_ERC)
+      references TG_MOT_CLE_ERC (ID_MC_ERC)
+      on delete restrict on update restrict;
+
+alter table TL_MC_ERC_PROJ
+   add constraint FK_TL_MC_ER_TL_MC_ERC_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TL_PERS_ORG
+   add constraint FK_TL_PERS__TL_PERS_O_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TL_PERS_ORG
+   add constraint FK_TL_PERS__TL_PERS_O_TG_ORGAN foreign key (ID_ORGANISME)
+      references TG_ORGANISME (ID_ORGANISME)
+      on delete restrict on update restrict;
+
+alter table TL_PERS_PART
+   add constraint FK_TL_PERS__TL_PERS_P_TG_PARTE foreign key (ID_PARTENAIRE)
+      references TG_PARTENARIAT (ID_PARTENAIRE)
+      on delete restrict on update restrict;
+
+alter table TL_PERS_PART
+   add constraint FK_TL_PERS__TL_PERS_P_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TL_POL_PROJ
+   add constraint FK_TL_POL_P_TL_POL_PR_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TL_POL_PROJ
+   add constraint FK_TL_POL_P_TL_POL_PR_TR_POL_C foreign key (ID_POLE_COMP)
+      references TR_POL_COMP (ID_POLE_COMP)
+      on delete restrict on update restrict;
+
+alter table TL_PROFIL_CLASSE
+   add constraint FK_TL_PROFI_TL_PROFIL_TR_CLASS foreign key (ID_CLASSE_FORMULAIRE)
+      references TR_CLASSE_FORMULAIRE (ID_CLASSE_FORMULAIRE)
+      on delete restrict on update restrict;
+
+alter table TL_PROFIL_CLASSE
+   add constraint FK_TL_PROFI_TL_PROFIL_TR_PROFI foreign key (ID_PROFIL)
+      references TR_PROFIL (ID_PROFIL)
+      on delete restrict on update restrict;
+
+alter table TL_PROJ_MC_CES
+   add constraint FK_TL_PROJ__TL_PROJ_M_TG_MC_CE foreign key (ID_MC_CES)
+      references TG_MC_CES (ID_MC_CES)
+      on delete restrict on update restrict;
+
+alter table TL_PROJ_MC_CES
+   add constraint FK_TL_PROJ__TL_PROJ_M_TG_PROJE foreign key (ID_PROJET)
+      references TG_PROJET (ID_PROJET)
+      on delete restrict on update restrict;
+
+alter table TL_REU_PERS
+   add constraint FK_TL_REU_P_TL_REU_PE_TG_SEANC foreign key (ID_SEANCE)
+      references TG_SEANCE (ID_SEANCE)
+      on delete restrict on update restrict;
+
+alter table TL_REU_PERS
+   add constraint FK_TL_REU_P_TL_REU_PE_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TL_SEANCE_PERS
+   add constraint FK_TL_SEANC_TL_SEANCE_TG_SEANC foreign key (ID_SEANCE)
+      references TG_SEANCE (ID_SEANCE)
+      on delete restrict on update restrict;
+
+alter table TL_SEANCE_PERS
+   add constraint FK_TL_SEANC_TL_SEANCE_TG_PERSO foreign key (ID_PERSONNE)
+      references TG_PERSONNE (ID_PERSONNE)
+      on delete restrict on update restrict;
+
+alter table TR_DISC_ERC
+   add constraint FK_TR_DISC__DISCIPLIN_TR_CAT_E foreign key (ID_CAT_ERC)
+      references TR_CAT_ERC (ID_CAT_ERC)
+      on delete restrict on update restrict;
+
+alter table TR_DUREE_PROJET
+   add constraint FK_TR_DUREE_A_POUR_DU_TG_APPEL foreign key (ID_APPEL)
+      references TG_APPEL_PROJ (ID_APPEL)
+      on delete restrict on update restrict;
+

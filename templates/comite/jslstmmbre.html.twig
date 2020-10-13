@@ -1,0 +1,369 @@
+<script>
+
+    // jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });
+    $(window).on('load', function () {jQuery(".loader").fadeOut("200"); });
+
+    $('#exampleModal').on('shown.bs.modal', function () {
+        // if(invalidForm) {
+        //     e.preventDefault();
+        // }
+        var modal = $(this);
+        $.ajax('{{ path('ajouter_comite') }}', {
+                success: function (data) {
+                    modal.find('.modal-body').html(data);
+                    $('.chosen-select').chosen();
+                },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+            }
+        )
+        ;
+    });
+    // $('#exampleModal').modal({backdrop: 'static', keyboard: false})
+
+    //modal pour la création seance
+
+    // $('*[id*=seanceModalClick]').click( function (e) {
+    //     e.preventDefault();
+    //     var path = $(this).data('id');
+    //     $.ajax({
+    //         type: 'POST',
+    //         'url': path,
+    //         success: function (response) {
+    //             $('#seanceModal').modal('show');
+    //             $('#seanceModal').find('.modal-body').html(response);
+    //         }
+    //     });
+    // });
+
+
+
+
+
+    //modal pour les reunions
+    $('#reunionPeriodeModal').on('show.bs.modal', function (e) {
+        // if (e.namespace === 'bs.modal') {
+            // <-- ajouter pour le fonctionnement de Datapicker
+            // var modal_periode_reunion = $(this);
+            // récuperer la route du lien modal  data-id
+            $.ajax('{{ path('show_periode_reu') }}',
+                {
+                success: function (data) {
+                    $('#reunionPeriodeModal').find('.modal-body').html(data);
+                },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+            });
+        // }
+    });
+
+    $('#ajoute_reunion').on('show.bs.modal', function (e) {
+        if (e.namespace === 'bs.modal') {
+
+            // récuperer la route du lien modal  data-id
+            var path = $(e.relatedTarget).data('id');
+            $.ajax({
+                'url': path,
+                success: function (dataform) {
+                    $('#reunionPeriodeModal').hide();
+                    $('#ajoute_reunion').find('.modal-body').html(dataform);
+
+                    $('#ajouterReu').submit(function (e) {
+                        e.preventDefault();
+                        var date1 = document.getElementById("reunion_dtDebPeriode").value.split("/").reverse().join("-");
+                        var date2 = document.getElementById("reunion_dtFinPeriode").value.split("/").reverse().join("-");
+                        var dateMax = document.getElementById("reunion_nbDureeMax").value;
+                        var datedb = new Date(date1);
+                        var datefn = new Date(date2);
+                        var diffDays = parseInt((datefn - datedb) / (1000 * 60 * 60 * 24), 10);
+                        if (datedb > datefn) {
+                            alert('La date début est supérieure à la date fin');
+                            return false;
+                        }
+                        if (diffDays < dateMax) {
+                            alert("La duréee Max. est supérieure à la période autorisée");
+                            return false;
+                        }
+                        let formResult = {};
+                        $(this).serializeArray().forEach((object) => {
+                            formResult[object.name] = object.value;
+                        });
+                        $.ajax({
+                            url: '/fr/reun/periode/addReunion',
+                            type: 'POST',
+                            data: JSON.stringify(formResult),
+                            success: function (data) {
+                                $('.js-error-ajout').hide();
+                                $('.js-success-ajout').hide();
+                                if (data.succes != '') {
+                                    $('.js-success-ajout').show();
+                                    $('.js-success-ajout').html('<div class="alert alert-success text-center">' +
+                                        ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                        ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                        ' </button>' +
+                                        '<p class="message-alert-none"><strong>Succès ! </strong>' + data.succes + '</p>' +
+                                        '</div>');
+                                    $('#ajouterReu').trigger("reset");
+
+                                } else {
+                                    $('.js-error-ajout').show();
+                                    $('.js-error-ajout').html('<div class="alert alert-danger text-center">' +
+                                        ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                        ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                        ' </button>' +
+                                        '<p class="message-alert-none"><strong>Erreur ! </strong>' + data.errors + '</p>' +
+                                        '</div>');
+                                }
+
+                                $('#reunionPeriodeModal').on('hidden.bs.modal', function () {
+                                    location.reload(true);
+                                });
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert('Error : ' + errorThrown);
+                            }
+                        });
+                    });
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
+                    $(".readonly").keydown(function (e) {
+                        e.preventDefault();
+                    });
+                    $('#data_periode .input-daterange').datepicker({
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        autoclose: true,
+                        showOnFocus: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            })
+        }
+
+    });
+
+    $('#seanceModal').on('show.bs.modal', function (e) {
+            var path = $(e.relatedTarget).data('id');
+            var modal_seance = $(this);
+            $.ajax({
+                type: 'POST',
+                'url': path,
+                success: function (data) {
+                    modal_seance.find('.modal-body').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+    });
+
+    $('#seanceModalMaj').on('show.bs.modal', function (e) {
+        var path = $(e.relatedTarget).data('id');
+        var modal_seanceMaj = $(this);
+        $.ajax({
+            type: 'POST',
+            'url': path,
+            success: function (data) {
+                $('#seanceModal').modal('hide');// cacher le modal prècédent
+                modal_seanceMaj.find('.modal-body').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+
+    // modal pour la modification reunion
+
+    $('#modifperiodeModal').on('show.bs.modal', function (e) {
+        if (e.namespace === 'bs.modal') {
+            // récuperer la route du lien modal  data-id
+            var path = $(e.relatedTarget).data('id');
+            var modal_modif_reunion = $(this);
+            $.ajax({
+                'url': path,
+                success: function (data) {
+                    modal_modif_reunion.find('.modal-body').html(data);
+                    $('#modifierReu').submit(function(even) {
+                        even.preventDefault();
+                        $('#modifierReu #submitBtn').prop('disabled', true);
+                        $(this).unbind('submit').submit();
+                    });
+                    // ajouter pour le style
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
+                    $(".readonly").keydown(function(e){
+                        e.preventDefault();
+                    });
+                    $('.chosen-select').chosen();
+                    $('#data_periode .input-daterange').datepicker({
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        autoclose: true,
+                        showOnFocus: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+                    });
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+
+            });
+        }
+    });
+    // modal pour la modification séance
+
+    $('#modifierSeanceModal').on('show.bs.modal', function (e) {
+        if (e.namespace === 'bs.modal') {
+            // récuperer la route du lien modal  data-id
+            var path = $(e.relatedTarget).data('id');
+            var modal_modifier_seance = $(this);
+            $('#seanceModal').modal('hide');// cacher le modal prècédent
+            $('#seanceModalMaj').modal('hide'); // cacher le modal de maj
+            $.ajax({
+                type : 'POST',
+                'url': path,
+                success: function (data) {
+                    modal_modifier_seance.find('.modal-body').html(data);
+
+                    var dateDebut = $('#date-debut').data('id'); // debut date
+                    var dateFin = $('#date-fin').data('id');  // fin date
+
+                    $('#modifierSeance').submit(function(e){ // désactiver le button après submit
+                        e.preventDefault();
+                        var matin =  document.getElementById("seance_matin").checked;
+                        var midi =  document.getElementById("seance_apresMidi").checked;
+                        if(!matin && !midi){
+                            alert("Aucune case n'est cochée (Matin, Après Midi)");
+                            return false
+                        }
+                        let formResult = {};
+                        $(this).serializeArray().forEach((object) => {
+                            formResult[object.name] = object.value;
+                        });
+                            $.ajax({
+                                url: '/fr/sea/modifSeance/Ajax/'+document.getElementById("seance").value,
+                                type: 'POST',
+                                data: JSON.stringify(formResult),
+                                success: function (data) {
+
+                                    if (data.succes != '') {
+                                        $('.js-success-s_modif').show().delay(2000).hide("slow");
+                                        $('.js-success-s_modif').html('<div class="alert alert-success text-center">' +
+                                            ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                            ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                            ' </button>' +
+                                            '<p class="message-alert-none"><strong>Succès ! </strong>' + data.succes + '</p>' +
+                                            '</div>');
+                                    }else {
+                                        $('.js-error-s_modif').show().delay(2000).hide("slow");
+                                        $('.js-error-s_modif').html('<div class="alert alert-danger text-center">' +
+                                            ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                            ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                            ' </button>' +
+                                            '<p class="message-alert-none"><strong>Erreur ! </strong>' + data.errors + '</p>' +
+                                            '</div>');
+                                    }
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    alert('Error : ' + errorThrown);
+                                }
+                            });
+                    });
+                    // ajouter pour le style
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
+                    $(".readonly").keydown(function(e){
+                        e.preventDefault();
+                    });
+                    $('#data_1 .input-group.date').datepicker({
+                        dateFormat: "dd/mm/yyyy",
+                        startDate: new Date(dateDebut),
+                        endDate: new Date(dateFin),
+                        keyboardNavigation: false,
+                        forceParse: false,
+                        autoclose: true,
+                        format: "dd/mm/yyyy",
+                        language: 'fr'
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        }
+    });
+
+    $('#SupprimeSeanceModal').on('show.bs.modal', function (event) {
+            // récuperer la route du lien modal  data-id
+        var path_ = $(event.relatedTarget).data('id');
+        var modal_delete = $(this);
+        $.ajax({
+            'url': path_,
+            success: function (data) {
+                modal_delete.find('.modal-body').html(data);
+                $("#form_delete_seance").submit(function(e) {
+                    e.preventDefault();
+                    console.log('/fr/seadelete/'+ document.getElementById("_seance").value);
+                    $.ajax({
+                        type: "POST",
+                        url: '/fr/seadelete/'+ document.getElementById("_seance").value,
+                        data: $(this).serialize(), // serializes the form's elements.
+                        success: function(data) {
+                            if(data.succes){
+                                $('#'+document.getElementById("_seance").value).remove();
+                                $('#SupprimeSeanceModal .modal-body').empty();
+                                $('#SupprimeSeanceModal').modal('hide');
+                            }else{
+                                alert('Erreur de suppression !')
+                            }
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                    });
+
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    })
+
+    //modal pour la création message cps coes pres
+    $('#messageModal').on('show.bs.modal', function (e) {
+        // récuperer la route du lien modal  data-id
+        var path = $(e.relatedTarget).data('id');
+        var modal_message = $(this);
+        $.ajax({
+            'url': path,
+            success: function (data) {
+                modal_message.find('.modal-body').html(data);
+                $('#ajouterMessage').submit(function(e){
+                    e.preventDefault();
+                    $('#ajouterMessage #submitBtn').prop('disabled', true);
+                    $(this).unbind('submit').submit();
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+</script>

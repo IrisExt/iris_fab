@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Participation' %}
+{% block title %}TgParticipation{% endblock %}
+
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'partic.form.participation'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a href="{{ path('tg_participation_index') }}">{{ 'partic.form.retour'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                            <table class="table">
+                                <tbody>
+
+                                <tr>
+                                    <th>{{ 'partic.form.Lbgroupe'|trans }}</th>
+                                    <td>{{ tg_participation.lbGroupe }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'partic.form.PrioGrp'|trans }}</th>
+                                    <td>{{ tg_participation.prioGrp }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'partic.form.DhMaj'|trans }}</th>
+                                    <td>{{ tg_participation.dhMaj ? tg_participation.dhMaj|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'partic.form.LbRespMaj'|trans }}</th>
+                                    <td>{{ tg_participation.lbRespMaj }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'partic.form.BlSupprime'|trans }}</th>
+                                    <td>{{ tg_participation.blSupprime }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'partic.form.role'|trans }}</th>
+                                    <td>{{ tg_participation.idRole }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ 'partic.form.participant'|trans }}</th>
+                                    <td>{{ tg_participation.idPersonne }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="footer-text-right">
+                                <a class="btn btn-primary"
+                                   href="{{ path('tg_participation_edit', {'idParticipation': tg_participation.idParticipation}) }}">{{ 'partic.form.edit'|trans }}</a>
+                            </div>
+
+                            {{ include('tg_participation/_delete_form.html.twig') }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% if comites is not null %}
+{% for comite in comites %}
+    <div class="widget col-lg-3">
+        <div class="income-dashone-total shadow-reset nt-mg-b-30 res-mg-t-30">
+            <div class="sparkline13-hd">
+                <div class="main-sparkline12-hd">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1>{{ comite.lbAcr }} : <span class="password-mt-none"></span>Affectation des R / L</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline12-outline-icon">
+                </div>
+            </div>
+            <div class="income-dashone-pro">
+                <div class="row">
+                    <div class="text-center col-lg-6">
+                        <a style="color: black"
+                           href="{{ path('profil_user',
+                               {'idAppel': comite.idAppel.idAppel,
+                                   'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase,
+                                   'idProfil' :profil.idProfil,
+                                   'idComite' : comite.idComite,
+                                    'redirect' : 'quest_mmbre'}
+                           ) }}" data-toggle="tooltip" data-placement="top" title="Paramétrage du questionnaire du choix des projets par les membres du comité">
+                            <i class="fa fa-cog" style="font-size:36px"></i></a>
+
+                    </div>
+                    <div class="text-center col-lg-6">
+                        <a href="{{ path('profil_user',
+                                    {'idAppel': comite.idAppel.idAppel,
+                                        'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase,
+                                        'idProfil' :profil.idProfil,
+                                        'idComite' : comite.idComite,
+                                        'redirect' : 'affec_af'}
+                                ) }}" data-toggle="tooltip" data-placement="top" title="Affectations R/L">
+                            <img src="{{ asset('img/seance.ico') }}" width="40" height="40">
+                        <span class="indicator-ts" style="color: red">{% if comite.nbQuestSoum > 0 %}{{ comite.nbQuestSoum }}{% endif %}</span> </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endfor %}
+{% endif %}

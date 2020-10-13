@@ -1,0 +1,10 @@
+{{ form_start(form, {'action': path('new_message_comite', {'idComite' : comite.idComite, 'idParticipation' : participant }), 'attr': {'id': 'ajouterMessage'}  ,'method': 'POST'}) }}
+ {{ form_widget(form) }}
+<br><br>
+<div class="row">
+    <div class="footer-text-right">
+        <button class="btn btn-warning" data-dismiss="modal">Fermer</button>
+        <button class="btn btn-primary" id="submitBtn" type="submit">Envoyer</button>
+    </div>
+</div>
+{{ form_end(form) }}

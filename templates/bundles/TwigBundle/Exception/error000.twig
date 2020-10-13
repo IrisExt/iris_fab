@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-5">
+            <h2>Erreur : l'Appel à projet est fermé <a href="{{ path('accueil') }}"> Retour </a> </h2>
+        </div>
+        <div class="col-md-4">
+            <p>l'Appel à projet est fermé</p>
+            <img src="{{ asset('img/ferme.gif') }}">
+
+        </div>
+    </div>
+{% endblock %}

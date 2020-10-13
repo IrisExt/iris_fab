@@ -1,0 +1,13 @@
+<form method="post" action="{{ path('cv_delete_ddrec', {'idCompetenceLangue': idCompetenceLangue}) }}">
+
+    <div class="alert alert-danger" > <p>Êtes-vous sûr de vouloir supprimer cette compétence de langue?</p></div>
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ idCompetenceLangue) }}">
+
+    <div class="modal-footer">
+        <button data-dismiss="modal" class="btn btn-warning" >Annuler </button>
+        <button  class="btn btn-danger" type="submit">
+            <span class="adminpro-icon adminpro-danger-error"></span> {{ 'action.delete'|trans }}
+        </button>
+    </div>
+</form>

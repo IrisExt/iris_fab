@@ -1,0 +1,71 @@
+{% if habils is not null %}{{ dump(habils) }}
+    {% for habi in habils %}  <!-- habilitation -->
+
+        {% for comite  in habi.idComite %}
+            {% for widgrl in widgRL %}
+                {% if comite.idAppel.niveauEnCours.idTypeNiveu.idTypeNiveu == 1 %} <!-- niveau soumission -->
+                    <div class="widget col-lg-3 col-md-6 col-sm-12 col-xs-12">
+                        <div class="income-dashone-total shadow-reset nt-mg-b-30 res-mg-t-30">
+                            <div class="sparkline13-hd">
+                                <div class="main-sparkline12-hd">
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            <h4>{{ comite.idAppel }}
+                                                - {{ comite.idAppel.niveauEnCours.idPhase.idPhaseRef }}
+                                                : {{ comite.lbAcr }}</h4>
+                                        </div>
+                                        <div class="col-sm-5" style="text-align:right">
+                                            {{ widgrl }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sparkline12-outline-icon">
+                                </div>
+                            </div>
+                            <div class="income-dashone-pro">
+                                <div class="row">
+                                    <div class="col-md-4">
+{#                                        {% set profil = null %}#}
+{#                                        {% for habComite in habComites %}#}
+{#                                            {% for Cmte in  habComite.idComite %}#}
+{#                                                {% if Cmte == comite %}{% set profil = habComite.idProfil %}  {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                        {% endfor %}#}
+                                        <a href="{{ path('profil_user',
+                                            {   'idAppel': comite.idAppel.idAppel,
+                                                'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase,
+                                                'idProfil' : habi.idProfil.idProfil,
+                                                'idComite' : comite.idComite,
+                                                'redirect' : 'suivi_eval_cmte'}) }}"
+                                           class="btn btn-outline-primary btn-sm"><p>Tous les projets ...</p>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        {#                                    <span class="price-graph">#}
+                                        <p class="btn btn-primary" data-toggle="tooltip"
+                                           data-original-title="Acceptation">
+                                            <span class="badge">2</span>
+                                        </p>
+
+                                        <button class="btn btn-success" type="button" data-toggle="tooltip"
+                                                data-original-title="Refus">
+                                            <span class="badge">1</span>
+                                        </button>
+
+                                        <button class="btn btn-danger" type="button" data-toggle="tooltip"
+                                                data-original-title="Conflit">
+                                            <span class="badge">3</span>
+                                        </button>
+                                        {#                                    </span>#}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+    {% endfor %}
+{% endif %}

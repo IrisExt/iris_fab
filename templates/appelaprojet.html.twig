@@ -1,0 +1,32 @@
+<li class="nav-item">
+    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+        <span class="fa big-icon fa-cube header-riht-inf"></span>
+        <span class="admin-name"><h5>{% if aapgActeul != null  %} {{ aapgActeul.LbAcronyme }} {% else %} Aucun Appel {% endif %} </h5></span>
+        <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
+    </a>
+
+
+{#    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">#}
+{#        {% if dosem == true %}#}
+{#            {% for appelencour in appelEnCours %}#}
+{#                <li>#}
+{#                    <a href="{{ path('profil_user',{'idAppel' : appelencour.idAppel, 'idphase' :  appelencour.niveauEnCours.idniveauPhase, 'idProfil' : }) }}">#}
+{#                        <span class="fa big-icon"> </span> {{ appelencour.LbAcronyme }}#}
+{#                        - {{ appelencour.niveauEnCours.idPhase.idPhaseRef.lbNom }}#}
+{#                    </a>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        {% elseif appelphases != null %}#}
+{#            {% for aapg in aapgs %}#}
+{#                <li>#}
+
+{#                    <a href="{{ path('profil_user',{'idAppel' : aapg.idAppel.idAppel, 'idphase' : aapg.idPhase.idPhase}) }}">#}
+{#                        <span class="fa big-icon"> </span> {{ aapg.idAppel.LbAcronyme }}#}
+{#                        -  {{ aapg.idPhase.lbPhase }}#}
+{#                    </a>#}
+{#                </li>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{#    </ul>#}
+
+</li>

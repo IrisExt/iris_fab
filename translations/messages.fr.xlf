@@ -1,0 +1,323 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="bloc.no.project">
+                <source>bloc.no.project</source>
+                <target>Veuillez choisir un projet dans la rubrique Instrument de financement</target>
+            </trans-unit>
+            <trans-unit id="bloc.edit.project">
+                <source>bloc.edit.project</source>
+                <target>Attention en changant le projet, vous risquez de perdre tous les données de ce formulaire !</target>
+            </trans-unit>
+            <trans-unit id="bloc.success.save.project">
+                <source>bloc.success.save.project</source>
+                <target>Enregistrement effectué avec succès</target>
+            </trans-unit>
+            <trans-unit id="bloc.error.save.project">
+                <source>bloc.error.save.project</source>
+                <target>Erreur lors de l'enregistrement !</target>
+            </trans-unit>
+            <trans-unit id="bloc.mcces.idcomite.project">
+                <source>bloc.mcces.idcomite.project</source>
+                <target>Veuillez choisir un comité dans la rubrique "Identité du projet"</target>
+            </trans-unit>
+            <trans-unit id="BlInstFiType.bloc_contains_errors">
+                <source>BlInstFiType.bloc_contains_errors</source>
+                <target>Le bloc "Instrument de financement" n'est pas valide"</target>
+            </trans-unit>
+            <trans-unit id="BlIdentProjType.bloc_contains_errors">
+                <source>BlIdentProjType.bloc_contains_errors</source>
+                <target>Le bloc "Identité du projet" n'est pas valide"</target>
+            </trans-unit>
+            <trans-unit id="BlInfoComplType.bloc_contains_errors">
+                <source>BlInfoComplType.bloc_contains_errors</source>
+                <target>Le bloc "Informations complémentaires" n'est pas valide"</target>
+            </trans-unit>
+            <trans-unit id="BlDocScientifiqueType.bloc_contains_errors">
+                <source>BlDocScientifiqueType.bloc_contains_errors</source>
+                <target>Le bloc "Document scientifique n'est pas valide"</target>
+            </trans-unit>
+            <trans-unit id="BlMotCleErcType.bloc_contains_errors">
+                <source>BlMotCleErcType.bloc_contains_errors</source>
+                <target>Le bloc "Mot clé ERC contient des erreurs"</target>
+            </trans-unit>
+            <trans-unit id="BlMotCleCesType.bloc_contains_errors">
+                <source>BlMotCleCesType.bloc_contains_errors</source>
+                <target>Le bloc "Mot clé CES contient des erreurs"</target>
+            </trans-unit>
+            <trans-unit id="10.bloc_contains_errors">
+                <source>10.bloc_contains_errors</source>
+                <target>Le bloc "Experts non souhaités contient des erreurs"</target>
+            </trans-unit>
+            <trans-unit id="BlAnnexePrepropositionType.bloc_contains_errors">
+                <source>BlAnnexePrepropositionType.bloc_contains_errors</source>
+                <target>Le bloc "Annexe à la Pré-proposition n'est pas valide"</target>
+            </trans-unit>
+            <trans-unit id="BlResumeType.bloc_contains_errors">
+                <source>BlResumeType.bloc_contains_errors</source>
+                <target>Le bloc "Résumés n'est pas valide"</target>
+            </trans-unit>
+            <trans-unit id="13.bloc_contains_errors">
+                <source>13.bloc_contains_errors</source>
+                <target>Le bloc "Mots clés Libre contient des erreurs"</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.partenariat.add">
+                <source>bloc.form.partenariat.add</source>
+                <target>Ajouter un partenaire</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.rnsr">
+                <source>bloc.form.blpartenariat.rnsr</source>
+                <target>Numéro RNSR</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.siret_tut_heb">
+                <source>bloc.form.blpartenariat.siret_tut_heb</source>
+                <target>Siret de la tutelle hébergeante</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.delegation_tut_heb">
+                <source>bloc.form.blpartenariat.delegation_tut_heb</source>
+                <target>Délégation</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.name_tut_heb">
+                <source>bloc.form.blpartenariat.name_tut_heb</source>
+                <target>Nom de la tutelle hébergeante</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.code_tut_heb">
+                <source>bloc.form.blpartenariat.code_tut_heb</source>
+                <target>Numéro UMR (code unité)</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.adress_tut_heb">
+                <source>bloc.form.blpartenariat.adress_tut_heb</source>
+                <target>Adresse postale</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.compl_adress_tut_heb">
+                <source>bloc.form.blpartenariat.compl_adress_tut_heb</source>
+                <target>Complément d'adresse</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.postal_code_tut_heb">
+                <source>bloc.form.blpartenariat.postal_code_tut_heb</source>
+                <target>Code postale</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.city_tut_heb">
+                <source>bloc.form.blpartenariat.city_tut_heb</source>
+                <target>Ville</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.country_tut_heb">
+                <source>bloc.form.blpartenariat.country_tut_heb</source>
+                <target>Pays</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.city_tut_gest">
+                <source>bloc.form.blpartenariat.city_tut_gest</source>
+                <target>Ville</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.siret_tut_gest">
+                <source>bloc.form.blpartenariat.siret_tut_gest</source>
+                <target>Numéro SIRET</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.country_tut_gest">
+                <source>bloc.form.blpartenariat.country_tut_gest</source>
+                <target>Pays</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.adress_tut_gest">
+                <source>bloc.form.blpartenariat.adress_tut_gest</source>
+                <target>Adresse postale</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.name_tut_gest">
+                <source>bloc.form.blpartenariat.name_tut_gest</source>
+                <target>Nom complet de la tutelle gestionnaire</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.sigle">
+                <source>bloc.form.blpartenariat.sigle</source>
+                <target>Sigle</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.compl_adress_tut_gest">
+                <source>bloc.form.blpartenariat.compl_adress_tut_gest</source>
+                <target>Complément d'adresse</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.postal_code_tut_gest">
+                <source>bloc.form.blpartenariat.postal_code_tut_gest</source>
+                <target>Code postale</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.firstname_direct_lab">
+                <source>bloc.form.blpartenariat.firstname_direct_lab</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.lastname_direct_lab">
+                <source>bloc.form.blpartenariat.lastname_direct_lab</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.courriel_direct_lab">
+                <source>bloc.form.blpartenariat.courriel_direct_lab</source>
+                <target>Courriel</target>
+            </trans-unit>
+
+            <trans-unit id="bloc.form.blpartenariat.firstname_resp_sc">
+                <source>bloc.form.blpartenariat.firstname_resp_sc</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.lastname_resp_sc">
+                <source>bloc.form.blpartenariat.lastname_resp_sc</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.coord_francais">
+                <source>bloc.form.blpartenariat.coord_francais</source>
+                <target>Coordinateur projet (Français) </target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.coord_etranger">
+                <source>bloc.form.blpartenariat.coord_etranger</source>
+                <target>Coordinateur projet (Etranger) </target>
+            </trans-unit>
+
+            <trans-unit id="bloc.form.blpartenariat.firstname_rep_juridique">
+                <source>bloc.form.blpartenariat.firstname_rep_juridique</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.lastname_rep_juridique">
+                <source>bloc.form.blpartenariat.lastname_rep_juridique</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.function_rep_juridique">
+                <source>bloc.form.blpartenariat.function_rep_juridique</source>
+                <target>Fonction </target>
+            </trans-unit>
+
+            <trans-unit id="bloc.form.blpartenariat.firstname_gest_admin">
+                <source>bloc.form.blpartenariat.firstname_gest_admin</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.lastname_gest_admin">
+                <source>bloc.form.blpartenariat.lastname_gest_admin</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.gender_gest_admin">
+                <source>bloc.form.blpartenariat.gender_gest_admin</source>
+                <target>Genre </target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.mail_gest_admin">
+                <source>bloc.form.blpartenariat.mail_gest_admin</source>
+                <target>Courriel </target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.phone_gest_admin">
+                <source>bloc.form.blpartenariat.phone_gest_admin</source>
+                <target>Téléphone </target>
+            </trans-unit>
+
+            <trans-unit id="bloc.form.blpartenaire.hebergeur">
+                <source>bloc.form.blpartenaire.hebergeur</source>
+                <target>Organisme hébergeur</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.laboratoire">
+                <source>bloc.form.blpartenaire.laboratoire</source>
+                <target>Laboratoire</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.tutelle">
+                <source>bloc.form.blpartenaire.tutelle</source>
+                <target>Tutelle Gestionnaire</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.personnel">
+                <source>bloc.form.blpartenaire.personnel</source>
+                <target>Participants</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.montantAide">
+                <source>bloc.form.blpartenaire.montantAide</source>
+                <target>Montant d'aide</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.tauxAide">
+                <source>bloc.form.blpartenaire.tauxAide</source>
+                <target>Taux d'aide</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.respScientifique">
+                <source>bloc.form.blpartenaire.respScientifique</source>
+                <target>R. Scientifique</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.respJuridique">
+                <source>bloc.form.blpartenaire.respJuridique</source>
+                <target>R. Juridique</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.respAdmin">
+                <source>bloc.form.blpartenaire.respAdmin</source>
+                <target>R. administratif and Financier</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blparticipants.add">
+                <source>bloc.form.blparticipants.add</source>
+                <target>Ajouter un participant</target>
+            </trans-unit>
+             <trans-unit id="bloc.form.blparticipants.civ">
+                 <source>bloc.form.blparticipants.civ</source>
+                 <target>CIV</target>
+             </trans-unit>
+            <trans-unit id="bloc.form.blparticipants.nom">
+                <source>bloc.form.blparticipants.nom</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blparticipants.prenom">
+                <source>bloc.form.blparticipants.prenom</source>
+                <target>Prénom</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blparticipants.email">
+                <source>bloc.form.blparticipants.email</source>
+                <target>Courriel</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blparticipants.orcid">
+                <source>bloc.form.blparticipants.orcid</source>
+                <target>ORCID</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.name_etr">
+                <source>bloc.form.blpartenariat.name_etr</source>
+                <target>Nom de l'établissement</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.laboratoire">
+                <source>bloc.form.blpartenariat.laboratoire</source>
+                <target>Nom laboratoire</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.coordFr">
+                <source>bloc.form.blpartenaire.coordFr</source>
+                <target>Coord. Fr</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.coordEtr">
+                <source>bloc.form.blpartenaire.coordEtr</source>
+                <target>Coord. Etr</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenaire.dirLabo">
+                <source>bloc.form.blpartenaire.dirLabo</source>
+                <target>Dir. Unité</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.banque_tut_g">
+                <source>bloc.form.blpartenariat.banque_tut_g</source>
+                <target>Nom de la banque</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.rib_tut_g">
+                <source>bloc.form.blpartenariat.rib_tut_g</source>
+                <target>RIB</target>
+            </trans-unit>
+            <trans-unit id="bloc.form.blpartenariat.iban_tut_g">
+                <source>bloc.form.blpartenariat.iban_tut_g</source>
+                <target>IBAN/SWIFT</target>
+            </trans-unit>
+             <trans-unit id="widget.porteurAppel">
+                 <source>widget.porteurAppel</source>
+                 <target>Appels</target>
+             </trans-unit>
+             <trans-unit id="widget.porteurPoursuivreProjet">
+                 <source>widget.porteurPoursuivreProjet</source>
+                 <target>Poursuivre votre soumission</target>
+             </trans-unit>
+             <trans-unit id="widget.porteurSoumettreProjet">
+                 <source>widget.porteurSoumettreProjet</source>
+                 <target>Soumettre votre projet</target>
+             </trans-unit>
+              <trans-unit id="bloc.success.save.avisProjet">
+                  <source>bloc.success.save.avisProjet</source>
+                  <target>Le questionaire a bien été soumis</target>
+              </trans-unit>
+              <trans-unit id="widget.projets">
+                  <source>widget.projets</source>
+                  <target>Projects</target>
+              </trans-unit>
+              <trans-unit id="widget.edit">
+                  <source>widget.edit</source>
+                  <target>Modifier</target>
+              </trans-unit>
+        </body>
+    </file>
+</xliff>

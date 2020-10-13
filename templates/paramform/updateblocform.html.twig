@@ -1,0 +1,47 @@
+<div class="breadcome-area mg-b-30 small-dn">
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="sparkline8-list shadow-reset">
+                <div class="sparkline8-hd" style="background: #b7b8e1">
+                    <div class="main-sparkline8-hd">
+                        <h1> Formulaire : <b> {{ formulaire }} </b></h1>
+                    </div>
+                </div>
+                <div class="sparkline8-graph">
+                    <div class="row">
+
+                      {% if countBloc != 0 %}
+                        <form action="{{ path('update_bloc_form',{'idFormulaire' : formulaire.idFormulaire}) }}" method="POST">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Choix</th>
+                                <th>Bloc</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for bloc in blocs %}
+                                <tr>
+                                    <td><input name="bloc_{{ bloc.idBloc }}" type="checkbox" value="{{ bloc.idBloc }}"> </td>
+                                    <td>{{ bloc }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                            <input type="hidden" name="_token" value="{{ csrf_token('addBlocForm' ~ formulaire.idFormulaire) }}">
+                            <div class="footer-text-right">
+                                <a class="btn btn-action" data-dismiss="modal">Annuler</a>
+                                <button class="btn btn-primary" type="submit"> Ajouter</button>
+                            </div>
+                        </form>
+                        {% else %}
+                          Il ne reste pas de bloc à ajouter !
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

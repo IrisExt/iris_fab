@@ -1,0 +1,4 @@
+#!/bin/sh
+
+rsync -av ./ root@10.10.3.110:~/../var/www/iris10 --include=public/.htaccess --include=.env --include=vendor --exclude-from=.gitignore --exclude=".*"
+# Si nous avons trouvé un compte correspondant au nom d'utilisateur ou à l'adresse e-mail fournie, nous vous avons envoyé un lien vous permettant de réinitialiser votre mot de passe. Si vous ne voyez pas de message, pensez à vérifier vos spam

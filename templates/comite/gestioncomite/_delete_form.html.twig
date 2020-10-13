@@ -1,0 +1,6 @@
+
+<form method="post" action="{{ path('comite_delete', {'idComite': tg_comite.idComite}) }}" onsubmit="return ModalErreur('Attention', 'Êtes-vous sûr de vouloir supprimer ce comité ?\'');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tg_comite.idComite) }}">
+    <button class="btn btn-danger"><span class="adminpro-icon adminpro-danger-error"></span> {{ 'action.delete'|trans }}</button>
+</form>

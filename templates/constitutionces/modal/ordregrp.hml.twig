@@ -1,0 +1,12 @@
+<form id="toto">
+<ul class="sort" id="sortable">
+{% for mmbr in mmbreCmte %}
+    <li class="ui-state-default" >{% if mmbr.priogrp is null %}  {% else %} {{ mmbr.priogrp + 1 }} {% endif %} : {{ mmbr.idProfil }} >>>> {{ mmbr.idPersonne }} <p class="text-right"> {{ mmbr.lbgroupe }} </p>
+        <input type="hidden" value="{{ mmbr.idParticipation }}" name="participant[]">
+    </li>
+{% endfor %}
+</ul>
+    <div class="footer-text-right">
+        <button class="btn btn-primary" type="submit">{{ button_label|default('Modifier') }}</button>
+    </div>
+</form>

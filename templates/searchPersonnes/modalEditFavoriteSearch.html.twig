@@ -1,0 +1,63 @@
+<div class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" id="editFavoriteSearch" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1">
+                    <h4 class="ml14 modal-title">
+                    <span class="text-wrapper">
+                     <span class="letters">Favoris</span>
+                    </span>
+                    </h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" href="#" onclick="refreshParent()"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <span class="adminpro-icon modal-check-pro information-icon-pro"></span>
+                <div class="row">
+                    <div class="form-group row">
+                        <table class="table table-striped table-bordered display dataTable" id="my-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nom de la recherche</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                            {% for key,listFavoris in listFavoris %}
+                                <tr>
+                                    <td>{{ listFavoris.getIdFavoris }}</td>
+                                    <td>{{ listFavoris.getLbNom }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a  href="#" onclick="refreshParent()">Fermer</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="{{ asset('js/jquery.tabledit.js') }}"></script>
+    <script>
+
+        function refreshParent() {
+            window.location.reload();
+        }
+
+        $('#my-table').Tabledit({
+            columns: {
+                identifier: [0, 'id'],
+                editable: [[1, 'Name']]
+            },
+            hideIdentifier: true,
+            restoreButton: false
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% for comite in comites %}
+    <div class="widget col-lg-3">
+        <div class="income-dashone-total shadow-reset nt-mg-b-30 res-mg-t-30">
+            <div class="sparkline13-hd">
+                <div class="main-sparkline12-hd">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h1>{{ comite.lbAcr }} : <span class="password-mt-none"></span>Affectation</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="sparkline12-outline-icon">
+                </div>
+            </div>
+            <div class="income-dashone-pro">
+                <div class="row">
+                    <div class="text-center col-lg-12">
+                        {% if true == comite.questPublie %}
+                            <a style="color: black"
+                               href="{{ path('profil_user',
+                                   {'idAppel': comite.idAppel.idAppel,
+                                       'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase,
+                                       'idProfil' :profil.idProfil,
+                                       'idComite' : comite.idComite,
+                                       'redirect' : 'avis_member'} ) }}"
+                               data-toggle="tooltip" data-placement="top" title="Questionnaire avis projet">
+                                <i class="fa fa-edit" style="font-size:36px">
+                                    {# <img src="{{ asset('img/web.ico') }}" width="20" height="20"> #}
+                                </i>
+                            </a><br>
+                            <small><i>Le questionnaire du comité {{ comite.lbAcr }} est Publié</i></small>
+                        {% else %}
+
+                            <a style="color: black" href="#" data-toggle="tooltip" data-placement="top"
+                               title="Questionnaire avis projet">
+                                <i class="fa fa-edit" style="font-size:36px"></i></a><br>
+                            <small><i>Le questionnaire du comité {{ comite.lbAcr }} n'est pas Publié</i></small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

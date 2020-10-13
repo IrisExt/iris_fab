@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'AppelProjet' %}
+
+{% block title %}Liste appel à projet{% endblock %}
+
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'appel.projet.appelpro'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a class="btn btn-primary"
+                                       href="{{ path('tg_appel_proj_new') }}">{{ 'appel.projet.creenewproj'|trans }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+                        <table class="table">
+                            <thead>
+                            <tr>
+
+                                <th>{{ 'appel.form.edition'|trans }}</th>
+                                <th>{{ 'appel.form.lbacronyme'|trans }}</th>
+                                <th>{{ 'appel.form.titre'|trans }}</th>
+{#                                <th>{{ 'appel.form.dtclofin'|trans }}</th>#}
+                                <th>Pilote</th>
+                                <th>{{ 'appel.form.action'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tg_appel_proj in tg_appel_projs %}
+                                <tr>
+
+                                    <td>{{ tg_appel_proj.dtMillesime }}</td>
+                                    <td>{{ tg_appel_proj.lbAcronyme }}</td>
+                                    <td>{{ tg_appel_proj.lbAppel }}</td>
+{#                                    <td>{{ tg_appel_proj.dtCloFin ? tg_appel_proj.dtCloFin|date('Y-m-d') : '' }}</td>#}
+                                    <td>{{ tg_appel_proj.pilote }}</td>
+                                    <td>
+                                        <div class="row">
+{#                                            <div class="col-xs-3">#}
+{#                                                <a href="{{ path('tg_appel_proj_show', {'idAppel': tg_appel_proj.idAppel}) }}">#}
+{#                                                    <span class="fa fa-eye"></span> </a>#}
+{#                                            </div>#}
+                                            <div class="col-xs-10">
+                                                <a href="{{ path('tg_appel_proj_edit', {'idAppel': tg_appel_proj.idAppel}) }}">
+                                                    <span class="fa fa-edit"></span> Modifier / Supprimer </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">aucun résultat</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

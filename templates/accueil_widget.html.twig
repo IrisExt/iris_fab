@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="informations"></div>
+            {% for widget in widgets %}
+                {{ render(controller(widget)) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        if (!$(".widget")[0]) {
+            ($(".informations")).html(
+                '<div class="alert alert-warning alert-mg-b alert-warning-style4 alert-warning-stylenone">' +
+                '<button type="button" class="close warning-op" data-dismiss="alert" aria-label="Close">' +
+                '<span class="icon-sc-cl" aria-hidden="true">×</span>' +
+                '</button>' +
+                '<span class="adminpro-icon adminpro-warning-error admin-check-sucess admin-check-pro-none"></span>' +
+                '<p class="message-alert-none"><strong>Informations !</strong>  Vous avez aucune habilitation. </p>' +
+                '</div>'
+            )
+        }
+
+    </script>
+{% endblock %}
+

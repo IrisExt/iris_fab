@@ -1,0 +1,17 @@
+{#{% for profilPer in profilPers %}#}
+  {% for habi in profilPers %}
+        {{habi.idComite[0] is defined }}
+      {% for appe in habi.idAppel %}
+    <div class="row">
+        <div class="col-lg-6">
+            <label for="password1"> {{ appe }} : {{ appe.niveauEnCours.idPhase}}</label>
+        </div>
+        <div class="col-lg-6">
+            <a class="btn btn-default btn-sm"
+               href="{{ path('profil_user',{'idAppel': appe.idAppel, 'idphase' : appe.niveauEnCours.idNiveauPhase, 'idComite' : appe.idComite.idComite|default('') }) }}">
+                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <br>
+  {% endfor %}
+{% endfor %}

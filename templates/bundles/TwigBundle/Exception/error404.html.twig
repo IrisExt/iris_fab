@@ -1,0 +1,17 @@
+
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+{% block body %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <h2>Erreur 404 : Page non trouvée </h2>
+        </div>
+        <div class="col-md-4"></div>
+{#        <div class="col-md-4"></div>#}
+        <div class="col-md-8">
+            <img src="{{ asset('img/erreur-404.png') }}">
+        </div>
+        <div class="col-md-8"></div><a href="{{ path('accueil') }}"> Retour </a>
+
+    </div>
+{% endblock %}

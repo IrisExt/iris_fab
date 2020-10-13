@@ -1,0 +1,40 @@
+{{ form_start(form, {'action': path('modifier_ajax_seance', {'idSeance' : seance.idSeance}), 'attr': {'id': 'modifierSeance'} ,'method': 'POST'}) }}
+
+  {{ form_row(form.idReunion) }}
+
+<div class="form-group row">
+    <label class="col-form-label col-sm-3 required" for="seance_idReunion">Date</label>
+
+    <div class="col-lg-6"> Période : <b>{{ seance.idReunion.dtDebPeriode|date('d/m/Y') }}</b> Et <b>{{ seance.idReunion.dtFinPeriode|date('d/m/Y') }}</b>
+        <div class="form-group data-custon-pick" id="data_1">
+            <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                {{ form_widget(form.dtSeance) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3">
+        <div class="i-checks pull-left">
+            <label>{{ form_widget(form.matin) }}  </label>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="i-checks pull-left">
+            <label>{{ form_widget(form.apresMidi) }}  </label>
+        </div>
+    </div>
+</div>
+<a href="#" data-id="{{ seance.idReunion.dtDebPeriode|date('Y-m-d') }}" id="date-debut"></a>
+<a href="#" data-id="{{ seance.idReunion.dtFinPeriode|date('Y-m-d') }}" id="date-fin"></a>
+
+<div class="footer-text-right">
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#seanceModal" data-dismiss="modal" data-id="{{ path('show_seance',{'idComite' : seance.idComite.idComite }) }}">Fermer</button>
+{#    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#seanceModal" data-dismiss="modal" data-id="{{ path('show_seance',{'idComite' : idcomite.idComite }) }}">Fermer</button>#}
+{#    <a class="btn btn-warning" href="{{ path('list_comite',{'cmte-seance' : seance.idComite.idComite } ) }}">Retour</a>#}
+    <button class="btn btn-primary" id="submitBtn" type="submit">Modifier</button>
+</div>
+<input type="hidden" value="{{ seance.idSeance }}" id="seance">
+{{ form_end(form) }}

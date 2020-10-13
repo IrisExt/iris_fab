@@ -1,0 +1,94 @@
+
+{% if count_reun != 0 %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Phase</th>
+            <th scope="col">Type</th>
+            <th scope="col">Ob</th>
+            <th colspan="2">Période Autorisée</th>
+            <th scope="col">Durée Maximum(j)</th>
+            <td scope="col"></td>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for reunion in reunions %}
+            <tr>
+                <td>{{ reunion.idphase.lbphase }}</td>
+                <td>{{ reunion.idtypereunion }}</td>
+                <td>{{ reunion.blobligatoire ? 'Oui' : 'Non' }}</td>
+                <td>{{ reunion.dtdebperiode|date("d/m/Y") }}</td>
+                <td>{{ reunion.dtfinperiode|date("d/m/Y") }}</td>
+                <td>{{ reunion.nbdureemax }}</td>
+                <td> <!-- Large modal -->
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <a href="#" class="btn" data-toggle="modal" data-target="#modifModal"
+                               data-id="{{ path('modif_reunion',{'idReunion' : reunion.idreunion }) }}">
+                                <i class="adminpro-icon adminpro-edit"></i>
+                            </a>
+                        </div>
+                        <div class="col-xs-2">
+                            <form method="post" action="{{ path('annuler_reunion', {'idReunion': reunion.idreunion}) }}"
+                                  onsubmit="return confirm('voulez vous supprimer cette réunion ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('annuler' ~ reunion.idreunion) }}">
+                                <button class="btn btn-link" aria-hidden="true"><i class="fa fa-trash-o text-danger"></i> </button>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <strong>Info!</strong> Aucune réunion pour ce comité.
+    </div>
+{% endif %}
+
+{{ form_start(form, {'action': path('nv_reunion'), 'method': 'POST'}) }}
+
+{#    {{ form_row(form.idComite) }}#}
+    {{ form_row(form.idPhase) }}
+    {{ form_row(form.lbTitre) }}
+    {{ form_row(form.idPhase) }}
+    {{ form_row(form.idTypeReunion) }}
+    {{ form_row(form.txComment) }}
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label class=""> Période autorisée</label>
+        </div>
+        <div id="daterangepicker" title="daterangepicker"></div>
+        <div class="col-sm-6">
+            <div class="form-group data-custon-pick data-custom-mg" id="data_periode">
+                <div class="input-daterange input-group" id="datepicker">
+                    {{ form_widget(form.dtDebPeriode) }}
+                    <span class="input-group-addon">à</span>
+                    {{ form_widget(form.dtFinPeriode) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label class=""> Durée max. </label>
+        </div>
+        <div class="col-sm-4">
+            {{ form_widget(form.nbDureeMax) }}
+        </div>
+    </div>
+{{ form_row(form.blObligatoire) }}
+<div class="row">
+    <div class="footer-text-right">
+        <button class="btn btn-warning" data-dismiss="modal">Fermer</button>
+        <button class="btn btn-primary" id="submit" type="submit">Créer</button>
+    </div>
+</div>
+
+{{ form_end(form) }}

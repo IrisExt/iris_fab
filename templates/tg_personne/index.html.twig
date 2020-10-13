@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'Personne' %}
+{% block title %}TgPersonne index{% endblock %}
+
+{% block body %}
+    <div class="advanced-form-area mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{{ 'personne.liste.listeper'|trans }}</h1>
+                                <div class="sparkline8-outline-icon">
+                                    <a class="btn btn-primary"
+                                         href="{{ path('tg_personne_new') }}" > {{ 'personne.liste.creerpers'|trans }}
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline8-graph">
+
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>{{ 'personne.from.genre'|trans }}</th>
+                                <th>{{ 'personne.from.lbNomUsage'|trans }}</th>
+                                <th>{{ 'personne.from.lbPrenom'|trans }}</th>
+                                <th>{{ 'personne.from.username'|trans }}</th>
+                                <th>{{ 'personne.from.email'|trans }}</th>
+                                <th>{{ 'personne.from.cdfrancophone'|trans }}</th>
+                                <th>{{ 'personne.from.fonction'|trans }}</th>
+{#                                <th>{{ 'personne.from.typepers'|trans }}</th>#}
+                                <th>{{ 'personne.from.action'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tg_personne in tg_personnes %}
+                                <tr>
+
+                                    <td>{{ tg_personne.idGenre.cdGenre|default('') }}</td>
+                                    <td>{{ tg_personne.lbNomUsage }}</td>
+                                    <td>{{ tg_personne.lbPrenom }}</td>
+                                    <td>{% if tg_personne.users != null %}{{ tg_personne.users.username }}{% endif %}</td>
+                                    <td>{% if tg_personne.users != null %}{{ tg_personne.users.email }}{% endif %}</td>
+                                    <td>{{ tg_personne.cdfrancophone }}</td>
+                                    <td>{{ tg_personne.fonction }}</td>
+{#                                    <td>{{ tg_personne.cdTypePers }}</td>#}
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <a href="{{ path('tg_personne_show', {'idPersonne': tg_personne.idPersonne}) }}">
+                                                    <span class="fa fa-eye"></span> </a>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <a href="{{ path('tg_personne_edit', {'idPersonne': tg_personne.idPersonne}) }}">
+                                                    <span class="fa fa-edit"></span> </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

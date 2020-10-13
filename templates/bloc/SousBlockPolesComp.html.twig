@@ -1,0 +1,21 @@
+{% block polesComp %}
+    <div id="bl_pc" class="infocompl" >
+{#        <div class="title_sous_bloc">#}
+{#            <h4>Pôles de compétitivité</h4>#}
+{#        </div>#}
+        <div class="row">
+            <p class="col-sm-7" style="font-size: 15px">
+                Souhaitez vous que votre projet soit labelisé par un ou des poles de compétitivité
+                <i id="CHOIX_PC" class="fa fa-question-circle"></i>
+            </p>
+            <div class="col-sm-5" style="float: left">
+                {{ form_row(bloc.blDemLabel) }}
+            </div>
+        </div>
+        <br><br>
+        <div id="poles">
+            {{ form_widget(bloc.idPoleComp, {'label_attr': {'class': 'required'}}) }}
+            {% if NbPolCompMax %}<p style="font-size: 13px;color: #a23e3e"><span>*</span> Le nombre de pôles de compétitivité sélectionnés doit être inférieur ou égal à {{NbPolCompMax}}</p>{% endif %}
+        </div>
+    </div>
+{% endblock %}

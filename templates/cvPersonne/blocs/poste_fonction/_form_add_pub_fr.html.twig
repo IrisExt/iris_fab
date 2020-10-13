@@ -1,0 +1,17 @@
+{{ form_start(form_rnsr) }}
+    {{ form_widget(form_rnsr) }}
+
+    <input type="hidden" name="idorganisme" id="idorganisme" value="">
+    <div class="footer-text-right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <span id="add_">
+            <a href="#" data-id="{{ path('cv_org_pub_fr') }}" id="submitOrPubFr"
+               class="btn btn-primary">Ajouter</a>
+        </span>
+        <span id="modif">
+            <a href="#" id="updateOrPubFr"  class="btn btn-warning">Modifier</a>
+        </span>
+
+        {#            <button type="submit" class="add_org_pub_fr btn btn-primary">Ajouter</button>#}
+    </div>
+{{ form_end(form_rnsr) }}

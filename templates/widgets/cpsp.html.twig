@@ -1,0 +1,75 @@
+{% if habilitations.idComite is not empty %}
+{#    {% extends habilitations.idComite.count > 0 ? "widgets/base_widget.html.twig" : "widgets/vierge.html.twig"  %}#}
+
+    {% for comite in habilitations.idComite %}
+        {% set statut = '' %}
+        {% set btn = '' %}
+    <div class="col-lg-3">
+        <div class="income-dashone-total shadow-reset nt-mg-b-30 res-mg-t-30">
+            <div class="sparkline13-hd">
+                <div class="main-sparkline12-hd">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h1> {% block name_profil %}CPS P.{% endblock %}</h1>
+                        </div>
+                        <div class="col-sm-9" style="text-align:right">
+                            <i>{% block text_profil %}{% endblock %}</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="income-dashone-pro">
+                {% block container_profil %}
+                    {% set statut = '' %}
+                    {% set btn = '' %}
+                    <div class="widget income-rate-total">
+                        <p class="order_appel"> {{ comite.idAppel }} : {{ comite }}</p>
+                        <span class="price-graph">
+                            {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : comite.idAppel})) == 1 %} <!-- return true / false -->
+                                {% set statut = 'En cours ' %}
+                                {% set btn = 'primary' %}
+                            {% else %}
+                                {% set statut = 'Fermé ' %}
+                                {% set btn = 'danger' %}
+                            {% endif %}
+                            <a class="btn btn-{{ btn }} btn-sm"
+                               href="{{ path('profil_user',
+                                   {'idAppel': comite.idAppel.idAppel, 'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase, 'idProfil' : habilitations.idProfil.idProfil, 'idComite' : comite.idComite}
+                               ) }}"> {{ statut }}
+                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                        </span>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+
+
+{#    {% block name_profil %}CPS P.{% endblock %}#}
+{#    {% block container_profil %}#}
+{#        {% for comite in habilitations.idComite %}#}
+{#            {% set statut = '' %}#}
+{#            {% set btn = '' %}#}
+{#            <div class="widget income-rate-total">#}
+{#                <p class="order_appel"> {{ comite.idAppel }} : {{ comite }}</p>#}
+{#                <span class="price-graph">#}
+{#                    {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : comite.idAppel})) == 1 %} <!-- return true / false -->#}
+{#                        {% set statut = 'En cours ' %}#}
+{#                        {% set btn = 'primary' %}#}
+{#                    {% else %}#}
+{#                        {% set statut = 'Fermé ' %}#}
+{#                        {% set btn = 'danger' %}#}
+{#                    {% endif %}#}
+{#                    <a class="btn btn-{{ btn }} btn-sm"#}
+{#                       href="{{ path('profil_user',#}
+{#                           {'idAppel': comite.idAppel.idAppel, 'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase, 'idProfil' : habilitations.idProfil.idProfil, 'idComite' : comite.idComite}#}
+{#                       ) }}"> {{ statut }}#}
+{#                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>#}
+{#                </span>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    {% endblock %}#}
+{#{% endif %}#}
+

@@ -1,0 +1,21 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Comite</th>
+        <th>Role</th>
+        <th>Membre</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for mmbre in mmbreComite %}
+        <tr>
+            <td>{{ mmbre.idHabilitation.idComite }}</td>
+            <td>{{ mmbre.idHabilitation.idProfil }}</td>
+            <td> <a href="{{ path('tg_participation_show', {'idParticipation': mmbre.idParticipation}) }}">{{ mmbre.idHabilitation.idpersonne }}</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="footer text right">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+</div>

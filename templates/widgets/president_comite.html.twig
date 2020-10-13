@@ -1,0 +1,29 @@
+{% if habilitations.idComite is not empty %}
+    {% extends habilitations.idComite.count > 0 ? "widgets/base_widget.html.twig" : "widgets/vierge.html.twig"  %}
+    {% block javascripts %}
+    {% endblock %}
+    {% block name_profil %}{{ habilitations.idProfil.lbProfil }}{% endblock %}
+    {% block container_profil %}
+        {% for comite in habilitations.idComite %}
+            {% set statut = '' %}
+            {% set btn = '' %}
+            <div class="widget income-rate-total">
+                <p> {{ comite.idAppel }} : {{ comite }}</p>
+                <span class="price-graph">
+                    {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : comite.idAppel})) == 1 %} <!-- return true / false -->
+                        {% set statut = 'En cours ' %}
+                        {% set btn = 'primary' %}
+                    {% else %}
+                        {% set statut = 'Fermé ' %}
+                        {% set btn = 'danger' %}
+                    {% endif %}
+                    <a class="btn btn-{{ btn }} btn-sm"
+                       href="{{ path('profil_user',
+                           {'idAppel': comite.idAppel.idAppel, 'idNiveauphase' : comite.idAppel.niveauEnCours.idNiveauPhase, 'idProfil' : habilitations.idProfil.idProfil, 'idComite' : comite.idComite}
+                       ) }}"> {{ statut }}
+                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+                </span>
+            </div>
+        {% endfor %}
+    {% endblock %}
+{% endif %}

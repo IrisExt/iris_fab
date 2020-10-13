@@ -1,0 +1,67 @@
+{% if seeWidget is not empty and (soumAppels is not empty) %}
+<div class="col-lg-3">
+    <div class="sparkline12-list password-mt-b shadow-reset">
+        <div class="sparkline13-hd">
+            <div class="main-sparkline12-hd">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <h1>{{ 'widget.porteurAppel'|trans }} </h1>
+                    </div>
+                    <div class="col-sm-10" style="text-align:right">
+                        <i>{{profil}}</i>
+                    </div>
+                </div>
+            </div>
+            <div class="sparkline12-outline-icon">
+            </div>
+        </div>
+
+    <div class="sparkline12-hd">
+        <div class="row">
+
+            {% for key, tlformAppel  in soumAppels %}
+            {% for tlfpl  in tlformAppel['soumission'] %}
+                <div class="col-lg-4">
+                    {{ tlfpl.idAppel }}
+                </div>
+                <div class="col-lg-8">
+                    <a  href="#" class="btn btn-primary btn-sm soumissionRa"
+                        data-id="{{ path('soumission_with_role',{'tgAppelProj' :   tlfpl.getIdAppel().getIdAppel(), 'tgFormulaire' : tlfpl.getIdFormulaire().getIdFormulaire(), 'profil' : 18, 'idPartenaire' : key})  }}"
+                    >{{ tlformAppel['partenaire']|easyadmin_truncate(30) }}
+                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                    </a>
+                </div><br><br>
+            {% endfor %}
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% block javascripts %}
+    <script src="{{ asset('js/vendor/jquery-1.11.3.min.js') }}"></script>
+    <script>
+        $('.soumissionRa').click(function (e) {
+            var path = $(e.target).data('id');
+
+            $.ajax({
+                'url': path,
+                type: 'POST',
+                success: function (data) {
+                    if(data.appel && data.formulaire && data.bloc)
+                        if(data.idPartenaire)
+                            window.location.href = "/fr/soumission/appel/"+data.appel+"/formulaire/"+data.formulaire+"/bloc/"+data.bloc+"/projet/"+data.idProjet+"?p="+data.idPartenaire;
+                        else
+                            window.location.href = "/fr/soumission/appel/"+data.appel+"/formulaire/"+data.formulaire+"/bloc/"+data.bloc+"/projet/"+data.idProjet;
+                    else
+                        window.location.href = "#";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+

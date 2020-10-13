@@ -1,0 +1,13 @@
+<form method="post" action="{{ path('delete_mail_notif', {'mailNotification': adrMail}) }}">
+
+    <div class="alert alert-danger" > <p>Êtes-vous sûr de vouloir supprimer ce mail de votre liste de mails de notification ?</p></div>
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adrMail) }}">
+
+    <div class="modal-footer">
+        <button data-dismiss="modal" class="btn btn-warning" >Annuler </button>
+        <button  class="btn btn-danger" type="submit">
+            <span class="adminpro-icon adminpro-danger-error"></span> {{ 'action.delete'|trans }}
+        </button>
+    </div>
+</form>

@@ -1,0 +1,8 @@
+consti:
+  form:
+    selComite: 'Sélectionner un comité'
+    enrgEvalua: 'Enregistrer un évaluateur'
+    modifEvalua: 'Modifier un évaluateur'
+    sollcitationMbre: 'Sollicitation Membre'
+    modifSollicit: 'Modifier Sollicitation'
+    retour: 'Retour'

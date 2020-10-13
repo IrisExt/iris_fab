@@ -1,0 +1,13 @@
+reunion:
+  form:
+    comite: 'Comité'
+    titre: 'Titre'
+    appProj: 'Appel à projet'
+    typereunion: 'Type réunion'
+    comment:  'Commentaires'
+    periodeautorise: 'Période autorisée'
+    dureemax: 'Durée max. en jours'
+    blobligatoire: 'Obligatoire'
+    dtdebreunion: 'Date début'
+    dtfinreunion: 'Date fin'
+    phase: 'Phase'

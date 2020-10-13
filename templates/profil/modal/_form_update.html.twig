@@ -1,0 +1,25 @@
+{{ form_start(form_mail,{'action' : path('update_mail',{'adrmail' : adrmail}), 'method' : 'POST'}) }}
+<div class="form-group row">
+    <label class="col-form-label col-sm-3 required" for="adress_mail">Adresse mail</label>
+    <div class="col-lg-6">
+        {{ form_widget(form_mail.adrMail) }}
+        <input type="hidden" name="old_mail" value="{{ adrmail }}">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3"></div>
+{#    <div class="col-sm-3">#}
+{#        <div class="i-checks pull-left">#}
+{#            <label>{{ form_widget(form_mail.blValide) }}  </label>#}
+{#        </div>#}
+{#    </div>#}
+    <div class="col-sm-4">
+        <div class="i-checks pull-left">
+            <label>{{ form_widget(form_mail.blNotification) }}  </label>
+        </div>
+    </div>
+</div>
+<div class="footer-text-right">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+    <button type="submit" class="btn btn-warning" >Modifier</button>
+{{ form_end(form_mail) }}

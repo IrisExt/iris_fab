@@ -1,0 +1,33 @@
+{% for seance in seances %}
+<div class="btn-group" id="{{ seance.idSeance }}">
+    <a class="" data-toggle="dropdown" href="#" style="font-family:'Open Sans', sans-serif">
+    <span class="fa fa-th-list" title="Toggle dropdown menu">
+    </span>
+    {{ seance.dtseance|date('d/m/Y') }} : {{ seance.matin ? 'AM' : ''}} - {{ seance.apresmidi ? 'PM' : ''}}
+    </a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="#" class="btn btn-link"  data-toggle="modal" data-target="#modifierSeanceModal"
+               data-backdrop="static" data-keyboard="false"
+               data-id="{{ path('modifier_seance',{'idSeance' : seance.idseance }) }}">
+                <i class="fa fa-pencil fa-fw"></i> Modifier </a>
+        </li>
+
+        <li> <!-- supprimer seance -->
+            <a href="#" class="btn btn-link" data-toggle="modal" data-target="#SupprimeSeanceModal"
+               data-backdrop="static" data-keyboard="false"
+               data-id="{{ path('delete_ajax_seance', {'idSeance': seance.idSeance}) }}">
+                <i class="fa fa-remove text-danger"> Supprimer</i>
+            </a>
+{#            <form method="post" action="{{ path('supprimer_seance', {'idSeance': seance.idSeance}) }}">#}
+{#                              onsubmit="return confirm('Souhaitez-vous supprimer cette date de réunion ?');">#}
+{#                            <input type="hidden" name="_method" value="DELETE">#}
+{#                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ seance.idSeance) }}">#}
+{#                        <a id="SupprimeSeanceModal"  class="btn btn-primary" data-id="{{ path('supprimer_seance', {'idSeance': seance.idSeance}) }}" >Supprimer</a>#}
+            {#                <button class="btn btn-link" aria-hidden="true"><i class="fa fa-trash-o text-danger"> Supprimer</i> </button>#}
+{#            </form>#}
+        </li>
+    </ul>
+</div>
+    <br>
+{% endfor %}

@@ -1,0 +1,291 @@
+{% extends 'base_soumission.html.twig' %}
+
+{% trans_default_domain 'Blocs' %}
+{% block stylesheets %}
+<link type="text/css" rel="stylesheet" href="{{ asset('bundles/craueformflow/css/buttons.css') }}"/>
+<link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+<link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-table.css') }}"/>
+<link type="text/css" rel="stylesheet" href="{{ asset('css/data-table/bootstrap-editable.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/preloader/preloader-style.css') }}">
+<style>
+.rightButton {
+ color: #fff;
+ background-color: #337ab7;
+ border-color: #2e6da4;
+ float: right;
+}
+ .d-block {
+            color: crimson;
+            font-size: 11px;
+            display: ruby-base;
+        }
+        .badge {
+            background-color: #dd1717;
+            font-size: 10px;
+        }
+.modal-body {
+  padding: 50px 40px !important;
+}
+th {
+ background-color: #369;
+ color: white;
+}
+table { margin-bottom: 0 !important;}
+</style>
+{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+     {% include 'bloc/list_blocs.html.twig' with { list_bloc:list_bloc, formulaire:formulaire, projet:projet, id_instrument:id_instrument, blocValidation:blocValidation } %}
+    <div class="col-sm-9">
+        {% block content %}
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <div class="advanced-form-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="sparkline8-list shadow-reset">
+                        <div class="sparkline8-hd">
+                            <div class="main-sparkline8-hd">
+                                <h1>{% for bloc in list_bloc %} {% if bloc.id_bloc == idBloc %} {{ bloc.libelle }} {% endif %} {% endfor %}</h1>
+                            </div>
+                        </div>
+                        <div class="sparkline8-graph">
+                             {{ form_start(bloc) }}
+                             <div id="expertNonSouhaite"  class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+                                 <div class="modal-dialog modal-lg" role="document">
+                                     <div class="modal-content">
+                                         <div class="modal-header">
+                                             <div class="modal-header header-color-modal bg-color-1">
+                                                 <h4 class="modal-title">Créer un expert</h4>
+                                                 <div class="modal-close-area modal-close-df">
+                                                     <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     <div class="modal-body">
+                                         {{ form_row(bloc.nom, {'label_attr': {'class': 'required'}}) }}
+                                         {{ form_row(bloc.prenom) }}
+                                         {{ form_row(bloc.courriel, {'label_attr': {'class': 'required'}}) }}
+                                         {{ form_row(bloc.organisme) }}
+                                         {{ form_row(bloc.lbMotif) }}
+                                     </div>
+                                     <div class="modal-footer">
+                                         <a id="annuler_ns" data-dismiss="modal" href="#">Annuler</a>
+                                         <a href="#" data-id=""  id="submitENS" class="add-edit-ns">Ajouter</a>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+
+                                                            <div class="row">
+                                                            <div class="col-sm-1"></div>
+                                                            <div class="col-sm-8">
+
+                                                                <div class="fixed-table-container">
+                                                                    <div class="fixed-table-body">
+
+                                                                        <table id="table" class="table table-striped" data-toggle="table" data-pagination="true"
+                                                                               data-search="true" data-show-columns="true"
+                                                                               data-show-pagination-switch="true" data-show-refresh="true"
+                                                                               data-key-events="true" data-show-toggle="true" data-resizable="true"
+                                                                               data-cookie="true" data-cookie-id-table="saveId" data-click-to-select="true"
+                                                                               data-toolbar="#toolbar">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th data-field="nom"
+                                                                                    data-editable="true">{{ 'bloc.form.blnonsouh.nom'|trans() }}</th>
+                                                                                <th data-field="prenom"
+                                                                                    data-editable="true">{{ 'bloc.form.blnonsouh.prenom'|trans() }}</th>
+                                                                                <th data-field="email"
+                                                                                    data-editable="true">{{ 'bloc.form.blnonsouh.courriel'|trans() }}</th>
+                                                                                <th data-field="organisme"
+                                                                                    data-editable="true">{{ 'bloc.form.blnonsouh.organisme'|trans() }}</th>
+                                                                                <th data-field="motif"
+                                                                                    data-editable="true">{{ 'bloc.form.blnonsouh.motif'|trans() }}</th>
+                                                                                <th data-field="action">Action</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            {% for ns in nonsouhaite %}
+                                                                                <tr>
+                                                                                    <td>{{ ns.getNom() }}</td>
+                                                                                    <td>{{ ns.getPrenom() }}</td>
+                                                                                    <td>{{ ns.getCourriel() }}</td>
+                                                                                    <td>{{ ns.getOrganisme() }}</td>
+                                                                                    <td>{{ ns.getLbMotif() }}</td>
+                                                                                    <td>
+                                                                                        <a href="#" data-id="{{ ns.getIdNonSouhaite() }}" class="edit-nonsouhaite">
+                                                                                        <span class="fa fa-edit" ></span></a>
+                                                                                        |
+                                                                                        <a href="#" class="delete-nonsouhaite">
+                                                                                            <span class="fa fa-trash-o text-danger" data-toggle="modal"  data-backdrop="static" data-keyboard="false" data-target="#deleteNotif{{ loop.index }}"></span></a>
+                                                                                    </td>
+                                                                                </tr>
+
+
+
+<div id="deleteNotif{{ loop.index }}" class="modal modal-adminpro-general FullColor-popup-DangerModal fade bounceInRight animated deleteNotif" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header header-color-modal bg-color-1" style="background: #f45846;">
+                    <h4 class="modal-title">Suppression de l'expert  <b>{{ ns.getNom() }}</b></h4>
+                    <div class="modal-close-area modal-close-df">
+                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+            <h4>Attention !</h4>
+            <p>Etes vous sur de vouloir supprimer l'expert <b>{{ ns.getNom() }}</b> ?</p>
+        </div>
+            <div class="modal-footer">
+            <a data-dismiss="modal" href="#">Annuler</a>
+            <a href="#" data-id="{{ path('non_souhaite_del',{'idProjet' :  idProjet, 'idNonSouhaite' : ns.getIdNonSouhaite()})  }}" class="delete-ns" >Supprimer</a>
+        </div>
+        </div>
+    </div>
+</div>
+
+                                                                            {% endfor %}
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                             <a href="#" class="btn btn-sm btn-primary add-nonsouhaite" rel="tooltip">
+                                                                <i class="fa fa-plus"></i>
+                                                                {{ 'bloc.form.blnonsouh.add'|trans }}
+                                                            </a>
+                                                            </div>
+                                                            </div>
+                                                       <br><br><br>
+                                                         <div>
+                                  <div class="col-md-8 col-sm-3"></div>
+                                  <div class="col-md-2 col-sm-3">  <a href="{{ previousblock }}" class="btn btn-primary pull-right"><< Précédent</a> </div>
+                                  <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBlocWithoutRedirect, { 'attr': {'class': 'hidden'} }) }} </div>
+                                  <div class="col-md-2 col-sm-3"> {{ form_widget(bloc.saveBloc) }} </div>
+                              </div>
+
+
+                                                           <div class="form-group row">
+                                                              <div class="col-sm-12">
+                                                                  {{ form_widget(bloc.saveFormulaire, { 'attr': {'class': 'hidden'} }) }}
+                                                              </div>
+                                                          </div>
+                                                            {{ form_end(bloc) }}
+
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts1 %}
+    <script src="{{ asset('js/modal-active.js') }}"></script>
+{% endblock %}
+{% block javascripts %}
+<script>
+
+        $('#submitENS').click(function (e) {
+            var path = $(e.target).data('id');
+            $.ajax({
+                'url': path,
+                type: 'POST',
+                data:{
+                    'nom': $("#NonSouhaiteType_nom").val(),
+                    'prenom': $("#NonSouhaiteType_prenom").val(),
+                    'courriel': $("#NonSouhaiteType_courriel").val(),
+                     'organisme': $("#NonSouhaiteType_organisme").val(),
+                    'lbMotif': $("#NonSouhaiteType_lbMotif").val(),
+                },
+                success: function (data) {
+
+                 $('.ExpertNsError').html('');
+                 if(data.result == 0) {
+                    for (var key in data.data) {
+                          $('#NonSouhaiteType_'+data.data[key].field+'').after('<span class="invalid-feedback d-block ExpertNsError"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Erreur</span><span class="form-error-message"> '+data.data[key].message+'</span></span></span>');
+                    }
+                } else {
+                   // Submit OK
+                   $('form[name="NonSouhaiteType"]').trigger("reset");
+                   $('#expertNonSouhaite').modal('hide');
+                   location.reload();
+                }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  alert('Error : ' + errorThrown);
+                }
+            });
+        });
+
+        $('.delete-ns').click(function (e) {
+            var path = $(e.target).data('id');
+
+            $.ajax({
+                'url': path,
+                type: 'POST',
+                success: function (data) {
+                    console.log(data);
+                    location.reload();
+                },
+                 error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  alert('Error : ' + errorThrown);
+                }
+            });
+        });
+
+          $('.add-nonsouhaite').click(function (e) {
+
+               $("#submitENS").text('Ajouter');
+               $('form[name="NonSouhaiteType"]').trigger("reset");
+               $('.add-edit-ns').data("id", "/fr/soumission/nonsouhaiteadd/{{ idProjet }}");
+               $('#expertNonSouhaite').modal(
+                   {  backdrop: 'static',
+			          keyboard: false
+		           },
+                   'show');
+           });
+
+            $('#annuler_ns').click(function (e) {
+               $('form[name="NonSouhaiteType"]').trigger("reset");
+              $('.invalid-feedback').html('');
+           });
+
+        $('.edit-nonsouhaite').click(function (e) {
+          var expert_id = $(this).data("id");
+          var currentRow=$(this).closest("tr");
+
+          var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
+          var col2=currentRow.find("td:eq(1)").text(); // get current row 1st TD value
+          var col3=currentRow.find("td:eq(2)").text(); // get current row 1st TD value
+          var col4=currentRow.find("td:eq(3)").text(); // get current row 1st TD value
+          var col5=currentRow.find("td:eq(4)").text(); // get current row 1st TD value
+            $('#NonSouhaiteType_nom').val(col1);
+            $('#NonSouhaiteType_prenom').val(col2);
+            $('#NonSouhaiteType_courriel').val(col3);
+             $('#NonSouhaiteType_organisme').val(col4);
+            $('#NonSouhaiteType_lbMotif').val(col5);
+
+         $("#submitENS").text('Modifier');
+         $('.add-edit-ns').data("id", "/fr/soumission/nonsouhaiteedit/"+expert_id);
+         $('#expertNonSouhaite').modal(
+             {  backdrop: 'static',
+			    keyboard: false
+		     },
+             'show');
+      });
+
+</script>
+{% endblock %}

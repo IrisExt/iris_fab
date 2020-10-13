@@ -1,0 +1,94 @@
+{% block participantsShow %}
+    <div id="participants"  class="modal modal-adminpro-general default-popup-PrimaryModal fade" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-header header-color-modal bg-color-1">
+                        <h4 class="ml14 modal-title">
+                    <span class="text-wrapper">
+                     <span class="letters">Participants pour le partenaire :
+                       {% if "PRF" == partenaire.getTypPart().getTypPart() %}
+                           {% if partenaire.getTutGest() %}{{ partenaire.getTutGest().getLbNomFr() }}{% endif %}
+                       {% else %}
+                           {% if partenaire.getHebergeur() %}{{ partenaire.getHebergeur().getLbNomFr() }}{% endif %}
+                       {% endif %}
+                     </span>
+                    </span>
+                        </h4>
+                        <div class="modal-close-area modal-close-df">
+                            <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body" id="scrollmodal" style=" padding: 40px 25px !important;">
+                    <div class="row">
+                        <div class="col-sm-9">  </div>
+                        <div class="col-sm-3">
+                            <a href="#{{ partenaire.getTypPart().getTypPart() }}" data-browse="{{ partenaire.getTypPart().getTypPart() }}" class="btn btn-sm btn-primary add-participant" data-id="{{ partenaire.getIdPartenaire }}" data-respsc="{{ partenaire.getRespScient }}" rel="tooltip"  >
+                                <i class="fa fa-plus"></i>
+                                {{ 'bloc.form.blparticipants.add'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="fixed-table-container">
+                                <div class="fixed-table-body">
+
+                                    <div class="rTable">
+                                        <div id="table-to-participants"  class="rTableRow">
+                                            <div class="rTableHead">{{ 'bloc.form.blparticipants.resp'|trans() }}</div>
+                                            <div class="rTableHead">{{ 'bloc.form.blparticipants.civ'|trans() }}</div>
+                                            <div class="rTableHead">{{ 'bloc.form.blparticipants.nom'|trans() }}</div>
+                                            <div class="rTableHead">{{ 'bloc.form.blparticipants.prenom'|trans() }}</div>
+                                            <div class="rTableHead">{{ 'bloc.form.blparticipants.email'|trans() }}</div>
+                                            <div class="rTableHead">{{ 'bloc.form.blparticipants.orcid'|trans() }}</div>
+                                            <div class="rTableHead">Action</div>
+                                        </div>
+
+                                        {% for ns in partenaire.getIdPersonne %}
+                                            <div id="tr_{{ ns.getIdPersonne() }}" class="rTableRow">
+                                                <div id="resp_{{ ns.getIdPersonne() }}" class="rTableCell">
+                                                    {% if partenaire.getRespScient %}
+                                                        {% if (partenaire.getRespScient.getIdPersonne() == ns.getIdPersonne()) %}
+                                                            <input type="hidden" id="respsc_{{ ns.getIdPersonne() }}" value="true">
+                                                            <i class="fa fa-user"></i> {{ 'bloc.form.blparticipants.resp'|trans() }}
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                                <div id="civ_{{ ns.getIdPersonne() }}" class="rTableCell">{{ ns.getIdCivilite() }}</div>
+                                                <div id="nom_{{ ns.getIdPersonne() }}" class="rTableCell">{{ ns.getLbNomUsage() }}</div>
+                                                <div id="prenom_{{ ns.getIdPersonne() }}" class="rTableCell">{{ ns.getLbPrenom() }}</div>
+                                                <div id="mail_{{ ns.getIdPersonne() }}" class="rTableCell">{% for mail in ns.getIdAdrMail %} {{ mail.getAdrMail() }} {% endfor %}</div>
+                                                <div id="orcid_{{ ns.getIdPersonne() }}" class="rTableCell">{{ ns.getOrcid() }}</div>
+                                                <div id="action" class="rTableCell">
+                                                    <input type="hidden" id="idPartenaire_{{ ns.getIdPersonne() }}" value="{{ partenaire.getIdPartenaire }}">
+                                                    <a href="#{{ partenaire.getTypPart().getTypPart() }}" data-browse="{{ partenaire.getTypPart().getTypPart() }}" data-id="{{ ns.getIdPersonne() }}" class="edit-participant"><span class="fa fa-edit"></span></a>|
+                                                    <a href="#{{ partenaire.getTypPart().getTypPart() }}" class="delete-parti"><span class="fa fa-trash-o text-danger" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target="#deleteParticipant{{ ns.getIdPersonne() }}"></span></a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <a data-dismiss="modal" href="#">Annuler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+            {% block javascripts1 %}
+        <script src="{{ asset('js/modal-active.js') }}"></script>
+       {% endblock %}
+ {% block javascripts %}
+
+{% endblock %}

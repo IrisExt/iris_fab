@@ -1,0 +1,50 @@
+        <div id="AjouterReunion" class="tab-pane animated flipInX custon-tab-style1">
+            {{ form_start(form, {'action': path('add_reunion'), 'attr': {'id': 'ajouterReu'},  'method': 'POST'}) }}
+
+            {{ form_widget(form.idAppel) }}
+            {{ form_row(form.idPhase) }}
+            {{ form_row(form.lbTitre) }}
+            {{ form_row(form.idPhase) }}
+            {{ form_row(form.idTypeReunion) }}
+            {{ form_row(form.txComment) }}
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label class="">Période autorisée <span class="text-danger"> *</span> </label>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group data-custon-pick data-custom-mg" id="data_periode">
+                       <div class="input-daterange input-group" id="datepicker">
+                           <span class="input-group-addon">du</span> {{ form_widget(form.dtDebPeriode) }}
+                            <span class="input-group-addon">au</span>
+                            {{ form_widget(form.dtFinPeriode) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ form_row(form.nbDureeMax) }}
+
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-1">
+                    <div class="i-checks pull-left">
+                     {{ form_row(form.blObligatoire) }}  </label>
+                    </div>
+                </div>
+                <div class="col-sm-4"><b>Obligatoire</b> </div>
+            </div>
+
+
+            <div class="row">
+                <div class="footer-text-right">
+                    <a href="{{ path('list_comite',{'reun-true':'msg2reu'}) }}" class="btn btn-warning">Rerour</a>
+                    <button class="btn btn-primary" id="submitBtn" name="creerreunion" type="submit">Créer</button>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

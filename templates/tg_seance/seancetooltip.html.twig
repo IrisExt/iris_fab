@@ -1,0 +1,3 @@
+{% for seance in seances %}
+   <p> {{ seance.dtseance|date('d/m') }} : {{ seance.matin ? 'AM' : ''}} - {{ seance.apresmidi ? 'PM' : ''}}</p>
+{% endfor %}

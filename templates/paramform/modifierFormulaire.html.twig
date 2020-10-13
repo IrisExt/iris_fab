@@ -1,0 +1,166 @@
+{% extends "paramform/base.html.twig" %}
+{% block stylesheets1 %}
+    <!-- modals CSS
+        ============================================ -->
+    <!--suppress ALL -->
+    <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+    <style type="text/css" media="all">
+        .sortable_item {
+            cursor: move;
+            width: 100%;
+            list-style: none;
+        }
+
+        .ul_style {
+
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+<div class="advanced-form-area mg-b-15">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd">
+                        <div class="main-sparkline8-hd">
+                            {% set disabled ='disabled' %}
+                            <h1>{% if not is_granted('ROLE_DOS_EM') %} Modification des blocs
+                                {% else %} Consultation des blocs  {% endif %}</h1>
+                            <div class="sparkline8-outline-icon">
+                                <a class="btn" href="{{ path('index_soumission') }}">Retour</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sparkline12-graph">
+
+                        {% if not is_granted('ROLE_DOS_EM') %}
+                            {% if modif_acces %}
+                                {% set disabled =''%}
+                        <div class="footer-text-right">
+                                    <a href="#" id="update-formulaire" class="btn btn-primary"
+                                       data-toggle="modal"
+                                       data-target="#addbloc" rel="tooltip"
+                                       data-id="{{ path('update_bloc_form', {'idFormulaire' : formulaire.idFormulaire}) }}">
+                                        <i class="fa fa-plus fa-fw"></i> Ajouter un bloc
+                                    </a>
+
+                        </div>
+                            {% else %}
+                                <div class="alert alert-warning"><strong>Information !</strong> Le formulaire est déjà utilisé, Impossible de le modifier.'</div>
+                            {% endif %}
+                        {% endif %}
+                        <br>
+                        <form id="ordonner"
+                              action="{{ path('update-formulaire', {'idFormulaire' : formulaire.idFormulaire }) }}"
+                              method="post">
+                            <table width="900" border="0" cellspacing="0" cellpadding="0" class="table tblsort">
+                                <thead>
+                                <tr>
+                                    <th>Ordre</th>
+                                    <th>Bloc</th>
+                                    <th>ordre précédent</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for bloc in blocs %}
+                                    <tr>
+                                        <td class="order">{{ bloc.ordre }}</td>
+                                        <td> {{ bloc.idBloc }}</td>
+                                        <td>{{ bloc.ordre }}  <input type="hidden" value="{{ bloc.idBloc.idBloc }}" name="ordre[]"></td>
+                                        <td>
+                                            <div class="row"><form></form>
+                                                <div class="col-lg-6">
+                                                <i class="fa fa-eye text-primary"></i>
+                                                </div>
+                                                {% if (not is_granted('ROLE_DOS_EM')) and modif_acces %}
+                                                        <form  method="post"
+                                                              action="{{ path('delete_bloc_form', {'idBloc' : bloc.idBloc.idBloc , 'idFormulaire' : formulaire.idFormulaire  }) }}"
+                                                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce bloc?');">
+                                                            <input type="hidden" name="_method" value="DELETE">
+                                                            <input type="hidden" name="_token"
+                                                                   value="{{ csrf_token('delete' ~ bloc.idBloc.idBloc) }}">
+                                                            <a class="btn btn-link"><i class="fa fa-trash-o text-danger"></i>
+                                                            </a>
+                                                        </form>
+                                                    </div>
+                                                {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        <div class="footer-text-right">
+                            {% if not is_granted('ROLE_DOS_EM') %}
+                            <a class="btn btn-action" href="{{ path('index_soumission') }}">Retour</a>
+                                <button  {{ disabled }} class="btn btn-warning" type="submit" onclick="submit_by_id()"
+                                        onsubmit="return confirm('Êtes-vous sûr de vouloir modifier?');"> Modifier
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    {% include 'paramform/modalparmform/modaladdblocform.html.twig' %}
+    {% endblock %}
+    {% block javascripts1 %}
+        <!-- modal JS
+               ============================================ -->
+        <script src="{{ asset('js/modal-active.js') }}"></script>
+        <script type="text/javascript">
+            // Submit form with id function.
+            function submit_by_id() {
+                document.getElementById("ordonner").submit(); //form submission
+
+            }
+
+            $('#addbloc').on('show.bs.modal', function (e) {
+                var path = $(e.relatedTarget).data('id');
+                var modal = $(this);
+                $.ajax({
+                    'url': path,
+                    success: function (data) {
+                        modal.find('.modal-body').html(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert('Error : ' + errorThrown);
+                    }
+                });
+            });
+
+
+            $(function () {
+                $(".tblsort tbody").sortable({
+                    helper: function (e, ui) {
+                        ui.children().each(function () {
+                            $(this).width($(this).width());
+                        });
+                        return ui;
+                    },
+                    update: function (event, ui) {
+                        $(this).find('td.order:nth-child(2n+1)').each(function (i) {
+                            $(this).text(i + 1);
+                        });
+                    }
+                });
+                $(".tblsort").draggable({
+                    revert: true,
+                    revertDuration: 0
+                });
+
+            });
+        </script>
+
+    {% endblock %}

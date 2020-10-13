@@ -1,0 +1,24 @@
+{{ form_start(form, {'action': path('enregistrer_evalua_comite', {'idComite' : comite.idComite})}) }}
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_row(form.idGenre) }}
+        {{ form_row(form.lbNomFr) }}
+        {{ form_row(form.lbPrenom) }}
+        {{ form_row(form.lbOrganisme) }}
+        {{ form_row(form.lbVilleHeberg) }}
+        {{ form_row(form.groupe) }}
+
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.lbAdrMail) }}
+        {{ form_row(form.lbWebPerso) }}
+        {{ form_row(form.lblangue) }}
+        {{ form_row(form.motcle) }}
+        {{ form_row(form.profil) }}
+
+    </div>
+</div>
+<div class="footer-text-right">
+    <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+</div>
+{{ form_end(form) }}
