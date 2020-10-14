@@ -1,0 +1,7 @@
+{% for expert in experts|sort((a, b) => a.statutEvaluation[0].ordre <=>
+b.statutEvaluation[0].ordre) %}
+<i
+  class="fa fa-2x fa-square"
+  style="color: #{{ expert.statutEvaluation[0].colorHexa }}"
+></i>
+{% endfor %}

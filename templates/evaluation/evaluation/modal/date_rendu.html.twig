@@ -1,0 +1,40 @@
+<div class="row">
+  {{ include('evaluation/evaluation/modal/contact_personne.html.twig', {personne: tgPersonne}) }}
+</div></br></br>
+<div class="row">
+  <h4 class="modal-title">Modifier la date de rendu de l'évaluateur</h4>
+</div></br></br>
+<div class="row">
+  <div class="row">
+    <div class="col-md-12">
+      <input type="text" id="date_rendu_current" class="js-datepicker">
+    </div>
+  </div></br>
+  <div class="row">
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-warning send-date" data-id="{{ path('set_ajax_date_rendu') }}" data-idprojet="{{idProjet}}" data-idaffectation="{{idAffectation}}" data-idpersonne="{{ tgPersonne.idPersonne }}">Modifier</button>
+    </div>
+  </div>
+</div>
+
+{% block javascripts %}
+    <script>
+        $(document).on("click", ".send-date", function () {
+          // AJAX request
+          //console.log($('textarea#add_comment').val());
+          $.ajax({
+              url: $(this).data('id'),
+              type: 'POST',
+              data: 'idPersonne='+ $(this).data('idpersonne')+'&idProjet='+ $(this).data('idprojet')+'&idAffectation='+ $(this).data('idaffectation')+'&dhRendu='+ $('input#date_rendu_current').val(),
+              success: function (response) {
+                  $('.close').trigger('click');
+                  document.location.reload(true);
+              },
+              error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  alert('Error : ' + errorThrown);
+              }
+          });
+        });
+    </script>
+{% endblock %}
+

@@ -1,0 +1,13 @@
+{# param: TgAffectation expert #} {% set sts , sol, color =
+expert.cdStsEvaluation, expert.cdSollicitation, '' %} {% if sol is not empty %}
+{% if sts is not empty %} {% if sts.tlStsEvaluation.ordre >
+sol.tlStsEvaluation.ordre %} {% set color = sts.tlStsEvaluation.colorHexa %} {%
+else %} {% set color = sol.tlStsEvaluation.colorHexa %} {% endif %} {% else %}
+{% set color = sol.tlStsEvaluation.colorHexa %} {% endif %} {% else %} {% if sts
+is not empty %} {% set color = sts.tlStsEvaluation.colorHexa %} {% endif %} {%
+endif %} {% if color is not empty %}
+<!-- <i class="fa fa-2x fa-square" style="color: #{{ color }}"></i> -->
+<i class="fa fa-2x fa-square" style="color: #ff9999"></i>
+{% else %}
+<!-- <i class="fa fa-2x fa-square" style="color: #{{ expert.statutEvaluation[0].colorHexa }}"></i> -->
+{% endif %}

@@ -1,0 +1,53 @@
+
+{% trans_default_domain 'Evaluations' %}
+
+<span class="container_legend">
+  <span class="title_legend">
+    <u onclick="toggle_legend()">
+      {{ 'evaluation.actions.legende'|trans }}
+    </u>
+  </span>
+  <span class="title_legend" style="display: none;">
+    <u onclick="toggle_legend()">
+      {{ 'evaluation.evaluations'|trans }}
+    </u>
+  </span>
+  {% for evaluation in statusEvaluations|sort((a, b) => a.ordre <=> b.ordre) %}
+  <span class="item_legend" style="display: none;">
+    <i class="fa fa-2x fa-square" style="color: #{{evaluation.colorHexa}};"></i>
+    <span>
+        {% if evaluation.cdStsEvaluation is not null %}
+            {{ evaluation.cdStsEvaluation }}
+        {% elseif evaluation.cdSollicitation is not null %}
+            {{ evaluation.cdSollicitation }}
+        {% endif %}
+    </span>
+  </span>
+  {% endfor %}
+</span>
+
+<script>
+toggle_legend = function() {
+    $('.container_legend .title_legend').toggle();
+    $('.container_legend .item_legend').fadeToggle(500);
+};
+</script>
+
+<style>
+  .container_legend {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 34px;
+    margin-right: 5px;
+  }
+  .title_legend {
+      cursor: pointer;
+  }
+  .item_legend {
+    flex-grow: 4;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+</style>
