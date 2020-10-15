@@ -263,13 +263,6 @@
                     $('.modal-body').html(response);
                     // Display Modal
                     $('#evaluationModal').modal('show');
-                    /*$("#date_rendu_current").datepicker({
-                        dateFormat:'d/m/yy',
-                        numberOfMonths: 2
-                    }).datepicker('show');*/
-                    /*$("#date_rendu_current").daterangepicker({
-                        locale: {format: 'DD/MM/YYYY'},
-                    }).focus();*/
 
                     var dates = {}
                     dates[new Date(dhrenduexpert).getTime()]='date1'; /* date rendu  par exemple  mm/dd/yyy */
@@ -278,7 +271,7 @@
 
                     console.log(dhrenducomite);
 
-                    $('#date_rendu_current').datepicker({
+                    $('.date_rendu_current').datepicker({
                         /* minDate: new Date('2020/10/11') */
                         minDate: new Date(),
                         maxDate: new Date(dhrenducomite),

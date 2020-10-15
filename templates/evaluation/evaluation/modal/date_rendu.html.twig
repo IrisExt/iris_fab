@@ -7,7 +7,7 @@
 <div class="row">
   <div class="row">
     <div class="col-md-12">
-      <input type="text" id="date_rendu_current" class="js-datepicker">
+      <input type="text" class="js-datepicker date_rendu_current">
     </div>
   </div></br>
   <div class="row">
@@ -25,7 +25,7 @@
           $.ajax({
               url: $(this).data('id'),
               type: 'POST',
-              data: 'idPersonne='+ $(this).data('idpersonne')+'&idProjet='+ $(this).data('idprojet')+'&idAffectation='+ $(this).data('idaffectation')+'&dhRendu='+ $('input#date_rendu_current').val(),
+              data: 'idPersonne='+ $(this).data('idpersonne')+'&idProjet='+ $(this).data('idprojet')+'&idAffectation='+ $(this).data('idaffectation')+'&dhRendu='+ $('input.date_rendu_current').val(),
               success: function (response) {
                   $('.close').trigger('click');
                   document.location.reload(true);

@@ -522,6 +522,11 @@ class TgProjet
     private $experProj;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TgAffectation", mappedBy="idProjet")
+     */
+    private $tgAffectations;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -539,6 +544,7 @@ class TgProjet
         $this->tgDocument = new ArrayCollection();
         $this->avisProjet = new ArrayCollection();
         $this->experProj = new ArrayCollection();
+        $this->tgAffectations = new ArrayCollection();
     }
 
     public function getIdProjet(): ?int
@@ -1272,6 +1278,37 @@ class TgProjet
             // set the owning side to null (unless already changed)
             if ($experProj->getIdProjet() === $this) {
                 $experProj->setIdProjet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TgAffectation[]
+     */
+    public function getTgAffectations(): Collection
+    {
+        return $this->tgAffectations;
+    }
+
+    public function addTgAffectation(TgAffectation $tgAffectation): self
+    {
+        if (!$this->tgAffectations->contains($tgAffectation)) {
+            $this->tgAffectations[] = $tgAffectation;
+            $tgAffectation->setTgProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTgAffectation(TgAffectation $tgAffectation): self
+    {
+        if ($this->tgAffectations->contains($tgAffectation)) {
+            $this->tgAffectations->removeElement($tgAffectation);
+            // set the owning side to null (unless already changed)
+            if ($tgAffectation->getTgProjet() === $this) {
+                $tgAffectation->setTgProjet(null);
             }
         }
 

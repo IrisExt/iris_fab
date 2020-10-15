@@ -1,0 +1,10 @@
+evaluation:
+  evaluation: 'Evaluation'
+  evaluations: 'Evaluations'
+  projet: 'Project'
+  criticite: 'Criticity'
+  rapporteur: 'Rapporteur'
+  lecteurs: 'Reader(s)'
+  action: 'Action'
+  langue: 'Language'
+  recuse: 'Challenged'

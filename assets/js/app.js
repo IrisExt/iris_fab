@@ -15,6 +15,7 @@ import '../css/css-iris/normalize.css';
 const $ = require('jquery');
 global.$ = global.jQuery = $;
 require('Bootstrap')
+require('../js/iris-js/jquery-ui.min')
 require( '@ckeditor/ckeditor5-build-classic' )
 require('../js/iris-js/jquery.meanmenu')
 require('../js/iris-js/jquery.validate.min')

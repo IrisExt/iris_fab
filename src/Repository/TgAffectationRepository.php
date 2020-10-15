@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
 
 use App\Entity\TgAffectation;
+use App\Repository\TrCriticiteRepository;
+use App\Repository\TlStsEvaluationRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,17 +18,25 @@ class TgAffectationRepository extends ServiceEntityRepository
      */
     protected $entityManager;
 
+    private $trCriticiteRepository;
+    private $tlStsEvaluationRepository;
+
     /**
      * TrTypeDocRepository constructor.
      *
      * @param ManagerRegistry $registry
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        EntityManagerInterface $entityManager,
+        TrCriticiteRepository $trCriticiteRepository,
+        TlStsEvaluationRepository $tlStsEvaluationRepository
+    ) {
         parent::__construct($registry, TgAffectation::class);
-
         $this->entityManager = $entityManager;
+        $this->trCriticiteRepository = $trCriticiteRepository;
+        $this->tlStsEvaluationRepository = $tlStsEvaluationRepository;
     }
 
 
@@ -33,7 +44,8 @@ class TgAffectationRepository extends ServiceEntityRepository
      * @param $comite
      * @return mixed
      */
-    public function affectationRL($comite){
+    public function affectationRL($comite)
+    {
 
         $db = $this->createQueryBuilder('a')
             ->leftJoin('a.idProjet', 'p')
@@ -41,10 +53,11 @@ class TgAffectationRepository extends ServiceEntityRepository
             ->setParameter('comite', $comite)
             ->getQuery();
 
-            return $db->getResult();
+        return $db->getResult();
     }
 
-    public function affectationExpComite($proj ,array $sollic){
+    public function affectationExpComite($proj, array $sollic)
+    {
 
         $db = $this->createQueryBuilder('a')
             ->leftJoin('a.idProjet', 'p')
@@ -56,5 +69,184 @@ class TgAffectationRepository extends ServiceEntityRepository
         return $db->getResult();
     }
 
+    public function setCriticiteToProject($projet)
+    {
+        // Quotas
+        $nbMinEvalAccept = 0;
+        $nbMinEvalSoum = 0;
 
+        // Evaluation
+        $arrayEvaluationSoumise = [];
+        $arrayEvaluationEnCours = [];
+        $nbEvaluationSoumise = 0;
+        $nbEvaluationEnCours = 0;
+
+        // Evaluateur
+        $arrayEvaluateurAccepte = [];
+        $arrayEvaluateurSollicite = [];
+        $arrayEvaluateurSansReponse = [];
+        $nbEvaluateurAccepte = 0;
+        $nbEvaluateurSollicite = 0;
+        $nbEvaluateurSansReponse = 0;
+
+        // Criticité
+        $codeCriticite = 0;
+
+        // quotas evaluation pour chaque projet
+        $comite = $projet->getIdComite();
+        if (isset($comite)) {
+            // quotas min evaluation accepte
+            $nbMinEvalAccept = $comite->getNbMinEvalAccept();
+            // quotas min evaluation soumise
+            $nbMinEvalSoum = $comite->getNbMinEvalSoum();
+        }
+
+        // affectations pour le projet
+        $listAffectation = $projet->getTgAffectations();
+        foreach ($listAffectation as $affectation) {
+
+            // statut évaluation
+            $cdStsEvaluation = $affectation->getCdStsEvaluation();
+            if (isset($cdStsEvaluation)) {
+                // évaluations soumises pour chaque projet
+                if ($cdStsEvaluation->getCdStsEvaluation() == 'SOM') {
+                    array_push($arrayEvaluationSoumise, $projet->getIdProjet());
+                }
+                // évaluations en cours pour chaque projet
+                if ($cdStsEvaluation->getCdStsEvaluation() == 'ENC') {
+                    array_push($arrayEvaluationEnCours, $projet->getIdProjet());
+                }
+            }
+
+            // statut évaluateur
+            $cdSollicitation = $affectation->getCdSollicitation();
+            if (isset($cdSollicitation)) {
+                // évaluateurs acceptés par projet
+                if ($cdSollicitation->getCdSollicitation() == 'ACC') {
+                    array_push($arrayEvaluateurAccepte, $projet->getIdProjet());
+                }
+                // évaluateurs sollicités par projet
+                if ($cdSollicitation->getCdSollicitation() == 'SOL') {
+                    array_push($arrayEvaluateurSollicite, $projet->getIdProjet());
+                }
+                // évaluateurs sollicités par projet
+                if ($cdSollicitation->getCdSollicitation() == 'SSR') {
+                    array_push($arrayEvaluateurSansReponse, $projet->getIdProjet());
+                }
+            }
+        }
+
+        // Evaluation
+        // nb d'évaluation soumise
+        if (!empty($arrayEvaluationSoumise)) {
+            $nbEvaluationSoumise = array_values(array_count_values($arrayEvaluationSoumise))[0];
+        }
+        // nb d'évaluation en cours
+        if (!empty($arrayEvaluationEnCours)) {
+            $nbEvaluationEnCours = array_values(array_count_values($arrayEvaluationEnCours))[0];
+        }
+
+        // Evaluateur
+        // nb d'évaluateur accepté
+        if (!empty($arrayEvaluateurAccepte)) {
+            $nbEvaluateurAccepte = array_values(array_count_values($arrayEvaluateurAccepte))[0];
+        }
+        // nb d'évaluateur sollicité
+        if (!empty($arrayEvaluateurSollicite)) {
+            $nbEvaluateurSollicite = array_values(array_count_values($arrayEvaluateurSollicite))[0];
+        }
+        // nb d'évaluateur sans réponse
+        if (!empty($arrayEvaluateurSansReponse)) {
+            $nbEvaluateurSansReponse = array_values(array_count_values($arrayEvaluateurSansReponse))[0];
+        }
+
+        // code de criticité
+        if ($nbEvaluationSoumise >= $nbMinEvalSoum) {
+            $codeCriticite = 7;
+        } else if (
+            $nbEvaluationSoumise +
+            $nbEvaluationEnCours >= $nbMinEvalSoum
+        ) {
+            $codeCriticite = 6;
+        } else if ($nbEvaluateurAccepte >= $nbMinEvalAccept) {
+            $codeCriticite = 5;
+        } else if (
+            $nbEvaluateurAccepte +
+            $nbEvaluateurSollicite >= $nbMinEvalAccept
+        ) {
+            $codeCriticite = 4;
+        } else if (
+            $nbEvaluationSoumise +
+            $nbEvaluateurSollicite +
+            $nbEvaluateurAccepte >= $nbMinEvalAccept
+        ) {
+            $codeCriticite = 3;
+        } else if (
+            ($nbEvaluationSoumise +
+                $nbEvaluationEnCours +
+                $nbEvaluateurAccepte +
+                $nbEvaluateurSollicite +
+                $nbEvaluateurSansReponse) == $nbMinEvalAccept
+        ) {
+            $codeCriticite = 2;
+        } else if (
+            ($nbEvaluationSoumise +
+                $nbEvaluationEnCours +
+                $nbEvaluateurAccepte +
+                $nbEvaluateurSollicite +
+                $nbEvaluateurSansReponse) < $nbMinEvalAccept &&
+            ($nbEvaluationSoumise +
+                $nbEvaluationEnCours +
+                $nbEvaluateurAccepte +
+                $nbEvaluateurSollicite +
+                $nbEvaluateurSansReponse) > 0
+        ) {
+            $codeCriticite = 1;
+        } else if (
+            $nbEvaluateurSollicite == 0 ||
+            $nbEvaluateurAccepte == 0 ||
+            $nbEvaluationSoumise == 0
+        ) {
+            $codeCriticite = 0;
+        }
+
+        // rajout de la criticite au projet
+        $projet->criticite = $this->trCriticiteRepository->findBy(['codeCriticite' => $codeCriticite]);
+
+        // retour du projet avec la criticite
+        return $projet;
+    }
+
+    public function setStatutEvaluationToProject($projet)
+    {
+        // affectations pour le projet
+        $listAffectation = $projet->getTgAffectations();
+        foreach ($listAffectation as $affectation) {
+            // statut evaluation
+            $cdStsEvaluation = null;
+            $cdSollicitation = null;
+            // statut de l'evaluation cdStsEvaluation si existe
+            if (!empty($affectation->getCdStsEvaluation())) {
+                $cdStsEvaluation = $affectation->getCdStsEvaluation()->getCdStsEvaluation();
+            }
+            // statut de l'evaluation cdSollicitation si existe
+            else if (!empty($affectation->getCdSollicitation())) {
+                $cdSollicitation = $affectation->getCdSollicitation()->getCdSollicitation();
+            }
+            // rajout du statut de l'evaluation si cdStsEvaluation est non null pour l'affectation
+            if (!is_null($cdStsEvaluation)) {
+                $affectation->statutEvaluation = $this->tlStsEvaluationRepository->findBy(['cdStsEvaluation' => $cdStsEvaluation]);
+            }
+            // rajout du statut de l'evaluation si cdSollicitation est non null pour l'affectation
+            else if (!is_null($cdSollicitation)) {
+                $affectation->statutEvaluation = $this->tlStsEvaluationRepository->findBy(['cdSollicitation' => $cdSollicitation]);
+            }
+            // rajout du statut neutre d'evaluation si tout est null pour l'affectation
+            else {
+                $affectation->statutEvaluation = $this->tlStsEvaluationRepository->findBy(['cdStsEvaluation' => 'AFR']);
+            }
+        }
+        // retour du projet avec l'evaluation pour chaque affectation
+        return $projet;
+    }
 }
