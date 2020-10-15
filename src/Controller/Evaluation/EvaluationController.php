@@ -24,13 +24,14 @@ class EvaluationController extends BaseController
      */
     public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, PaginatorInterface $paginator, TgComite $tgComite)
     {
-        //dd($tgComite);
         $lstProjets = $affectationManager->getComiteProjets($tgComite);
         $listeProjet = [];
         foreach ($lstProjets as $projet) {
             $projetWithCriticite = $affectationManager->setCriticiteToProject($projet);
             $projetWithStatutEvaluateurs = $affectationManager->setStatutEvaluationToProject($projetWithCriticite);
-            array_push($listeProjet, $projetWithStatutEvaluateurs);
+            if (!$affectationManager->utilisateurEstEnConflit($projet, $this->getUserConnect())) {
+                array_push($listeProjet, $projetWithStatutEvaluateurs);
+            }
         }
 
         $statusEvaluations = $tlStsEvaluationManager->getAllStsEvaluations();

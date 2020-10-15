@@ -4,6 +4,8 @@ namespace App\Manager;
 
 use App\Entity\TgComite;
 use App\Entity\TgAffectation;
+use App\Entity\TgPersonne;
+use App\Entity\TgProjet;
 use App\Repository\TgAffectationRepository;
 use App\Repository\TgProjetRepository;
 use App\Repository\FtCommandeAppRepository;
@@ -72,4 +74,22 @@ class AffectationManager
     {
         return $this->tgAffectationRepository->setStatutEvaluationToProject($projet);
     }
+
+    /**
+     * Retourne si une personne est en conflit avec un projet.
+     *
+     * @param TgProjet $projet
+     * @param TgPersonne $personne
+     * @return boolean
+     */
+    public function utilisateurEstEnConflit(TgProjet $projet, TgPersonne $personne) : bool
+    {
+        $affectation = $this->tgAffectationRepository->findOneBy([
+            'idPersonne' => $personne->getIdPersonne(),
+            'idProjet' => $projet->getIdProjet(),
+        ]);
+        
+        return isset($affectation) && $affectation->getCdStsEvaluation() === 'ENC';
+    }
+
 }
