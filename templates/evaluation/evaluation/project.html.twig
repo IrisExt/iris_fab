@@ -1,21 +1,22 @@
 {% extends 'base.html.twig' %}
 {% trans_default_domain 'Evaluations' %}
 {% block title %}{{ project.lbAcro }}{% endblock %}
- {% block stylesheets1 %}
-     <!-- modals CSS
+{% block stylesheets1 %}
+<!-- modals CSS
          ============================================ -->
-     <link rel="stylesheet" href="{{ asset('css/modals.css') }}">
- {% endblock %}
+<link rel="stylesheet" href="{{ asset('css/modals.css') }}">
+{% endblock %}
 {% block body %}
-    {% include "evaluation/popup.html.twig" %}
-    {% include "evaluation/popup_search.html.twig" %}
-    <div class="modal fade" id="modalRecherche" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+{% include "evaluation/popup.html.twig" %}
+{% include "evaluation/popup_search.html.twig" %}
+<div class="modal fade" id="modalRecherche" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-xl-large" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                    <div class="modal-close-area modal-close-df">
-                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
-                    </div>
+                <div class="modal-close-area modal-close-df">
+                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                </div>
             </div>
             <div class="modal-body mb-0 p-0">
                 <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
@@ -23,304 +24,327 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
-    <div class="advanced-form-area mg-b-15">
-        <div class="container-fluid">
-            <div class="row">
+<div class="advanced-form-area mg-b-15">
+    <div class="container-fluid">
+        <div class="row">
 
-                <div class="col-lg-12">
-                    <div class="sparkline8-list shadow-reset">
-                        <div class="sparkline8-hd">
-                            <div class="main-sparkline8-hd">
-                                <h1><a href="{{ path('evaluations', {'idComite': project.idComite.idComite}) }}"><span class="glyphicon glyphicon-triangle-left"></span></a> {{ project.lbAcro|trans }}</h1>
-                                <div class="sparkline8-outline-icon">
-                                    <span style="display: inline-block;">
-                                        {% include 'evaluation/evaluation/evaluation.legende.html.twig' with statusEvaluations %}
-                                    </span>
-                                    <a class="btn btn-default"
-                                       href="{{ path('comite_nv') }}"><i class="fa fa-envelope"></i> {{ 'evaluation.actions.relance'|trans }}</a>
-                                    <a class="btn btn-default"
-                                       href="{{ path('comite_nv') }}"><i class="fa fa-calendar"></i> {{ 'evaluation.actions.echeance'|trans }}</a>
-                                    <a class="btn btn-default"
-                                       href="#" data-toggle="modal" data-target="#modalRecherche"><i class="fa fa-plus"></i> {{ 'evaluation.actions.ajout'|trans }}</a>
-                                </div>
+            <div class="col-lg-12">
+                <div class="sparkline8-list shadow-reset">
+                    <div class="sparkline8-hd">
+                        <div class="main-sparkline8-hd">
+                            <h1><a href="{{ path('evaluations', {'idComite': project.idComite.idComite}) }}"><span
+                                        class="glyphicon glyphicon-triangle-left"></span></a> {{ project.lbAcro|trans }}
+                            </h1>
+                            <div class="sparkline8-outline-icon">
+                                <span style="display: inline-block;">
+                                    {% include 'evaluation/evaluation/evaluation.legende.html.twig' with statusEvaluations %}
+                                </span>
+                                <a class="btn btn-default" href="{{ path('comite_nv') }}"><i class="fa fa-envelope"></i>
+                                    {{ 'evaluation.actions.relance'|trans }}</a>
+                                <a class="btn btn-default" href="{{ path('comite_nv') }}"><i class="fa fa-calendar"></i>
+                                    {{ 'evaluation.actions.echeance'|trans }}</a>
+                                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalRecherche"><i
+                                        class="fa fa-plus"></i> {{ 'evaluation.actions.ajout'|trans }}</a>
                             </div>
                         </div>
                     </div>
-                    <div class="sparkline13-graph">
-                        <div class="datatable-dashv1-list custom-datatable-overright">
-                            <table class="table table-condensed table-striped table-hover tablesorter ui-table-reflow" id="sortTable" >
-                                <thead>
-                                    <tr>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.status'|trans |capitalize }}<span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.evaluateur'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.organisme'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.lang'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.solicitation'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.doc'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.evaluation'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.echeance'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.reste'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-1"><h5>{{ 'evaluation.form.relance'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th class="col-md-2"><h5>{{ 'evaluation.form.action'|trans |capitalize }} <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="searchable">
-                                    {% set colors = ['99CCFF', 'CCFFFF', '99FF99', 'FFFF99', 'FFCC99', 'FF9999'] %}
-                                    {% set color = colors|first %}
-                                    {% set index = 0 %}
-                                
-                                    {% for expert in project.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert') %}
-                                        {% set habilitation = project.idHabilitation|filter(hab => hab.idPersonne == expert.idPersonne) | sort((a, b) => a.dhMaj > b.dhMaj) | first %}
-                                        {% set dhrenduphase = null %}
-                                        {% for phase in habilitation.idPhase %}
-                                            {% set dhrenduphase = phase.dhRenduEvalRL %}
-                                        {% endfor %}
-                                        <tr>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-        
-                                                {% for c in colors %}
-                                                    {% if c == color %}
-                                                        {% set index = loop.index - 1 %}
-                                                    {% endif %}
-                                                {% endfor %}
+                </div>
+                <div class="sparkline13-graph">
+                    <div class="datatable-dashv1-list custom-datatable-overright">
+                        <table class="table table-condensed table-striped table-hover tablesorter ui-table-reflow"
+                            id="sortTable">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.status'|trans |capitalize }}<span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.evaluateur'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.organisme'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.lang'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.solicitation'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.doc'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.evaluation'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.echeance'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.reste'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-1">
+                                        <h5>{{ 'evaluation.form.relance'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                    <th class="col-md-2">
+                                        <h5>{{ 'evaluation.form.action'|trans |capitalize }} <span
+                                                class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="searchable">
+                                {% set colors = ['99CCFF', 'CCFFFF', '99FF99', 'FFFF99', 'FFCC99', 'FF9999'] %}
+                                {% set color = colors|first %}
+                                {% set index = 0 %}
 
-                                                {% set color = random(colors|slice(index, colors|length - index)) %}
-                                                <i class="fa fa-2x fa-square" style="color: #{{ color }}"></i>
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-2" style="word-wrap: break-word;">
-                                                <a href="#" id="show_cv" type="button"
-                                                    data-id="{{ path('get_cv_personne') }}"
-                                                    data-idpersonne="{{ expert.idPersonne.idPersonne }}"
-                                                    data-toggle="modal"
-                                                    data-target="#evaluationCv">
-                                                        <i class="fa fa-file-text-o"></i> <span>{{ expert.idPersonne.lbNomUsage  ~" "~ expert.idPersonne.lbPrenom }}</span>
-                                                </a>
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                            {% for organisme in expert.idPersonne.tlPersOrg %}
-                                                <pre>
+                                {% for expert in project.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert') %}
+                                {% set habilitation = project.idHabilitation|filter(hab => hab.idPersonne == expert.idPersonne) | sort((a, b) => a.dhMaj > b.dhMaj) | first %}
+                                {% set dhrenduphase = null %}
+                                {% for phase in habilitation.idPhase %}
+                                {% set dhrenduphase = phase.dhRenduEvalRL %}
+                                {% endfor %}
+                                <tr>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+
+                                        {% for c in colors %}
+                                        {% if c == color %}
+                                        {% set index = loop.index - 1 %}
+                                        {% endif %}
+                                        {% endfor %}
+
+                                        {% set color = random(colors|slice(index, colors|length - index)) %}
+                                        <i class="fa fa-2x fa-square" style="color: #{{ color }}"></i>
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-2" style="word-wrap: break-word;">
+                                        <a href="#" id="show_cv" type="button" data-id="{{ path('get_cv_personne') }}"
+                                            data-idpersonne="{{ expert.idPersonne.idPersonne }}" data-toggle="modal"
+                                            data-target="#evaluationCv">
+                                            <i class="fa fa-file-text-o"></i>
+                                            <span>{{ expert.idPersonne.lbNomUsage  ~" "~ expert.idPersonne.lbPrenom }}</span>
+                                        </a>
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        {% for organisme in expert.idPersonne.tlPersOrg %}
+                                        <pre>
                                                     {{ dump(organisme) }}
                                                 </pre>
-                                            {% endfor %}
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                            FR
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                                {% if expert.cdSollicitation is not null %}
-                                                    {{expert.cdSollicitation.lbDescription}}
-                                                {% endif %}
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                                {% if expert.blDocTelecharge is same as(true) %}
-                                                    <i class="fa fa-check" style="font-size:30px;color:#ccff99;"></i>
-                                                {% else %}
-                                                    <i class="fa fa-times" style="font-size:30px;color:red;"></i>
-                                                {% endif %}
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                                {% if expert.cdStsEvaluation is not null %}
-                                                    {{expert.cdStsEvaluation.lbDescription}}
-                                                {% endif %}
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                                {% set difference = null %}
-                                                {% if expert.dhRendu is not null %}
-                                                    {{ expert.dhRendu | date('d/m/Y') }}
-                                                    {% set difference = date(expert.dhRendu).diff(date("now")) %}
-                                                {% elseif project.idComite.dhEcheanceEvaluation  is not null %}
-                                                    {{ project.idComite.dhEcheanceEvaluation | date('d/m/Y') }}
-                                                    {% set difference = date(project.idComite.dhEcheanceEvaluation).diff(date("now")) %}
-                                                {% else %}
-                                                    {{ dhrenduphase | date('d/m/Y') }}
-                                                    {% set difference = date(dhrenduphase).diff(date("now")) %}
-                                                {% endif %}
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                                {% set leftDays = difference.days %}
-                                                {{leftDays}}j
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                            1
-                                            </td>
-                                            <!-- block comite , titre, département -->
-                                            <td class="col-md-1" style="word-wrap: break-word;">
-                                                <a href="#" id="show_comments" type="button"
-                                                    data-id="{{ path('get_ajax_comment') }}"
-                                                    data-toggle="modal"
-                                                    data-idpersonne="{{ expert.idPersonne.idPersonne }}"
-                                                    data-idprojet="{{ project.idProjet }}"
-                                                    data-target="#evaluationModal">
-                                                    <span class="adminpro-icon adminpro-chat-pro"></span>
-                                                    <!--i class="material-icons">chat_bubble_outline</i-->
-                                                </a>
-                                                <a href="#" id="evaluation_mail" type="button"
-                                                    data-id="{{ path('update_name') }}"
-                                                    data-toggle="modal"
-                                                    data-target="#evaluationModal">
-                                                    <span class="adminpro-icon adminpro-envelope"></span>
-                                                    <!--i class="material-icons">mail_outline</i-->
-                                                </a>
-                                                <a href="#" id="evaluation_conflit" type="button"
-                                                    data-id="{{ path('update_name') }}"
-                                                    data-toggle="modal"
-                                                    data-target="#evaluationModal">
-                                                    <span class="adminpro-icon adminpro-danger-error"></span>
-                                                    <!--i class="material-icons">block</i-->
-                                                </a>
-                                                <a href="#" id="show_date_rendu" type="button"
-                                                    data-id="{{ path('get_ajax_date_rendu') }}"
-                                                    data-idpersonne="{{ expert.idPersonne.idPersonne }}"
-                                                    data-idAffectation="{{ expert.idAffectation }}"
-                                                    data-idProjet="{{ project.idProjet }}"
-                                                    data-dhrenduexpert="{{expert.dhRendu | date('m/d/Y')}}"
-                                                    data-dhrenducomite="{{project.idComite.dhEcheanceEvaluation | date('m/d/Y')}}"
-                                                    data-dhrenduphase="{{dhrenduphase | date('m/d/Y')}}"
-                                                    data-toggle="modal"
-                                                    data-target="#evaluationModal">
-                                                    <span class="adminpro-icon adminpro-calendar"></span>
-                                                    <!--i class="material-icons">calendar_today</i-->
-                                                </a>
-                                                <input type="checkbox" id="evaluation_checkbox">
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                                        {% endfor %}
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        FR
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        {% if expert.cdSollicitation is not null %}
+                                        {{expert.cdSollicitation.lbDescription}}
+                                        {% endif %}
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        {% if expert.blDocTelecharge is same as(true) %}
+                                        <i class="fa fa-check" style="font-size:30px;color:#ccff99;"></i>
+                                        {% else %}
+                                        <i class="fa fa-times" style="font-size:30px;color:red;"></i>
+                                        {% endif %}
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        {% if expert.cdStsEvaluation is not null %}
+                                        {{expert.cdStsEvaluation.lbDescription}}
+                                        {% endif %}
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        {% set difference = null %}
+                                        {% if expert.dhRendu is not null %}
+                                        {{ expert.dhRendu | date('d/m/Y') }}
+                                        {% set difference = date(expert.dhRendu).diff(date("now")) %}
+                                        {% elseif project.idComite.dhEcheanceEvaluation  is not null %}
+                                        {{ project.idComite.dhEcheanceEvaluation | date('d/m/Y') }}
+                                        {% set difference = date(project.idComite.dhEcheanceEvaluation).diff(date("now")) %}
+                                        {% else %}
+                                        {{ dhrenduphase | date('d/m/Y') }}
+                                        {% set difference = date(dhrenduphase).diff(date("now")) %}
+                                        {% endif %}
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        {% set leftDays = difference.days %}
+                                        {{leftDays}}j
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        1
+                                    </td>
+                                    <!-- block comite , titre, département -->
+                                    <td class="col-md-1" style="word-wrap: break-word;">
+                                        <a href="#" id="show_comments" type="button"
+                                            data-id="{{ path('get_ajax_comment') }}" data-toggle="modal"
+                                            data-idpersonne="{{ expert.idPersonne.idPersonne }}"
+                                            data-idprojet="{{ project.idProjet }}" data-target="#evaluationModal">
+                                            <span class="adminpro-icon adminpro-chat-pro"></span>
+                                            <!--i class="material-icons">chat_bubble_outline</i-->
+                                        </a>
+                                        <a href="#" id="evaluation_mail" type="button"
+                                            data-id="{{ path('update_name') }}" data-toggle="modal"
+                                            data-target="#evaluationModal">
+                                            <span class="adminpro-icon adminpro-envelope"></span>
+                                            <!--i class="material-icons">mail_outline</i-->
+                                        </a>
+                                        <a href="#" id="evaluation_conflit" type="button"
+                                            data-id="{{ path('update_name') }}" data-toggle="modal"
+                                            data-target="#evaluationModal">
+                                            <span class="adminpro-icon adminpro-danger-error"></span>
+                                            <!--i class="material-icons">block</i-->
+                                        </a>
+                                        <a href="#" id="show_date_rendu" type="button"
+                                            data-id="{{ path('get_ajax_date_rendu') }}"
+                                            data-idpersonne="{{ expert.idPersonne.idPersonne }}"
+                                            data-idAffectation="{{ expert.idAffectation }}"
+                                            data-idProjet="{{ project.idProjet }}"
+                                            data-dhrenduexpert="{{expert.dhRendu | date('m/d/Y')}}"
+                                            data-dhrenducomite="{{project.idComite.dhEcheanceEvaluation | date('m/d/Y')}}"
+                                            data-dhrenduphase="{{dhrenduphase | date('m/d/Y')}}" data-toggle="modal"
+                                            data-target="#evaluationModal">
+                                            <span class="adminpro-icon adminpro-calendar"></span>
+                                            <!--i class="material-icons">calendar_today</i-->
+                                        </a>
+                                        <input type="checkbox" id="evaluation_checkbox">
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 
-    {% block javascripts %}
-        <script>
-            //modal pour la création reunion
-            $('#membreModal').on('show.bs.modal', function (e) {
-                // récuperer la route du lien modal  data-id
-                var path = $(e.relatedTarget).data('id');
-                var modal_membre = $(this);
-                $.ajax({
-                    'url': path,
-                    success: function (data) {
-                        modal_membre.find('.modal-body').html(data);
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('Error : ' + errorThrown);
-                    }
-                });
-            });
-            
-        $(document).on("click", "#show_cv", function () {
-            var path = $(this).data('id');
-            $('.modal-title').text('Contact');
-            // AJAX request
-            $.ajax({
-                url: path,
-                type: 'POST',
-                data: 'idPersonne='+ $(this).data('idpersonne'),
-                success: function (response) {
-                    // Add response in Modal body
-                    $('.modal-body').html(response);
-                    // Display Modal
-                    $('#evaluationModal').modal('show');
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('Error : ' + errorThrown);
-                }
-            });
+{% block javascripts %}
+<script>
+    //modal pour la création reunion
+    $('#membreModal').on('show.bs.modal', function (e) {
+        // récuperer la route du lien modal  data-id
+        var path = $(e.relatedTarget).data('id');
+        var modal_membre = $(this);
+        $.ajax({
+            'url': path,
+            success: function (data) {
+                modal_membre.find('.modal-body').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
         });
+    });
 
-        $(document).on("click", "#show_date_rendu", function () {
-            var path = $(this).data('id');
-            var dhrenduexpert = $(this).data('dhrenduexpert');
-            var dhrenducomite = $(this).data('dhrenducomite');
-            var dhrenduphase = $(this).data('dhrenduphase');
+    $(document).on("click", "#show_cv", function () {
+        var path = $(this).data('id');
+        $('.modal-title').text('Contact');
+        // AJAX request
+        $.ajax({
+            url: path,
+            type: 'POST',
+            data: 'idPersonne=' + $(this).data('idpersonne'),
+            success: function (response) {
+                // Add response in Modal body
+                $('.modal-body').html(response);
+                // Display Modal
+                $('#evaluationModal').modal('show');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
 
-            $('.modal-title').text('Contact');
+    $(document).on("click", "#show_date_rendu", function () {
+        var path = $(this).data('id');
+        var dhrenduexpert = $(this).data('dhrenduexpert');
+        var dhrenducomite = $(this).data('dhrenducomite');
+        var dhrenduphase = $(this).data('dhrenduphase');
 
-            // AJAX request
-            $.ajax({
-                url: path,
-                type: 'POST',
-                data: 'idPersonne='+ $(this).data('idpersonne')+'&idProjet='+ $(this).data('idprojet')+'&idAffectation='+ $(this).data('idaffectation'),
-                success: function (response) {
-                    // Add response in Modal body
-                    $('.modal-body').html(response);
-                    // Display Modal
-                    $('#evaluationModal').modal('show');
-                    /*$("#date_rendu_current").datepicker({
-                        dateFormat:'d/m/yy',
-                        numberOfMonths: 2
-                    }).datepicker('show');*/
-                    /*$("#date_rendu_current").daterangepicker({
-                        locale: {format: 'DD/MM/YYYY'},
-                    }).focus();*/
+        $('.modal-title').text('Contact');
 
-                    var dates = {}
-                    dates[new Date(dhrenduexpert).getTime()]='date1'; /* date rendu  par exemple  mm/dd/yyy */
-                    dates[new Date(dhrenducomite).getTime()]='date2';
-                    dates[new Date(dhrenduphase).getTime()]='date3'; 
+        // AJAX request
+        $.ajax({
+            url: path,
+            type: 'POST',
+            data: 'idPersonne=' + $(this).data('idpersonne') + '&idProjet=' + $(this).data('idprojet') + '&idAffectation=' + $(this).data('idaffectation'),
+            success: function (response) {
+                // Add response in Modal body
+                $('.modal-body').html(response);
+                // Display Modal
+                $('#evaluationModal').modal('show');
 
-                    console.log(dhrenducomite);
+                var dates = {}
+                dates[new Date(dhrenduexpert).getTime()] = 'date1'; /* date rendu  par exemple  mm/dd/yyy */
+                dates[new Date(dhrenducomite).getTime()] = 'date2';
+                dates[new Date(dhrenduphase).getTime()] = 'date3';
 
-                    $('#date_rendu_current').datepicker({
-                        /* minDate: new Date('2020/10/11') */
-                        minDate: new Date(),
-                        maxDate: new Date(dhrenducomite),
-                        dateFormat:'d/mm/yy',
-                        numberOfMonths: 2,
-                        /* tu peux changer le nombre de mois visible ici c'est 3 */
-                        showButtonPanel: true,
-                        beforeShowDay: function(date) {
+                console.log(dhrenducomite);
+
+                $('.date_rendu_current').datepicker({
+                    /* minDate: new Date('2020/10/11') */
+                    minDate: new Date(),
+                    maxDate: new Date(dhrenducomite),
+                    dateFormat: 'd/mm/yy',
+                    numberOfMonths: 2,
+                    /* tu peux changer le nombre de mois visible ici c'est 3 */
+                    showButtonPanel: true,
+                    beforeShowDay: function (date) {
                         var hlText = dates[date.getTime()];
 
                         return (hlText) ? [true, hlText, hlText] : [true, '', ''];
 
-                        }
-                    }).focus();
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('Error : ' + errorThrown);
-                }
-            });
+                    }
+                }).focus();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
         });
-            
-        $(document).on("click", "#show_comments", function () {
-            var path = $(this).data('id');
+    });
 
-            $('.modal-title').text('Contact');
-            console.log($(this).data());
-            // AJAX request
-            $.ajax({
-                url: path,
-                type: 'POST',
-                data: 'idPersonne='+ $(this).data('idpersonne')+'&idProjet='+ $(this).data('idprojet'),
-                success: function (response) {
-                    // Add response in Modal body
-                    $('.modal-body').html(response);
-                    // Display Modal
-                    $('#evaluationModal').modal('show');
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('Error : ' + errorThrown);
-                }
-            });
+    $(document).on("click", "#show_comments", function () {
+        var path = $(this).data('id');
+
+        $('.modal-title').text('Contact');
+        console.log($(this).data());
+        // AJAX request
+        $.ajax({
+            url: path,
+            type: 'POST',
+            data: 'idPersonne=' + $(this).data('idpersonne') + '&idProjet=' + $(this).data('idprojet'),
+            success: function (response) {
+                // Add response in Modal body
+                $('.modal-body').html(response);
+                // Display Modal
+                $('#evaluationModal').modal('show');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
         });
+    });
 
-        </script>
-    {% endblock %}
+</script>
+{% endblock %}

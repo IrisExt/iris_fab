@@ -1,6 +1,6 @@
 {#{% extends 'base.html.twig' %}#}
 {#{% block stylesheets %}#}
-    <link rel="stylesheet" href="http://localhost:8080/build/vendors~app.css"><link rel="stylesheet" href="http://localhost:8080/build/app.css">
+    <link rel="stylesheet" href="http://localhost:8000/build/vendors~app.css"><link rel="stylesheet" href="http://localhost:8000/build/app.css">
 
     <link rel="stylesheet" href="{{ asset('https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder/dist/css/query-builder.default.min.css') }}">
 
@@ -131,7 +131,7 @@
     {% include 'searchProjets/modalEditFavoriteSearch.html.twig' with {listFavoris:listFavoris} %}
 {% endblock %}
 {#{% block javascripts1 %}#}
-    <script src="http://localhost:8080/build/vendors~app.js"></script><script src="http://localhost:8080/build/app.js"></script>
+    <script src="http://localhost:8000/build/vendors~app.js"></script><script src="http://localhost:8000/build/app.js"></script>
     <script src="{{ asset('js/queryBuilder.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/modal-active.js') }}"></script>

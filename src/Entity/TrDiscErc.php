@@ -27,7 +27,7 @@ class TrDiscErc
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_disc_erc", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_disc_erc", type="string", length=500, nullable=false)
      */
     private $lbDiscErc;
 
@@ -108,5 +108,4 @@ class TrDiscErc
 
         return $this;
     }
-
 }

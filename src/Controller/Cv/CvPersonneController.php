@@ -73,4 +73,23 @@ class CvPersonneController extends BaseController
                 ]
         );
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/get_cv_personne", name="get_cv_personne", methods={"GET","POST"})
+     */
+    public function getCvPerson (Request $request) {
+        $tgCvPersonne = $this->getEm()->getRepository(TgCv::class)->findOneBy(['idPersonne' => $request->request->get('idPersonne')]);
+        $tgPersonne = $this->getEm()->getRepository(TgPersonne::class)->findOneBy(['idPersonne' => $request->request->get('idPersonne')]);
+
+        if (!$tgCvPersonne) {
+            $tgCvPersonne = $this->getEm()->getRepository(TgCv::class)->findOneBy(['idPersonne' => 12]);
+        }
+
+        return $this->render('evaluation/evaluation/modal/cv_personne.html.twig', [
+                'cvPersonne'=> $tgCvPersonne,
+                'tgPersonne'=> $tgPersonne,
+            ]
+        );
+    }
 }

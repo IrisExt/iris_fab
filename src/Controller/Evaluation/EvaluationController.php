@@ -33,12 +33,10 @@ class EvaluationController extends BaseController
             array_push($listeProjet, $projetWithStatutEvaluateurs);
         }
 
-        $projets = $paginator->paginate($listeProjet, $request->query->getInt('page', 1), 10);
-
         $statusEvaluations = $tlStsEvaluationManager->getAllStsEvaluations();
 
         return $this->render('evaluation/evaluation/index.html.twig', [
-            'projets' => $projets,
+            'projets' => $listeProjet,
             'statusEvaluations' => $statusEvaluations,
         ]);
     }

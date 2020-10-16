@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -90,7 +92,7 @@ class TgAffectation
     /**
      * @var \TgProjet
      *
-     * @ORM\ManyToOne(targetEntity="TgProjet")
+     * @ORM\ManyToOne(targetEntity="TgProjet", inversedBy="tgAffectations")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_projet", referencedColumnName="id_projet")
      * })
@@ -136,6 +138,31 @@ class TgAffectation
      * })
      */
     private $idPropose;
+
+    /**
+     * @ORM\Column(name="dh_val_bureau", type="date", nullable=true)
+     */
+    private $dhValBureau;
+
+    /**
+     * @ORM\Column(name="dh_val_anr", type="date", nullable=true)
+     */
+    private $dhValAnr;
+
+    /**
+     * @ORM\Column(name="dh_rendu", type="date", nullable=true)
+     */
+    private $dhRendu;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TlAffectUtilisateur", mappedBy="IdAffectation", cascade={"persist"})
+     */
+    private $tlAffectUtilisateurs;
+
+    public function __construct()
+    {
+        $this->tlAffectUtilisateurs = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -301,10 +328,71 @@ class TgAffectation
         return $this;
     }
 
-    public function __toString(): string
+    public function getDhValBureau(): ?\DateTimeInterface
     {
-        return $this->idPersonne->getNomUsage();
+        return $this->dhValBureau;
     }
 
+    public function setDhValBureau(?\DateTimeInterface $dhValBureau): self
+    {
+        $this->dhValBureau = $dhValBureau;
+
+        return $this;
+    }
+
+    public function getDhValAnr(): ?\DateTimeInterface
+    {
+        return $this->dhValAnr;
+    }
+
+    public function setDhValAnr(?\DateTimeInterface $dhValAnr): self
+    {
+        $this->dhValAnr = $dhValAnr;
+
+        return $this;
+    }
+
+    public function getDhRendu(): ?\DateTimeInterface
+    {
+        return $this->dhRendu;
+    }
+
+    public function setDhRendu(?\DateTimeInterface $dhRendu): self
+    {
+        $this->dhRendu = $dhRendu;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|TlAffectUtilisateur[]
+     */
+    public function getTlAffectUtilisateurs(): Collection
+    {
+        return $this->tlAffectUtilisateurs;
+    }
+
+    public function addTlAffectUtilisateur(TlAffectUtilisateur $tlAffectUtilisateur): self
+    {
+        if (!$this->tlAffectUtilisateurs->contains($tlAffectUtilisateur)) {
+            $this->tlAffectUtilisateurs[] = $tlAffectUtilisateur;
+            $tlAffectUtilisateur->setIdAffectation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTlAffectUtilisateur(TlAffectUtilisateur $tlAffectUtilisateur): self
+    {
+        if ($this->tlAffectUtilisateurs->contains($tlAffectUtilisateur)) {
+            $this->tlAffectUtilisateurs->removeElement($tlAffectUtilisateur);
+            // set the owning side to null (unless already changed)
+            if ($tlAffectUtilisateur->getIdAffectation() === $this) {
+                $tlAffectUtilisateur->setIdAffectation(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

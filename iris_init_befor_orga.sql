@@ -1,8 +1,3 @@
-/*
-bin/console doctrin:schema:drop --full-database --force
-bin/console doctrin:schema:update --force
- */
-
 INSERT INTO "tr_ag_fi" ("id_agence_fi", "lb_agenc_fi") VALUES
 (1,'Mexique (Mexico) - CONACYT'),
 (2,'Allemagne (Germany) - DFG'),
