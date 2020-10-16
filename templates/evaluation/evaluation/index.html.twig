@@ -3,143 +3,261 @@
 
 {% block title %}{{ 'evaluation.evaluation'|trans }}{% endblock %}
 
-{% block stylesheets1 %}
-    <style>
-        .sort_tab { cursor: pointer; }
-    </style>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+{% block stylesheets %}
+<style>
+    #tableStyle {
+        margin-bottom: 20px;
+        background-color: whitesmoke;
+        padding: 0 !important;
+    }
+
+    #tableStyle .row {
+        margin: 0 !important;
+        padding: 25px 15px 25px 15px;
+        display: flex;
+        width: 100%;
+    }
+
+    #echeanceStyle {
+        margin-left: auto;
+        margin-right: 10px;
+    }
+
+    #rechercheStyle {
+        width: 300px;
+    }
+
+    .table th {
+        text-align: center;
+    }
+
+    #rapporteurTitleStyle,
+    #lecteurTitleStyle {
+        text-align: left;
+    }
+
+    #projetStyle {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 130px;
+        padding-left: 25px;
+    }
+
+    #criticiteStyle {
+        width: 100px;
+        text-align: center;
+    }
+
+    #evaluationsStyle {
+        display: flex;
+    }
+
+    #evaluationsPreviousStyle {
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .evaluationsStatutStyle {
+        max-width: 275px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    #evaluationsNextStyle {
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    #rapporteurStyle {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 190px;
+    }
+
+    #lecteurStyle {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 190px;
+    }
+
+    #langueStyle {
+        text-align: center;
+    }
+</style>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block navmenu %}
-    <span class="bread-slash">/</span>
-    <li><a href={{ path('evaluations') }}><b>{{ 'evaluation.evaluations'|trans }}</b></a></li>
+<span class="bread-slash">/</span>
+<li><a href={{ path('evaluations') }}><b>{{ 'evaluation.evaluations'|trans }}</b></a></li>
 {% endblock %}
 
 {% block body %}
-<div class="breadcome-area mg-b-30 small-dn">
-    <div class="container-fluid">
+<div class="container-fluid">
+    <div class="breadcome-list shadow-reset" id="tableStyle">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcome-list shadow-reset">
-                    <div class="row">
-                        <div class="col-md-7">{% include 'evaluation/evaluation/evaluation.legende.html.twig'  with statusEvaluations %}</div>
-                        <div class="col-md-5">
-                            <div class="breadcome-heading has-feedback">
-                                <input id="filter" type="text" placeholder="Recherche..." class="form-control" style="width:100%">
-                                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+            <div>
+                {% include 'evaluation/evaluation/evaluation.legende.html.twig'  with statusEvaluations %}
+            </div>
+            <div id="echeanceStyle">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#echeanceModal"><i
+                        class="fa fa-calendar"></i>
+                    {{ 'evaluation.actions.echeance'|trans }}</button>
+            </div>
+            <div class="breadcome-heading has-feedback" id="rechercheStyle">
+                <input id="filter" type="text" placeholder="Recherche..." class="form-control" style="width:100%">
+                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <!-- tableau -->
+            <table class="table" id="sortTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <h5>{{ 'evaluation.projet'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.criticite'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.evaluations'|trans }}</h5>
+                        </th>
+                        <th id="rapporteurTitleStyle">
+                            <h5>{{ 'evaluation.rapporteur'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5>
+                        </th>
+                        <th id="lecteurTitleStyle">
+                            <h5>{{ 'evaluation.lecteurs'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.recuse'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.langue'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.action'|trans }}</h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for projet in projets %}
+                    <tr>
+                        <td id="projetStyle">
+                            {% if projet.idComite.IdLangue is defined  %}
+                            {% if projet.idComite.IdLangue == 1 %}
+                            <a href="{{ path('evaluations_project', {'idProjet': projet.idProjet}) }}">
+                                {{ projet.lbTitreFr }}
+                            </a>
+                            {% else %}
+                            <a href="{{ path('evaluations_project', {'idProjet': projet.idProjet}) }}">
+                                {{ projet.lbTitreEn }}
+                            </a>
+                            {% endif %}
+                            {% else %}
+                            <a href="{{ path('evaluations_project', {'idProjet': projet.idProjet}) }}">
+                                {{ projet.lbTitreFr }}
+                            </a>
+                            {% endif %}
+                        </td>
+                        <td id="criticiteStyle">
+                            {% set criticite = projet.criticite %}
+                            {% include 'evaluation/evaluation/evaluation.criticite.html.twig' with criticite %}
+                        </td>
+                        <td id="evaluationsStyle">
+                            {% set experts = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert') %}
+                            {% if experts|length > 10 %}
+                            <i onclick="previous('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-left"
+                                id="evaluationsPreviousStyle"></i>
+                            {% endif %}
+                            <div id="scroll_{{ projet.idProjet }}" class="evaluationsStatutStyle">
+                                {% include 'evaluation/evaluation/evaluation.panel.html.twig' with experts %}
                             </div>
-                        </div>
-                    </div>
-                </div>
+                            {% if experts|length > 10 %}
+                            <i onclick="next('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-right"
+                                id="evaluationsNextStyle"></i>
+                            {% endif %}
+                        </td>
+                        <td id="rapporteurStyle">
+                            {% set rapporteurs = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Rapporteur')  %}
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                title="{{ rapporteurs|map(rapporteur => "#{rapporteur.idPersonne.lbNomUsage|upper} #{rapporteur.idPersonne.lbPrenom|capitalize} (#{projet.tgAffectations|filter(affect => affect.idPropose == rapporteur.idPersonne)|length})")|join(' ') }}">
+                                {% for rapporteur in rapporteurs %}
+                                {{ rapporteur.idPersonne.lbNomUsage|upper }}
+                                {{ rapporteur.idPersonne.lbPrenom|capitalize }}
+                                ({{ projet.tgAffectations|filter(affect => affect.idPropose == rapporteur.idPersonne)|length }})
+                                {% endfor %}
+                            </span>
+                        </td>
+                        <td id="lecteurStyle">
+                            {% set lecteurs = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Lecteur') %}
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                title="{{ lecteurs|map(lecteur => "#{lecteur.idPersonne.lbNomUsage|upper} #{lecteur.idPersonne.lbPrenom|capitalize} (#{projet.tgAffectations|filter(affect => affect.idPropose == lecteur.idPersonne)|length})")|join(' ') }}">
+                                {% for lecteur in lecteurs %}
+                                {{ lecteur.idPersonne.lbNomUsage|upper }}
+                                {{ lecteur.idPersonne.lbPrenom|capitalize }}
+                                ({{ projet.tgAffectations|filter(affect => affect.idPropose == lecteur.idPersonne)|length }})
+                                {% endfor %}
+                        </td>
+                        <td></td>
+                        <td id="langueStyle">
+                            {% set doc = projet.tgDocument|filter(doc => doc.idTypeDoc == '1')|first %}
+                            {% if doc is not empty %}
+                            {% if doc.idLangue is not empty %}
+                            {{ doc.idLangue.cdLangue }}
+                            {% else %}
+                            no language
+                            {% endif %}
+                            {% else %}
+                            no doc
+                            {% endif %}
+                        </td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="echeanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-
-<div class="data-table-area mg-b-15">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="sparkline13-list shadow-reset">
-                    <div class="sparkline12-hd">
-
-                            <div class="datatable-dashv1-list custom-datatable-overright">
-                                <!-- tableau -->
-                                <table class="table table-condensed table-striped table-hover tablesorter ui-table-reflow" id="sortTable" >
-                                    <thead>
-                                    <tr>
-                                        <th><h5>{{ 'evaluation.projet'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th><h5>{{ 'evaluation.criticite'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th><h5>{{ 'evaluation.evaluations'|trans }}</h5></th>
-                                        <th><h5>{{ 'evaluation.rapporteur'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th><h5>{{ 'evaluation.lecteurs'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th><h5>{{ 'evaluation.action'|trans }}</h5></th>
-                                        <th><h5>{{ 'evaluation.langue'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                        <th><h5>{{ 'evaluation.recuse'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="searchable">
-                                    {% for projet in projets %}
-                                    <tr>
-                                        <td>
-                                            {% if projet.idComite.IdLangue is defined  %}
-                                                {% if projet.idComite.IdLangue == 1 %}
-                                                    <a href="{{ path('evaluations_project', {'idProjet': projet.idProjet}) }}">
-                                                        {{ projet.lbTitreFr }}
-                                                    </a>
-                                                {% else %}
-                                                    <a href="{{ path('evaluations_project', {'idProjet': projet.idProjet}) }}">
-                                                        {{ projet.lbTitreEn }}
-                                                    </a>
-                                                {% endif %}
-                                            {% else %}
-                                                <a href="{{ path('evaluations_project', {'idProjet': projet.idProjet}) }}">
-                                                    {{ projet.lbTitreFr }}
-                                                </a>
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            {% set criticite = projet.criticite %}
-                                            {% include 'evaluation/evaluation/evaluation.criticite.html.twig' with criticite %}</td>
-                                        <td>
-                                            <div>
-                                                {% set experts = projet.tgAffectations %}
-                                                {% include 'evaluation/evaluation/evaluation.panel.html.twig' with experts %}
-                                            </div>       
-                                        </td>
-                                        <td>
-                                            {% set rapporteurs = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Rapporteur')  %}
-                                            {% for rapporteur in rapporteurs %}
-                                                {{ rapporteur.idPersonne.lbNomUsage|upper }} {{ rapporteur.idPersonne.lbPrenom|capitalize }} ({{ projet.tgAffectations|filter(affect => affect.idPropose == rapporteur.idPersonne)|length }})
-                                            {% endfor %}
-                                        </td>
-                                        <td>
-                                            {% set lecteurs = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Lecteur') %}
-                                            {% for lecteur in lecteurs %}
-                                                {{ lecteur.idPersonne.lbNomUsage|upper }} {{ lecteur.idPersonne.lbPrenom|capitalize }} ({{ projet.tgAffectations|filter(affect => affect.idPropose == lecteur.idPersonne)|length }})
-                                            {% endfor %}
-                                        </td>
-                                        <td></td>
-                                        <td>
-                                            {% set doc = projet.tgDocument|filter(doc => doc.idTypeDoc == '1')|first %}
-                                            {% if doc is not empty %}
-                                                {% if doc.idLangue is not empty %}
-                                                    {{ doc.idLangue.cdLangue }}
-                                                {% else %}
-                                                    no language
-                                                {% endif %}
-                                            {% else %}
-                                                no doc
-                                            {% endif %}
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                                {% include 'tg_message/modal/modalMessageCes.html.twig' %} <!-- modal message cps ... -->
-                                <div class="footer-text-center">
-                                    {{ knp_pagination_render(projets) }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 {% endblock %}
-
-
 {% block javascripts %}
-
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
-
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         (function ($) {
             $('#filter').keyup(function () {
                 var rex = new RegExp($(this).val(), 'i');
@@ -164,6 +282,16 @@
                 ]
             });
     });
+    function next(scrollId) {
+        content = document.getElementById(scrollId);
+        content.scrollLeft += 28;
+    }
+    function previous(scrollId) {
+        content = document.getElementById(scrollId);
+        content.scrollLeft -= 28;
+    }
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
-
 {% endblock %}

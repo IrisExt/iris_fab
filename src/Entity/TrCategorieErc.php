@@ -27,7 +27,7 @@ class TrCategorieErc
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_cat_erc", type="string", length=255, nullable=false)
+     * @ORM\Column(name="lb_cat_erc", type="string", length=500, nullable=false)
      */
     private $lbCatErc;
 
