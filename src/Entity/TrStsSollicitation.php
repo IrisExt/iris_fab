@@ -36,6 +36,10 @@ class TrStsSollicitation
      */
     private $actionSollicitation;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\TlStsEvaluation", mappedBy="cdSollicitation", cascade={"persist", "remove"})
+     */
+    private $tlStsEvaluation;
 
     public function getCdSollicitation(): ?string
     {
@@ -82,5 +86,22 @@ class TrStsSollicitation
         $this->actionSollicitation = $actionSollicitation;
     }
 
+    public function getTlStsEvaluation(): ?TlStsEvaluation
+    {
+        return $this->tlStsEvaluation;
+    }
+
+    public function setTlStsEvaluation(?TlStsEvaluation $tlStsEvaluation): self
+    {
+        $this->tlStsEvaluation = $tlStsEvaluation;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCdSollicitation = null === $tlStsEvaluation ? null : $this;
+        if ($tlStsEvaluation->getCdSollicitation() !== $newCdSollicitation) {
+            $tlStsEvaluation->setCdSollicitation($newCdSollicitation);
+        }
+
+        return $this;
+    }
 
 }
