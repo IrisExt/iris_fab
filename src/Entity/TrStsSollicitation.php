@@ -32,7 +32,7 @@ class TrStsSollicitation
     /**
      * @var string
      *
-     * @ORM\Column(name="action_sollicitation", type="string", length=50, nullable=true, options={"comment"="Explicitation de la r�le (affichable)"})
+     * @ORM\Column(name="action_sollicitation", type="string", length=255, nullable=true, options={"comment"="Explicitation de la r�le (affichable)"})
      */
     private $actionSollicitation;
 

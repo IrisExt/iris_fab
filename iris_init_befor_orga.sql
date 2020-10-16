@@ -3416,6 +3416,8 @@ INSERT INTO "tg_resume" ("id_projet", "id_langue", "lb_texte") VALUES
 (18,	1,	'FR - Résumé test projet AMA01'),
 (18,	2,	'EN - Résumé test projet AMA01');
 
+SELECT SETVAL('tg_publication_id_publication_seq',50);
+
 INSERT INTO "tg_reunion" ("id_reunion", "id_type_reunion", "id_phase", "id_appel", "lb_titre", "tx_comment", "dt_deb_periode", "dt_fin_periode", "nb_duree_max", "bl_obligatoire", "bl_actif") VALUES
 (1,	1,	1,	1,	'Réunion',	'"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."',	'2020-06-15',	'2020-06-21',	3,	't',	1),
 (2,	1,	1,	1,	'Plénière',	'"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."',	'2020-06-22',	'2020-06-28',	2,	't',	1),
