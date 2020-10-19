@@ -27,7 +27,7 @@ class TrDiscErc
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_disc_erc", type="string", length=500, nullable=false)
+     * @ORM\Column(name="lb_disc_erc", type="string", length=2000, nullable=false)
      */
     private $lbDiscErc;
 

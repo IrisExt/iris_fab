@@ -27,7 +27,7 @@ class TrInstFi
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_nom", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_inst_fi", type="string", length=50, nullable=false)
      */
     private $lbNom;
 
