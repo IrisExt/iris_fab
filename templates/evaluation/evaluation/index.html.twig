@@ -86,8 +86,31 @@
     #langueStyle {
         text-align: center;
     }
+
+    #echeanceModalContent {
+        border: none;
+    }
+
+    #echeanceModalHeader {
+        text-align: center;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    #echeanceModalFooter {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: none;
+    }
+
+    #echeanceModalCloseButton,
+    #echeanceModalSaveButton {
+        border: 1px solid black;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 {% endblock %}
 
 {% block navmenu %}
@@ -228,22 +251,20 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="echeanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="echeanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="modal-content" id="echeanceModalContent">
+            <div class="modal-header bg-primary text-white" id="echeanceModalHeader">
+                <h4 class="modal-title">{{ 'date échéance comité'|upper }}</h4>
             </div>
             <div class="modal-body">
-                ...
+                <div id="datepicker">
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-footer" id="echeanceModalFooter">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    id="echeanceModalCloseButton">Fermer</button>
+                <button type="button" class="btn btn-danger" id="echeanceModalSaveButton">Sauvegarder</button>
             </div>
         </div>
     </div>
@@ -256,42 +277,66 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     $(document).ready(function () {
-        (function ($) {
-            $('#filter').keyup(function () {
-                var rex = new RegExp($(this).val(), 'i');
-                $('.searchable tr').hide();
-                $('.searchable tr').filter(function () {
-                    return rex.test($(this).text());
-                }).show();
-            })
-        }(jQuery));
+        $('#filter').keyup(function () {
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+        })
+    }(jQuery));
 
-        $("#sortTable")
-            .tablesorter({
-                // Enable filter
-                widgets: ["filter"],
-                widgetOptions: {
-                    filter_columnFilters: false,
-                    filter_searchDelay: 60,
-                    filter_useParsedData: true
-                },
-                sortList: [
-                    [1]
-                ]
-            });
-    });
+    $("#sortTable")
+        .tablesorter({
+            // Enable filter
+            widgets: ["filter"],
+            widgetOptions: {
+                filter_columnFilters: false,
+                filter_searchDelay: 60,
+                filter_useParsedData: true
+            },
+            sortList: [
+                [1]
+            ]
+        });
+
     function next(scrollId) {
         content = document.getElementById(scrollId);
         content.scrollLeft += 28;
     }
+
     function previous(scrollId) {
         content = document.getElementById(scrollId);
         content.scrollLeft -= 28;
     }
+
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
-    })
+    });
+
+    !function (a) {
+        a.fn.datepicker.dates.fr = {
+            days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+            daysShort: ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."],
+            daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+            months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+            monthsShort: ["Janv.", "Févr.", "Mars", "Avril", "Mai", "Juin", "Juil.", "Août", "Sept.", "Oct.", "Nov.", "Déc."],
+            today: "Aujourd'hui",
+            monthsTitle: "Mois",
+            clear: "Effacer",
+            weekStart: 1,
+            format: "dd/mm/yyyy"
+        }
+    }(jQuery);
+
+    $('#datepicker').datepicker({
+        language: 'fr',
+        calendarWeeks: true,
+        todayHighlight: true
+    });
 </script>
 {% endblock %}

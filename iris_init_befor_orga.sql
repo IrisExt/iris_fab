@@ -4078,12 +4078,13 @@ UPDATE "tg_personne" SET  "id_cv" = 4 WHERE id_personne = 38;
 UPDATE "tg_personne" SET  "id_cv" = 1 WHERE id_personne = 54;
 UPDATE "tg_personne" SET  "id_cv" = 2 WHERE id_personne = 4;
 
-INSERT INTO "tr_sts_sollicitation"(cd_sollicitation, lb_description, action_sollicitation)
-	VALUES ('SSR', 'Sans réponses', 'Sollicité sans réponses après relances');
+INSERT INTO public.tr_sts_sollicitation(cd_sollicitation, lb_description, action_sollicitation)
+VALUES ('SSR', 'Sans réponses', 'Sollicité sans réponses après relances');
 
-INSERT INTO "tl_sts_evaluation"(id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre)
-	VALUES (1, 'SOM', null, '99CCFF', 1),(2, 'ENC', null, 'CCFFFF', 2),(3, null, 'ACC', '99FF99', 3),(4, null, 'SOL', 'FFFF99', 4),(5, null, 'PRO', 'FFFFFF', 5),(6, null, 'SSR', 'FFCC99', 6),(7, null, 'RET', 'FFCC99', 7),(8, null, 'REF', 'FF9999', 8),(9, null, 'ENC', 'FF9999', 9),(10, 'AFR', null, 'FFFFFF', 10);
+INSERT INTO public.tl_sts_evaluation(id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre)
+VALUES (1, 'SOM', null, '99CCFF', 1),(2, 'ENC', null, 'CCFFFF', 2),(3, null, 'ACC', '99FF99', 3),(4, null, 'SOL', 'FFFF99', 4),(5, null, 'PRO', 'FFFFFF', 5),(6, null, 'SSR', 'FFCC99', 6),(7, null, 'RET', 'FFCC99', 7),(8, null, 'REF', 'FF9999', 8),(9, null, 'ENC', 'FF9999', 9),(10, 'AFR', null, 'FFFFFF', 10);
 
-INSERT INTO "tr_criticite"(id_criticite, code_criticite, couleur_criticite)
-    VALUES (1, 0, '#FFFFFF'), (2, 1, '#FF9999'), (3, 2, '#FFCC99'), (4, 3, '#FFFF99'), (5, 4, '#CCFFCC'), (6, 5, '#99FF99'), (7, 6, '#CCFFFF'), (8, 7, '#99CCFF');
+INSERT INTO public.tr_criticite(id_criticite, code_criticite, couleur_criticite)
+VALUES (1, 0, '#FFFFFF'), (2, 1, '#FF9999'), (3, 2, '#FFCC99'), (4, 3, '#FFFF99'), (5, 4, '#CCFFCC'), (6, 5, '#99FF99'), (7, 6, '#CCFFFF'), (8, 7, '#99CCFF');
 
+UPDATE public.tg_comite SET nb_min_eval_soum=2, nb_min_eval_accept=3, dh_echeance_evaluation='2020-10-20';

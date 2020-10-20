@@ -1512,6 +1512,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
+bootstrap-datetimepicker-4.17.37@^4.17.37:
+  version "4.17.37"
+  resolved "https://registry.yarnpkg.com/bootstrap-datetimepicker-4.17.37/-/bootstrap-datetimepicker-4.17.37-4.17.37.tgz#f867f605e82468fd6f0905029ace346a0953e26b"
+  integrity sha1-+Gf2BegkaP1vCQUCms40aglT4ms=
+
 bootstrap@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.4.1.tgz#c3a347d419e289ad11f4033e3c4132b87c081d72"
