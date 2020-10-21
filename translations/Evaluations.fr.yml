@@ -25,3 +25,8 @@ evaluation:
     echeance: 'Echéance'
     relance: 'Relance'
     legende: 'Voir la légende'
+  widget:
+    suivi_expertise:
+      titre: 'Expertise'
+      mes_projets: 'Mes projets'
+      tous_les_projets: 'Tous les projets'
