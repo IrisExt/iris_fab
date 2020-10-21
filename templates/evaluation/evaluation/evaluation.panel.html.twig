@@ -1,5 +1,5 @@
-{% for expert in experts|sort((a, b) => a.statutEvaluation[0].ordre <=>
-b.statutEvaluation[0].ordre) %}
-<i class="fa fa-2x fa-square"
-    style="color: #{{ expert.statutEvaluation ? expert.statutEvaluation[0].colorHexa : '' }}"></i>
+{% for expert in experts|sortEval  %}
+
+{% include 'evaluation/evaluation/evaluation.status.html.twig' %}
+
 {% endfor %}

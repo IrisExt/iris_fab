@@ -22,15 +22,14 @@ class EvaluationController extends BaseController
     /**
      * @Route("/evaluations/{idComite}", name="evaluations")
      */
-    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, PaginatorInterface $paginator, TgComite $tgComite)
+    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite)
     {
         //dd($tgComite);
         $lstProjets = $affectationManager->getComiteProjets($tgComite);
         $listeProjet = [];
         foreach ($lstProjets as $projet) {
             $projetWithCriticite = $affectationManager->setCriticiteToProject($projet);
-            $projetWithStatutEvaluateurs = $affectationManager->setStatutEvaluationToProject($projetWithCriticite);
-            array_push($listeProjet, $projetWithStatutEvaluateurs);
+            array_push($listeProjet, $projetWithCriticite);
         }
 
         $statusEvaluations = $tlStsEvaluationManager->getAllStsEvaluations();
