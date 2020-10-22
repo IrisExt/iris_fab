@@ -247,6 +247,7 @@
                             {% include 'evaluation/evaluation/evaluation.criticite.html.twig' with criticite %}
                         </td>
                         <td id="evaluationsStyle">
+                            {% if role == 'expert' %}
                             {% set experts = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert') %}
                             {% if experts|length > 10 %}
                             <i onclick="previous('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-left"
@@ -258,6 +259,33 @@
                             {% if experts|length > 10 %}
                             <i onclick="next('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-right"
                                 id="evaluationsNextStyle"></i>
+                            {% endif %}
+                            {% elseif role == 'rl' %}
+                            {% set experts = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Rapporteur' or affect.idStAffect.lbNom == 'Lecteur') %}
+                            {% if experts|length > 10 %}
+                            <i onclick="previous('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-left"
+                                id="evaluationsPreviousStyle"></i>
+                            {% endif %}
+                            <div id="scroll_{{ projet.idProjet }}" class="evaluationsStatutStyle">
+                                {% include 'evaluation/evaluation/evaluation.panel.html.twig' with experts %}
+                            </div>
+                            {% if experts|length > 10 %}
+                            <i onclick="next('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-right"
+                                id="evaluationsNextStyle"></i>
+                            {% endif %}
+                            {% else %}
+                            {% set experts = projet.tgAffectations %}
+                            {% if experts|length > 10 %}
+                            <i onclick="previous('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-left"
+                                id="evaluationsPreviousStyle"></i>
+                            {% endif %}
+                            <div id="scroll_{{ projet.idProjet }}" class="evaluationsStatutStyle">
+                                {% include 'evaluation/evaluation/evaluation.panel.html.twig' with experts %}
+                            </div>
+                            {% if experts|length > 10 %}
+                            <i onclick="next('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-right"
+                                id="evaluationsNextStyle"></i>
+                            {% endif %}
                             {% endif %}
                         </td>
                         <td id="rapporteurStyle">

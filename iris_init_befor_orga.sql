@@ -4110,3 +4110,10 @@ update "tg_affectation" set cd_sts_evaluation = 'SOM' where id_st_affect = 5 and
 
 INSERT INTO "tg_affectation"(id_affectation, id_profil, id_st_affect, cd_sts_evaluation, id_projet, id_personne, cd_sollicitation, id_propose)
 	VALUES (1299, 16, 5, 'SOM', 65, 592, 'ACC', 606),(1300, 16, 5, 'SOM', 65, 593, 'ACC', 607);
+
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 917;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 918;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 903;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 904;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 905;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 906;

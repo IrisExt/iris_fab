@@ -22,10 +22,13 @@ class EvaluationController extends BaseController
 
     /**
      * @Route("/evaluations/{idComite}", name="evaluations")
+     * 
+     * @example /evaluations/1 Accés aux évaluations
+     * @example /evaluations/1?role=expert Accés aux évaluations des experts
+     * @example /evaluations/1?role=rl Accés aux évaluations des rapporteurs/lecteurs
      */
     public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite)
     {
-        //dd($tgComite);
         $lstProjets = $affectationManager->getComiteProjets($tgComite);
         $listeProjet = [];
         foreach ($lstProjets as $projet) {
@@ -38,6 +41,7 @@ class EvaluationController extends BaseController
         return $this->render('evaluation/evaluation/index.html.twig', [
             'projets' => $listeProjet,
             'statusEvaluations' => $statusEvaluations,
+            'role' => $request->query->get('role')
         ]);
     }
 
