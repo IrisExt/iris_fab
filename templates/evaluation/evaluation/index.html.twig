@@ -338,7 +338,7 @@
                 <h4 class="modal-title">{{ 'date échéance comité'|upper }}</h4>
             </div>
             <div class="modal-body" id="echeanceModalBody">
-                {% set dateEcheanceComite = projets[0].idComite.dhEcheanceEvaluation %}
+                {% set dateEcheanceComite = projets[0].idComite.dhRenduEvalRl %}
                 <div id="datepicker" data-date-echeance-comite="{{ dateEcheanceComite|date('d/m/Y') }}"></div>
                 <div id="echeanceModalBodyLegende">
                     <div id="echeanceModalBodyTitleLegende">

@@ -4095,7 +4095,7 @@ INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollic
 INSERT INTO "tr_criticite"(id_criticite, code_criticite, couleur_criticite)
     VALUES (1, 0, '#FFFFFF'), (2, 1, '#FF9999'), (3, 2, '#FFCC99'), (4, 3, '#FFFF99'), (5, 4, '#CCFFCC'), (6, 5, '#99FF99'), (7, 6, '#CCFFFF'), (8, 7, '#99CCFF');
 
-UPDATE "tg_comite" SET nb_min_eval_soum=2, nb_min_eval_accept=3, dh_echeance_evaluation='30/10/2020';
+UPDATE "tg_comite" SET nb_min_eval_soum=2, nb_min_eval_accept=3, dh_rendu_eval_rl='30/10/2020';
 
 update "tg_affectation" set cd_sollicitation = 'PRO' where id_st_affect = 5 and id_affectation >= 1199 and id_affectation < 1221;
 update "tg_affectation" set cd_sollicitation = 'SOL' where id_st_affect = 5 and id_affectation >= 1221 and id_affectation < 1239;

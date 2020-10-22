@@ -40,7 +40,7 @@ class TgComiteRepository extends ServiceEntityRepository
             return false;
         }
         $dateComite = explode('/', $newDateComite);
-        $updateDateEcheance->setDhEcheanceEvaluation(new \DateTime($dateComite[2] . '-' . $dateComite[1] . '-' . $dateComite[0]));
+        $updateDateEcheance->setDhRenduEvalRl(new \DateTime($dateComite[2] . '-' . $dateComite[1] . '-' . $dateComite[0]));
         $this->entityManager->persist($updateDateEcheance);
         $this->entityManager->flush();
         return true;
