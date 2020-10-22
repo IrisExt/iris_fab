@@ -4087,3 +4087,90 @@ INSERT INTO "tl_sts_evaluation"(id_sts_evaluation, cd_sts_evaluation, cd_sollici
 INSERT INTO "tr_criticite"(id_criticite, code_criticite, couleur_criticite)
     VALUES (1, 0, '#FFFFFF'), (2, 1, '#FF9999'), (3, 2, '#FFCC99'), (4, 3, '#FFFF99'), (5, 4, '#CCFFCC'), (6, 5, '#99FF99'), (7, 6, '#CCFFFF'), (8, 7, '#99CCFF');
 
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP1', lb_prenom='cpsp1'
+WHERE id_personne=11;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS5', lb_prenom='cpss5'
+WHERE id_personne=17;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS4', lb_prenom='cpss4'
+WHERE id_personne=18;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP6', lb_prenom='cpsp6'
+WHERE id_personne=20;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES4', lb_prenom='pres4'
+WHERE id_personne=21;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP1', lb_prenom='vp1'
+WHERE id_personne=22;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP2', lb_prenom='vp2'
+WHERE id_personne=23;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP3', lb_prenom='vp3'
+WHERE id_personne=24;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP4', lb_prenom='vp4'
+WHERE id_personne=25;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS1', lb_prenom='cpss1'
+WHERE id_personne=14;
+UPDATE public.tg_personne
+SET lb_nom_usage='PILOTE2', lb_prenom='pilote2'
+WHERE id_personne=10;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP4', lb_prenom='cpsp4'
+WHERE id_personne=26;
+UPDATE public.tg_personne
+SET lb_nom_usage='PILOTE1', lb_prenom='pilote1'
+WHERE id_personne=6;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES2', lb_prenom='pres2'
+WHERE id_personne=2;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS3', lb_prenom='cpss3'
+WHERE id_personne=16;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES3', lb_prenom='pres3'
+WHERE id_personne=3;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP3', lb_prenom='CPSP3'
+WHERE id_personne=13;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP5', lb_prenom='cpsp5'
+WHERE id_personne=19;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS2', lb_prenom='cpss2'
+WHERE id_personne=15;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES1', lb_prenom='pres1'
+WHERE id_personne=1;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP2', lb_prenom='cpsp2'
+WHERE id_personne=12;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE3', lb_prenom='mbre3'
+WHERE id_personne=36;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE2', lb_prenom='mbre2'
+WHERE id_personne=39;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE1', lb_prenom='mbre1'
+WHERE id_personne=38;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE5', lb_prenom='mbre5'
+WHERE id_personne=29;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE4', lb_prenom='mbre4'
+WHERE id_personne=28;
+
+
+UPDATE public.tg_affectation
+SET id_type=1
+WHERE id_st_affect=5;
+
+UPDATE public.tg_affectation
+SET id_type=2
+WHERE id_st_affect IN (1,2);
