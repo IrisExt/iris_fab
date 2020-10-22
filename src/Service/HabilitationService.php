@@ -50,29 +50,35 @@ class HabilitationService
 
                     case 6 : // cps principal
                         $wid[] = 'App\\Controller\\WidgetController::widgetCpsP' ;
+                        $wid[] = 'App\\Controller\\WidgetController::widgetSuiviExpertiseCpsP';
                         $wid[] = 'App\\Controller\\WidgetController::widgetAffectationRLComite';
 
                         continue 2;
                     case 7 : // cps Secondaire
                         $wid[] = 'App\\Controller\\WidgetController::widgetCpsS' ;
+                        $wid[] = 'App\\Controller\\WidgetController::widgetSuiviExpertiseCpsS';
                         $wid[] = 'App\\Controller\\WidgetController::widgetAffectationRLComite'; continue 2;
                     case 12 : // Resp scientifique
+                        $wid[] = 'App\\Controller\\WidgetController::widgetSuiviExpertiseRespSc';
                         $wid[] = 'App\\Controller\\WidgetController::widgetformSoumissionRespSc'; continue 2;
                     case 4 : //président
-                        $wid[]= 'App\\Controller\\WidgetController::widgetPA';
+                        $wid[] = 'App\\Controller\\WidgetController::widgetPA';
+                        $wid[] = 'App\\Controller\\WidgetController::widgetSuiviExpertiseP';
                         $wid[] = 'App\\Controller\\WidgetController::widgetAffectationRLComite'; continue 2;
 
                     case 8 : // vise président
-                        $wid[]= 'App\\Controller\\WidgetController::widgetPA';
+                        $wid[] = 'App\\Controller\\WidgetController::widgetPA';
+                        $wid[] = 'App\\Controller\\WidgetController::widgetSuiviExpertiseVP';
                         $wid[] = 'App\\Controller\\WidgetController::widgetAffectationRLComite';continue  2;
 
                     case 15 : // porteur projet
-                        $wid[]= 'App\\Controller\\WidgetController::widgetPorteurP'; continue  2;
+                        $wid[] = 'App\\Controller\\WidgetController::widgetPorteurP'; continue  2;
                     case 16 : // Expert
 
                     continue  2;
                     case 9 : // membres
-                        $wid[]= 'App\\Controller\\WidgetController::widgetAffectationRLMembre'; continue  2;
+                        $wid[] = 'App\\Controller\\WidgetController::widgetSuiviExpertiseM';
+                        $wid[] = 'App\\Controller\\WidgetController::widgetAffectationRLMembre'; continue  2;
                     case 18 : // Resp administratif
                         $wid[] = 'App\\Controller\\WidgetController::widgetformSoumissionRespAdm'; continue 2;
                     case 17 : // Lecteurs
