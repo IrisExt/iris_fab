@@ -33,9 +33,8 @@ class EvaluationController extends BaseController
         $listeProjet = [];
         foreach ($lstProjets as $projet) {
             $projetWithCriticite = $affectationManager->setCriticiteToProject($projet);
-            $projetWithStatutEvaluateurs = $affectationManager->setStatutEvaluationToProject($projetWithCriticite);
             if (!$affectationManager->utilisateurEstEnConflit($projet, $this->getUserConnect())) {
-                array_push($listeProjet, $projetWithStatutEvaluateurs);
+                array_push($listeProjet, $projetWithCriticite);
             }
         }
 
