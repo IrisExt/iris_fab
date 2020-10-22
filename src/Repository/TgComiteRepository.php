@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -32,4 +33,16 @@ class TgComiteRepository extends ServiceEntityRepository
         $this->entityManager = $entityManager;
     }
 
+    public function updateDateComite($idComite, $newDateComite)
+    {
+        $updateDateEcheance = $this->entityManager->getRepository(TgComite::class)->find($idComite);
+        if (!$updateDateEcheance) {
+            return false;
+        }
+        $dateComite = explode('/', $newDateComite);
+        $updateDateEcheance->setDhEcheanceEvaluation(new \DateTime($dateComite[2] . '-' . $dateComite[1] . '-' . $dateComite[0]));
+        $this->entityManager->persist($updateDateEcheance);
+        $this->entityManager->flush();
+        return true;
+    }
 }

@@ -216,37 +216,4 @@ class TgAffectationRepository extends ServiceEntityRepository
         // retour du projet avec la criticite
         return $projet;
     }
-
-    public function setStatutEvaluationToProject($projet)
-    {
-        // affectations pour le projet
-        $listAffectation = $projet->getTgAffectations();
-        foreach ($listAffectation as $affectation) {
-            // statut evaluation
-            $cdStsEvaluation = null;
-            $cdSollicitation = null;
-            // statut de l'evaluation cdStsEvaluation si existe
-            if (!empty($affectation->getCdStsEvaluation())) {
-                $cdStsEvaluation = $affectation->getCdStsEvaluation()->getCdStsEvaluation();
-            }
-            // statut de l'evaluation cdSollicitation si existe
-            else if (!empty($affectation->getCdSollicitation())) {
-                $cdSollicitation = $affectation->getCdSollicitation()->getCdSollicitation();
-            }
-            // rajout du statut de l'evaluation si cdStsEvaluation est non null pour l'affectation
-            if (!is_null($cdStsEvaluation)) {
-                $affectation->statutEvaluation = $this->tlStsEvaluationRepository->findBy(['cdStsEvaluation' => $cdStsEvaluation]);
-            }
-            // rajout du statut de l'evaluation si cdSollicitation est non null pour l'affectation
-            else if (!is_null($cdSollicitation)) {
-                $affectation->statutEvaluation = $this->tlStsEvaluationRepository->findBy(['cdSollicitation' => $cdSollicitation]);
-            }
-            // rajout du statut neutre d'evaluation si tout est null pour l'affectation
-            else {
-                $affectation->statutEvaluation = $this->tlStsEvaluationRepository->findBy(['cdStsEvaluation' => 'AFR']);
-            }
-        }
-        // retour du projet avec l'evaluation pour chaque affectation
-        return $projet;
-    }
 }

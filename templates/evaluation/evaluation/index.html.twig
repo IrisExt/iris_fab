@@ -91,6 +91,10 @@
         border: none;
     }
 
+    #echeanceModalBody {
+        display: flex;
+    }
+
     #echeanceModalHeader {
         text-align: center;
         border-top-left-radius: 5px;
@@ -103,9 +107,57 @@
         border: none;
     }
 
-    #echeanceModalCloseButton,
-    #echeanceModalSaveButton {
-        border: 1px solid black;
+    #echeanceModalDateDuJour {
+        color: #fde19a;
+        display: contents;
+    }
+
+    #echeanceModalDateComite {
+        color: red;
+        display: contents;
+    }
+
+    #echeanceModalNewDateComite {
+        color: blueviolet;
+        display: contents;
+    }
+
+    #echeanceModalDateDuJourLegende,
+    #echeanceModalDateComiteLegende,
+    #echeanceModalNewDateComiteLegende {
+        color: black;
+    }
+
+    #echeanceModalBodyLegende {
+        flex-grow: 1;
+        margin-left: 25px;
+    }
+
+    #echeanceModalBodyTitleLegende {
+        text-align: center;
+        padding-top: 10px;
+        border-bottom: 1px solid black;
+    }
+
+    #echeanceModalBodyContentLegende {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .dateEcheanceComite {
+        background-color: red;
+        color: white;
+    }
+
+    #echeanceModalNewDateComiteLegende {
+        display: inline-flex;
+    }
+
+    #newDateComite {
+        width: 75px;
+        border: none;
+        padding-top: 2px;
+        margin-left: 2px;
     }
 </style>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
@@ -257,14 +309,36 @@
             <div class="modal-header bg-primary text-white" id="echeanceModalHeader">
                 <h4 class="modal-title">{{ 'date échéance comité'|upper }}</h4>
             </div>
-            <div class="modal-body">
-                <div id="datepicker">
+            <div class="modal-body" id="echeanceModalBody">
+                {% set dateEcheanceComite = projets[0].idComite.dhEcheanceEvaluation %}
+                <div id="datepicker" data-date-echeance-comite="{{ dateEcheanceComite|date('d/m/Y') }}"></div>
+                <div id="echeanceModalBodyLegende">
+                    <div id="echeanceModalBodyTitleLegende">
+                        <h4>Légende</h4>
+                    </div>
+                    <div id="echeanceModalBodyContentLegende">
+                        <div class="fa fa-circle fa-stack-1x" id="echeanceModalDateDuJour">
+                            <span id="echeanceModalDateDuJourLegende">Date du jour : {{ "now"|date("d/m/Y") }}</span>
+                        </div>
+                        <br>
+                        <div class="fa fa-circle fa-stack-1x" id="echeanceModalDateComite">
+                            <span id="echeanceModalDateComiteLegende">Date échéance comité :
+                                {{ dateEcheanceComite|date("d/m/Y") }}</span>
+                        </div>
+                        <br>
+                        <div class="fa fa-circle fa-stack-1x" id="echeanceModalNewDateComite">
+                            <span id="echeanceModalNewDateComiteLegende">Nouvelle date échéance comité : <input
+                                    type="text" id="newDateComite" disabled /></span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer" id="echeanceModalFooter">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                <button type="button" class="btn btn-light" data-dismiss="modal"
                     id="echeanceModalCloseButton">Fermer</button>
-                <button type="button" class="btn btn-danger" id="echeanceModalSaveButton">Sauvegarder</button>
+                <button type="button" class="btn btn-danger" id="echeanceModalSaveButton" onclick="saveNewDateComite()"
+                    data-id-comite="{{ projets[0].idComite.idComite }}"
+                    data-path="{{ path('update_ajax_date_comite') }}">Sauvegarder</button>
             </div>
         </div>
     </div>
@@ -277,8 +351,6 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
-<script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#filter').keyup(function () {
@@ -314,29 +386,44 @@
         content.scrollLeft -= 28;
     }
 
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
-
-    !function (a) {
-        a.fn.datepicker.dates.fr = {
-            days: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-            daysShort: ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."],
-            daysMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-            months: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-            monthsShort: ["Janv.", "Févr.", "Mars", "Avril", "Mai", "Juin", "Juil.", "Août", "Sept.", "Oct.", "Nov.", "Déc."],
-            today: "Aujourd'hui",
-            monthsTitle: "Mois",
-            clear: "Effacer",
-            weekStart: 1,
-            format: "dd/mm/yyyy"
-        }
-    }(jQuery);
+    var echeanceComite = $('#datepicker').data('dateEcheanceComite');
 
     $('#datepicker').datepicker({
         language: 'fr',
         calendarWeeks: true,
-        todayHighlight: true
+        todayHighlight: true,
+        clearBtn: true,
+        startDate: new Date(),
+        beforeShowDay: function (date) {
+            formattedDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+            if (formattedDate == echeanceComite) {
+                return { classes: 'dateEcheanceComite' };
+            }
+            return;
+        }
     });
+
+    $('#datepicker').datepicker().on('changeDate', function (e) {
+        $('#newDateComite').val(e.format(0, "dd/mm/yyyy"));
+    });
+
+    function saveNewDateComite() {
+        idComite = $('#echeanceModalSaveButton').data('idComite');
+        path = $('#echeanceModalSaveButton').data('path');
+        newDateComite = document.getElementById("newDateComite").value;
+        $.ajax({
+            url: path,
+            type: 'POST',
+            data: 'idComite=' + idComite + '&newDateComite=' + newDateComite,
+            success: function (response) {
+                $('.close').trigger('click');
+                document.location.reload(true);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    }
+
 </script>
 {% endblock %}
