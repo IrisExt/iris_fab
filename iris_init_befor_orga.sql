@@ -2831,7 +2831,7 @@ INSERT INTO "tg_niveau_phase" ("id_niveau_phase", "id_type_niveu", "id_phase", "
 
 SELECT SETVAL('tg_niveau_phase_id_niveau_phase_seq',50);
 
-INSERT INTO "tg_comite" ("id_comite", "id_appel", "id_langue", "lb_acr", "lb_titre", "bl_actif", "lb_desc", "quest_publie", "nb_quest_soum", "bl_droit_projet_ouvert", "nb_min_eval_soum", "nb_min_eval_accept", "dh_echeance_evaluation") VALUES
+INSERT INTO "tg_comite" ("id_comite", "id_appel", "id_langue", "lb_acr", "lb_titre", "bl_actif", "lb_desc", "quest_publie", "nb_quest_soum", "bl_droit_projet_ouvert", "nb_min_eval_soum", "nb_min_eval_accept", "dh_rendu_eval_rl") VALUES
 (2,	1,	NULL,	'CE02',	'Comité CE02',	1,	'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here,',	't',	0,	'f',	NULL,	NULL,	NULL),
 (4,	1,	NULL,	'CEAMA01',	'Comité AMA',	1,	'seqrse',	'f',	0,	'f',	NULL,	NULL,	NULL),
 (1,	1,	NULL,	'CE01',	'Comite CE01',	1,	'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',	't',	0,	'f',	NULL,	NULL,	NULL),
@@ -4117,6 +4117,7 @@ UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC'
 UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 904;
 UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 905;
 UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 906;
+
 UPDATE public.tg_personne
 SET lb_nom_usage='CPSP1', lb_prenom='cpsp1'
 WHERE id_personne=11;
