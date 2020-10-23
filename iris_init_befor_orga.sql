@@ -4081,12 +4081,42 @@ UPDATE "tg_personne" SET  "id_cv" = 2 WHERE id_personne = 4;
 INSERT INTO "tr_sts_sollicitation"(cd_sollicitation, lb_description, action_sollicitation)
 	VALUES ('SSR', 'Sans réponses', 'Sollicité sans réponses après relances');
 
-INSERT INTO "tl_sts_evaluation"(id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre)
-	VALUES (1, 'SOM', null, '99CCFF', 1),(2, 'ENC', null, 'CCFFFF', 2),(3, null, 'ACC', '99FF99', 3),(4, null, 'SOL', 'FFFF99', 4),(5, null, 'PRO', 'FFFFFF', 5),(6, null, 'SSR', 'FFCC99', 6),(7, null, 'RET', 'FFCC99', 7),(8, null, 'REF', 'FF9999', 8),(9, null, 'ENC', 'FF9999', 9),(10, 'AFR', null, 'FFFFFF', 10);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (3, NULL, 'ACC', '99FF99', 5, 3);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (4, NULL, 'SOL', 'FFFF99', 2, 4);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (5, NULL, 'PRO', 'FFFFFF', 1, 5);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (6, NULL, 'SSR', 'FFCC99', 3, 6);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (7, NULL, 'RET', 'FFCC99', 4, 7);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (8, NULL, 'REF', 'FF9999', 4, 8);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (9, NULL, 'ENC', 'FF9999', 4, 9);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (1, 'SOM', NULL, '99CCFF', 7, 1);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (2, 'ENC', NULL, 'CCFFFF', 6, 2);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (10, 'AFR', NULL, 'FFFFFF', 1, NULL);
 
 INSERT INTO "tr_criticite"(id_criticite, code_criticite, couleur_criticite)
     VALUES (1, 0, '#FFFFFF'), (2, 1, '#FF9999'), (3, 2, '#FFCC99'), (4, 3, '#FFFF99'), (5, 4, '#CCFFCC'), (6, 5, '#99FF99'), (7, 6, '#CCFFFF'), (8, 7, '#99CCFF');
 
+UPDATE "tg_comite" SET nb_min_eval_soum=2, nb_min_eval_accept=3, dh_rendu_eval_rl='30/10/2020';
+
+update "tg_affectation" set cd_sollicitation = 'PRO' where id_st_affect = 5 and id_affectation >= 1199 and id_affectation < 1221;
+update "tg_affectation" set cd_sollicitation = 'SOL' where id_st_affect = 5 and id_affectation >= 1221 and id_affectation < 1239;
+update "tg_affectation" set cd_sollicitation = 'SSR' where id_st_affect = 5 and id_affectation >= 1239 and id_affectation < 1251;
+update "tg_affectation" set cd_sollicitation = 'RET' where id_st_affect = 5 and id_affectation >= 1251 and id_affectation < 1258;
+update "tg_affectation" set cd_sollicitation = 'REF' where id_st_affect = 5 and id_affectation >= 1258 and id_affectation < 1263;
+update "tg_affectation" set cd_sollicitation = 'ENC' where id_st_affect = 5 and id_affectation >= 1263 and id_affectation < 1268;
+update "tg_affectation" set cd_sollicitation = 'ACC' where id_st_affect = 5 and id_affectation >= 1268;
+update "tg_affectation" set cd_sts_evaluation = 'AFR' where id_st_affect = 5;
+update "tg_affectation" set cd_sts_evaluation = 'ENC' where id_st_affect = 5 and cd_sollicitation = 'ACC' and id_affectation >= 1276 and id_affectation < 1289;
+update "tg_affectation" set cd_sts_evaluation = 'SOM' where id_st_affect = 5 and cd_sollicitation = 'ACC' and id_affectation >= 1289;
+
+INSERT INTO "tg_affectation"(id_affectation, id_profil, id_st_affect, cd_sts_evaluation, id_projet, id_personne, cd_sollicitation, id_propose)
+	VALUES (1299, 16, 5, 'SOM', 65, 592, 'ACC', 606),(1300, 16, 5, 'SOM', 65, 593, 'ACC', 607);
+
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 917;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 918;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 903;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 904;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 905;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 906;
 UPDATE public.tg_personne
 SET lb_nom_usage='CPSP1', lb_prenom='cpsp1'
 WHERE id_personne=11;

@@ -23,6 +23,9 @@ require('../js/iris-js/jquery.mCustomScrollbar.concat.min')
 // require('../js/iris-js/jquery.sticky')
 require('../js/iris-js/main')
 
+require('bootstrap-datepicker')
+require('bootstrap-datepicker/js/locales/bootstrap-datepicker.fr')
+
 // jQuery.htmlPrefilter = function( html ) {
 //     return html;
 // };

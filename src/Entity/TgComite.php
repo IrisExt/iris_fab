@@ -159,7 +159,6 @@ class TgComite
      */
     private $blDroitProjetOuvert = false;
 
-
     /**
      * @var int|null
      *
@@ -177,9 +176,16 @@ class TgComite
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dh_echeance_evaluation", type="date", nullable=true)
+     * @ORM\Column(name="dh_rendu_eval_rl", type="date", nullable=true)
      */
-    private $dhEcheanceEvaluation;
+    private $dhRenduEvalRl;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dh_rendu_rapport", type="date", nullable=true)
+     */
+    private $dhRenduRapport;
 
     /**
      * @var TrLangue
@@ -200,12 +206,11 @@ class TgComite
         $this->idHabilitation = new ArrayCollection();
         $this->idSeance = new ArrayCollection();
         $this->avisPossibles = new ArrayCollection();
-
     }
 
 
 
-    public function __toString():string
+    public function __toString(): string
     {
         return $this->getLbAcr();
     }
@@ -534,17 +539,33 @@ class TgComite
     /**
      * @return \DateTime|null
      */
-    public function getDhEcheanceEvaluation(): ?\DateTime
+    public function getDhRenduEvalRl(): ?\DateTime
     {
-        return $this->dhEcheanceEvaluation;
+        return $this->dhRenduEvalRl;
     }
 
     /**
-     * @param \DateTime|null $dhEcheanceEvaluation
+     * @param \DateTime|null $dhRenduEvalRl
      */
-    public function setDhEcheanceEvaluation(?\DateTime $dhEcheanceEvaluation): void
+    public function setDhRenduEvalRl(?\DateTime $dhRenduEvalRl): void
     {
-        $this->dhEcheanceEvaluation = $dhEcheanceEvaluation;
+        $this->dhRenduEvalRl = $dhRenduEvalRl;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDhRenduRapport(): ?\DateTime
+    {
+        return $this->dhRenduRapport;
+    }
+
+    /**
+     * @param \DateTime|null $dhRenduRapport
+     */
+    public function setDhRenduRapport(?\DateTime $dhRenduRapport): void
+    {
+        $this->dhRenduRapport = $dhRenduRapport;
     }
 
     /**
@@ -583,5 +604,4 @@ class TgComite
     {
         return $this->blDroitProjetOuvert;
     }
-
 }

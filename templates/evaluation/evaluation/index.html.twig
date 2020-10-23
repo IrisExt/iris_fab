@@ -86,8 +86,83 @@
     #langueStyle {
         text-align: center;
     }
+
+    #echeanceModalContent {
+        border: none;
+    }
+
+    #echeanceModalBody {
+        display: flex;
+    }
+
+    #echeanceModalHeader {
+        text-align: center;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    #echeanceModalFooter {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border: none;
+    }
+
+    #echeanceModalDateDuJour {
+        color: #fde19a;
+        display: contents;
+    }
+
+    #echeanceModalDateComite {
+        color: red;
+        display: contents;
+    }
+
+    #echeanceModalNewDateComite {
+        color: blueviolet;
+        display: contents;
+    }
+
+    #echeanceModalDateDuJourLegende,
+    #echeanceModalDateComiteLegende,
+    #echeanceModalNewDateComiteLegende {
+        color: black;
+    }
+
+    #echeanceModalBodyLegende {
+        flex-grow: 1;
+        margin-left: 25px;
+    }
+
+    #echeanceModalBodyTitleLegende {
+        text-align: center;
+        padding-top: 10px;
+        border-bottom: 1px solid black;
+    }
+
+    #echeanceModalBodyContentLegende {
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .dateEcheanceComite {
+        background-color: red;
+        color: white;
+    }
+
+    #echeanceModalNewDateComiteLegende {
+        display: inline-flex;
+    }
+
+    #newDateComite {
+        width: 75px;
+        border: none;
+        padding-top: 2px;
+        margin-left: 2px;
+    }
 </style>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 {% endblock %}
 
 {% block navmenu %}
@@ -172,6 +247,7 @@
                             {% include 'evaluation/evaluation/evaluation.criticite.html.twig' with criticite %}
                         </td>
                         <td id="evaluationsStyle">
+                            {% if role == 'expert' %}
                             {% set experts = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert') %}
                             {% if experts|length > 10 %}
                             <i onclick="previous('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-left"
@@ -183,6 +259,33 @@
                             {% if experts|length > 10 %}
                             <i onclick="next('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-right"
                                 id="evaluationsNextStyle"></i>
+                            {% endif %}
+                            {% elseif role == 'rl' %}
+                            {% set experts = projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Rapporteur' or affect.idStAffect.lbNom == 'Lecteur') %}
+                            {% if experts|length > 10 %}
+                            <i onclick="previous('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-left"
+                                id="evaluationsPreviousStyle"></i>
+                            {% endif %}
+                            <div id="scroll_{{ projet.idProjet }}" class="evaluationsStatutStyle">
+                                {% include 'evaluation/evaluation/evaluation.panel.html.twig' with experts %}
+                            </div>
+                            {% if experts|length > 10 %}
+                            <i onclick="next('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-right"
+                                id="evaluationsNextStyle"></i>
+                            {% endif %}
+                            {% else %}
+                            {% set experts = projet.tgAffectations %}
+                            {% if experts|length > 10 %}
+                            <i onclick="previous('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-left"
+                                id="evaluationsPreviousStyle"></i>
+                            {% endif %}
+                            <div id="scroll_{{ projet.idProjet }}" class="evaluationsStatutStyle">
+                                {% include 'evaluation/evaluation/evaluation.panel.html.twig' with experts %}
+                            </div>
+                            {% if experts|length > 10 %}
+                            <i onclick="next('scroll_{{ projet.idProjet }}')" class="fa fa-2x fa-caret-right"
+                                id="evaluationsNextStyle"></i>
+                            {% endif %}
                             {% endif %}
                         </td>
                         <td id="rapporteurStyle">
@@ -228,22 +331,42 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="echeanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="echeanceModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        <div class="modal-content" id="echeanceModalContent">
+            <div class="modal-header bg-primary text-white" id="echeanceModalHeader">
+                <h4 class="modal-title">{{ 'date échéance comité'|upper }}</h4>
             </div>
-            <div class="modal-body">
-                ...
+            <div class="modal-body" id="echeanceModalBody">
+                {% set dateEcheanceComite = projets[0].idComite.dhRenduEvalRl %}
+                <div id="datepicker" data-date-echeance-comite="{{ dateEcheanceComite|date('d/m/Y') }}"></div>
+                <div id="echeanceModalBodyLegende">
+                    <div id="echeanceModalBodyTitleLegende">
+                        <h4>Légende</h4>
+                    </div>
+                    <div id="echeanceModalBodyContentLegende">
+                        <div class="fa fa-circle fa-stack-1x" id="echeanceModalDateDuJour">
+                            <span id="echeanceModalDateDuJourLegende">Date du jour : {{ "now"|date("d/m/Y") }}</span>
+                        </div>
+                        <br>
+                        <div class="fa fa-circle fa-stack-1x" id="echeanceModalDateComite">
+                            <span id="echeanceModalDateComiteLegende">Date échéance comité :
+                                {{ dateEcheanceComite|date("d/m/Y") }}</span>
+                        </div>
+                        <br>
+                        <div class="fa fa-circle fa-stack-1x" id="echeanceModalNewDateComite">
+                            <span id="echeanceModalNewDateComiteLegende">Nouvelle date échéance comité : <input
+                                    type="text" id="newDateComite" disabled /></span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-footer" id="echeanceModalFooter">
+                <button type="button" class="btn btn-light" data-dismiss="modal"
+                    id="echeanceModalCloseButton">Fermer</button>
+                <button type="button" class="btn btn-danger" id="echeanceModalSaveButton" onclick="saveNewDateComite()"
+                    data-id-comite="{{ projets[0].idComite.idComite }}"
+                    data-path="{{ path('update_ajax_date_comite') }}">Sauvegarder</button>
             </div>
         </div>
     </div>
@@ -258,40 +381,77 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
 <script>
     $(document).ready(function () {
-        (function ($) {
-            $('#filter').keyup(function () {
-                var rex = new RegExp($(this).val(), 'i');
-                $('.searchable tr').hide();
-                $('.searchable tr').filter(function () {
-                    return rex.test($(this).text());
-                }).show();
-            })
-        }(jQuery));
+        $('#filter').keyup(function () {
+            var rex = new RegExp($(this).val(), 'i');
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function () {
+                return rex.test($(this).text());
+            }).show();
+        })
+    }(jQuery));
 
-        $("#sortTable")
-            .tablesorter({
-                // Enable filter
-                widgets: ["filter"],
-                widgetOptions: {
-                    filter_columnFilters: false,
-                    filter_searchDelay: 60,
-                    filter_useParsedData: true
-                },
-                sortList: [
-                    [1]
-                ]
-            });
-    });
+    $("#sortTable")
+        .tablesorter({
+            // Enable filter
+            widgets: ["filter"],
+            widgetOptions: {
+                filter_columnFilters: false,
+                filter_searchDelay: 60,
+                filter_useParsedData: true
+            },
+            sortList: [
+                [1]
+            ]
+        });
+
     function next(scrollId) {
         content = document.getElementById(scrollId);
         content.scrollLeft += 28;
     }
+
     function previous(scrollId) {
         content = document.getElementById(scrollId);
         content.scrollLeft -= 28;
     }
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
+
+    var echeanceComite = $('#datepicker').data('dateEcheanceComite');
+
+    $('#datepicker').datepicker({
+        language: 'fr',
+        calendarWeeks: true,
+        todayHighlight: true,
+        clearBtn: true,
+        startDate: new Date(),
+        beforeShowDay: function (date) {
+            formattedDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+            if (formattedDate == echeanceComite) {
+                return { classes: 'dateEcheanceComite' };
+            }
+            return;
+        }
+    });
+
+    $('#datepicker').datepicker().on('changeDate', function (e) {
+        $('#newDateComite').val(e.format(0, "dd/mm/yyyy"));
+    });
+
+    function saveNewDateComite() {
+        idComite = $('#echeanceModalSaveButton').data('idComite');
+        path = $('#echeanceModalSaveButton').data('path');
+        newDateComite = document.getElementById("newDateComite").value;
+        $.ajax({
+            url: path,
+            type: 'POST',
+            data: 'idComite=' + idComite + '&newDateComite=' + newDateComite,
+            success: function (response) {
+                $('.close').trigger('click');
+                document.location.reload(true);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    }
+
 </script>
 {% endblock %}

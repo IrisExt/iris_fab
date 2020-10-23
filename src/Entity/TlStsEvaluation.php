@@ -44,6 +44,11 @@ class TlStsEvaluation
     private $colorHexa;
 
     /**
+     * @ORM\Column(name="ordre_affichage", type="smallint", nullable=true)
+     */
+    private $ordreAffichage;
+
+    /**
      * @ORM\Column(name="ordre", type="smallint")
      */
     private $ordre;
@@ -85,6 +90,18 @@ class TlStsEvaluation
     public function setColorHexa(string $colorHexa): self
     {
         $this->colorHexa = $colorHexa;
+
+        return $this;
+    }
+
+    public function getOrdreAffichage(): ?int
+    {
+        return $this->ordreAffichage;
+    }
+
+    public function setOrdreAffichage(int $ordreAffichage): self
+    {
+        $this->ordreAffichage = $ordreAffichage;
 
         return $this;
     }
