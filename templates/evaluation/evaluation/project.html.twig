@@ -174,9 +174,9 @@
                                         {% if expert.dhRendu is not null %}
                                         {{ expert.dhRendu | date('d/m/Y') }}
                                         {% set difference = date(expert.dhRendu).diff(date("now")) %}
-                                        {% elseif project.idComite.dhEcheanceEvaluation  is not null %}
-                                        {{ project.idComite.dhEcheanceEvaluation | date('d/m/Y') }}
-                                        {% set difference = date(project.idComite.dhEcheanceEvaluation).diff(date("now")) %}
+                                        {% elseif project.idComite.dhRenduEvalRL  is not null %}
+                                        {{ project.idComite.dhRenduEvalRL | date('d/m/Y') }}
+                                        {% set difference = date(project.idComite.dhRenduEvalRL).diff(date("now")) %}
                                         {% else %}
                                         {{ dhrenduphase | date('d/m/Y') }}
                                         {% set difference = date(dhrenduphase).diff(date("now")) %}
@@ -218,7 +218,7 @@
                                             data-idAffectation="{{ expert.idAffectation }}"
                                             data-idProjet="{{ project.idProjet }}"
                                             data-dhrenduexpert="{{expert.dhRendu | date('m/d/Y')}}"
-                                            data-dhrenducomite="{{project.idComite.dhEcheanceEvaluation | date('m/d/Y')}}"
+                                            data-dhrenducomite="{{project.idComite.dhRenduEvalRL | date('m/d/Y')}}"
                                             data-dhrenduphase="{{dhrenduphase | date('m/d/Y')}}" data-toggle="modal"
                                             data-target="#evaluationModal">
                                             <span class="adminpro-icon adminpro-calendar"></span>
