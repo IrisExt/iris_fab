@@ -14,6 +14,7 @@ use App\Manager\ComiteManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Helper\StringHelperTrait;
+use App\Manager\TgProjetManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EvaluationController extends BaseController
@@ -27,13 +28,18 @@ class EvaluationController extends BaseController
      * @example /evaluations/1?role=expert Accés aux évaluations des experts
      * @example /evaluations/1?role=rl Accés aux évaluations des rapporteurs/lecteurs
      */
-    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite)
+    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgProjetManager $tgProjetManager, TgComite $tgComite)
     {
-        $lstProjets = $affectationManager->getComiteProjets($tgComite);
+        $user = $this->getUserConnect();
+        if ($request->query->get('portefeuille', false)) {
+            $lstProjets = $tgProjetManager->getPortefeuilleRL($user->getIdPersonne(), $tgComite->getIdComite());
+        } else {
+            $lstProjets = $affectationManager->getComiteProjets($tgComite);
+        }
         $listeProjet = [];
         foreach ($lstProjets as $projet) {
             $projetWithCriticite = $affectationManager->setCriticiteToProject($projet);
-            if (!$affectationManager->utilisateurEstEnConflit($projet, $this->getUserConnect())) {
+            if (!$affectationManager->utilisateurEstEnConflit($projet, $user)) {
                 array_push($listeProjet, $projetWithCriticite);
             }
         }

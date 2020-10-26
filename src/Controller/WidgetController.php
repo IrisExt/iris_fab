@@ -384,38 +384,33 @@ class WidgetController extends BaseController
     }
 
     public function widgetSuiviExpertiseP(){
-        return $this->widgetSuiviExpertise(4, true);
+        return $this->widgetSuiviExpertise(4, true, true);
     }
 
     public function widgetSuiviExpertiseVP(){
-        return $this->widgetSuiviExpertise(8, true);
+        return $this->widgetSuiviExpertise(8, true, true);
     }
 
     public function widgetSuiviExpertiseM(){
-        return $this->widgetSuiviExpertise(9, false);
+        return $this->widgetSuiviExpertise(9, false, true);
     }
 
-    public function widgetSuiviExpertise(int $idProfil, $lienComite = true){
-        $listeComitesAffiches = [];
-        $lienPortefeuille = true;
+    public function widgetSuiviExpertise(int $idProfil, $lienComite = true, $lienPortefeuille = false){
+        $comitesFinaux = [];
         $habilitation = $this->habilitationsPersonne($this->profilEntity($idProfil));
         $comites = $habilitation->getIdComite();
         /** @var TgComite $comite */
         foreach($comites as $comite) {
             $niveauEnCours = $comite->getIdAppel()->getNiveauEnCours();
             if ($niveauEnCours->getIdTypeNiveu()->getLbNom() !== 'Soumission') {
-                if($lienPortefeuille || $lienComite) {
-                    $listeComitesAffiches[] = [
-                        'comite' => $comite,
-                        'lien_portefeuille' => $lienPortefeuille,
-                        'lien_comite' => $lienComite,
-                    ];
-                }
+                $comitesFinaux[] = $comite;
             }
         }
 
         return $this->render('widgets/suivi_eval/suivi_expertise.html.twig',[
-            'listeComitesAffiches' => $listeComitesAffiches
+            'comites' => $comitesFinaux,
+            'lienComite' => $lienComite,
+            'lienPortefeuille' => $lienPortefeuille,
         ]);
     }
 
