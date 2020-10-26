@@ -1,0 +1,25 @@
+image: php:7.4
+
+cache:
+  paths:
+    - vendor/
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  # Set php.ini configuration
+  - mv php.ini-dev "$PHP_INI_DIR/php.ini"
+  - apt-get update -yqq
+  - apt-get install -yqq libzip-dev libpng-dev
+  # Install PHP extensions
+  - docker-php-ext-install zip gd sockets
+  # Install and run Composer
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install
+
+test:unitaire:
+  script:
+    - vendor/bin/phpunit tests/Evaluation
