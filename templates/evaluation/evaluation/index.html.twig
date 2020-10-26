@@ -332,7 +332,7 @@
                 <h4 class="modal-title">{{ 'date échéance comité'|upper }}</h4>
             </div>
             <div class="modal-body" id="echeanceModalBody">
-                {% set dateEcheanceComite = projets[0].idComite.dhRenduEvalRl %}
+                {% set dateEcheanceComite = comite.dhRenduEvalRl %}
                 <div id="datepicker" data-date-echeance-comite="{{ dateEcheanceComite|date('d/m/Y') }}"></div>
                 <div id="echeanceModalBodyLegende">
                     <div id="echeanceModalBodyTitleLegende">
@@ -359,7 +359,7 @@
                 <button type="button" class="btn btn-light" data-dismiss="modal"
                     id="echeanceModalCloseButton">Fermer</button>
                 <button type="button" class="btn btn-danger" id="echeanceModalSaveButton" onclick="saveNewDateComite()"
-                    data-id-comite="{{ projets[0].idComite.idComite }}"
+                    data-id-comite="{{ comite.idComite }}"
                     data-path="{{ path('update_ajax_date_comite') }}">Sauvegarder</button>
             </div>
         </div>
