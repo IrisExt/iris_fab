@@ -74,3 +74,4 @@ security:
         - { path: ^/(%app_locales%)/constces/changer/sollicit/, role: [ROLE_CPS, ROLE_PRES, ROLE_VISE_PRES] }
         - { path: ^/(%app_locales%)/constces/gstMembre/, role: [ROLE_CPS, ROLE_PRES, ROLE_VISE_PRES] }
         - { path: ^/(%app_locales%)/personne/recherche/membre/, role: [ROLE_CPS, ROLE_PRES, ROLE_VISE_PRES] }
+        - { path: ^/(%app_locales%)/evaluations/, role: [ROLE_USER] }
