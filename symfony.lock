@@ -264,9 +264,6 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v3.0.0"
     },
-    "laminas/laminas-zendframework-bridge": {
-        "version": "1.1.1"
-    },
     "maennchen/zipstream-php": {
         "version": "2.1.0"
     },
@@ -929,9 +926,6 @@
     },
     "twig/twig": {
         "version": "v2.11.2"
-    },
-    "webimpress/safe-writer": {
-        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.4.0"

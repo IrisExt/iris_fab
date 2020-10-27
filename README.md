@@ -4,14 +4,16 @@
 
 ### Tests unitaires
 
-#### Tous
+#### Commandes
+
+Exécuter tous les tests de l'application:
 
 ```sh
 vendor/bin/phpunit
 ```
 
-#### Module Evaluation
+Exécuter seulement un fichier de test
 
 ```sh
-vendor/bin/phpunit tests/Evaluation
+vendor/bin/phpunit %CHEMION_VERS_MON_FICHIER%/%MON_FICHIER%
 ```
