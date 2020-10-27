@@ -8,6 +8,9 @@ evaluation:
   action: 'Action'
   langue: 'Langue'
   recuse: 'Récusé'
+  nom: 'Nom'
+  entite: 'Entité'
+  cp: 'CP'
   form:
     status: 'statut'
     evaluateur: 'evaluateur'

@@ -4165,3 +4165,126 @@ select:invalid[multiple] {
 .hidden_1 {
 	display: none;
 }
+
+/********************************************************************************************/
+#open {
+	position: fixed;
+	z-index: 1;
+	top: 60px;
+	right: 0;
+  }
+
+  #mySidenav .row {
+	  margin-left: 30px;
+  }
+
+.sidenav {
+	height: 700px;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 60px;
+	right: 0;
+	background-color: #fff;
+	overflow-x: hidden;
+	padding-top: 8px;
+  }
+  
+  .sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	font-size: 36px;
+	margin-left: 30px;
+  }
+
+  .sidenav .sidenav-head {
+	  margin-bottom: 30px;
+  }
+  
+  @media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+  }
+
+  .chip {
+	color: #fff;
+	display: inline-block;
+	padding: 0 25px;
+	height: 56px;
+	font-size: 12px;
+	line-height: 50px;
+	background-color: #bdbdbd;
+	z-index: 3;
+  }
+
+  #loader {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	z-index: 1;
+	width: 150px;
+	height: 150px;
+	margin: -75px 0 0 -75px;
+	border: 16px solid #f3f3f3;
+	border-radius: 50%;
+	border-top: 16px solid #3498db;
+	width: 120px;
+	height: 120px;
+	-webkit-animation: spin 2s linear infinite;
+	animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+	0% { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+  }
+  
+  /* Add animation to "page content" */
+  .animate-bottom {
+	position: relative;
+	-webkit-animation-name: animatebottom;
+	-webkit-animation-duration: 1s;
+	animation-name: animatebottom;
+	animation-duration: 1s
+  }
+  
+  @-webkit-keyframes animatebottom {
+	from { bottom:-100px; opacity:0 } 
+	to { bottom:0px; opacity:1 }
+  }
+  
+  @keyframes animatebottom { 
+	from{ bottom:-100px; opacity:0 } 
+	to{ bottom:0; opacity:1 }
+  }
+
+  .mb-5 {
+	  margin-bottom: 5px;;
+  }
+
+  .mb-15 {
+	  margin-bottom: 15px;;
+  }
+
+  .b-15 {
+	  bottom: 15px;
+  }
+  .mt-15 {
+	  margin-top: 15px;;
+  }
+  .mgt-5 {
+	  margin-top: 5px;;
+  }
+
+  .t-15 {
+	  top: 15px;
+  }
+
+  .modal-title {
+	text-align: center;
+  }
+  

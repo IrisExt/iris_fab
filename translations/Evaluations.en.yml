@@ -8,3 +8,6 @@ evaluation:
   action: 'Action'
   langue: 'Language'
   recuse: 'Challenged'
+  nom: 'Name'
+  entite: 'Entity'
+  cp: 'CP'

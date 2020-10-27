@@ -27,14 +27,14 @@ class TrLangue
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_nom_fr", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_nom_fr", type="string", length=50, nullable=true)
      */
     private $lbLangue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_nom_en", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_nom_en", type="string", length=50, nullable=true)
      */
     private $lbNomEn;
 

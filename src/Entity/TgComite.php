@@ -197,6 +197,11 @@ class TgComite
      */
     private $idLangue;
 
+    /**
+     * @ORM\OneToMany(targetEntity="TgMcCes", mappedBy="idComite")
+     */
+    private $idMcCes;
+
 
     public function __construct()
     {
@@ -206,6 +211,7 @@ class TgComite
         $this->idHabilitation = new ArrayCollection();
         $this->idSeance = new ArrayCollection();
         $this->avisPossibles = new ArrayCollection();
+        $this->idMcCes = new ArrayCollection();
     }
 
 
@@ -604,4 +610,36 @@ class TgComite
     {
         return $this->blDroitProjetOuvert;
     }
+
+    /**
+     * @return Collection|TgMcCes[]
+     */
+    public function getIdMcCes(): Collection
+    {
+        return $this->idMcCes;
+    }
+
+    public function addIdMcCe(TgMcCes $idMcCe): self
+    {
+        if (!$this->idMcCes->contains($idMcCe)) {
+            $this->idMcCes[] = $idMcCe;
+            $idMcCe->setTgComite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIdMcCe(TgMcCes $idMcCe): self
+    {
+        if ($this->idMcCes->contains($idMcCe)) {
+            $this->idMcCes->removeElement($idMcCe);
+            // set the owning side to null (unless already changed)
+            if ($idMcCe->getTgComite() === $this) {
+                $idMcCe->setTgComite(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Entity\TgComite;
 use App\Entity\TgProjet;
 use App\Entity\TgPersonne;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Manager\ProjetManager;
 use App\Manager\AffectationManager;
 use App\Manager\TlStsEvaluationManager;
 use App\Manager\FtCommandeAppManager;
@@ -136,5 +137,18 @@ class EvaluationController extends BaseController
     {
         $success = $comiteManager->updateDateComite($request->request->get('idComite'), $request->request->get('newDateComite'));
         return new JsonResponse(['success' => $success]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/get_ajax_booklet", name="get_ajax_booklet", methods={"GET","POST"})
+     */
+    public function getBooklet (Request $request, ProjetManager $projetManager) {
+        $project = $projetManager->getProject($request->request->get('idProjet'));
+
+        return $this->render('evaluation/evaluation/modal/booklet.html.twig', [
+                'project'=> $project,
+            ]
+        );
     }
 }
