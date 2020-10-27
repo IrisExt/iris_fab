@@ -111,9 +111,11 @@
                                 {% for expert in project.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert') %}
                                 {% set habilitation = project.idHabilitation|filter(hab => hab.idPersonne == expert.idPersonne) | sort((a, b) => a.dhMaj > b.dhMaj) | first %}
                                 {% set dhrenduphase = null %}
-                                {% for phase in habilitation.idPhase %}
-                                {% set dhrenduphase = phase.dhRenduEvalRL %}
-                                {% endfor %}
+                                {% if habilitation != false %}
+                                    {% for phase in habilitation.idPhase %}
+                                    {% set dhrenduphase = phase.dhRenduEvalRL %}
+                                    {% endfor %}
+                                {% endif %}
                                 <tr>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
