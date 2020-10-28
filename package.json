@@ -33,6 +33,7 @@
     "jquery-sticky": "^1.0.4",
     "mmenu-js": "^8.5.18",
     "node-forge": "^0.10.0",
-    "sass-loader": "^9.0.1"
+    "sass-loader": "^9.0.1",
+    "tablesorter": "^2.31.3"
   }
 }

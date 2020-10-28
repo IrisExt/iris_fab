@@ -1,10 +1,26 @@
 evaluation:
-  evaluation: 'Evaluation'
-  evaluations: 'Evaluations'
-  projet: 'Project'
-  criticite: 'Criticity'
-  rapporteur: 'Rapporteur'
-  lecteurs: 'Reader(s)'
-  action: 'Action'
-  langue: 'Language'
-  recuse: 'Challenged'
+  evaluation: "Evaluation"
+  evaluations: "Evaluations"
+  projet: "Project"
+  criticite: "Criticity"
+  rapporteur: "Protractor"
+  lecteurs: "Reader(s)"
+  action: "Action"
+  langue: "Language"
+  recuse: "Challenged"
+  actions:
+    echeance: "Deadline"
+    legende: "See legend"
+    recherche: "Research"
+  modal:
+    titre: "committee deadline"
+    legende: "Legend"
+    date:
+      today: "Today's date"
+      eval: "End date of evaluation phase"
+      comite: "Committee deadline"
+      new: "New committee deadline"
+      placeholder: "no selection"
+      find: "date not specified"
+    close: "Close"
+    save: "Save"
