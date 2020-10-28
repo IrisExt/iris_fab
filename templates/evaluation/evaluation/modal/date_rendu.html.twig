@@ -2,7 +2,7 @@
   {{ include('evaluation/evaluation/modal/contact_personne.html.twig', {personne: tgPersonne}) }}
 </div></br>
 <div class="row align-center">
-  <h4 class="modal-title"><b>Modifier la date de rendu de l'évaluateur</b></h4>
+  <h4 class="modal-title"><b>{{ 'evaluation.modifier_date_rendu'|trans }}</b></h4>
 </div></br></br>
 <div class="row">
   <div class="col-md-5">
@@ -24,11 +24,11 @@
       </div>
       <div class="days" data-group="days"></div>
       <div></br></br>
-        <p>Légende</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #1d86c8"></i> Date du jour</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #FFCC99"></i> Date rendu de l'évaluation</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #99FF99"></i> Date du comité</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #FFFF99"></i> Date de l'appel</p>
+        <p>{{ 'evaluation.legende'|trans }}</p>
+        <p><i class="fa fa-2x fa-circle" style="color: #1d86c8"></i> {{ 'evaluation.date_jour'|trans }}</p>
+        <p><i class="fa fa-2x fa-circle" style="color: #FFCC99"></i> {{ 'evaluation.date_rendu_evaluateur'|trans }}</p>
+        <p><i class="fa fa-2x fa-circle" style="color: #99FF99"></i> {{ 'evaluation.date_comite'|trans }}</p>
+        <p><i class="fa fa-2x fa-circle" style="color: #FFFF99"></i> {{ 'evaluation.date_appel'|trans }}</p>
       </div>
     </div>
     <!-- Responsive calendar - END -->
@@ -55,7 +55,7 @@
           <input type="text" name="dhrendu" id="dhrendusent" class="form-control js-datepicker" placeholder="DD/MM/YYYY" required readonly value="">
       </div></br></br></br></br>
       <div class="col-md-12">
-          <button type="submit" class="btn btn-warning send-date" data-id="{{ path('set_ajax_date_rendu') }}" data-idprojet="{{idProjet}}" data-idaffectation="{{idAffectation}}" data-idpersonne="{{ tgPersonne.idPersonne }}">Modifier</button>
+          <button type="submit" class="btn btn-warning send-date" data-id="{{ path('set_ajax_date_rendu') }}" data-idprojet="{{idProjet}}" data-idaffectation="{{idAffectation}}" data-idpersonne="{{ tgPersonne.idPersonne }}">{{ 'evaluation.modifier'|trans }}</button>
       </div>
     </div>
     <!-- Responsive calendar - END -->

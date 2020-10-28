@@ -86,8 +86,6 @@ class EvaluationController extends BaseController
      */
     public function setDateRendu(Request $request, AffectationManager $affectationManager)
     {
-        //$tgPersonne = $this->getEm()->getRepository(TgPersonne::class)->findOneBy(['idPersonne' => $request->request->get('idPersonne')]);
-        //$project = $affectationManager->getProject(55);
         $success = $affectationManager->setDateRendu($request->request->get('idPersonne'), $request->request->get('idAffectation'), $request->request->get('dhRendu'));
 
         return new JsonResponse(['success' => $success]);

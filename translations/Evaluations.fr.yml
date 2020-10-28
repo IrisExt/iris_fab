@@ -11,6 +11,21 @@ evaluation:
   nom: 'Nom'
   entite: 'Entité'
   cp: 'CP'
+  titre: 'Titre'
+  outil_financement: 'Outil de Financement'
+  categorie_rd: 'Catégorie R&D'
+  experts_recuse: 'Experts Récusés'
+  resume: 'Résumé'
+  erc: 'ERC'
+  mot_cle_ces: 'Mot(s) Clé(s) CES:'
+  modifier_date_rendu: "Modifier la date de rendu de l'évaluateur"
+  legende: 'Légende'
+  date_jour: 'Date du jour'
+  date_rendu_evaluateur: "Date rendu de l'évaluation"
+  date_comite: 'Date du comité'
+  date_appel: "Date de l'appel"
+  modifier: 'Modifier'
+  cv: 'Curriculum Vitae'
   form:
     status: 'statut'
     evaluateur: 'evaluateur'
