@@ -8,3 +8,21 @@ evaluation:
   action: 'Action'
   langue: 'Language'
   recuse: 'Challenged'
+  nom: 'Name'
+  entite: 'Entity'
+  cp: 'CP'
+  titre: 'Title'
+  outil_financement: 'Funding Tool'
+  categorie_rd: 'R&D Category'
+  experts_recuse: 'Rejected Experts'
+  resume: 'Summary'
+  erc: 'ERC'
+  mot_cle_ces: 'CES Key(s) Word(s):'
+  modifier_date_rendu: "Change the reviewer's rendering date"
+  legende: 'Legend'
+  date_jour: 'Current day'
+  date_rendu_evaluateur: "tTe reviewer's rendering date"
+  date_comite: 'Committee date'
+  date_appel: "Call date"
+  modifier: 'Modify'
+  cv: 'Curriculum Vitae'

@@ -8,24 +8,6 @@
 {% endblock %}
 {% block body %}
 {% include "evaluation/popup.html.twig" %}
-{% include "evaluation/popup_search.html.twig" %}
-<div class="modal fade" id="modalRecherche" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl-large" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-close-area modal-close-df">
-                    <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
-                </div>
-            </div>
-            <div class="modal-body mb-0 p-0">
-                <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
-                    <iframe class="embed-responsive-item" src="{{ path('search_personnes') }}" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="advanced-form-area mg-b-15">
     <div class="container-fluid">
         <div class="row">
@@ -41,11 +23,11 @@
                                 <span style="display: inline-block;">
                                     {% include 'evaluation/evaluation/evaluation.legende.html.twig' with statusEvaluations %}
                                 </span>
-                                <a class="btn btn-default" href="{{ path('comite_nv') }}"><i class="fa fa-envelope"></i>
+                                <a class="btn btn-primary" href="{{ path('comite_nv') }}"><i class="fa fa-envelope"></i>
                                     {{ 'evaluation.actions.relance'|trans }}</a>
-                                <a class="btn btn-default" href="{{ path('comite_nv') }}"><i class="fa fa-calendar"></i>
+                                <a class="btn btn-primary" href="{{ path('comite_nv') }}"><i class="fa fa-calendar"></i>
                                     {{ 'evaluation.actions.echeance'|trans }}</a>
-                                <a class="btn btn-default" href="#" data-toggle="modal" data-target="#modalRecherche"><i
+                                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalRecherche"><i
                                         class="fa fa-plus"></i> {{ 'evaluation.actions.ajout'|trans }}</a>
                             </div>
                         </div>
@@ -131,9 +113,8 @@
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-2" style="word-wrap: break-word;">
-                                        <a href="#" id="show_cv" type="button" data-id="{{ path('get_cv_personne') }}"
-                                            data-idpersonne="{{ expert.idPersonne.idPersonne }}" data-toggle="modal"
-                                            data-target="#evaluationCv">
+                                        <a href="#" class="show_cv" type="button" data-id="{{ path('get_cv_personne') }}"
+                                            data-idpersonne="{{ expert.idPersonne.idPersonne }}">
                                             <i class="fa fa-file-text-o"></i>
                                             <span>{{ expert.idPersonne.lbNomUsage  ~" "~ expert.idPersonne.lbPrenom }}</span>
                                         </a>
@@ -195,10 +176,10 @@
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
-                                        <a href="#" id="show_comments" type="button"
-                                            data-id="{{ path('get_ajax_comment') }}" data-toggle="modal"
+                                        <a href="#" class="show_comments" type="button"
+                                            data-id="{{ path('get_ajax_comment') }}"
                                             data-idpersonne="{{ expert.idPersonne.idPersonne }}"
-                                            data-idprojet="{{ project.idProjet }}" data-target="#evaluationModal">
+                                            data-idprojet="{{ project.idProjet }}">
                                             <span class="adminpro-icon adminpro-chat-pro"></span>
                                             <!--i class="material-icons">chat_bubble_outline</i-->
                                         </a>
@@ -214,15 +195,14 @@
                                             <span class="adminpro-icon adminpro-danger-error"></span>
                                             <!--i class="material-icons">block</i-->
                                         </a>
-                                        <a href="#" id="show_date_rendu" type="button"
+                                        <a href="#" class="show_date_rendu" type="button"
                                             data-id="{{ path('get_ajax_date_rendu') }}"
                                             data-idpersonne="{{ expert.idPersonne.idPersonne }}"
                                             data-idAffectation="{{ expert.idAffectation }}"
                                             data-idProjet="{{ project.idProjet }}"
                                             data-dhrenduexpert="{{expert.dhRendu | date('m/d/Y')}}"
                                             data-dhrenducomite="{{project.idComite.dhRenduEvalRL | date('m/d/Y')}}"
-                                            data-dhrenduphase="{{dhrenduphase | date('m/d/Y')}}" data-toggle="modal"
-                                            data-target="#evaluationModal">
+                                            data-dhrenduphase="{{dhrenduphase | date('m/d/Y')}}">
                                             <span class="adminpro-icon adminpro-calendar"></span>
                                             <!--i class="material-icons">calendar_today</i-->
                                         </a>
@@ -241,7 +221,14 @@
 {% endblock %}
 
 {% block javascripts %}
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
 <script>
+    $('#mySidenav .sidenav-head .sidenav-head-title').html('');
     //modal pour la création reunion
     $('#membreModal').on('show.bs.modal', function (e) {
         // récuperer la route du lien modal  data-id
@@ -258,95 +245,18 @@
         });
     });
 
-    $(document).on("click", "#show_cv", function () {
-        var path = $(this).data('id');
-        $('.modal-title').text('Contact');
-        // AJAX request
-        $.ajax({
-            url: path,
-            type: 'POST',
-            data: 'idPersonne=' + $(this).data('idpersonne'),
-            success: function (response) {
-                // Add response in Modal body
-                $('.modal-body').html(response);
-                // Display Modal
-                $('#evaluationModal').modal('show');
+    $("#sortTable")
+        .tablesorter({
+            // Enable filter
+            widgets: ["filter"],
+            widgetOptions: {
+                filter_columnFilters: false,
+                filter_searchDelay: 60,
+                filter_useParsedData: true
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('Error : ' + errorThrown);
-            }
+            sortList: [
+                [1]
+            ]
         });
-    });
-
-    $(document).on("click", "#show_date_rendu", function () {
-        var path = $(this).data('id');
-        var dhrenduexpert = $(this).data('dhrenduexpert');
-        var dhrenducomite = $(this).data('dhrenducomite');
-        var dhrenduphase = $(this).data('dhrenduphase');
-
-        $('.modal-title').text('Contact');
-
-        // AJAX request
-        $.ajax({
-            url: path,
-            type: 'POST',
-            data: 'idPersonne=' + $(this).data('idpersonne') + '&idProjet=' + $(this).data('idprojet') + '&idAffectation=' + $(this).data('idaffectation'),
-            success: function (response) {
-                // Add response in Modal body
-                $('.modal-body').html(response);
-                // Display Modal
-                $('#evaluationModal').modal('show');
-
-                var dates = {}
-                dates[new Date(dhrenduexpert).getTime()] = 'date1'; /* date rendu  par exemple  mm/dd/yyy */
-                dates[new Date(dhrenducomite).getTime()] = 'date2';
-                dates[new Date(dhrenduphase).getTime()] = 'date3';
-
-                console.log(dhrenducomite);
-
-                $('.date_rendu_current').datepicker({
-                    /* minDate: new Date('2020/10/11') */
-                    minDate: new Date(),
-                    maxDate: new Date(dhrenducomite),
-                    dateFormat: 'd/mm/yy',
-                    numberOfMonths: 2,
-                    /* tu peux changer le nombre de mois visible ici c'est 3 */
-                    showButtonPanel: true,
-                    beforeShowDay: function (date) {
-                        var hlText = dates[date.getTime()];
-
-                        return (hlText) ? [true, hlText, hlText] : [true, '', ''];
-
-                    }
-                }).focus();
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('Error : ' + errorThrown);
-            }
-        });
-    });
-
-    $(document).on("click", "#show_comments", function () {
-        var path = $(this).data('id');
-
-        $('.modal-title').text('Contact');
-        console.log($(this).data());
-        // AJAX request
-        $.ajax({
-            url: path,
-            type: 'POST',
-            data: 'idPersonne=' + $(this).data('idpersonne') + '&idProjet=' + $(this).data('idprojet'),
-            success: function (response) {
-                // Add response in Modal body
-                $('.modal-body').html(response);
-                // Display Modal
-                $('#evaluationModal').modal('show');
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('Error : ' + errorThrown);
-            }
-        });
-    });
-
 </script>
 {% endblock %}

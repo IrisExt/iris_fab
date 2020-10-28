@@ -1,0 +1,168 @@
+
+{% trans_default_domain 'Evaluations' %}
+<div class="row">
+    <div class="row">
+        <div class="col-lg-10 col-md-10">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <b>{{ 'evaluation.projet'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        {{ project.lbAcro }}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <b>{{ 'evaluation.titre'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        {{ project.lbTitreEn }}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                            <b>{{ 'evaluation.outil_financement'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        {{ project.idInfraFi.lbAcro }}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseTwo">
+                            <b>{{ 'evaluation.categorie_rd'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        {{ project.idCatRd.lbCatRd }}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseThree">
+                                <b>{{ 'evaluation.experts_recuse'|trans }}</b>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseFive" class="panel-collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body">
+                            {% for expert in project.tgAffectations %}
+                                {{ expert.idPersonne.lbNomUsage ~ ' ' ~ expert.idPersonne.lbPrenom  }}{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="true" aria-controls="collapseTwo">
+                            <b>{{ 'evaluation.resume'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        {% for resume in project.tgResume %}
+                            {% if app.request.getLocale() is same as(resume.idLangue.cdLangue | lower) %}
+                                {{ resume.lbTexte }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="true" aria-controls="collapseThree">
+                            <b>{{ 'evaluation.erc'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseSeven" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        {% for erc in project.idMcErc %}
+                            {{ erc.lbNomFr }}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseHeight" aria-expanded="true" aria-controls="collapseThree">
+                            <b>{{ 'evaluation.mot_cle_ces'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseHeight" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        {% for ces in project.idComite.idMcCes %}
+                            {{ ces.lbMcCes }}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mgt-5">
+        <div class="table-responsive">
+            <!-- tableau -->
+            <table class="table" id="sortTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <h5>{{ 'evaluation.nom'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.entite'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.cp'|trans }}</h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for erc in project.idMcErc %}
+                    <tr>
+                        <td class="col-md-1" style="word-wrap: break-word;">
+                            {{ 'Bruno Raffin' }}
+                        </td>
+                        <td class="col-md-1" style="word-wrap: break-word;">
+                            {{ 'Institut national de la recherche en informatique' }}
+                        </td>
+                        <td class="col-md-1" style="word-wrap: break-word;">
+                            {{ '38401' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

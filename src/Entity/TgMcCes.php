@@ -39,7 +39,7 @@ class TgMcCes
     /**
      * @var \TgComite
      *
-     * @ORM\ManyToOne(targetEntity="TgComite")
+     * @ORM\ManyToOne(targetEntity="TgComite", inversedBy="idMcCes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_comite", referencedColumnName="id_comite")
      * })
