@@ -90,4 +90,28 @@ class TgProjetRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Retourne le portefeuille de projet d'une personne pour un comité selon les rôles indiqués
+     *
+     * @param integer $idPersonne
+     * @param integer $idComite
+     * @param array $roles
+     * @return TgProjet[]
+     */
+    public function getPortefeuille(int $idPersonne, int $idComite, array $roles = []): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->join('p.idHabilitation', 'h')
+            ->join('p.tgAffectations', 'a')
+            ->where('p.idComite = :idComite')
+            ->andWhere('h.idPersonne = :idPersonne')
+            ->andWhere('a.idPersonne = :idPersonne')
+            ->andWhere('a.idStAffect in (:roles)')
+            ->setParameter('idComite', $idComite)
+            ->setParameter('idPersonne', $idPersonne)
+            ->setParameter('roles', $roles)
+            ->getQuery();
+        return $qb->getResult();
+    }
+
 }

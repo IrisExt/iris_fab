@@ -4205,3 +4205,29 @@ WHERE id_st_affect=5;
 UPDATE public.tg_affectation
 SET id_type=2
 WHERE id_st_affect IN (1,2);
+
+UPDATE public.tg_appel_proj SET niveau_en_cours=2 WHERE id_appel=1;
+
+INSERT INTO tl_hab_projet VALUES (32, 10);
+INSERT INTO tl_hab_projet VALUES (39, 16);
+INSERT INTO tl_hab_projet VALUES (17, 3);
+INSERT INTO tl_hab_projet VALUES (33, 10);
+INSERT INTO tl_hab_projet VALUES (16, 10);
+INSERT INTO tl_hab_projet VALUES (32, 7);
+INSERT INTO tl_hab_projet VALUES (17, 1);
+INSERT INTO tl_hab_projet VALUES (33, 50);
+INSERT INTO tl_hab_projet VALUES (17, 51);
+INSERT INTO tl_hab_projet VALUES (33, 54);
+INSERT INTO tl_hab_projet VALUES (17, 55);
+INSERT INTO tl_hab_projet VALUES (32, 57);
+INSERT INTO tl_hab_projet VALUES (33, 61);
+INSERT INTO tl_hab_projet VALUES (32, 66);
+INSERT INTO tl_hab_projet VALUES (33, 59);
+
+INSERT INTO public.tl_hab_projet
+(id_habilitation, id_projet)
+VALUES(32, 12);
+
+INSERT INTO public.tg_affectation
+(id_affectation, id_profil, id_st_affect, cd_sts_evaluation, id_projet, id_personne, cd_sollicitation, id_type, id_propose, lb_cause, bl_new_modif, bl_doc_telecharge)
+VALUES(10000, 18, 1, NULL, 12, 36, NULL, 2, NULL, NULL, false, false);
