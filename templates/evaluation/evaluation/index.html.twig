@@ -336,7 +336,7 @@
                 <h4 class="modal-title">{{ 'evaluation.modal.titre'|trans|upper }}</h4>
             </div>
             <div class="modal-body" id="echeanceModalBody">
-                {% set dateEcheanceComite = projets[0].idComite.dhRenduEvalRl %}
+                {% set dateEcheanceComite = comite.dhRenduEvalRl %}
                 <div id="datepicker" data-date-echeance-comite="{{ dateEcheanceComite|date('d/m/Y') }}"
                     data-date-fin-eval="{{ dateFinPhaseEval|date('d/m/Y') }}"></div>
                 <div id="echeanceModalBodyLegende">
