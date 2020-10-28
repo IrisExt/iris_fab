@@ -50,6 +50,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "friendsofphp/php-cs-fixer": "^2.16",
         "hautelook/alice-bundle": "^2.7",
         "nelmio/alice": "^3.7",
         "symfony/debug-pack": "*",
