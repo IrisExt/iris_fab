@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Manager\ProjetManager;
 use App\Manager\AffectationManager;
 use App\Manager\TlStsEvaluationManager;
+use App\Manager\NiveauPhaseManager;
 use App\Manager\FtCommandeAppManager;
 use App\Manager\ComiteManager;
 use Knp\Component\Pager\PaginatorInterface;
@@ -29,7 +30,7 @@ class EvaluationController extends BaseController
      * @example /evaluations/1?role=expert Accés aux évaluations des experts
      * @example /evaluations/1?role=rl Accés aux évaluations des rapporteurs/lecteurs
      */
-    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgProjetManager $tgProjetManager, TgComite $tgComite)
+    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite, NiveauPhaseManager $niveauPhaseManager, TgProjetManager $tgProjetManager)
     {
         $user = $this->getUserConnect();
         if ($request->query->get('portefeuille', false)) {
@@ -47,11 +48,14 @@ class EvaluationController extends BaseController
 
         $statusEvaluations = $tlStsEvaluationManager->getAllStsEvaluations();
 
+        $dateFinPhaseEval = $niveauPhaseManager->findDateFinEvalByIdAppel($tgComite->getIdAppel());
+
         return $this->render('evaluation/evaluation/index.html.twig', [
             'comite' => $tgComite,
             'projets' => $listeProjet,
             'statusEvaluations' => $statusEvaluations,
-            'role' => $request->query->get('role')
+            'role' => $request->query->get('role'),
+            'dateFinPhaseEval' => $dateFinPhaseEval[0]['dhFin']
         ]);
     }
 
@@ -148,12 +152,12 @@ class EvaluationController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/get_ajax_booklet", name="get_ajax_booklet", methods={"GET","POST"})
      */
-    public function getBooklet (Request $request, ProjetManager $projetManager) {
+    public function getBooklet(Request $request, ProjetManager $projetManager)
+    {
         $project = $projetManager->getProject($request->request->get('idProjet'));
 
         return $this->render('evaluation/evaluation/modal/booklet.html.twig', [
-                'project'=> $project,
-            ]
-        );
+            'project' => $project,
+        ]);
     }
 }

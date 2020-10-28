@@ -1,50 +1,63 @@
 evaluation:
-  evaluation: 'Evaluation'
-  evaluations: 'Evaluations'
-  projet: 'Projet'
-  criticite: 'Criticité'
-  rapporteur: 'Rapporteur'
-  lecteurs: 'Lecteur(s)'
-  action: 'Action'
-  langue: 'Langue'
-  recuse: 'Récusé'
-  nom: 'Nom'
-  entite: 'Entité'
-  cp: 'CP'
-  titre: 'Titre'
-  outil_financement: 'Outil de Financement'
-  categorie_rd: 'Catégorie R&D'
-  experts_recuse: 'Experts Récusés'
-  resume: 'Résumé'
-  erc: 'ERC'
-  mot_cle_ces: 'Mot(s) Clé(s) CES:'
+  evaluation: "Evaluation"
+  evaluations: "Evaluations"
+  projet: "Projet"
+  criticite: "Criticité"
+  rapporteur: "Rapporteur"
+  lecteurs: "Lecteur(s)"
+  action: "Action"
+  langue: "Langue"
+  recuse: "Récusé"
+  nom: "Nom"
+  entite: "Entité"
+  cp: "CP"
+  titre: "Titre"
+  outil_financement: "Outil de Financement"
+  categorie_rd: "Catégorie R&D"
+  experts_recuse: "Experts Récusés"
+  resume: "Résumé"
+  erc: "ERC"
+  mot_cle_ces: "Mot(s) Clé(s) CES:"
   modifier_date_rendu: "Modifier la date de rendu de l'évaluateur"
-  legende: 'Légende'
-  date_jour: 'Date du jour'
+  legende: "Légende"
+  date_jour: "Date du jour"
   date_rendu_evaluateur: "Date rendu de l'évaluation"
-  date_comite: 'Date du comité'
+  date_comite: "Date du comité"
   date_appel: "Date de l'appel"
-  modifier: 'Modifier'
-  cv: 'Curriculum Vitae'
+  modifier: "Modifier"
+  cv: "Curriculum Vitae"
   form:
-    status: 'statut'
-    evaluateur: 'evaluateur'
-    organisme: 'organisme'
-    lang: 'langue'
-    solicitation: 'solicitation'
-    doc: 'doc'
-    evaluation: 'evaluation'
-    echeance: 'échéance'
-    reste: 'reste'
-    relance: 'relance'
-    action: 'action'
+    status: "statut"
+    evaluateur: "evaluateur"
+    organisme: "organisme"
+    lang: "langue"
+    solicitation: "solicitation"
+    doc: "doc"
+    evaluation: "evaluation"
+    echeance: "échéance"
+    reste: "reste"
+    relance: "relance"
+    action: "action"
   actions:
-    ajout: 'Ajouter évaluateur'
-    echeance: 'Echéance'
-    relance: 'Relance'
-    legende: 'Voir la légende'
+    ajout: "Ajouter évaluateur"
+    echeance: "Echéance"
+    relance: "Relance"
+    legende: "Voir la légende"
+    recherche: "Recherche"
   widget:
     suivi_expertise:
-      titre: 'Expertise'
-      mes_projets: 'Mes projets'
-      tous_les_projets: 'Tous les projets'
+      titre: "Expertise"
+      mes_projets: "Mes projets"
+      tous_les_projets: "Tous les projets"
+  modal:
+    titre: "date échéance comité"
+    legende: "Légende"
+    date:
+      today: "Date du jour"
+      eval: "Date fin de phase d'évaluation"
+      comite: "Date échéance comité"
+      new: "Nouvelle date échéance comité"
+      placeholder: "aucune sélection"
+      find: "date non renseignée"
+    close: "Fermer"
+    save: "Sauvegarder"

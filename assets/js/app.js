@@ -27,7 +27,11 @@ require('../js/iris-js/main')
 
 require('bootstrap-datepicker')
 require('bootstrap-datepicker/js/locales/bootstrap-datepicker.fr')
-
+require('bootstrap-datepicker/js/locales/bootstrap-datepicker.en-GB')
+require('datatables.net-dt/js/dataTables.dataTables.min')
+require('tablesorter/dist/js/jquery.tablesorter')
+require('tablesorter/dist/js/jquery.tablesorter.widgets')
+require('tablesorter/dist/js/widgets/widget-columnSelector.min')
 // jQuery.htmlPrefilter = function( html ) {
 //     return html;
 // };

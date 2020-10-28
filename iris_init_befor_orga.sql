@@ -4206,6 +4206,11 @@ UPDATE public.tg_affectation
 SET id_type=2
 WHERE id_st_affect IN (1,2);
 
+UPDATE public.tg_niveau_phase SET dh_fin = '2020-10-29' WHERE id_type_niveu = 2 AND id_appel = 1;
+
+UPDATE public.tg_projet	SET id_langue = 38 WHERE id_projet >= 1 AND id_projet < 19;
+UPDATE public.tg_projet	SET id_langue = 48 WHERE id_projet >= 19 AND id_projet <= 67;
+
 UPDATE public.tg_appel_proj SET niveau_en_cours=2 WHERE id_appel=1;
 
 INSERT INTO tl_hab_projet VALUES (32, 10);
