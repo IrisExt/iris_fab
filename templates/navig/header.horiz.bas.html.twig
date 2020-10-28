@@ -54,3 +54,19 @@
         </div>
     </div>
 </div>
+{% if project is defined %}
+    <div id="mySidenav" class="sidenav">
+        <div class="row sidenav-head">
+            <div class="col-md-6">
+                <a href="#" class="closebtn">&times;</a>
+            </div>
+            <div class="col-md-6">
+                <h4 class="sidenav-head-title"></h4>
+            </div><hr>
+        </div>
+        <div class="row sidenav-content">
+            
+        </div>
+    </div>
+    <span id='open' class="chip" style="font-size:20px;cursor:pointer" data-id="{{ path('get_ajax_booklet') }}" data-idprojet="{{ project.idProjet }}">Booklet</span>
+{% endif %}

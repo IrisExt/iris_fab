@@ -19,6 +19,7 @@
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "phpoffice/phpspreadsheet": "^1.11",
         "phpoffice/phpword": "^0.17.0",
+        "phpunit/phpunit": "^9.4",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.4.*",

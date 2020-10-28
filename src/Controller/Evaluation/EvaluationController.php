@@ -7,6 +7,7 @@ use App\Entity\TgComite;
 use App\Entity\TgProjet;
 use App\Entity\TgPersonne;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Manager\ProjetManager;
 use App\Manager\AffectationManager;
 use App\Manager\TlStsEvaluationManager;
 use App\Manager\NiveauPhaseManager;
@@ -15,6 +16,7 @@ use App\Manager\ComiteManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Helper\StringHelperTrait;
+use App\Manager\TgProjetManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EvaluationController extends BaseController
@@ -28,13 +30,18 @@ class EvaluationController extends BaseController
      * @example /evaluations/1?role=expert Accés aux évaluations des experts
      * @example /evaluations/1?role=rl Accés aux évaluations des rapporteurs/lecteurs
      */
-    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite, NiveauPhaseManager $niveauPhaseManager)
+    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite, NiveauPhaseManager $niveauPhaseManager, TgProjetManager $tgProjetManager)
     {
-        $lstProjets = $affectationManager->getComiteProjets($tgComite);
+        $user = $this->getUserConnect();
+        if ($request->query->get('portefeuille', false)) {
+            $lstProjets = $tgProjetManager->getPortefeuilleRL($user->getIdPersonne(), $tgComite->getIdComite());
+        } else {
+            $lstProjets = $affectationManager->getComiteProjets($tgComite);
+        }
         $listeProjet = [];
         foreach ($lstProjets as $projet) {
             $projetWithCriticite = $affectationManager->setCriticiteToProject($projet);
-            if (!$affectationManager->utilisateurEstEnConflit($projet, $this->getUserConnect())) {
+            if (!$affectationManager->utilisateurEstEnConflit($projet, $user)) {
                 array_push($listeProjet, $projetWithCriticite);
             }
         }
@@ -44,6 +51,7 @@ class EvaluationController extends BaseController
         $dateFinPhaseEval = $niveauPhaseManager->findDateFinEvalByIdAppel($tgComite->getIdAppel());
 
         return $this->render('evaluation/evaluation/index.html.twig', [
+            'comite' => $tgComite,
             'projets' => $listeProjet,
             'statusEvaluations' => $statusEvaluations,
             'role' => $request->query->get('role'),
@@ -89,8 +97,6 @@ class EvaluationController extends BaseController
      */
     public function setDateRendu(Request $request, AffectationManager $affectationManager)
     {
-        //$tgPersonne = $this->getEm()->getRepository(TgPersonne::class)->findOneBy(['idPersonne' => $request->request->get('idPersonne')]);
-        //$project = $affectationManager->getProject(55);
         $success = $affectationManager->setDateRendu($request->request->get('idPersonne'), $request->request->get('idAffectation'), $request->request->get('dhRendu'));
 
         return new JsonResponse(['success' => $success]);
@@ -140,5 +146,18 @@ class EvaluationController extends BaseController
     {
         $success = $comiteManager->updateDateComite($request->request->get('idComite'), $request->request->get('newDateComite'));
         return new JsonResponse(['success' => $success]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/get_ajax_booklet", name="get_ajax_booklet", methods={"GET","POST"})
+     */
+    public function getBooklet(Request $request, ProjetManager $projetManager)
+    {
+        $project = $projetManager->getProject($request->request->get('idProjet'));
+
+        return $this->render('evaluation/evaluation/modal/booklet.html.twig', [
+            'project' => $project,
+        ]);
     }
 }

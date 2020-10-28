@@ -1,7 +1,6 @@
 {% trans_default_domain 'Evaluations' %}
-{% for comiteAffiche in listeComitesAffiches %}
-{% set comite = comiteAffiche['comite'] %}
-<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+{% for comite in comites %}
+<div class="widget col-lg-3 col-md-6 col-sm-12 col-xs-12">
     <div class="income-dashone-total shadow-reset nt-mg-b-30 res-mg-t-30">
         <div class="sparkline13-hd">
             <div class="main-sparkline12-hd">
@@ -13,8 +12,8 @@
             </div>
         </div>
         <div class="income-dashone-pro">
-            {% if comiteAffiche['lien_portefeuille'] %} <p><a href="{{url('evaluations', {'idComite': comite.idComite, 'role': 'expert'})}}">{{ 'evaluation.widget.suivi_expertise.mes_projets'|trans }}</a></p> {% endif %}
-            {% if comiteAffiche['lien_comite'] %} <p><a href="{{url('evaluations', {'idComite': comite.idComite, 'role': 'expert'})}}">{{ 'evaluation.widget.suivi_expertise.tous_les_projets'|trans }}</a></p> {% endif %}
+            {% if lienPortefeuille %} <p><a href="{{url('evaluations', {'idComite': comite.idComite, 'role': 'expert', 'portefeuille': true})}}">{{ 'evaluation.widget.suivi_expertise.mes_projets'|trans }}</a></p> {% endif %}
+            {% if lienComite %} <p><a href="{{url('evaluations', {'idComite': comite.idComite, 'role': 'expert'})}}">{{ 'evaluation.widget.suivi_expertise.tous_les_projets'|trans }}</a></p> {% endif %}
         </div>
     </div>
 </div>

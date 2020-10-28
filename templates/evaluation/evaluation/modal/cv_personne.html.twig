@@ -2,9 +2,13 @@
   {{ include('evaluation/evaluation/modal/contact_personne.html.twig', {personne: tgPersonne}) }}
 </div></br></br>
 <div class="row">
-  <h4 class="modal-title">Curriculum Vitae</h4>
+  <div class="col-md-6">
+    <h4 class="modal-title">{{ 'evaluation.cv'|trans }}</h4>
+  </div>
 </div></br></br>
 <div class="row">
-  <p>{{ cvPersonne.lbAutresActivites }}</p>
+  <div class="col-md-6">
+    <p>{{ cvPersonne.lbAutresActivites }}</p>
+  </div>
 </div>
 

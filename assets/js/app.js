@@ -11,6 +11,7 @@ import '../css/css-iris/style.css';
 import '../css/css-iris/adminpro-custon-icon.css';
 import '../css/css-iris/meanmenu.min.css';
 import '../css/css-iris/normalize.css';
+import '../css/plugin/responsive-calendar.css';
 
 const $ = require('jquery');
 global.$ = global.jQuery = $;
@@ -20,6 +21,7 @@ require( '@ckeditor/ckeditor5-build-classic' )
 require('../js/iris-js/jquery.meanmenu')
 require('../js/iris-js/jquery.validate.min')
 require('../js/iris-js/jquery.mCustomScrollbar.concat.min')
+require('../js/plugin/responsive-calendar')
 // require('../js/iris-js/jquery.sticky')
 require('../js/iris-js/main')
 
