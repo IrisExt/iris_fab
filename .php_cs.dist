@@ -7,8 +7,9 @@ $finder = PhpCsFixer\Finder::create()
 
 return PhpCsFixer\Config::create()
     ->setRules([
-        '@Symfony' => true,
-        'array_syntax' => ['syntax' => 'short'],
+        // TODO l'activer un de ces 4
+        // '@Symfony' => true,
+        // 'array_syntax' => ['syntax' => 'short'],
     ])
     ->setFinder($finder)
 ;
