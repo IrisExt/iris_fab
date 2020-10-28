@@ -20,3 +20,8 @@ unitaire:
   stage: test
   script:
     - vendor/bin/phpunit
+
+linter_back:
+  stage: test
+  script:
+    - vendor/bin/php-cs-fixer fix --dry-run -vv
