@@ -9,6 +9,7 @@ use App\Manager\AffectationManager;
 use App\Repository\TgAffectationRepository;
 use App\Repository\TgProjetRepository;
 use App\Repository\FtCommandeAppRepository;
+use App\Repository\TgComiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -18,6 +19,7 @@ class AffectationManagerTest extends TestCase
     protected $tgAffectationRepository;
     protected $tgProjetRepository;
     protected $ftCommandeAppRepository;
+    protected $tgComiteRepository;
     protected $em;
     protected $affectationManager;
 
@@ -27,8 +29,9 @@ class AffectationManagerTest extends TestCase
         $this->tgAffectationRepository = $this->createMock(TgAffectationRepository::class);
         $this->tgProjetRepository = $this->createMock(TgProjetRepository::class);
         $this->ftCommandeAppRepository = $this->createMock(FtCommandeAppRepository::class);
+        $this->tgComiteRepository = $this->createMock(TgComiteRepository::class);
         //$this->affectationManager = $this->createMock(AffectationManager::class, ['setDateRendu'], [$this->em, $this->tgAffectationRepository, $this->tgProjetRepository, $this->ftCommandeAppRepository]);
-        $this->affectationManager = new AffectationManager($this->em, $this->tgAffectationRepository, $this->tgProjetRepository, $this->ftCommandeAppRepository);
+        $this->affectationManager = new AffectationManager($this->em, $this->tgAffectationRepository, $this->tgProjetRepository, $this->ftCommandeAppRepository, $this->tgComiteRepository);
     }
 
     /** @test */
@@ -38,12 +41,9 @@ class AffectationManagerTest extends TestCase
         $this->tgAffectationRepository
             ->expects($this->once())
             ->method('findOneBy')
-            ->with([
-                  $this->anything(),
-                  $this->anything(),
-            ])
+            ->with($this->anything())
             ->willReturn($tgAffectation);
-
+        
         $this->assertTrue($this->affectationManager->setDateRendu(536, 1235, '29/10/2020'));
     }
 }
