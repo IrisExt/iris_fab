@@ -143,4 +143,18 @@ class PersonneRepository extends ServiceEntityRepository
 
     }
 
+    public function findPersonnesByString($str)
+    {
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('p')
+            ->from(TgPersonne::class, 'p')
+            ->andwhere('lower (p.lbNomUsage) LIKE lower(:str) OR lower(p.lbPrenom) LIKE lower(:str)')
+            ->setParameter('str', '%'.$str.'%')
+            ->orderBy('p.lbNomUsage')
+            ->getQuery();
+
+        return $qb->execute();
+
+    }
+
 }

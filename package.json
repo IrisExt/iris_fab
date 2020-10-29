@@ -25,6 +25,8 @@
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-datetimepicker-4.17.37": "^4.17.37",
     "ckeditor5": "^23.0.0",
+    "datatable": "^2.0.2",
+    "datatables.net": "^1.10.22",
     "datatables.net-dt": "^1.10.22",
     "detached-jquery-1.11.3": "^1.11.3",
     "font-awesome": "^4.7.0",
@@ -33,6 +35,8 @@
     "jquery-sticky": "^1.0.4",
     "mmenu-js": "^8.5.18",
     "node-forge": "^0.10.0",
-    "sass-loader": "^9.0.1"
+    "sass-loader": "^9.0.1",
+    "select2": "^4.0.13",
+    "tablesorter": "^2.31.3"
   }
 }

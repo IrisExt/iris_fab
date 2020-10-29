@@ -282,6 +282,11 @@ class TgPersonne
     private $experProj;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TlAffectUtilisateur", mappedBy="IdPersonne", cascade={"persist"})
+     */
+    private $tlAffectUtilisateurs;
+
+    /**
      * Constructor
      */
     public function __construct()

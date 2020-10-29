@@ -22,10 +22,13 @@ require('../js/iris-js/jquery.validate.min')
 require('../js/iris-js/jquery.mCustomScrollbar.concat.min')
 // require('../js/iris-js/jquery.sticky')
 require('../js/iris-js/main')
-
+require('select2/dist/js/select2.full');
+require('../js/iris-js/select2entity.js')
+require('datatables.net')
+require('datatables.net-dt')
 require('bootstrap-datepicker')
 require('bootstrap-datepicker/js/locales/bootstrap-datepicker.fr')
-
+import '../js/iris-js/script_iris'
 // jQuery.htmlPrefilter = function( html ) {
 //     return html;
 // };
@@ -38,9 +41,9 @@ require('bootstrap-datepicker/js/locales/bootstrap-datepicker.fr')
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
+// $(function () {
+//     $('[data-toggle="tooltip"]').tooltip()
+// })
 // $(document).ready(function() {
 //     $('[data-toggle="popover"]').popover();
 // });

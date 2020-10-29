@@ -6,10 +6,15 @@ namespace App\Manager;
 
 use App\Entity\TgAppelProj;
 use App\Entity\TgComite;
+use App\Entity\TgHabilitation;
 use App\Entity\TgPersonne;
+use App\Entity\TgPhase;
+use App\Entity\TgProjet;
 use App\Entity\TrProfil;
 use App\Repository\HabilitationRepository;
-use App\Repository\ProfilRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class HabilitationManager
 {
@@ -19,20 +24,31 @@ class HabilitationManager
      */
     private $habilitationRepository;
     /**
-     * @var ProfilRepository
+     * @var EntityManagerInterface
      */
-    private $profilRepository;
+    private $em;
+    /**
+     * @var UserManagerInterface
+     */
+    private $user;
+    /**
+     * @var Security
+     */
+    private $security;
 
     /**
      * HabilitaionManager constructor.
+     * @param EntityManagerInterface $em
      * @param HabilitationRepository $habilitationRepository
-     * @param ProfilRepository $profilRepository
+     * @param Security $security
      */
-    public function __construct(HabilitationRepository $habilitationRepository, ProfilRepository $profilRepository)
+    public function __construct(EntityManagerInterface $em, HabilitationRepository $habilitationRepository, Security $security)
     {
 
         $this->habilitationRepository = $habilitationRepository;
-        $this->profilRepository = $profilRepository;
+        $this->em = $em;
+
+        $this->security = $security;
     }
 
     public function getHabProfilPersonne(TgPersonne $tgPersonne, trProfil $trProfil) {
@@ -43,10 +59,27 @@ class HabilitationManager
     public function getHabComitePersonne(TgComite $tgComite){
         return $this->habilitationRepository->findBy(['idComite'=> $tgComite]);
     }
-    public function getHabAppelPersonne(TgAppelProj $tgAppelProj){
-        return $this->habilitationRepository->AppelPersonne();
-    }
+
     public function getHabPhasePersonne(TgComite $tgComite){
         return $this->habilitationRepository->findBy(['idComite'=> $tgComite]);
+    }
+
+    public function setHabilitation(TgPersonne $tgPersonne, TrProfil $trProfil, ?TgComite $tgComite, ?TgAppelProj $tgAppelProj, ?TgPhase $tgPhase, ?TgProjet $tgProjet)
+    {
+        $userConnect = $this->security->getUser()->getIdPersonne();
+        $hab = new TgHabilitation();
+        $hab
+            ->setBlSupprime(1)
+            ->setIdPersonne($tgPersonne)
+            ->setIdProfil($trProfil)
+            ->setLbRespMaj($userConnect->getLbNomUsage().' '.$userConnect->getLbPrenom());
+        $tgComite    ? $hab->addIdComite($tgComite):null;
+        $tgAppelProj ? $hab->addIdAppel($tgAppelProj):null;
+        $tgPhase     ? $hab->addIdPhase($tgPhase):null;
+        $tgProjet    ? $hab->addIdProjet($tgProjet):null;
+        $this->em->persist($hab);
+        $this->em->flush();
+
+        return true;
     }
 }

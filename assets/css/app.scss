@@ -4,5 +4,9 @@ $primary: darken(#428bca, 20%);
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.css";
+@import "css-iris/meanmenu.min.css";
 @import "~animate.css/animate.css";
-//@import "~jquery/dist/jquery.js";
+@import "css-iris/style.css";
+@import "css-iris/responsive.css";
+@import "~select2/dist/css/select2.css";
+@import "~datatables.net-dt/css/jquery.dataTables.min.css";

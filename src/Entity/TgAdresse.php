@@ -76,6 +76,13 @@ class TgAdresse
     private $blAdrPrinc;
 
     /**
+     * @var bool|null
+     *
+     * @ORM\Column(name="bl_adresse_pro", type="boolean", nullable=true)
+     */
+    private $blAdressePro;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="typ_adr", type="string", length=3, nullable=true)

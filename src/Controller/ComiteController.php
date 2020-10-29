@@ -9,6 +9,7 @@ use App\Entity\TrDepartement;
 use App\Entity\TrEtatSol;
 use App\Form\ComiteType;
 use App\Form\ParticipationType;
+use App\Manager\HabilitationManager;
 use App\Service\InsertDataProvisional;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,17 +42,25 @@ class ComiteController extends BaseController
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var HabilitationManager
+     */
+    private $habilitationManager;
 
     /**
      * ComiteController constructor.
+     * @param SessionInterface $session
+     * @param EntityManagerInterface $em
+     * @param HabilitationManager $habilitationManager
      */
-    public function __construct(SessionInterface $session, EntityManagerInterface $em)
+    public function __construct(SessionInterface $session, EntityManagerInterface $em, HabilitationManager $habilitationManager)
     {
         $this->em = $em;
 
         $this->appel = $session->get('appel');
 
         $this->session = $session;
+        $this->habilitationManager = $habilitationManager;
     }
 
     /**
@@ -73,7 +82,7 @@ class ComiteController extends BaseController
             $result = $tgComite->findLstcomiteDep($this->appel, $dep);
         } else {
             $result = ($cmte ? $tgComite
-                ->findby(['idComite' => $cmte, 'idAppel' => $this->appel, 'blActif' => 1])
+                ->findby(['idComite' => $cmte, 'blActif' => 1])
                 : $comites);
         }
 
@@ -212,9 +221,7 @@ class ComiteController extends BaseController
                     if (!empty($habiExiste)) { // $abilitaion existe
                         $habiExiste->AddIdComite($Comite);
                         $this->em->persist($habiExiste);
-                    } else {
-                        $this->inserToHabilitation($president, $profil_pres, $Comite);
-                    }
+                    } else $this->habilitationManager->setHabilitation($president,$profil_pres,$Comite,null,null,null);
                 }
 
                 // boucle pour les personne cps Prin. et persist
@@ -224,9 +231,7 @@ class ComiteController extends BaseController
                     if (!empty($habiExiste)) { // $abilitaion appel existe pas
                         $habiExiste->AddIdComite($Comite);
                         $this->em->persist($habiExiste);
-                    } else {
-                        $this->inserToHabilitation($cpsPrin, $profil_cpsP, $Comite);
-                    }
+                    } else $this->habilitationManager->setHabilitation($cpsPrin, $profil_cpsP, $Comite,null,null,null);
                 }
 
                 // boucle pour les personne cps Sec
@@ -237,9 +242,7 @@ class ComiteController extends BaseController
                         if (!empty($habiExiste)) { // $abilitaion appel existe pas
                             $habiExiste->AddIdComite($Comite);
                             $this->em->persist($habiExiste);
-                        } else {
-                            $this->inserToHabilitation($cpsSec, $profil_cpsSe, $Comite);
-                        }
+                        }else $this->habilitationManager->setHabilitation($cpsSec, $profil_cpsSe, $Comite,null,null,null);
                     }
                 }
 
@@ -287,35 +290,40 @@ class ComiteController extends BaseController
     public function edit(Request $request, TgComite $tgComite): Response
     {
         $this->appelClos($this->appel); // retour 403 / Accès refusé si appel est clos
-
+        $profil_pres = $this->getEmProfil(4); //  président
+        $profil_cpsP = $this->getEmProfil(6); // correspond à cps Prin
+        $profil_cpsSe = $this->getEmProfil(7); //  cps Sec
+        $profilComitePres = $this->getEmHabil()->findProfilByComite($tgComite, $profil_pres);
+        $profilComiteCpsP = $this->getEmHabil()->findProfilByComite($tgComite, $profil_cpsP);
+        $profilComiteCpsSe = $this->getEmHabil()->findProfilByComite($tgComite, $profil_cpsSe);
+        $cpsPs_= $cpsSs_ = [];
+        $president = $profilComitePres ? $profilComitePres[0]->getIdPersonne():[];
+        foreach ($profilComiteCpsP as $cpsp_){$cpsPs_[]= $cpsp_->getIdPersonne(); }
+        foreach ($profilComiteCpsSe as $cpss_){ $cpsSs_[]= $cpss_->getIdPersonne(); }
         $form = $this->createForm(ComiteType::class, $tgComite,
-        [
-            'appel' => $this->session->get('appel'),
-        ]);
+            [
+                'president' => $president,
+                'cpsPs' => $cpsPs_,
+                'cpsSs' => $cpsSs_,
+                'appel' => $this->session->get('appel'),
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $sollicitation = $this->em->getRepository(TrEtatSol::class)->find(3);
-
-            $profil_pres = $this->getEmProfil(4); //  président
-            $profil_cpsP = $this->getEmProfil(6); // correspond à cps Prin
-            $profil_cpsSe = $this->getEmProfil(7); //  cps Sec
-//            $appel = $this->getEmAppPro()->find($this->session->get('appel'));
             $phase = $this->appel->getNiveauEnCours()->getIdPhase();
-
             try {
                 //Président
-
-                $profilComitePres = $this->getEmHabil()->findProfilByComite($tgComite, $profil_pres);
-                $personneAncien = ($profilComitePres) ? $profilComitePres[0]->getIdPersonne() : null;
+                // habilitation
                 $presNv = $this->getEmHabil()->findOneBy(['idProfil' => $profil_pres, 'idPersonne' => $form->all()['president']->getData()]);
                 // Participation
                 $particiPres = $this->getEmPartic()
-                    ->findOneBy(['idPersonne' => $personneAncien, 'idComite' => $tgComite, 'idProfil' => $profil_pres]);
+                    ->findOneBy(['idPersonne' => $president, 'idComite' => $tgComite, 'idProfil' => $profil_pres]);
                 if (empty($particiPres) && null !== $form->all()['president']->getData()) {
                     $this->inserToParticipation($form->all()['president']
                         ->getData(), $tgComite, $phase->getIdPhaseRef(), $sollicitation, $profil_pres);
-                } elseif (!empty($particiPres) && $personneAncien !== $form->all()['president']->getData()
+                } elseif (!empty($particiPres) && $president !== $form->all()['president']->getData()
                     && !empty($form->all()['president']->getData())) {
                     $particiPres->setIdPersonne($form->all()['president']->getData());
                     $this->em->persist($particiPres);
@@ -323,32 +331,30 @@ class ComiteController extends BaseController
                     $this->em->remove($particiPres);
                 } // fin participation
 
-                if ((!empty($profilComitePres) && $personneAncien !== $form->all()['president']->getData()) || empty($profilComitePres)) {
+                if ((!empty($profilComitePres) && $president !== $form->all()['president']->getData()) || empty($profilComitePres)) {
                     if (!isset($presNv)) {
                         if (null !== $form->all()['president']->getData()) {
-                            $this->inserToHabilitation($form->all()['president']->getData(), $profil_pres, $tgComite);
+                            $this->habilitationManager->setHabilitation($form->all()['president']->getData(), $profil_pres, $tgComite,null,null,null);
                         }
                     } else {
                         $presNv->AddIdComite($tgComite);
                         $this->em->persist($presNv);
                     }
-                    if (!empty($profilComitePres) && $personneAncien !== $form->all()['president']->getData()) {
+                    if (!empty($profilComitePres) && $president !== $form->all()['president']->getData()) {
                         $profilComitePres[0]->removeIdComite($tgComite);
                         $this->em->persist($profilComitePres[0]);
                     }
                 }
                 //Cps Principal
-                $profilComiteCpsP = $this->getEmHabil()->findProfilByComite($tgComite, $profil_cpsP);
-                foreach ($profilComiteCpsP as $habilCpsP) {
+                foreach ($profilComiteCpsP as $habilCpsP) { // remove cpsP
                     $habilCpsP->removeIdcomite($tgComite);
                     $this->em->persist($habilCpsP);
                 }
                 $cpsSDatas = $form->all()['cpsprincipal']->getData();
-//                $nbCpspData = count($cpsSDatas);
                 foreach ($cpsSDatas as $cpsPData) {
                     $CpsPNv = $this->getEmHabil()->findOneBy(['idProfil' => $profil_cpsP, 'idPersonne' => $cpsPData]);
                     if (!isset($CpsPNv)) {
-                        $this->inserToHabilitation($cpsPData, $profil_cpsP, $tgComite);
+                        $this->habilitationManager->setHabilitation($cpsPData, $profil_cpsP, $tgComite,null,null,null);
                     } else {
                         $CpsPNv->AddIdComite($tgComite);
                         $this->em->persist($CpsPNv);
@@ -356,7 +362,7 @@ class ComiteController extends BaseController
                 }
 
                 //Cps Secondaire
-                $profilComiteCpsSe = $this->getEmHabil()->findProfilByComite($tgComite, $profil_cpsSe);
+//                $profilComiteCpsSe = $this->getEmHabil()->findProfilByComite($tgComite, $profil_cpsSe);
                 if (isset($profilComiteCpsSe)) {
                     foreach ($profilComiteCpsSe as $habilCpsSe) {
                         $habilCpsSe->removeIdcomite($tgComite);
@@ -369,7 +375,7 @@ class ComiteController extends BaseController
                     foreach ($cpsSDatas as $cpsSData) {
                         $CpsSeNv = $this->getEmHabil()->findOneBy(['idProfil' => $profil_cpsSe, 'idPersonne' => $cpsSData]);
                         if (!isset($CpsSeNv)) {
-                            $this->inserToHabilitation($cpsSData, $profil_cpsSe, $tgComite);
+                            $this->habilitationManager->setHabilitation($cpsSData, $profil_cpsSe, $tgComite,null,null,null);
                         } else {
                             $CpsSeNv->AddIdComite($tgComite);
                             $this->em->persist($CpsSeNv);
@@ -452,25 +458,6 @@ class ComiteController extends BaseController
 
     /**
      * @param $personne
-     * @param $profil
-     * @param $comite
-     *
-     * @throws Exception
-     */
-    private function inserToHabilitation($personne, $profil, $comite): void
-    {
-        $habilitation = new TgHabilitation();
-        $habilitation
-            ->setIdPersonne($personne)
-            ->setIdProfil($profil)
-            ->AddIdComite($comite)
-            ->setDhMaj(new DateTime())
-            ->setLbRespMaj($this->getUser()->getIdPersonne()->getLbNomUsage().' '.$this->getUser()->getIdPersonne()->getLbPrenom());
-        $this->em->persist($habilitation);
-    }
-
-    /**
-     * @param $personne
      * @param $comite
      * @param $phaseref
      * @param $sollicitation
@@ -486,5 +473,22 @@ class ComiteController extends BaseController
             ->setBlSupprime(1)
             ->setIdProfil($profil);
         $this->em->persist($participation);
+    }
+
+    /**
+     * @param $comite
+     * @param $rofil
+     * @return mixed
+    //     * @Route ("/habilComite" , name="habi_comite")
+     */
+    public function getHabListComite($comite, $profil, $personnes = []){
+        $habComiteProfils = $this->em->getRepository(TgHabilitation::class)->findByHabiltationComitePersonne($comite, $profil);
+        foreach ($habComiteProfils as $habComiteProfil){
+            $personnes[] =  $habComiteProfil->getIdPersonne();
+        }
+
+        return $this->render("comite/habi_comite_personne.html.twig",['personnes' => $personnes]);
+//        return $personnes;
+
     }
 }

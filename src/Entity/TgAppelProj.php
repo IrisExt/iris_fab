@@ -288,6 +288,20 @@ class TgAppelProj
      */
     private $tlMcErcAppel;
 
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="nb_rapp", type="integer", nullable=true)
+     */
+    private $nbRapp;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="nb_lecteur", type="integer", nullable=true)
+     */
+    private $nbLecteur;
+
     public function __construct()
     {
         $this->idHabilitation = new ArrayCollection();
@@ -830,6 +844,38 @@ class TgAppelProj
         }
 
         return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNbRapp(): ?int
+    {
+        return $this->nbRapp;
+    }
+
+    /**
+     * @param int|null $nbRapp
+     */
+    public function setNbRapp(?int $nbRapp): void
+    {
+        $this->nbRapp = $nbRapp;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNbLecteur(): ?int
+    {
+        return $this->nbLecteur;
+    }
+
+    /**
+     * @param int|null $nbLecteur
+     */
+    public function setNbLecteur(?int $nbLecteur): void
+    {
+        $this->nbLecteur = $nbLecteur;
     }
 
 

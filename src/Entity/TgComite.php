@@ -63,9 +63,9 @@ class TgComite
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lb_desc", type="string", length=1000, nullable=true, options={"comment"="Description du contenu du comité"})
+     * @ORM\Column(name="lb_desc", type="string", length=5000, nullable=true, options={"comment"="Description du contenu du comité"})
      * @Assert\Length(
-     *      max = 1000,
+     *      max = 2000,
      *      maxMessage = "La déscription est limité à {{ limit }} caractères"
      * )
      */

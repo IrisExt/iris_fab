@@ -168,7 +168,7 @@ class AffectationRLController extends BaseController
         $notAfect = ['E'];
         $arrStatuts = 1 == $phase ?
             $arrStatuts = $this->emRep(TrStAffect::class)->findAffectWithPhase($notAffectPhase) :
-                $this->emRep(TrStAffect::class)->findAffectRL($notAfect);
+            $this->emRep(TrStAffect::class)->findAffectRL($notAfect);
 
         $arrStatutsMembre = [];
         $arrStatutsMembre[] = 'EMP';
@@ -301,27 +301,15 @@ class AffectationRLController extends BaseController
     private function affectationAction($request, $idComite, $openAccess, $arrPostAffectations, $arrPositions, $arrIdMembres, $arrIdProjets)
     {
         $st_affect = ['R', 'L', 'O', 'X'];
-
         $deleteAffecComite = $this->emRep(TgParticipation::class)->projWhithCmteAffec($idComite, $st_affect);
 
         $em = $this->getEm();
+        $typeEval = $this->emRep(TrTypeEval::class)->find(3); // type rapport
+        $hab_prof = $this->getEmProfil(9);
         foreach ($deleteAffecComite as $tgAffect) {
             $em->remove($tgAffect);
             $em->flush();
         }
-        $emHabProj = $this->getEm();
-        foreach ($arrIdProjets as $key => $proj) {
-            $projet = $this->emRep(TgProjet::class)->find($proj);
-            $existeHab = $this->emRep(TgHabilitation::class)->habiMbreByProjet($projet);
-            if ($existeHab) {
-                foreach ($existeHab as $habi) {
-                    $habi->removeIdProjet($projet);
-                    $habi->removeIdComite($idComite);
-                    $emHabProj->flush();
-                }
-            }
-        }
-
         foreach ($arrPositions as $key => $value) {
             $intPosMembre = $value % $request->request->get('nb_membres');
             $intPosProjet = floor($value / $request->request->get('nb_membres'));
@@ -330,41 +318,30 @@ class AffectationRLController extends BaseController
             $tgProjet = $this->emRep(TgProjet::class)->find($arrIdProjets[$intPosProjet]);
             $trStAffect = $this->emRep(TrStAffect::class)->findOneBy(['symbole' => strtoupper($arrPostAffectations[$key])]);
             try {
-                $hab_prof = null;
-                if ('R' === $trStAffect->getSymbole()) {
-                    $hab_prof = $this->emRep(TrProfil::class)->find(18);
-                } elseif ('L' === $trStAffect->getSymbole()) {
-                    $hab_prof = $this->emRep(TrProfil::class)->find(17);
-                }
-
-                if (null !== $openAccess && null !== $hab_prof) { // ouvrir les accès pour les R/L
-                    $tghabil = $this->emRep(TgHabilitation::class)->findOneBy(['idPersonne' => $tgPersonne, 'idProfil' => $hab_prof]);
-                    $tghabilitation = $tghabil ?: new TgHabilitation();
-                    $tghabilitation
-                        ->setIdPersonne($tgPersonne)
-                        ->setIdProfil($hab_prof)
-                        ->setLbRespMaj($this->getUserConnect()->getLbNomUsage().' '.$this->getUserConnect()->getIdPersonne())
-                        ->addIdProjet($tgProjet)
-                        ->addIdComite($idComite);
-                    $em->persist($tghabilitation);
-
-                    $idComite->setBlDroitProjetOuvert(true);
-                    $em->persist($idComite);
-                }
-                $typeEval = $this->emRep(TrTypeEval::class)->find(1); // type expertise
                 $em = $this->getEm();
                 $tgAfect = new TgAffectation();
                 $tgAfect->setIdPersonne($tgPersonne)
                     ->setIdProfil($hab_prof)
                     ->setIdProjet($tgProjet)
                     ->setIdStAffect($trStAffect)
-                    ->setIdType($typeEval); // type expertise
+                    ->setIdType($typeEval); // type rapport
                 $em->persist($tgAfect);
-            } catch (DBALException $e) {
+            } catch (\Exception $e) {
                 $e->getMessage();
             }
+
+            $habilitationPersonne = $this->getEmHabil()->findOneBy(['idPersonne' => $tgPersonne, 'idProfil' => 9]);
+            if (null !== $openAccess && $habilitationPersonne){
+
+                $habilitationPersonne->addIdProjet($tgProjet);
+                $em->persist($habilitationPersonne);
+
+                $idComite->setBlDroitProjetOuvert(true);
+                $em->persist($idComite);
+
+                $em->flush();
+            }
         }
-        $emHabProj->flush();
         $em->flush();
     }
 

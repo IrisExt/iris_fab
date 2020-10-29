@@ -49,7 +49,7 @@ class TgProjet
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_titre_fr", type="string", length=50, nullable=true)
+     * @ORM\Column(name="lb_titre_fr", type="string", length=500, nullable=true)
      *
      * @Assert\NotBlank(
      *     message="tgprojet.lb_titre_fr.not_blank",
@@ -69,7 +69,7 @@ class TgProjet
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lb_titre_en", type="string", length=50, nullable=true, options={"comment"="titre du projet en anglais"})
+     * @ORM\Column(name="lb_titre_en", type="string", length=500, nullable=true, options={"comment"="titre du projet en anglais"})
      *
      * @Assert\Length(
      *      min = 10,
@@ -174,19 +174,19 @@ class TgProjet
      */
     private $idAppel;
 
-/**
-* @var \TrAgFi
-*
-* @ORM\ManyToOne(targetEntity="TrAgFi")
-* @ORM\JoinColumns({
-*   @ORM\JoinColumn(name="id_agence_fi", referencedColumnName="id_agence_fi")
-* })
-*
-* @Assert\NotBlank(
-*     message="tgprojet.id_agence_fi.not_blank",
-*     groups={"bloc_BlInstFiType_agence"}
-* )
-*/
+    /**
+     * @var \TrAgFi
+     *
+     * @ORM\ManyToOne(targetEntity="TrAgFi")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_agence_fi", referencedColumnName="id_agence_fi")
+     * })
+     *
+     * @Assert\NotBlank(
+     *     message="tgprojet.id_agence_fi.not_blank",
+     *     groups={"bloc_BlInstFiType_agence"}
+     * )
+     */
     private $idAgenceFi;
 
     /**
@@ -257,16 +257,16 @@ class TgProjet
      *   }
      * )
      *
-	 * @Assert\Collection(fields ={
-	 *     "id_mc_erc" = @Assert\NotBlank(
-	 *         message="tgprojet.mc_erc.not_blank",
-	 *         groups={"BlMotCleErcType_erc"}
-	 *     )
-	 * },
-	 *
-	 * allowMissingFields = false,
-	 * groups={"BlMotCleErcType_erc"}
-	 * )
+     * @Assert\Collection(fields ={
+     *     "id_mc_erc" = @Assert\NotBlank(
+     *         message="tgprojet.mc_erc.not_blank",
+     *         groups={"BlMotCleErcType_erc"}
+     *     )
+     * },
+     *
+     * allowMissingFields = false,
+     * groups={"BlMotCleErcType_erc"}
+     * )
      *
      */
     private $idMcErc;
@@ -334,15 +334,15 @@ class TgProjet
      *   }
      * )
      *
-	 * @Assert\Collection(fields ={
-	 *     "id_mc_ces" = @Assert\NotBlank(
-	 *         message="tgprojet.mc_ces.not_blank",
-	 *         groups={"BlMotCleCesType_ces"}
-	 *     )
-	 * },
-	 * allowMissingFields = false,
-	 * groups={"BlMotCleCesType_ces"}
-	 * )
+     * @Assert\Collection(fields ={
+     *     "id_mc_ces" = @Assert\NotBlank(
+     *         message="tgprojet.mc_ces.not_blank",
+     *         groups={"BlMotCleCesType_ces"}
+     *     )
+     * },
+     * allowMissingFields = false,
+     * groups={"BlMotCleCesType_ces"}
+     * )
      */
     private $idMcCes;
 
