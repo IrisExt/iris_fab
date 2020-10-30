@@ -60,17 +60,4 @@ class NiveauPhaseRepository extends ServiceEntityRepository
 
         return $query->getResult();
     }
-
-    public function findDateFinEvalByIdAppel($idAppel)
-    {
-        $query = $this->createQueryBuilder('np')
-            ->select('np.dhFin')
-            ->where('np.idAppel = :appel')
-            ->setParameter('appel', $idAppel)
-            ->andWhere('np.idTypeNiveu = 2')
-            ->groupby('np.dhFin')
-            ->getQuery();
-
-        return $query->getResult();
-    }
 }

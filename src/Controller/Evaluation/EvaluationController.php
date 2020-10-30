@@ -48,14 +48,12 @@ class EvaluationController extends BaseController
 
         $statusEvaluations = $tlStsEvaluationManager->getAllStsEvaluations();
 
-        $dateFinPhaseEval = $niveauPhaseManager->findDateFinEvalByIdAppel($tgComite->getIdAppel());
-
         return $this->render('evaluation/evaluation/index.html.twig', [
             'comite' => $tgComite,
             'projets' => $listeProjet,
             'statusEvaluations' => $statusEvaluations,
             'role' => $request->query->get('role'),
-            'dateFinPhaseEval' => $dateFinPhaseEval[0]['dhFin']
+            'dateFinPhaseEval' => $tgComite->getIdAppel()->getNiveauEnCours()->getDhFin()
         ]);
     }
 
