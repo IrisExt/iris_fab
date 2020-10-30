@@ -12,9 +12,4 @@ class NiveauPhaseManager
     {
         $this->niveauPhaseRepository = $niveauPhaseRepository;
     }
-
-    public function findDateFinEvalByIdAppel($idAppel)
-    {
-        return $this->niveauPhaseRepository->findDateFinEvalByIdAppel($idAppel);
-    }
 }
