@@ -312,12 +312,23 @@
                                 ({{ projet.tgAffectations|filter(affect => affect.idPropose == lecteur.idPersonne)|length }})
                                 {% endfor %}
                         </td>
-                        <td></td>
+                        <td>
+                            {% set countexpertrecuse = 0 %}
+                            {% for expertrecuse in projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert')  %}
+                                {% if expertrecuse.idPersonne.blRecuse is same as(true) %}
+                                    {% set countexpertrecuse = countexpertrecuse + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if countexpertrecuse > 0 %}
+                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{countexpertrecuse}}
+                            {% endif %}
+                            
+                        </td>
                         <td id="langueStyle">
                             {% if app.request.pathinfo|split('/')[1] == 'fr' %}
-                            {{ projet.idLangue.lbLangue }}
+                            {{ (projet.idLangue is not null) ? projet.idLangue.lbLangue }}
                             {% else %}
-                            {{ projet.idLangue.lbNomEn }}
+                            {{ (projet.idLangue is not null) ? projet.idLangue.lbNomEn }}
                             {% endif %}
                         </td>
                         <td></td>

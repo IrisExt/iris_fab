@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Helper\StringHelperTrait;
 use App\Manager\TgProjetManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Manager\UserManager;
 
 class EvaluationController extends BaseController
 {
@@ -98,6 +99,11 @@ class EvaluationController extends BaseController
     public function setDateRendu(Request $request, AffectationManager $affectationManager)
     {
         $success = $affectationManager->setDateRendu($request->request->get('idPersonne'), $request->request->get('idAffectation'), $request->request->get('dhRendu'));
+        
+        $this->addFlash(
+            'success',
+            "La date a été bien modifiée."
+        );
 
         return new JsonResponse(['success' => $success]);
     }
@@ -155,9 +161,29 @@ class EvaluationController extends BaseController
     public function getBooklet(Request $request, ProjetManager $projetManager)
     {
         $project = $projetManager->getProject($request->request->get('idProjet'));
+        $userhistory = $this->getUser()->getHistory();
 
         return $this->render('evaluation/evaluation/modal/booklet.html.twig', [
-            'project' => $project,
-        ]);
+                'project'=> $project,
+                'userhistory' => $userhistory
+            ]
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/set_booklet_opened", name="set_booklet_opened", methods={"GET","POST"})
+     */
+    public function setBookletOpened(Request $request, UserManager $userManager)
+    {
+        $session = $request->getSession();
+        $collapse = $session->get('COLLAPSE');
+        $collapse['opened'] = $request->request->get('collapseid');
+        $session->set('COLLAPSE', $collapse);
+        $user = $this->getUser();
+        $user->setHistory(['booklet' => $collapse]);
+        $userManager->save($user);
+
+        return new JsonResponse(['collapse' => $collapse, 'user' => $this->getUser()]);
     }
 }

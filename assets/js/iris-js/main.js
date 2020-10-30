@@ -236,7 +236,6 @@
         $("#open").on("click", function () {
 			$('#mySidenav .sidenav-head .sidenav-head-title').html('');
 			var path = $(this).data('id');
-			console.log(path);
 
             // Display sidenav
 			openNav();
@@ -324,10 +323,12 @@
 					var ddate = new Date();
 					var dyear = ddate.getFullYear();
 					var dmonth = ddate.getMonth() + 1;
+					var currentdate = ddate.getDate();
+					ddate = dyear+'-'+dmonth+'-'+currentdate;
 
 					$(".responsive-calendar").responsiveCalendar({
 						time: dyear+'-'+dmonth,
-						events: {[ddate]: {"url": "", "cls": ""}, [date1]: {"url": "", "cls": "dhrenduexpert"}, [date2]: {"url": "", "cls": "dhrenducomite"}, [date3]: {"url": "", "cls": "dhrenduphase"}},
+						events: {[ddate]: {"url": "", "cls": "dhdujour"}, [date1]: {"url": "", "cls": "dhrenduexpert"}, [date2]: {"url": "", "cls": "dhrenducomite"}, [date3]: {"url": "", "cls": "dhrenduphase"}},
 						onInit: function() {
 							$('#calendar-1 .next-1 .btn-primary').css({'background-color': '#ffffff', 'border-color': '#ffffff'});
 							$('#calendar-2 .prev-2 .btn-primary').css({'background-color': '#ffffff', 'border-color': '#ffffff'});
@@ -339,6 +340,10 @@
 							}
 						}
 					});
+					$('#date-jour').append(': '+currentdate+'/'+dmonth+'/'+dyear);
+					$('#date-rendu-evaluateur').append(': '+dhrenduexpert[1]+'/'+dhrenduexpert[0]+'/'+dhrenduexpert[2]);
+					$('#date-comite').append(': '+dhrenducomite[1]+'/'+dhrenducomite[0]+'/'+dhrenducomite[2]);
+					$('#date-appel').append(': '+dhrenduphase[1]+'/'+dhrenduphase[0]+'/'+dhrenduphase[2]);
 					$('#calendar-2 .next-2').trigger('click');
 					$('#calendar-2 .next-2').on('click', function() {
 						$('#calendar-1 .next-1').trigger('click');
@@ -352,7 +357,5 @@
                 }
             });
 		});
-
-		$('#collapseFive').collapse('show');
 	});
 })(jQuery);

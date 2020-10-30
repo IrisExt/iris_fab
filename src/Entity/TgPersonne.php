@@ -282,6 +282,11 @@ class TgPersonne
     private $experProj;
 
     /**
+     * @ORM\Column(name="bl_recuse", type="boolean", nullable=true)
+     */
+    private $blRecuse;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -1084,6 +1089,18 @@ class TgPersonne
                 $experProj->setIdPersonne(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBlRecuse(): ?bool
+    {
+        return $this->blRecuse;
+    }
+
+    public function setBlRecuse(?bool $blRecuse): self
+    {
+        $this->blRecuse = $blRecuse;
 
         return $this;
     }

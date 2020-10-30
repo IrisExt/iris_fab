@@ -86,10 +86,6 @@
                                 </tr>
                             </thead>
                             <tbody class="searchable">
-                                {% set colors = ['99CCFF', 'CCFFFF', '99FF99', 'FFFF99', 'FFCC99', 'FF9999'] %}
-                                {% set color = colors|first %}
-                                {% set index = 0 %}
-
                                 {% for expert in project.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert') %}
                                 {% set habilitation = project.idHabilitation|filter(hab => hab.idPersonne == expert.idPersonne) | sort((a, b) => a.dhMaj > b.dhMaj) | first %}
                                 {% set dhrenduphase = null %}
@@ -99,17 +95,10 @@
                                     {% endfor %}
                                 {% endif %}
                                 <tr>
+                                    {% set dhrenduExpert = null %}
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
-
-                                        {% for c in colors %}
-                                        {% if c == color %}
-                                        {% set index = loop.index - 1 %}
-                                        {% endif %}
-                                        {% endfor %}
-
-                                        {% set color = random(colors|slice(index, colors|length - index)) %}
-                                        <i class="fa fa-2x fa-square" style="color: #{{ color }}"></i>
+                                        {% include 'evaluation/evaluation/evaluation.status.html.twig' %}
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-2" style="word-wrap: break-word;">
@@ -117,14 +106,15 @@
                                             data-idpersonne="{{ expert.idPersonne.idPersonne }}">
                                             <i class="fa fa-file-text-o"></i>
                                             <span>{{ expert.idPersonne.lbNomUsage  ~" "~ expert.idPersonne.lbPrenom }}</span>
+                                            {% if expert.idPersonne.blRecuse %}
+                                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                            {% endif %}
                                         </a>
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
                                         {% for organisme in expert.idPersonne.tlPersOrg %}
-                                        <pre>
-                                                    {{ dump(organisme) }}
-                                                </pre>
+                                            {{ organisme.idOrganisme.lbNomFr }}
                                         {% endfor %}
                                     </td>
                                     <!-- block comite , titre, département -->
@@ -148,27 +138,40 @@
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
                                         {% if expert.cdStsEvaluation is not null %}
-                                        {{expert.cdStsEvaluation.lbDescription}}
+                                            {{expert.cdStsEvaluation.lbDescription}}
                                         {% endif %}
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
                                         {% set difference = null %}
+                                        {% set datediff = null %}
                                         {% if expert.dhRendu is not null %}
-                                        {{ expert.dhRendu | date('d/m/Y') }}
-                                        {% set difference = date(expert.dhRendu).diff(date("now")) %}
+                                            {{ expert.dhRendu | date('d/m/Y') }}
+                                            {% set dhrenduExpert = expert.dhRendu %}
+                                            {% set difference = date(expert.dhRendu).diff(date("now")) %}
+                                            {% set datediff = dhrenduExpert < date("now") %}
                                         {% elseif project.idComite.dhRenduEvalRL  is not null %}
-                                        {{ project.idComite.dhRenduEvalRL | date('d/m/Y') }}
-                                        {% set difference = date(project.idComite.dhRenduEvalRL).diff(date("now")) %}
+                                            {{ project.idComite.dhRenduEvalRL | date('d/m/Y') }}
+                                            {% set dhrenduExpert = project.idComite.dhRenduEvalRL %}
+                                            {% set difference = date(project.idComite.dhRenduEvalRL).diff(date("now")) %}
+                                            {% set datediff = dhrenduExpert < date("now") %}
                                         {% else %}
-                                        {{ dhrenduphase | date('d/m/Y') }}
-                                        {% set difference = date(dhrenduphase).diff(date("now")) %}
+                                            {{ dhrenduphase | date('d/m/Y') }}
+                                            {% set dhrenduExpert = dhrenduphase %}
+                                            {% set difference = date(dhrenduphase).diff(date("now")) %}
+                                            {% set datediff = dhrenduExpert < date("now") %}
+                                        {% endif %}
+                                        {% if datediff %}
+                                            <i class="fa fa-exclamation-triangle" style="color:red" aria-hidden="true"></i>
                                         {% endif %}
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
-                                        {% set leftDays = difference.days %}
-                                        {{leftDays}}j
+                                        {% if datediff %}
+                                        ---
+                                        {% else %}
+                                            {{difference.days}}j
+                                        {% endif %}
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
@@ -200,7 +203,7 @@
                                             data-idpersonne="{{ expert.idPersonne.idPersonne }}"
                                             data-idAffectation="{{ expert.idAffectation }}"
                                             data-idProjet="{{ project.idProjet }}"
-                                            data-dhrenduexpert="{{expert.dhRendu | date('m/d/Y')}}"
+                                            data-dhrenduexpert="{{dhrenduExpert | date('m/d/Y')}}"
                                             data-dhrenducomite="{{project.idComite.dhRenduEvalRL | date('m/d/Y')}}"
                                             data-dhrenduphase="{{dhrenduphase | date('m/d/Y')}}">
                                             <span class="adminpro-icon adminpro-calendar"></span>
@@ -222,11 +225,6 @@
 
 {% block javascripts %}
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
 <script>
     $('#mySidenav .sidenav-head .sidenav-head-title').html('');
     //modal pour la création reunion

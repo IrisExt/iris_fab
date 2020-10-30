@@ -48,7 +48,7 @@ class TrLangue
     /**
      * @return string
      */
-    public function getCdLangue(): string
+    public function getCdLangue(): ?string
     {
         return $this->cdLangue;
     }

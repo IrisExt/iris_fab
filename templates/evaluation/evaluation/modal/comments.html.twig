@@ -1,4 +1,4 @@
-
+{% trans_default_domain 'Evaluations' %}
 <div class="row">
   {{ include('evaluation/evaluation/modal/contact_personne.html.twig', {personne: tgPersonne}) }}
 </div></br></br>
@@ -14,7 +14,7 @@
 </div></br></br>
 <div class="row">
   <div class="row">
-      <div id="comments" class="col-md-12">
+      <div id="comments" class="col-md-10">
         {% for comment in personneComments %}
           <p>{{ comment.idPersonne.lbNomUsage ~ " " ~ comment.idPersonne.lbPrenom }}:</p>
           <p>{{ comment.dhCommande| date('d/m/Y') }} à {{ comment.dhCommande| date('H:i') }}</p>
@@ -46,6 +46,7 @@
             $('#evaluationModal .modal-body').html(bodyhtml);
             // AJAX request
             $('.send-comment').on("click", function (event ) {
+              $('#comments').html("<div id='loader'></div>");
               $.ajax({
                   url: $(this).data('id'),
                   type: 'POST',
@@ -54,7 +55,6 @@
                     if (response.success) {
                       $('textarea#add_comment').val('');
                       $('.close').trigger("click");
-                      $('#comments').html(' ');
                       var html = '';
                       response.comments.forEach(function(comment) {
                           html += "<p>"+comment.lbNomUsage+' '+comment.lbPrenom+' :</p>'+
