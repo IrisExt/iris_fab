@@ -106,7 +106,7 @@
                                             data-idpersonne="{{ expert.idPersonne.idPersonne }}">
                                             <i class="fa fa-file-text-o"></i>
                                             <span>{{ expert.idPersonne.lbNomUsage  ~" "~ expert.idPersonne.lbPrenom }}</span>
-                                            {% if expert.idPersonne.blRecuse is same as(true) %}
+                                            {% if expert.idPersonne.blRecuse %}
                                                 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                             {% endif %}
                                         </a>
@@ -161,13 +161,13 @@
                                             {% set difference = date(dhrenduphase).diff(date("now")) %}
                                             {% set datediff = dhrenduExpert < date("now") %}
                                         {% endif %}
-                                        {% if datediff is same as(true) %}
+                                        {% if datediff %}
                                             <i class="fa fa-exclamation-triangle" style="color:red" aria-hidden="true"></i>
                                         {% endif %}
                                     </td>
                                     <!-- block comite , titre, département -->
                                     <td class="col-md-1" style="word-wrap: break-word;">
-                                        {% if datediff is same as(true) %}
+                                        {% if datediff %}
                                         ---
                                         {% else %}
                                             {{difference.days}}j

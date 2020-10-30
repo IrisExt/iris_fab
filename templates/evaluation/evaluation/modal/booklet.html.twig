@@ -135,10 +135,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for erc in project.idMcErc %}
+                    {% for rls in project.tgAffectations|filter(affect => (affect.idStAffect.lbNom == 'Rapporteur' or affect.idStAffect.lbNom == 'Lecteur')) %}
                     <tr>
                         <td class="col-md-1" style="word-wrap: break-word;">
-                            {{ 'Bruno Raffin' }}
+                            {{ rls.idPersonne.lbNomUsage  ~" "~ rls.idPersonne.lbPrenom }}
                         </td>
                         <td class="col-md-1" style="word-wrap: break-word;">
                             {{ 'Institut national de la recherche en informatique' }}
@@ -157,13 +157,11 @@
 {% block javascripts %}
 <script>
     $('#collapseTwo, #collapseThree, #collapseFour, #collapseSix, #collapseSeven, #collapseHeight').on('show.bs.collapse', function (event) {
-        console.log(event.target.id);
         $.ajax({
             url: '/{{ app.request.getLocale() }}/set_booklet_opened',
             type: 'POST',
             data: 'collapseid=' + event.target.id,
             success: function (data) {
-                console.log(data)
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert('Error : ' + errorThrown);
