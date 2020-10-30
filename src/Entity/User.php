@@ -68,6 +68,11 @@ class User extends BaseUser implements EquatableInterface
      */
     private $idFavoris;
 
+    /**
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $history = [];
+
     public function __construct()
     {
         parent::__construct();
@@ -186,4 +191,16 @@ class User extends BaseUser implements EquatableInterface
 
     return true;
 }
+
+    public function getHistory(): ?array
+    {
+        return $this->history;
+    }
+
+    public function setHistory(?array $history): self
+    {
+        $this->history = $history;
+
+        return $this;
+    }
 }

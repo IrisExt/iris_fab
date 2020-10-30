@@ -204,7 +204,7 @@
         dateNow.setHours(0, 0, 0, 0);
         dayDate = new Date(yearNum, monthNum - 1, dayNum);
         if (dayDate.getTime() < dateNow.getTime()) {
-          pastFutureClass = "past";
+          pastFutureClass = "past not-current";
         } else if (dayDate.getTime() === dateNow.getTime()) {
           pastFutureClass = "today";
         } else {

@@ -1,3 +1,4 @@
+{% trans_default_domain 'Evaluations' %}
 <div class="row">
   {{ include('evaluation/evaluation/modal/contact_personne.html.twig', {personne: tgPersonne}) }}
 </div></br>
@@ -25,10 +26,10 @@
       <div class="days" data-group="days"></div>
       <div></br></br>
         <p>{{ 'evaluation.legende'|trans }}</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #1d86c8"></i> {{ 'evaluation.date_jour'|trans }}</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #FFCC99"></i> {{ 'evaluation.date_rendu_evaluateur'|trans }}</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #99FF99"></i> {{ 'evaluation.date_comite'|trans }}</p>
-        <p><i class="fa fa-2x fa-circle" style="color: #FFFF99"></i> {{ 'evaluation.date_appel'|trans }}</p>
+        <p><i class="fa fa-2x fa-circle" style="color: #1d86c8"></i> {{ 'evaluation.date_jour'|trans }}<span id='date-jour'></span></p>
+        <p><i class="fa fa-2x fa-circle" style="color: #FFCC99"></i> {{ 'evaluation.date_rendu_evaluateur'|trans }}<span id='date-rendu-evaluateur'></span></p>
+        <p><i class="fa fa-2x fa-circle" style="color: #99FF99"></i> {{ 'evaluation.date_comite'|trans }}<span id='date-comite'></span></p>
+        <p><i class="fa fa-2x fa-circle" style="color: #FFFF99"></i> {{ 'evaluation.date_appel'|trans }}<span id='date-appel'></span></p>
       </div>
     </div>
     <!-- Responsive calendar - END -->

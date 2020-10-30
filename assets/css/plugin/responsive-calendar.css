@@ -65,6 +65,13 @@
   background-color: #ffffff;
 }
 
+.responsive-calendar .active.dhdujour a {
+  background-color: #1d86c8;
+  color: #ffffff;
+	border-radius:50%;
+	border:none;
+}
+
 .responsive-calendar .day.active .dhrenduexpert {
   background-color: #FFCC99;
   color: #ffffff;
