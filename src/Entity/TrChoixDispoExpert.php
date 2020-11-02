@@ -25,7 +25,7 @@ class TrChoixDispoExpert
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_nom_en", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_nom_en", type="string", length=255, nullable=false)
      */
     private $lbNomEn;
 
@@ -39,7 +39,7 @@ class TrChoixDispoExpert
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_nom_fr", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_nom_fr", type="string", length=255, nullable=false)
      */
     private $lbNomFr;
 

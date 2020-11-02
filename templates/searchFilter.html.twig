@@ -3,52 +3,52 @@
 
 {#    <link type="text/css" rel="stylesheet" href="{{ asset('css/jquery.dataTables.min.css') }}"/>#}
 
-    <link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+<link href='//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
 
-    <style>
-        tfoot input {
-            width: 100%;
-            padding: 3px;
-            box-sizing: border-box;
-        }
-    </style>
+<style>
+    tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+</style>
 {% endblock %}
 
 {% block body %}
-    <div class="col-lg-8 col-lg-offset-2">
-        <div class="text-center">
-        </div>
+<div class="col-lg-8 col-lg-offset-2">
+    <div class="text-center">
     </div>
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2">
-            <div class="sparkline8-list shadow-reset">
-                <div class="sparkline8-hd" style="background-color: #dfdfdf">
-                    <div class="main-sparkline8-hd">
-                        <h1>Recherche</h1>
-                        <div class="sparkline9-outline-icon">
-                        </div>
+</div>
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="sparkline8-list shadow-reset">
+            <div class="sparkline8-hd" style="background-color: #dfdfdf">
+                <div class="main-sparkline8-hd">
+                    <h1>Recherche</h1>
+                    <div class="sparkline9-outline-icon">
                     </div>
                 </div>
-                <div >
-                    <!-- Custom Filter -->
-                    <table>
-                        <tr>
-                            <td>
-                                <input type='text' id='searchByName' placeholder='Enter name'>
-                            </td>
-                            <td>
-                                <select id='searchByGender'>
-                                    <option value=''>-- Select Gender--</option>
-                                    <option value='male'>Male</option>
-                                    <option value='female'>Female</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
+            </div>
+            <div>
+                <!-- Custom Filter -->
+                <table>
+                    <tr>
+                        <td>
+                            <input type='text' id='searchByName' placeholder='Enter name'>
+                        </td>
+                        <td>
+                            <select id='searchByGender'>
+                                <option value=''>-- Select Gender--</option>
+                                <option value='male'>Male</option>
+                                <option value='female'>Female</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
 
-                    <!-- Table -->
-                    <table id='empTable' class='display dataTable'>
-                        <thead>
+                <!-- Table -->
+                <table id='empTable' class='display dataTable'>
+                    <thead>
                         <tr>
                             <th>Employee name</th>
                             <th>Email</th>
@@ -56,65 +56,65 @@
                             <th>Salary</th>
                             <th>City</th>
                         </tr>
-                        </thead>
+                    </thead>
 
-                    </table>
-                </div>
-
-                </div>
-
+                </table>
             </div>
+
         </div>
+
     </div>
-    {% include 'searchPersonnes/modalFavoriteSearch.html.twig' %}
+</div>
+</div>
+{% include 'searchPersonnes/modalFavoriteSearch.html.twig' %}
 {% endblock %}
 {% block javascripts1 %}
 
 
-    <!-- jQuery Library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- jQuery Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!-- Datatable JS -->
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<!-- Datatable JS -->
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
 {% endblock %}
 {% block javascripts %}
 
-    <script>
+<script>
 
-        $(document).ready(function(){
-            var dataTable = $('#empTable').DataTable({
-                'processing': true,
-                'serverSide': true,
-                'serverMethod': 'post',
-                //'searching': false, // Remove default Search Control
-                'ajax': {
-                    'url': "/fr/advancedsearch",
-                    'data': function(data){
-                        // Read values
-                        var gender = $('#searchByGender').val();
-                        var name = $('#searchByName').val();
+    $(document).ready(function () {
+        var dataTable = $('#empTable').DataTable({
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            //'searching': false, // Remove default Search Control
+            'ajax': {
+                'url': "/fr/advancedsearch",
+                'data': function (data) {
+                    // Read values
+                    var gender = $('#searchByGender').val();
+                    var name = $('#searchByName').val();
 
-                        // Append to data
-                        data.searchByGender = gender;
-                        data.searchByName = name;
-                    }
-                },
-                'columns': [
-                    { data: 'nom' },
-                    { data: 'email' },
-                    { data: 'gender' },
-                    { data: 'langue' },
-                ]
-            });
-
-            $('#searchByName').keyup(function(){
-                dataTable.draw();
-            });
-
-            $('#searchByGender').change(function(){
-                dataTable.draw();
-            });
+                    // Append to data
+                    data.searchByGender = gender;
+                    data.searchByName = name;
+                }
+            },
+            'columns': [
+                { data: 'nom' },
+                { data: 'email' },
+                { data: 'gender' },
+                { data: 'langue' },
+            ]
         });
-    </script>
+
+        $('#searchByName').keyup(function () {
+            dataTable.draw();
+        });
+
+        $('#searchByGender').change(function () {
+            dataTable.draw();
+        });
+    });
+</script>
 {% endblock %}

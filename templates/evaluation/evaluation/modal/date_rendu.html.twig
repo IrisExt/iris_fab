@@ -1,31 +1,75 @@
+{% trans_default_domain 'Evaluations' %}
 <div class="row">
   {{ include('evaluation/evaluation/modal/contact_personne.html.twig', {personne: tgPersonne}) }}
+</div></br>
+<div class="row align-center">
+  <h4 class="modal-title"><b>{{ 'evaluation.modifier_date_rendu'|trans }}</b></h4>
 </div></br></br>
 <div class="row">
-  <h4 class="modal-title">Modifier la date de rendu de l'évaluateur</h4>
-</div></br></br>
-<div class="row">
-  <div class="row">
-    <div class="col-md-12">
-      <input type="text" class="js-datepicker date_rendu_current">
+  <div class="col-md-5">
+    <!-- Responsive calendar - START -->
+    <div id="calendar-1" class="responsive-calendar">
+      <div class="controls">
+          <a class="pull-left prev-1" data-go="prev"><div class="btn btn-primary"><i class="fa fa-angle-left" style="font-size:36px"></i></div></a>
+          <h4><span data-head-year></span> <span data-head-month></span></h4>
+          <a class="pull-right next-1" data-go="next"><div class="btn btn-primary"></div></a>
+      </div><hr/>
+      <div class="day-headers">
+        <div class="day header">Lun</div>
+        <div class="day header">Mar</div>
+        <div class="day header">Mer</div>
+        <div class="day header">Jeu</div>
+        <div class="day header">Ven</div>
+        <div class="day header">Sam</div>
+        <div class="day header">Dim</div>
+      </div>
+      <div class="days" data-group="days"></div>
+      <div></br></br>
+        <p>{{ 'evaluation.legende'|trans }}</p>
+        <p><i class="fa fa-2x fa-circle" style="color: #1d86c8"></i> {{ 'evaluation.date_jour'|trans }}<span id='date-jour'></span></p>
+        <p><i class="fa fa-2x fa-circle" style="color: #FFCC99"></i> {{ 'evaluation.date_rendu_evaluateur'|trans }}<span id='date-rendu-evaluateur'></span></p>
+        <p><i class="fa fa-2x fa-circle" style="color: #99FF99"></i> {{ 'evaluation.date_comite'|trans }}<span id='date-comite'></span></p>
+        <p><i class="fa fa-2x fa-circle" style="color: #FFFF99"></i> {{ 'evaluation.date_appel'|trans }}<span id='date-appel'></span></p>
+      </div>
     </div>
-  </div></br>
-  <div class="row">
-    <div class="col-md-12">
-        <button type="submit" class="btn btn-warning send-date" data-id="{{ path('set_ajax_date_rendu') }}" data-idprojet="{{idProjet}}" data-idaffectation="{{idAffectation}}" data-idpersonne="{{ tgPersonne.idPersonne }}">Modifier</button>
-    </div>
+    <!-- Responsive calendar - END -->
   </div>
-</div>
+  <div class="col-md-5">
+    <!-- Responsive calendar - START -->
+    <div id="calendar-2" class="responsive-calendar">
+      <div class="controls">
+          <a class="pull-left prev-2" data-go="prev"><div class="btn btn-primary"></div></a>
+          <h4><span data-head-year></span> <span data-head-month></span></h4>
+          <a class="pull-right next-2" data-go="next"><div class="btn btn-primary"><i class="fa fa-angle-right" style="font-size:36px"></i></div></a>
+      </div><hr/>
+      <div class="day-headers">
+        <div class="day header">Lun</div>
+        <div class="day header">Mar</div>
+        <div class="day header">Mer</div>
+        <div class="day header">Jeu</div>
+        <div class="day header">Ven</div>
+        <div class="day header">Sam</div>
+        <div class="day header">Dim</div>
+      </div>
+      <div class="days" data-group="days"></div></br></br></br></br>
+      <div class="col-md-12 mt-15">
+          <input type="text" name="dhrendu" id="dhrendusent" class="form-control js-datepicker" placeholder="DD/MM/YYYY" required readonly value="">
+      </div></br></br></br></br>
+      <div class="col-md-12">
+          <button type="submit" class="btn btn-warning send-date" data-id="{{ path('set_ajax_date_rendu') }}" data-idprojet="{{idProjet}}" data-idaffectation="{{idAffectation}}" data-idpersonne="{{ tgPersonne.idPersonne }}">{{ 'evaluation.modifier'|trans }}</button>
+      </div>
+    </div>
+    <!-- Responsive calendar - END -->
+  </div>
+</div></br>
 
 {% block javascripts %}
     <script>
         $(document).on("click", ".send-date", function () {
-          // AJAX request
-          //console.log($('textarea#add_comment').val());
           $.ajax({
               url: $(this).data('id'),
               type: 'POST',
-              data: 'idPersonne='+ $(this).data('idpersonne')+'&idProjet='+ $(this).data('idprojet')+'&idAffectation='+ $(this).data('idaffectation')+'&dhRendu='+ $('input.date_rendu_current').val(),
+              data: 'idPersonne='+ $(this).data('idpersonne')+'&idProjet='+ $(this).data('idprojet')+'&idAffectation='+ $(this).data('idaffectation')+'&dhRendu='+ $('input#dhrendusent').val(),
               success: function (response) {
                   $('.close').trigger('click');
                   document.location.reload(true);

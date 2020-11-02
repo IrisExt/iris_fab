@@ -219,5 +219,143 @@
 	var previous = $('.hidden_1').closest('.form-group');
 	previous.prev('.nom-rubrique').hide();
  /////////////////////////////////////////////////////////////////////////////////////
+	function openNav() {
+		$("#mySidenav").css({'width': '55%'});
+		$(".chip").css({'background-color': '#0288d1 '});
+		$('#mySidenav .sidenav-content').html("<div id='loader'></div>");
+	}
+	function closeNav() {
+		$("#mySidenav").css({'width': '0'});
+		$(".chip").css({'background-color': '#bdbdbd'});
+	}
+    $(document).ready(function(){
+		$('.closebtn').on('click', function() {
+			closeNav();
+		});
 
+        $("#open").on("click", function () {
+			$('#mySidenav .sidenav-head .sidenav-head-title').html('');
+			var path = $(this).data('id');
+
+            // Display sidenav
+			openNav();
+
+            // AJAX request
+            $.ajax({
+                url: path,
+                type: 'POST',
+                data: 'idProjet=' + $(this).data('idprojet'),
+                success: function (response) {
+                    // Add response in Modal body
+                    $('#mySidenav .sidenav-content').html(response);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+		});
+
+        $(".show_cv").on("click", function () {
+			var path = $(this).data('id');
+			console.log(path);
+
+            // Display sidenav
+			openNav();
+
+            // AJAX request
+            $.ajax({
+                url: path,
+                type: 'POST',
+                data: 'idPersonne=' + $(this).data('idpersonne'),
+                success: function (response) {
+					$('.collapse').collapse()
+                    // Add response in Modal body
+                    $('#mySidenav .sidenav-content').html(response);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+		});
+
+        $(".show_comments").on("click", function () {
+            var path = $(this).data('id');
+
+            // Display sidenav
+			openNav();
+
+            // AJAX request
+            $.ajax({
+                url: path,
+                type: 'POST',
+                data: 'idPersonne=' + $(this).data('idpersonne') + '&idProjet=' + $(this).data('idprojet'),
+                success: function (response) {
+                    // Add response in Modal body
+                    $('#mySidenav .sidenav-content').html(response);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+        });
+
+        $(".show_date_rendu").on("click", function () {
+            var path = $(this).data('id');
+            var dhrenduexpert = $(this).data('dhrenduexpert').split('/');
+            var dhrenducomite = $(this).data('dhrenducomite').split('/');
+            var dhrenduphase = $(this).data('dhrenduphase').split('/');
+
+            // Display sidenav
+            openNav();
+
+            // AJAX request
+            $.ajax({
+                url: path,
+                type: 'POST',
+                data: 'idPersonne=' + $(this).data('idpersonne') + '&idProjet=' + $(this).data('idprojet') + '&idAffectation=' + $(this).data('idaffectation'),
+                success: function (response) {
+                    // Add response in Modal body
+					$('#mySidenav .sidenav-content').html(response);
+
+					var date1 = dhrenduexpert[2]+'-'+dhrenduexpert[0]+'-'+dhrenduexpert[1];
+					var date2 = dhrenducomite[2]+'-'+dhrenducomite[0]+'-'+dhrenducomite[1];
+					var date3 = dhrenduphase[2]+'-'+dhrenduphase[0]+'-'+dhrenduphase[1];
+					var ddate = new Date();
+					var dyear = ddate.getFullYear();
+					var dmonth = ddate.getMonth() + 1;
+					var currentdate = ddate.getDate();
+					ddate = dyear+'-'+dmonth+'-'+currentdate;
+
+					$(".responsive-calendar").responsiveCalendar({
+						time: dyear+'-'+dmonth,
+						events: {[ddate]: {"url": "", "cls": "dhdujour"}, [date1]: {"url": "", "cls": "dhrenduexpert"}, [date2]: {"url": "", "cls": "dhrenducomite"}, [date3]: {"url": "", "cls": "dhrenduphase"}},
+						onInit: function() {
+							$('#calendar-1 .next-1 .btn-primary').css({'background-color': '#ffffff', 'border-color': '#ffffff'});
+							$('#calendar-2 .prev-2 .btn-primary').css({'background-color': '#ffffff', 'border-color': '#ffffff'});
+						},
+						onDayClick: function(event) {
+							console.log('click on Day');
+							if (!$( this ).parent().hasClass('past') && !$( this ).parent().hasClass('not-current')) {
+								$('#dhrendusent').val(this.dataset.day+'/'+this.dataset.month+'/'+this.dataset.year);
+							}
+						}
+					});
+					$('#date-jour').append(': '+currentdate+'/'+dmonth+'/'+dyear);
+					$('#date-rendu-evaluateur').append(': '+dhrenduexpert[1]+'/'+dhrenduexpert[0]+'/'+dhrenduexpert[2]);
+					$('#date-comite').append(': '+dhrenducomite[1]+'/'+dhrenducomite[0]+'/'+dhrenducomite[2]);
+					$('#date-appel').append(': '+dhrenduphase[1]+'/'+dhrenduphase[0]+'/'+dhrenduphase[2]);
+					$('#calendar-2 .next-2').trigger('click');
+					$('#calendar-2 .next-2').on('click', function() {
+						$('#calendar-1 .next-1').trigger('click');
+					});
+					$('#calendar-1 .prev-1').on('click', function() {
+						$('#calendar-2 .prev-2').trigger('click');
+					});
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            });
+		});
+	});
 })(jQuery);

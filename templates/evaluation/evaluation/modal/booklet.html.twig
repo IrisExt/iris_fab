@@ -1,0 +1,180 @@
+{% trans_default_domain 'Evaluations' %}
+<div class="row">
+    <div class="row">
+        <div class="col-lg-10 col-md-10">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <h4>
+                    <b>{{ 'evaluation.projet'|trans }}:</b> {{ project.lbAcro }}
+                </h4>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <b>{{ 'evaluation.titre'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse {{ (userhistory is not null and userhistory.booklet is defined and userhistory.booklet.opened is same as('collapseTwo')) ? 'in' : '' }}" 
+                        role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        {{ project.lbTitreEn }}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                            <b>{{ 'evaluation.outil_financement'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseThree" 
+                        class="panel-collapse collapse {{ (userhistory is not null and userhistory.booklet is defined and userhistory.booklet.opened is same as('collapseThree')) ? 'in' : '' }}" 
+                        role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        {{ project.idInfraFi.lbAcro }}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseTwo">
+                            <b>{{ 'evaluation.categorie_rd'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseFour" class="panel-collapse collapse {{ (userhistory is not null and userhistory.booklet is defined and userhistory.booklet.opened is same as('collapseFour')) ? 'in' : '' }}" 
+                        role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        {{ project.idCatRd.lbCatRd }}
+                    </div>
+                    </div>
+                </div>
+                <div class="mgt-25 mgb-25">
+                    <b>{{ 'evaluation.experts_recuse'|trans }}:</b>
+                    {% set expertsRecuse = project.tgAffectations | filter(expert => expert.idPersonne.blRecuse is same as(true)) %}
+                    {% set expertsRecuseLength = expertsRecuse | length %}
+                    {% for expRec in expertsRecuse %}
+                        {{ expRec.idPersonne.lbNomUsage ~ ' ' ~ expRec.idPersonne.lbPrenom  }}{% if not (loop.index is same as(expertsRecuseLength) ) %},{% endif %}
+                    {% endfor %}
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="true" aria-controls="collapseTwo">
+                            <b>{{ 'evaluation.resume'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseSix" class="panel-collapse collapse {{ (userhistory is not null and userhistory.booklet is defined and userhistory.booklet.opened is same as('collapseSix')) ? 'in' : '' }}" 
+                        role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        {% for resume in project.tgResume %}
+                            {% if app.request.getLocale() is same as(resume.idLangue.cdLangue | lower) %}
+                                {{ resume.lbTexte }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="true" aria-controls="collapseThree">
+                            <b>{{ 'evaluation.erc'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseSeven" class="panel-collapse collapse {{ (userhistory is not null and userhistory.booklet is defined and userhistory.booklet.opened is same as('collapseSeven')) ? 'in' : '' }}" 
+                        role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        {% for erc in project.idMcErc %}
+                            {{ erc.lbNomFr }}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseHeight" aria-expanded="true" aria-controls="collapseThree">
+                            <b>{{ 'evaluation.mot_cle_ces'|trans }}</b>
+                        </a>
+                    </h4>
+                    </div>
+                    <div id="collapseHeight" class="panel-collapse collapse {{ (userhistory is not null and userhistory.booklet is defined and userhistory.booklet.opened is same as('collapseHeight')) ? 'in' : '' }}" 
+                        role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                        {% for ces in project.idComite.idMcCes %}
+                            {{ ces.lbMcCes }}{% if not loop.last %},{% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mgt-5">
+        <div class="table-responsive">
+            <!-- tableau -->
+            <table class="table" id="sortTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <h5>{{ 'evaluation.nom'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span>
+                            </h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.entite'|trans }}<span class="sort_tab fa fa-fw fa-sort"></span></h5>
+                        </th>
+                        <th>
+                            <h5>{{ 'evaluation.cp'|trans }}</h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rls in project.tgAffectations|filter(affect => (affect.idStAffect.lbNom == 'Rapporteur' or affect.idStAffect.lbNom == 'Lecteur')) %}
+                    <tr>
+                        <td class="col-md-1" style="word-wrap: break-word;">
+                            {{ rls.idPersonne.lbNomUsage  ~" "~ rls.idPersonne.lbPrenom }}
+                        </td>
+                        <td class="col-md-1" style="word-wrap: break-word;">
+                            {{ 'Institut national de la recherche en informatique' }}
+                        </td>
+                        <td class="col-md-1" style="word-wrap: break-word;">
+                            {{ '38401' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+<script>
+    $('#collapseTwo, #collapseThree, #collapseFour, #collapseSix, #collapseSeven, #collapseHeight').on('show.bs.collapse', function (event) {
+        $.ajax({
+            url: '/{{ app.request.getLocale() }}/set_booklet_opened',
+            type: 'POST',
+            data: 'collapseid=' + event.target.id,
+            success: function (data) {
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
+    });
+
+    $('.panel-collapse').on('show.bs.collapse', function () {
+        $(this).siblings('.panel-heading').addClass('active');
+    });
+
+    $('.panel-collapse').on('hide.bs.collapse', function () {
+        $(this).siblings('.panel-heading').removeClass('active');
+    });
+</script>
+{% endblock %}

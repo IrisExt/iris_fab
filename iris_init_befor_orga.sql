@@ -1,3 +1,8 @@
+/*
+bin/console doctrin:schema:drop --full-database --force
+bin/console doctrin:schema:update --force
+ */
+
 INSERT INTO "tr_ag_fi" ("id_agence_fi", "lb_agenc_fi") VALUES
 (1,'Mexique (Mexico) - CONACYT'),
 (2,'Allemagne (Germany) - DFG'),
@@ -20,9 +25,9 @@ INSERT INTO "tr_ag_fi" ("id_agence_fi", "lb_agenc_fi") VALUES
 
 INSERT INTO "tr_avis_projet" ("cd_avis", "code_avis", "lb_nom_fr", "lb_nom_en", "cd_couleur") VALUES
 (2,	'+',	'Favorable',	'Favourable',	'#CCFFCC'),
-(1,	'++',	'Très favorable',	'Very favourable',	'#33CC33'),
-(4,	'-',	'Défavorable',	'Unfavourable',	'#FFCCFF'),
-(6,	'O',	'Refus',	'Refus',	NULL),
+(1,	'++',	'Très favorable',	'very much in favour',	'#33CC33'),
+(4,	'-',	'Défavorable',	'against',	'#FFCCFF'),
+(6,	'O',	'Refus',	'rejected',	NULL),
 (3,	'=',	'indifférent',	'Indifferent',	'#FFFFFF'),
 (5,	'X',	'Conflit',	'Conflict',	'#FF0000');
 
@@ -32,36 +37,725 @@ INSERT INTO "tr_cat_rd" ("id_cat_rd", "lb_categorie") VALUES
 (3,'Recherche industrielle');
 
 INSERT INTO "tr_categorie_erc" ("id_cat_erc", "lb_cat_erc") VALUES
-(1,'LS01 - Molecular Biology, Biochemistry, Structural Biology and Molecular Biophysics (Molecular synthesis, modification, mechanisms and interactions, biochemistry, structural biology, molecular biophysics signalling pathways)'),
-(2,'LS02 - Genetics, ’Omics’, Bioinformatics and Systems Biology (Molecular genetics, quantitative genetics, genetic epidemiology, epigenetics, genomics, metagenomics, transcriptomics, proteomics, metabolomics, glycomics, bioinformatics, computational biology, biostatistics, systems biology)'),
-(3,'LS03 - Cellular and Developmental Biology (Cell biology, cell physiology, signal transduction, organogenesis, developmental genetics, pattern formation and stem cell biology, in plants and animals, or, where appropriate, in microorganisms)'),
-(4,'LS04 - Physiology, Pathophysiology and Endocrinology (Organ physiology, pathophysiology, endocrinology, metabolism, ageing, tumorigenesis, cardiovascular diseases, metabolic syndromes)'),
-(5,'LS05 - Neuroscience and Neural Disorders (Neural cell function and signalling, systems neuroscience, neural bases of cognitive and behavioural processes, neurological and psychiatric disorders)'),
-(6,'LS06 - Immunity and Infection (The immune system and related disorders, biology of infectious agents and infection, biological basis of prevention and treatment of infectious diseases)'),
-(7,'LS07 - Applied Medical Technologies, Diagnostics, Therapies and Public Health (Development of tools for diagnosis, monitoring and treatment of diseases, pharmacology, clinical medicine, regenerative medicine, epidemiology and public health)'),
-(8,'LS08 - Ecology, Evolution and Environmental Biology (Population, community and ecosystem ecology, evolutionary biology, behavioural ecology, microbial ecology)'),
-(9,'LS09 - Applied Life Sciences, Biotechnology, and Molecular and Biosystems Engineering (Applied plant and animal sciences, forestry, food sciences, applied biotechnology, environmental, and marine biotechnology, applied bioengineering, biomass and biofuels, biohazards)'),
-(10,'PE01 - Mathematics (All areas of mathematics, pure and applied, plus mathematical foundations of computer science, mathematical physics and statistics)'),
-(11,'PE02 - Fundamental Constituents of Matter (Particle, nuclear, plasma, atomic, molecular, gas, and optical physics)'),
-(12,'PE03 - Condensed Matter Physics (Structure, electronic properties, fluids, nanosciences, biological physics)'),
-(13,'PE04 - Physical and Analytical Chemical Sciences (Analytical chemistry, chemical theory, physical chemistry/chemical physics)'),
-(14,'PE05 - Synthetic Chemistry and Materials (Materials synthesis, structure-properties relations, functional and advanced materials, molecular architecture, organic chemistry)'),
-(15,'PE06 - Computer Science and Informatics (Informatics and information systems, computer science, scientific computing, intelligent systems)'),
-(16,'PE07 - Systems and Communication Engineering (Electrical, electronic, communication, optical and systems engineering)'),
-(17,'PE08 - Products and Processes Engineering (Product design, process design and control, construction methods, civil engineering, energy processes, material engineering)'),
-(18,'PE09 - Universe Sciences (Astro-physics/chemistry/biology; solar system; stellar, galactic and extragalactic astronomy, planetary systems, cosmology, space science, instrumentation)'),
-(19,'PE10 - Earth System Science (Physical geography, geology, geophysics, atmospheric sciences, oceanography, climatology, cryology, ecology, global environmental change, biogeochemical cycles, natural resources management)'),
-(20,'SH01 - Individuals, Markets and Organisations (Economics, finance and management)'),
-(21,'SH02 - Institutions, Values, Environment and Space (Political science, law, sustainability science, geography, regional studies and planning)'),
-(22,'SH03 - The Social World, Diversity, Population (Sociology, social psychology, social anthropology, demography, education, communication)'),
-(23,'SH04 - The Human Mind and Its Complexity (Cognitive science, psychology, linguistics, philosophy of mind)'),
-(24,'SH05 - Cultures and Cultural Production (Literature, philology, cultural studies, study of the arts, philosophy)'),
-(25,'SH06 - The Study of the Human Past (Archaeology and history)');
+(1,'LS - Macromolecular complexes including interactions involving nucleic acids, proteins, lipids and carbohydrates'),
+(2,'LS - Biochemistry'),
+(3,'LS - DNA synthesis, modification, repair, recombination, degradation'),
+(4,'LS - RNA synthesis, processing, modification, degradation'),
+(5,'LS - Protein synthesis, modification, turnover'),
+(6,'LS - Lipid biology'),
+(7,'LS - Glycobiology'),
+(8,'LS - Molecular biophysics (e.g. single-molecule approaches, bioenergetics, fluorescence)'),
+(9,'LS - Structural biology and its methodologies (e.g. crystallography, cryo-EM, NMR and new technologies)'),
+(10,'LS - Molecular mechanisms of signalling pathways'),
+(11,'LS - Fundamental aspects of synthetic biology and chemical biology'),
+(12,'LS - Molecular genetics, reverse genetics, forward genetics, genome editing'),
+(13,'LS - Non-coding RNAs'),
+(14,'LS - Quantitative genetics'),
+(15,'LS - Genetic epidemiology'),
+(16,'LS - Epigenetics and gene regulation'),
+(17,'LS - Genomics (e.g. comparative genomics, functional genomics)'),
+(18,'LS - Metagenomics'),
+(19,'LS - Transcriptomics'),
+(20,'LS - Proteomics'),
+(21,'LS - Metabolomics'),
+(22,'LS - Glycomics/Lipidomics'),
+(23,'LS - Bioinformatics'),
+(24,'LS - Computational biology'),
+(25,'LS - Biostatistics'),
+(26,'LS - Systems biology'),
+(27,'LS - Morphology and functional imaging of cells and tissues'),
+(28,'LS - Cytoskeleton and cell behaviour (e.g. control of cell shape, cell migration and cellular mechanosensing)'),
+(29,'LS - Organelle biology and trafficking'),
+(30,'LS - Cell junctions, cell adhesion, cell communication and the extracellular matrix'),
+(31,'LS - Cell signalling and signal transduction'),
+(32,'LS - Cell cycle, division and growth'),
+(33,'LS - Cell death (including senescence) and autophagy'),
+(34,'LS - Cell differentiation, physiology and dynamics'),
+(35,'LS - Developmental genetics in animals and plants'),
+(36,'LS - Embryology and pattern formation in animals and plants'),
+(37,'LS - Tissue organisation and morphogenesis in animals and plants (including biophysical approaches)'),
+(38,'LS - Stem cell biology in development, tissue regeneration and ageing, and fundamental aspects of stem cell-based therapies'),
+(39,'LS - Organ physiology and pathophysiology'),
+(40,'LS - Comparative physiology and pathophysiology'),
+(41,'LS - Molecular aspects of endocrinology'),
+(42,'LS - Fundamental mechanisms underlying ageing'),
+(43,'LS - Metabolism, biological basis of metabolism-related disorders'),
+(44,'LS - Fundamental mechanisms underlying cancer'),
+(45,'LS - Fundamental mechanisms underlying cardiovascular diseases'),
+(46,'LS - Non-communicable diseases (except for neural/psychiatric and immunity-related diseases)'),
+(47,'LS - Neural cell function, communication and signalling, neurotransmission in neuronal and/or glial cells'),
+(48,'LS - Systems neuroscience and computational neuroscience (e.g. neural networks, neural modelling)'),
+(49,'LS - Neuronal development, plasticity and regeneration'),
+(50,'LS - Sensation and perception (e.g. sensory systems, sensory processing, pain)'),
+(51,'LS - Neural bases of cognitive processes (e.g. memory, learning, attention)'),
+(52,'LS - Neural bases of behaviour (e.g. sleep, consciousness, addiction)'),
+(53,'LS - Neurological disorders (e.g. neurodegenerative diseases, seizures)'),
+(54,'LS - Psychiatric disorders (e.g. affective and anxiety disorders, autism, psychotic disorders)'),
+(55,'LS - Neurotrauma and neurovascular conditions (including injury, blood-brain barrier, stroke, neurorehabilitation)'),
+(56,'LS - Innate immunity in animals and plants'),
+(57,'LS - Adaptive immunity'),
+(58,'LS - Regulation and effector functions of the immune response (e.g. cytokines, interferons and chemokines, inflammation, immune signalling, helper T cells, immunological memory, immunological tolerance, cell-mediated cytotoxicity, complement)'),
+(59,'LS - Immunological mechanisms in disease (e.g. autoimmunity, allergy, transplantation immunology, tumour immunology)'),
+(60,'LS - Biology of pathogens (e.g. bacteria, viruses, parasites, fungi)'),
+(61,'LS - Mechanisms of infection (e.g. transmission, virulence factors, host defences, immunity to pathogens, molecular pathogenesis)'),
+(62,'LS - Biological basis of prevention and treatment of infection (e.g. infection natural cycle, reservoirs, vectors, vaccines, antimicrobials)'),
+(63,'LS - Infectious diseases in animals and plants'),
+(64,'LS - Imaging for medical diagnosis'),
+(65,'LS - Genetic tools for medical diagnosis'),
+(66,'LS - Other medical technologies for diagnosis and monitoring of diseases'),
+(67,'LS - Pharmacology and pharmacogenomics (including drug discovery and design, drug delivery and therapy, toxicology)'),
+(68,'LS - Applied gene and cell therapies, regenerative medicine'),
+(69,'LS - Radiation therapy'),
+(70,'LS - Analgesia and surgery'),
+(71,'LS - Epidemiology and public health'),
+(72,'LS - Environmental health, occupational medicine'),
+(73,'LS - Health services, health care research, medical ethics'),
+(74,'LS - Ecosystem and community ecology, macroecology'),
+(75,'LS - Biodiversity, conservation biology, conservation genetics'),
+(76,'LS - Population biology, population dynamics, population genetics'),
+(77,'LS - Evolutionary ecology'),
+(78,'LS - Evolutionary genetics'),
+(79,'LS - Phylogenetics, systematics, comparative biology'),
+(80,'LS - Macroevolution, paleobiology'),
+(81,'LS - Coevolution, biological mechanisms and ecology of species interactions (e.g. symbiosis, parasitism, mutualism, food-webs)'),
+(82,'LS - Behavioural ecology and evolution'),
+(83,'LS - Microbial ecology and evolution'),
+(84,'LS - Marine biology and ecology'),
+(85,'LS - Applied biotechnology (including transgenic organisms, applied genetics and genomics, biosensors, bioreactors, microbiology, bioactive compounds)'),
+(86,'LS - Applied bioengineering, synthetic biology, chemical biology, nanobiotechnology, metabolic engineering, protein and glyco-engineering, tissue engineering, biocatalysis, biomimetics'),
+(87,'LS - Applied animal sciences (including animal breeding, veterinary sciences, animal husbandry, animal welfare, aquaculture, fisheries, insect gene drive)'),
+(88,'LS - Applied plant sciences (including crop production, plant breeding, agroecology, forestry, soil biology)'),
+(89,'LS - Food sciences (including food technology, food safety, nutrition)'),
+(90,'LS - Biomass production and utilisation, biofuels'),
+(91,'LS - Environmental biotechnology (including bioindicators, bioremediation, biodegradation)'),
+(92,'LS - Biohazards (including biological containment, biosafety, biosecurity)'),
+(93,'LS - Marine biotechnology (including marine bioproducts, feed resources, genome mining)'),
+(94,'PE - Logic and foundations'),
+(95,'PE - Algebra'),
+(96,'PE - Number theory'),
+(97,'PE - Algebraic and complex geometry'),
+(98,'PE - Lie groups, Lie algebras'),
+(99,'PE - Geometry and Global Analysis'),
+(100,'PE - Topology'),
+(101,'PE - Analysis'),
+(102,'PE - Operator algebras and functional analysis'),
+(103,'PE - ODE and dynamical systems'),
+(104,'PE - Theoretical aspects of partial differential equations'),
+(105,'PE - Mathematical physics'),
+(106,'PE - Probability'),
+(107,'PE - Statistics'),
+(108,'PE - Discrete mathematics and combinatorics'),
+(109,'PE - Mathematical aspects of computer science'),
+(110,'PE - Numerical analysis'),
+(111,'PE - Scientific computing and data processing'),
+(112,'PE - Control theory and optimisation'),
+(113,'PE - Application of mathematics in sciences'),
+(114,'PE - Application of mathematics in industry and society'),
+(115,'PE - Fundamental interactions and fields'),
+(116,'PE - Particle physics'),
+(117,'PE - Nuclear physics'),
+(118,'PE - Nuclear astrophysics'),
+(119,'PE - Gas and plasma physics'),
+(120,'PE - Electromagnetism'),
+(121,'PE - Atomic, molecular physics'),
+(122,'PE - Ultra-cold atoms and molecules'),
+(123,'PE - Optics, non-linear optics and nano-optics'),
+(124,'PE - Quantum optics and quantum information'),
+(125,'PE - Lasers, ultra-short lasers and laser physics'),
+(126,'PE - Relativity'),
+(127,'PE - Thermodynamics'),
+(128,'PE - Non-linear physics'),
+(129,'PE - Metrology and measurement'),
+(130,'PE - Statistical physics (gases)'),
+(131,'PE - Structure of solids, material growth and characterisation'),
+(132,'PE - Mechanical and acoustical properties of condensed matter, Lattice dynamics'),
+(133,'PE - Transport properties of condensed matter'),
+(134,'PE - Electronic properties of materials, surfaces, interfaces, nanostructures, etc.'),
+(135,'PE - Physical properties of semiconductors and insulators'),
+(136,'PE - Macroscopic quantum phenomena: superconductivity, superfluidity, etc.'),
+(137,'PE - Spintronics'),
+(138,'PE - Magnetism and strongly correlated systems'),
+(139,'PE - Condensed matter - beam interactions (photons, electrons, etc.)'),
+(140,'PE - Nanophysics: nanoelectronics, nanophotonics, nanomagnetism, nanoelectromechanics, etc.'),
+(141,'PE - Mesoscopic physics'),
+(142,'PE - Molecular electronics'),
+(143,'PE - Structure and dynamics of disordered systems: soft matter (gels, colloids, liquid crystals, etc.), liquids, glasses, defects, etc.'),
+(144,'PE - Fluid dynamics (physics)'),
+(145,'PE - Statistical physics: phase transitions, noise and fluctuations, models of complex systems, etc.'),
+(146,'PE - Physics of biological systems'),
+(147,'PE - Physical chemistry'),
+(148,'PE - Spectroscopic and spectrometric techniques'),
+(149,'PE - Molecular architecture and Structure'),
+(150,'PE - Surface science and nanostructures'),
+(151,'PE - Analytical chemistry'),
+(152,'PE - Chemical physics'),
+(153,'PE - Chemical instrumentation'),
+(154,'PE - Electrochemistry, electrodialysis, microfluidics, sensors'),
+(155,'PE - Method development in chemistry'),
+(156,'PE - Heterogeneous catalysis'),
+(157,'PE - Physical chemistry of biological systems'),
+(158,'PE - Chemical reactions: mechanisms, dynamics, kinetics and catalytic reactions'),
+(159,'PE - Theoretical and computational chemistry'),
+(160,'PE - Radiation and Nuclear chemistry'),
+(161,'PE - Photochemistry'),
+(162,'PE - Corrosion'),
+(163,'PE - Characterisation methods of materials'),
+(164,'PE - Environment chemistry'),
+(165,'PE - Structural properties of materials'),
+(166,'PE - Solid state materials'),
+(167,'PE - Surface modification'),
+(168,'PE - Thin films'),
+(169,'PE - Ionic liquids'),
+(170,'PE - New materials: oxides, alloys, composite, organic-inorganic hybrid, nanoparticles'),
+(171,'PE - Biomaterials, biomaterials synthesis'),
+(172,'PE - Intelligent materials - self assembled materials'),
+(173,'PE - Coordination chemistry'),
+(174,'PE - Colloid chemistry'),
+(175,'PE - Biological chemistry'),
+(176,'PE - Chemistry of condensed matter'),
+(177,'PE - Homogeneous catalysis'),
+(178,'PE - Macromolecular chemistry'),
+(179,'PE - Polymer chemistry'),
+(180,'PE - Supramolecular chemistry'),
+(181,'PE - Organic chemistry'),
+(182,'PE - Medicinal chemistry'),
+(183,'PE - Computer architecture, pervasive computing, ubiquitous computing'),
+(184,'PE - Computer systems, parallel/distributed systems, sensor networks, embedded systems, cyber-physical systems'),
+(185,'PE - Software engineering, operating systems, computer languages'),
+(186,'PE - Theoretical computer science, formal methods, and quantum computing'),
+(187,'PE - Cryptology, security, privacy, quantum cryptography'),
+(188,'PE - Algorithms, distributed, parallel and network algorithms, algorithmic game theory'),
+(189,'PE - Artificial intelligence, intelligent systems, multi agent systems'),
+(190,'PE - Computer graphics, computer vision, multi media, computer games'),
+(191,'PE - Human computer interaction and interface, visualisation and natural language processing'),
+(192,'PE - Web and information systems, database systems, information retrieval and digital libraries, data fusion'),
+(193,'PE - Machine learning, statistical data processing and applications using signal processing (e.g. speech, image, video)'),
+(194,'PE - Scientific computing, simulation and modelling tools'),
+(195,'PE - Bioinformatics, biocomputing, and DNA and molecular computation'),
+(196,'PE - Control engineering'),
+(197,'PE - Electrical engineering: power components and/or systems'),
+(198,'PE - Simulation engineering and modelling'),
+(199,'PE - (Micro- and nano-) systems engineering'),
+(200,'PE - (Micro- and nano-) electronic, optoelectronic and photonic components'),
+(201,'PE - Communication technology, high-frequency technology'),
+(202,'PE - Signal processing'),
+(203,'PE - Networks (communication networks, sensor networks, networks of robots, etc.)'),
+(204,'PE - Man-machine interfaces'),
+(205,'PE - Robotics'),
+(206,'PE - Components and systems for applications (in e.g. medicine, biology, environment)'),
+(207,'PE - Electrical energy production, distribution, application'),
+(208,'PE - Aerospace engineering'),
+(209,'PE - Chemical engineering, technical chemistry'),
+(210,'PE - Civil engineering, architecture, maritime/hydraulic engineering, geotechnics, waste treatment'),
+(211,'PE - Computational engineering'),
+(212,'PE - Fluid mechanics, hydraulic-, turbo-, and piston- engines'),
+(213,'PE - Energy processes engineering'),
+(214,'PE - Mechanical and manufacturing engineering (shaping, mounting, joining, separation)'),
+(215,'PE - Materials engineering (biomaterials, metals, ceramics, polymers, composites, etc.)'),
+(216,'PE - Production technology, process engineering'),
+(217,'PE - Industrial design (product design, ergonomics, man-machine interfaces, etc.)'),
+(218,'PE - Sustainable design (for recycling, for environment, eco-design)'),
+(219,'PE - Lightweight construction, textile technology'),
+(220,'PE - Industrial bioengineering'),
+(221,'PE - Solar and interplanetary physics'),
+(222,'PE - Planetary systems sciences'),
+(223,'PE - Interstellar medium'),
+(224,'PE - Formation of stars and planets'),
+(225,'PE - Astrobiology'),
+(226,'PE - Stars and stellar systems'),
+(227,'PE - The Galaxy'),
+(228,'PE - Formation and evolution of galaxies'),
+(229,'PE - Clusters of galaxies and large scale structures'),
+(230,'PE - High energy and particles astronomy - X-rays, cosmic rays, gamma rays, neutrinos'),
+(231,'PE - Relativistic astrophysics'),
+(232,'PE - Dark matter, dark energy'),
+(233,'PE - Gravitational astronomy'),
+(234,'PE - Cosmology'),
+(235,'PE - Space Sciences'),
+(236,'PE - Very large data bases: archiving, handling and analysis'),
+(237,'PE - Instrumentation - telescopes, detectors and techniques'),
+(238,'PE - Atmospheric chemistry, atmospheric composition, air pollution'),
+(239,'PE - Meteorology, atmospheric physics and dynamics'),
+(240,'PE - Climatology and climate change'),
+(241,'PE - Terrestrial ecology, land cover change'),
+(242,'PE - Geology, tectonics, volcanology'),
+(243,'PE - Palaeoclimatology, palaeoecology'),
+(244,'PE - Physics of earth’s interior, seismology, volcanology'),
+(245,'PE - Oceanography (physical, chemical, biological, geological)'),
+(246,'PE - Biogeochemistry, biogeochemical cycles, environmental chemistry'),
+(247,'PE - Mineralogy, petrology, igneous petrology, metamorphic petrology'),
+(248,'PE - Geochemistry, crystal chemistry, isotope geochemistry, thermodynamics'),
+(249,'PE - Sedimentology, soil science, palaeontology, earth evolution'),
+(250,'PE - Physical geography'),
+(251,'PE - Earth observations from space/remote sensing'),
+(252,'PE - Geomagnetism, palaeomagnetism'),
+(253,'PE - Ozone, upper atmosphere, ionosphere'),
+(254,'PE - Hydrology, water and soil pollution'),
+(255,'PE - Cryosphere, dynamics of snow and ice cover, sea ice, permafrosts and ice sheets'),
+(256,'SH - Macroeconomics; monetary economics; economic growth'),
+(257,'SH - International management; international trade; international business; spatial economics'),
+(258,'SH - Development economics, health economics, education economics'),
+(259,'SH - Financial economics; banking; corporate finance; international finance; accounting; auditing; insurance'),
+(260,'SH - Labour and demographic economics; human resource management'),
+(261,'SH - Econometrics; operations research'),
+(262,'SH - Behavioural economics; experimental economics; neuro-economics'),
+(263,'SH - Microeconomics; game theory'),
+(264,'SH - Industrial organisation; strategy; entrepreneurship'),
+(265,'SH - Management; marketing; organisational behaviour; operations management'),
+(266,'SH - Technological change, innovation, research & development'),
+(267,'SH - Agricultural economics; energy economics; environmental economics'),
+(268,'SH - Public economics; political economics; law and economics'),
+(269,'SH - Competition law, contract law, trade law, Intellectual Property Rights'),
+(270,'SH - Quantitative economic history and history of economics; institutional economics; economic systems'),
+(271,'SH - Political systems, governance'),
+(272,'SH - Democratisation and social movements'),
+(273,'SH - Conflict resolution, war, peace building'),
+(274,'SH - Constitutions, human rights, comparative law, humanitarian law, anti-discrimination law'),
+(275,'SH - International relations, global and transnational governance'),
+(276,'SH - Sustainability sciences, environment and resources'),
+(277,'SH - Environmental and climate change, societal impact and policy'),
+(278,'SH - Energy, transportation and mobility'),
+(279,'SH - Urban, regional and rural studies'),
+(280,'SH - Land use and regional planning'),
+(281,'SH - Human, economic and social geography'),
+(282,'SH - GIS, spatial analysis; big data in political, geographical and legal studies'),
+(283,'SH - Social structure, social mobility'),
+(284,'SH - Inequalities, discrimination, prejudice, aggression and violence, antisocial behaviour'),
+(285,'SH - Social integration, exclusion, prosocial behaviour'),
+(286,'SH - Attitudes and beliefs'),
+(287,'SH - Social influence; power and group behaviour'),
+(288,'SH - Kinship; diversity and identities, gender, interethnic relations'),
+(289,'SH - Social policies, welfare'),
+(290,'SH - Population dynamics; households, family and fertility'),
+(291,'SH - Health, ageing and society'),
+(292,'SH - Religious studies, ritual; symbolic representation'),
+(293,'SH - Social aspects of learning, curriculum studies, educational policies'),
+(294,'SH - Communication and information, networks, media'),
+(295,'SH - Digital social research'),
+(296,'SH - Science and technology studies'),
+(297,'SH - Cognitive basis of human development and education, developmental disorders; comparative cognition'),
+(298,'SH - Personality and social cognition; emotion'),
+(299,'SH - Clinical and health psychology'),
+(300,'SH - Neuropsychology'),
+(301,'SH - Attention, perception, action, consciousness'),
+(302,'SH - Learning, memory; cognition in ageing'),
+(303,'SH - Reasoning, decision-making; intelligence'),
+(304,'SH - Language learning and processing (first and second languages)'),
+(305,'SH - Theoretical linguistics; computational linguistics'),
+(306,'SH - Language typology; historical linguistics'),
+(307,'SH - Pragmatics, sociolinguistics, linguistic anthropology, discourse analysis'),
+(308,'SH - Philosophy of mind, philosophy of language'),
+(309,'SH - Philosophy of science, epistemology, logic'),
+(310,'SH - Classics, ancient literature and art'),
+(311,'SH - Theory and history of literature, comparative literature'),
+(312,'SH - Philology and palaeography'),
+(313,'SH - Visual and performing arts, film, design'),
+(314,'SH - Music and musicology; history of music'),
+(315,'SH - History of art and architecture, arts-based research'),
+(316,'SH - Museums, exhibitions, conservation and restoration'),
+(317,'SH - Cultural studies, cultural identities and memories, cultural heritage'),
+(318,'SH - Metaphysics, philosophical anthropology; aesthetics'),
+(319,'SH - Ethics; social and political philosophy'),
+(320,'SH - History of philosophy'),
+(321,'SH - Computational modelling and digitisation in the cultural sphere'),
+(322,'SH - Historiography, theory and methods in history, including the analysis of digital data'),
+(323,'SH - Classical archaeology, history of archaeology'),
+(324,'SH - General archaeology, archaeometry, landscape archaeology'),
+(325,'SH - Prehistory, palaeoanthropology, palaeodemography, protohistory'),
+(326,'SH - Ancient history'),
+(327,'SH - Medieval history'),
+(328,'SH - Early modern history'),
+(329,'SH - Modern and contemporary history'),
+(330,'SH - Colonial and post-colonial history'),
+(331,'SH - Global history, transnational history, comparative history, entangled histories'),
+(332,'SH - Social and economic history'),
+(333,'SH - Gender history; cultural history; history of collective identities and memories'),
+(334,'SH - History of ideas, intellectual history, history of economic thought'),
+(335,'SH - History of science, medicine and technologies');
+
+INSERT INTO public.tr_disc_erc (id_disc_erc, id_cat_erc, lb_disc_erc) VALUES
+ (1, 1, 'LS01_01 - Macromolecular complexes including interactions involving nucleic acids, proteins, lipids and carbohydrates'),
+(2, 1, 'LS01_02 - Biochemistry'),
+(3, 1, 'LS01_03 - DNA synthesis, modification, repair, recombination, degradation'),
+(4, 1, 'LS01_04 - RNA synthesis, processing, modification, degradation'),
+(5, 1, 'LS01_05 - Protein synthesis, modification, turnover'),
+(6, 1, 'LS01_06 - Lipid biology'),
+(7, 1, 'LS01_07 - Glycobiology'),
+(8, 1, 'LS01_08 - Molecular biophysics (e.g. single-molecule approaches, bioenergetics, fluorescence)'),
+(9, 1, 'LS01_09 - Structural biology and its methodologies (e.g. crystallography, cryo-EM, NMR and new technologies)'),
+(10, 1, 'LS01_10 - Molecular mechanisms of signalling pathways'),
+(11, 1, 'LS01_11 - Fundamental aspects of synthetic biology and chemical biology'),
+(12, 2, 'LS02_01 - Molecular genetics, reverse genetics, forward genetics, genome editing'),
+(13, 2, 'LS02_02 - Non-coding RNAs'),
+(14, 2, 'LS02_03 - Quantitative genetics'),
+(15, 2, 'LS02_04 - Genetic epidemiology'),
+(16, 2, 'LS02_05 - Epigenetics and gene regulation'),
+(17, 2, 'LS02_06 - Genomics (e.g. comparative genomics, functional genomics)'),
+(18, 2, 'LS02_07 - Metagenomics'),
+(19, 2, 'LS02_08 - Transcriptomics'),
+(20, 2, 'LS02_09 - Proteomics'),
+(21, 2, 'LS02_10 - Metabolomics'),
+(22, 2, 'LS02_11 - Glycomics/Lipidomics'),
+(23, 2, 'LS02_12 - Bioinformatics'),
+(24, 2, 'LS02_13 - Computational biology'),
+(25, 2, 'LS02_14 - Biostatistics'),
+(26, 2, 'LS02_15 - Systems biology'),
+(27, 3, 'LS03_01 - Morphology and functional imaging of cells and tissues'),
+(28, 3, 'LS03_02 - Cytoskeleton and cell behaviour (e.g. control of cell shape, cell migration and cellular mechanosensing)'),
+(29, 3, 'LS03_03 - Organelle biology and trafficking'),
+(30, 3, 'LS03_04 - Cell junctions, cell adhesion, cell communication and the extracellular matrix'),
+(31, 3, 'LS03_05 - Cell signalling and signal transduction'),
+(32, 3, 'LS03_06 - Cell cycle, division and growth'),
+(33, 3, 'LS03_07 - Cell death (including senescence) and autophagy'),
+(34, 3, 'LS03_08 - Cell differentiation, physiology and dynamics'),
+(35, 3, 'LS03_09 - Developmental genetics in animals and plants'),
+(36, 3, 'LS03_10 - Embryology and pattern formation in animals and plants'),
+(37, 3, 'LS03_11 - Tissue organisation and morphogenesis in animals and plants (including biophysical approaches)'),
+(38, 3, 'LS03_12 - Stem cell biology in development, tissue regeneration and ageing, and fundamental aspects of stem cell-based therapies'),
+(39, 4, 'LS04_01 - Organ physiology and pathophysiology'),
+(40, 4, 'LS04_02 - Comparative physiology and pathophysiology'),
+(41, 4, 'LS04_03 - Molecular aspects of endocrinology'),
+(42, 4, 'LS04_04 - Fundamental mechanisms underlying ageing'),
+(43, 4, 'LS04_05 - Metabolism, biological basis of metabolism-related disorders'),
+(44, 4, 'LS04_06 - Fundamental mechanisms underlying cancer'),
+(45, 4, 'LS04_07 - Fundamental mechanisms underlying cardiovascular diseases'),
+(46, 4, 'LS04_08 - Non-communicable diseases (except for neural/psychiatric and immunity-related diseases)'),
+(47, 5, 'LS05_01 - Neural cell function, communication and signalling, neurotransmission in neuronal and/or glial cells'),
+(48, 5, 'LS05_02 - Systems neuroscience and computational neuroscience (e.g. neural networks, neural modelling)'),
+(49, 5, 'LS05_03 - Neuronal development, plasticity and regeneration'),
+(50, 5, 'LS05_04 - Sensation and perception (e.g. sensory systems, sensory processing, pain)'),
+(51, 5, 'LS05_05 - Neural bases of cognitive processes (e.g. memory, learning, attention)'),
+(52, 5, 'LS05_06 - Neural bases of behaviour (e.g. sleep, consciousness, addiction)'),
+(53, 5, 'LS05_07 - Neurological disorders (e.g. neurodegenerative diseases, seizures)'),
+(54, 5, 'LS05_08 - Psychiatric disorders (e.g. affective and anxiety disorders, autism, psychotic disorders)'),
+(55, 5, 'LS05_09 - Neurotrauma and neurovascular conditions (including injury, blood-brain barrier, stroke, neurorehabilitation)'),
+(56, 6, 'LS06_01 - Innate immunity in animals and plants'),
+(57, 6, 'LS06_02 - Adaptive immunity'),
+(58, 6, 'LS06_03 - Regulation and effector functions of the immune response (e.g. cytokines, interferons and chemokines, inflammation, immune signalling, helper T cells, immunological memory, immunological tolerance, cell-mediated cytotoxicity, complement)'),
+(59, 6, 'LS06_04 - Immunological mechanisms in disease (e.g. autoimmunity, allergy, transplantation immunology, tumour immunology)'),
+(60, 6, 'LS06_05 - Biology of pathogens (e.g. bacteria, viruses, parasites, fungi)'),
+(61, 6, 'LS06_06 - Mechanisms of infection (e.g. transmission, virulence factors, host defences, immunity to pathogens, molecular pathogenesis)'),
+(62, 6, 'LS06_07 - Biological basis of prevention and treatment of infection (e.g. infection natural cycle, reservoirs, vectors, vaccines, antimicrobials)'),
+(63, 6, 'LS06_08 - Infectious diseases in animals and plants'),
+(64, 7, 'LS07_01 - Imaging for medical diagnosis'),
+(65, 7, 'LS07_02 - Genetic tools for medical diagnosis'),
+(66, 7, 'LS07_03 - Other medical technologies for diagnosis and monitoring of diseases'),
+(67, 7, 'LS07_04 - Pharmacology and pharmacogenomics (including drug discovery and design, drug delivery and therapy, toxicology)'),
+(68, 7, 'LS07_05 - Applied gene and cell therapies, regenerative medicine'),
+(69, 7, 'LS07_06 - Radiation therapy'),
+(70, 7, 'LS07_07 - Analgesia and surgery'),
+(71, 7, 'LS07_08 - Epidemiology and public health'),
+(72, 7, 'LS07_09 - Environmental health, occupational medicine'),
+(73, 7, 'LS07_10 - Health services, health care research, medical ethics'),
+(74, 8, 'LS08_01 - Ecosystem and community ecology, macroecology'),
+(75, 8, 'LS08_02 - Biodiversity, conservation biology, conservation genetics'),
+(76, 8, 'LS08_03 - Population biology, population dynamics, population genetics'),
+(77, 8, 'LS08_04 - Evolutionary ecology'),
+(78, 8, 'LS08_05 - Evolutionary genetics'),
+(79, 8, 'LS08_06 - Phylogenetics, systematics, comparative biology'),
+(80, 8, 'LS08_07 - Macroevolution, palaeobiology'),
+(81, 8, 'LS08_08 - Coevolution, biological mechanisms and ecology of species interactions (e.g. symbiosis, parasitism, mutualism, food-webs)'),
+(82, 8, 'LS08_09 - Behavioural ecology and evolution'),
+(83, 8, 'LS08_10 - Microbial ecology and evolution'),
+(84, 8, 'LS08_11 - Marine biology and ecology'),
+(85, 9, 'LS09_01 - Applied biotechnology (including transgenic organisms, applied genetics and genomics, biosensors, bioreactors, microbiology, bioactive compounds)'),
+(86, 9, 'LS09_02 - Applied bioengineering, synthetic biology, chemical biology, nanobiotechnology, metabolic engineering, protein and glyco-engineering, tissue engineering, biocatalysis, biomimetics'),
+(87, 9, 'LS09_03 - Applied animal sciences (including animal breeding, veterinary sciences, animal husbandry, animal welfare, aquaculture, fisheries, insect gene drive)'),
+(88, 9, 'LS09_04 - Applied plant sciences (including crop production, plant breeding, agroecology, forestry, soil biology)'),
+(89, 9, 'LS09_05 - Food sciences (including food technology, food safety, nutrition)'),
+(90, 9, 'LS09_06 - Biomass production and utilisation, biofuels'),
+(91, 9, 'LS09_07 - Environmental biotechnology (including bioindicators, bioremediation, biodegradation)'),
+(92, 9, 'LS09_08 - Biohazards (including biological containment, biosafety, biosecurity)'),
+(93, 9, 'LS09_09 - Marine biotechnology (including marine bioproducts, feed resources, genome mining)'),
+(94, 10, 'PE01_01 - Logic and foundations'),
+(95, 10, 'PE01_02 - Algebra'),
+(96, 10, 'PE01_03 - Number theory'),
+(97, 10, 'PE01_04 - Algebraic and complex geometry'),
+(98, 10, 'PE01_05 - Lie groups, Lie algebras'),
+(99, 10, 'PE01_06 - Geometry and Global Analysis'),
+(100, 10, 'PE01_07 - Topology'),
+(101, 10, 'PE01_08 - Analysis'),
+(102, 10, 'PE01_09 - Operator algebras and functional analysis'),
+(103, 10, 'PE01_10 - ODE and dynamical systems'),
+(104, 10, 'PE01_11 - Theoretical aspects of partial differential equations'),
+(105, 10, 'PE01_12 - Mathematical physics'),
+(106, 10, 'PE01_13 - Probability'),
+(107, 10, 'PE01_14 - Statistics'),
+(108, 10, 'PE01_15 - Discrete mathematics and combinatorics'),
+(109, 10, 'PE01_16 - Mathematical aspects of computer science'),
+(110, 10, 'PE01_17 - Numerical analysis'),
+(111, 10, 'PE01_18 - Scientific computing and data processing'),
+(112, 10, 'PE01_19 - Control theory and optimisation'),
+(113, 10, 'PE01_20 - Application of mathematics in sciences'),
+(114, 10, 'PE01_21 - Application of mathematics in industry and society'),
+(115, 11, 'PE02_01 - Fundamental interactions and fields'),
+(116, 11, 'PE02_02 - Particle physics'),
+(117, 11, 'PE02_03 - Nuclear physics'),
+(118, 11, 'PE02_04 - Nuclear astrophysics'),
+(119, 11, 'PE02_05 - Gas and plasma physics'),
+(120, 11, 'PE02_06 - Electromagnetism'),
+(121, 11, 'PE02_07 - Atomic, molecular physics'),
+(122, 11, 'PE02_08 - Ultra-cold atoms and molecules'),
+(123, 11, 'PE02_09 - Optics, non-linear optics and nano-optics'),
+(124, 11, 'PE02_10 - Quantum optics and quantum information'),
+(125, 11, 'PE02_11 - Lasers, ultra-short lasers and laser physics'),
+(126, 11, 'PE02_12 - Relativity'),
+(127, 11, 'PE02_13 - Thermodynamics'),
+(128, 11, 'PE02_14 - Non-linear physics'),
+(129, 11, 'PE02_15 - Metrology and measurement'),
+(130, 11, 'PE02_16 - Statistical physics (gases)'),
+(131, 12, 'PE03_01 - Structure of solids, material growth and characterisation'),
+(132, 12, 'PE03_02 - Mechanical and acoustical properties of condensed matter, Lattice dynamics'),
+(133, 12, 'PE03_03 - Transport properties of condensed matter'),
+(134, 12, 'PE03_04 - Electronic properties of materials, surfaces, interfaces, nanostructures, etc.'),
+(135, 12, 'PE03_05 - Physical properties of semiconductors and insulators'),
+(136, 12, 'PE03_06 - Macroscopic quantum phenomena: superconductivity, superfluidity, etc.'),
+(137, 12, 'PE03_07 - Spintronics'),
+(138, 12, 'PE03_08 - Magnetism and strongly correlated systems'),
+(139, 12, 'PE03_09 - Condensed matter – beam interactions (photons, electrons, etc.)'),
+(140, 12, 'PE03_10 - Nanophysics: nanoelectronics, nanophotonics, nanomagnetism, nanoelectromechanics, etc.'),
+(141, 12, 'PE03_11 - Mesoscopic physics'),
+(142, 12, 'PE03_12 - Molecular electronics'),
+(143, 12, 'PE03_13 - Structure and dynamics of disordered systems: soft matter (gels, colloids, liquid crystals, etc.), liquids, glasses, defects, etc.'),
+(144, 12, 'PE03_14 - Fluid dynamics (physics)'),
+(145, 12, 'PE03_15 - Statistical physics: phase transitions, noise and fluctuations, models of complex systems, etc.'),
+(146, 12, 'PE03_16 - Physics of biological systems'),
+(147, 13, 'PE04_01 - Physical chemistry'),
+(148, 13, 'PE04_02 - Spectroscopic and spectrometric techniques'),
+(149, 13, 'PE04_03 - Molecular architecture and Structure'),
+(150, 13, 'PE04_04 - Surface science and nanostructures'),
+(151, 13, 'PE04_05 - Analytical chemistry'),
+(152, 13, 'PE04_06 - Chemical physics'),
+(153, 13, 'PE04_07 - Chemical instrumentation'),
+(154, 13, 'PE04_08 - Electrochemistry, electrodialysis, microfluidics, sensors'),
+(155, 13, 'PE04_09 - Method development in chemistry'),
+(156, 13, 'PE04_10 - Heterogeneous catalysis'),
+(157, 13, 'PE04_11 - Physical chemistry of biological systems'),
+(158, 13, 'PE04_12 - Chemical reactions: mechanisms, dynamics, kinetics and catalytic reactions'),
+(159, 13, 'PE04_13 - Theoretical and computational chemistry'),
+(160, 13, 'PE04_14 - Radiation and Nuclear chemistry'),
+(161, 13, 'PE04_15 - Photochemistry'),
+(162, 13, 'PE04_16 - Corrosion'),
+(163, 13, 'PE04_17 - Characterisation methods of materials'),
+(164, 13, 'PE04_18 - Environment chemistry'),
+(165, 14, 'PE05_01 - Structural properties of materials'),
+(166, 14, 'PE05_02 - Solid state materials'),
+(167, 14, 'PE05_03 - Surface modification'),
+(168, 14, 'PE05_04 - Thin films'),
+(169, 14, 'PE05_05 - Ionic liquids'),
+(170, 14, 'PE05_06 - New materials: oxides, alloys, composite, organic-inorganic hybrid, nanoparticles'),
+(171, 14, 'PE05_07 - Biomaterials, biomaterials synthesis'),
+(172, 14, 'PE05_08 - Intelligent materials – self assembled materials'),
+(173, 14, 'PE05_09 - Coordination chemistry'),
+(174, 14, 'PE05_10 - Colloid chemistry'),
+(175, 14, 'PE05_11 - Biological chemistry'),
+(176, 14, 'PE05_12 - Chemistry of condensed matter'),
+(177, 14, 'PE05_13 - Homogeneous catalysis'),
+(178, 14, 'PE05_14 - Macromolecular chemistry'),
+(179, 14, 'PE05_15 - Polymer chemistry'),
+(180, 14, 'PE05_16 - Supramolecular chemistry'),
+(181, 14, 'PE05_17 - Organic chemistry'),
+(182, 14, 'PE05_18 - Medicinal chemistry'),
+(183, 15, 'PE06_01 - Computer architecture, pervasive computing, ubiquitous computing'),
+(184, 15, 'PE06_02 - Computer systems, parallel/distributed systems, sensor networks, embedded systems, cyber-physical systems'),
+(185, 15, 'PE06_03 - Software engineering, operating systems, computer languages'),
+(186, 15, 'PE06_04 - Theoretical computer science, formal methods, and quantum computing'),
+(187, 15, 'PE06_05 - Cryptology, security, privacy, quantum cryptography'),
+(188, 15, 'PE06_06 - Algorithms, distributed, parallel and network algorithms, algorithmic game theory'),
+(189, 15, 'PE06_07 - Artificial intelligence, intelligent systems, multi agent systems'),
+(190, 15, 'PE06_08 - Computer graphics, computer vision, multi media, computer games'),
+(191, 15, 'PE06_09 - Human computer interaction and interface, visualisation and natural language processing'),
+(192, 15, 'PE06_10 - Web and information systems, database systems, information retrieval and digital libraries, data fusion'),
+(193, 15, 'PE06_11 - Machine learning, statistical data processing and applications using signal processing (e.g. speech, image, video)'),
+(194, 15, 'PE06_12 - Scientific computing, simulation and modelling tools'),
+(195, 15, 'PE06_13 - Bioinformatics, biocomputing, and DNA and molecular computation'),
+(196, 16, 'PE07_01 - Control engineering'),
+(197, 16, 'PE07_02 - Electrical engineering: power components and/or systems'),
+(198, 16, 'PE07_03 - Simulation engineering and modelling'),
+(199, 16, 'PE07_04 - (Micro- and nano-) systems engineering'),
+(200, 16, 'PE07_05 - (Micro- and nano-) electronic, optoelectronic and photonic components'),
+(201, 16, 'PE07_06 - Communication technology, high-frequency technology'),
+(202, 16, 'PE07_07 - Signal processing'),
+(203, 16, 'PE07_08 - Networks (communication networks, sensor networks, networks of robots, etc.)'),
+(204, 16, 'PE07_09 - Man-machine interfaces'),
+(205, 16, 'PE07_10 - Robotics'),
+(206, 16, 'PE07_11 - Components and systems for applications (in e.g. medicine, biology, environment)'),
+(207, 16, 'PE07_12 - Electrical energy production, distribution, application'),
+(208, 17, 'PE08_01 - Aerospace engineering'),
+(209, 17, 'PE08_02 - Chemical engineering, technical chemistry'),
+(210, 17, 'PE08_03 - Civil engineering, architecture, maritime/hydraulic engineering, geotechnics, waste treatment'),
+(211, 17, 'PE08_04 - Computational engineering'),
+(212, 17, 'PE08_05 - Fluid mechanics, hydraulic-, turbo-, and piston- engines'),
+(213, 17, 'PE08_06 - Energy processes engineering'),
+(214, 17, 'PE08_07 - Mechanical and manufacturing engineering (shaping, mounting, joining, separation)'),
+(215, 17, 'PE08_08 - Materials engineering (biomaterials, metals, ceramics, polymers, composites, etc.)'),
+(216, 17, 'PE08_09 - Production technology, process engineering'),
+(217, 17, 'PE08_10 - Industrial design (product design, ergonomics, man-machine interfaces, etc.)'),
+(218, 17, 'PE08_11 - Sustainable design (for recycling, for environment, eco-design)'),
+(219, 17, 'PE08_12 - Lightweight construction, textile technology'),
+(220, 17, 'PE08_13 - Industrial bioengineering'),
+(221, 18, 'PE09_01 - Solar and interplanetary physics'),
+(222, 18, 'PE09_02 - Planetary systems sciences'),
+(223, 18, 'PE09_03 - Interstellar medium'),
+(224, 18, 'PE09_04 - Formation of stars and planets'),
+(225, 18, 'PE09_05 - Astrobiology'),
+(226, 18, 'PE09_06 - Stars and stellar systems'),
+(227, 18, 'PE09_07 - The Galaxy'),
+(228, 18, 'PE09_08 - Formation and evolution of galaxies'),
+(229, 18, 'PE09_09 - Clusters of galaxies and large scale structures'),
+(230, 18, 'PE09_10 - High energy and particles astronomy – X-rays, cosmic rays, gamma rays, neutrinos'),
+(231, 18, 'PE09_11 - Relativistic astrophysics'),
+(232, 18, 'PE09_12 - Dark matter, dark energy'),
+(233, 18, 'PE09_13 - Gravitational astronomy'),
+(234, 18, 'PE09_14 - Cosmology'),
+(235, 18, 'PE09_15 - Space Sciences'),
+(236, 18, 'PE09_16 - Very large data bases: archiving, handling and analysis'),
+(237, 18, 'PE09_17 - Instrumentation - telescopes, detectors and techniques'),
+(238, 19, 'PE10_01 - Atmospheric chemistry, atmospheric composition, air pollution'),
+(239, 19, 'PE10_02 - Meteorology, atmospheric physics and dynamics'),
+(240, 19, 'PE10_03 - Climatology and climate change'),
+(241, 19, 'PE10_04 - Terrestrial ecology, land cover change'),
+(242, 19, 'PE10_05 - Geology, tectonics, volcanology'),
+(243, 19, 'PE10_06 - Palaeoclimatology, palaeoecology'),
+(244, 19, 'PE10_07 - Physics of earth’s interior, seismology, geodynamycs'),
+(245, 19, 'PE10_08 - Oceanography (physical, chemical, biological, geological)'),
+(246, 19, 'PE10_09 - Biogeochemistry, biogeochemical cycles, environmental chemistry'),
+(247, 19, 'PE10_10 - Mineralogy, petrology, igneous petrology, metamorphic petrology'),
+(248, 19, 'PE10_11 - Geochemistry, cosmochemistry, crystal chemistry, isotope geochemistry, thermodynamics'),
+(249, 19, 'PE10_12 - Sedimentology, soil science, palaeontology, earth evolution'),
+(250, 19, 'PE10_13 - Physical geography, geomorphology'),
+(251, 19, 'PE10_14 - Earth observations from space/remote sensing'),
+(252, 19, 'PE10_15 - Geomagnetism, palaeomagnetism'),
+(253, 19, 'PE10_16 - Ozone, upper atmosphere, ionosphere'),
+(254, 19, 'PE10_17 - Hydrology, hydrogeology, engineering and environmental geology, water and soil pollution'),
+(255, 19, 'PE10_18 - Cryosphere, dynamics of snow and ice cover, sea ice, permafrosts and ice sheets'),
+(256, 19, 'PE10_19 - Planetary geology and geophysics'),
+(257, 19, 'PE10_20 - Geohazards: earthquakes, landslides, tsunamis and other ground instabilities'),
+(258, 20, 'SH01_01 - Macroeconomics; monetary economics; economic growth'),
+(259, 20, 'SH01_02 - International management; international trade; international business; spatial economics'),
+(260, 20, 'SH01_03 - Development economics, health economics, education economics'),
+(261, 20, 'SH01_04 - Financial economics; banking; corporate finance; international finance; accounting; auditing; insurance'),
+(262, 20, 'SH01_05 - Labour and demographic economics; human resource management'),
+(263, 20, 'SH01_06 - Econometrics; operations research'),
+(264, 20, 'SH01_07 - Behavioural economics; experimental economics; neuro-economics'),
+(265, 20, 'SH01_08 - Microeconomics; game theory'),
+(266, 20, 'SH01_09 - Industrial organisation; strategy; entrepreneurship'),
+(267, 20, 'SH01_10 - Management; marketing; organisational behaviour; operations management'),
+(268, 20, 'SH01_11 - Technological change, innovation, research & development'),
+(269, 20, 'SH01_12 - Agricultural economics; energy economics; environmental economics'),
+(270, 20, 'SH01_13 - Public economics; political economics; law and economics'),
+(271, 20, 'SH01_14 - Competition law, contract law, trade law, Intellectual Property Rights'),
+(272, 20, 'SH01_15 - Quantitative economic history and history of economics; institutional economics; economic systems'),
+(273, 21, 'SH02_01 - Political systems, governance'),
+(274, 21, 'SH02_02 - Democratisation and social movements'),
+(275, 21, 'SH02_03 - Conflict resolution, war, peace building'),
+(276, 21, 'SH02_04 - Constitutions, human rights, comparative law, humanitarian law, anti-discrimination law'),
+(277, 21, 'SH02_05 - International relations, global and transnational governance'),
+(278, 21, 'SH02_06 - Sustainability sciences, environment and resources'),
+(279, 21, 'SH02_07 - Environmental and climate change, societal impact and policy'),
+(280, 21, 'SH02_08 - Energy, transportation and mobility'),
+(281, 21, 'SH02_09 - Urban, regional and rural studies'),
+(282, 21, 'SH02_10 - Land use and regional planning'),
+(283, 21, 'SH02_11 - Human, economic and social geography'),
+(284, 21, 'SH02_12 - GIS, spatial analysis; big data in political, geographical and legal studies'),
+(285, 22, 'SH03_01 - Social structure, social mobility'),
+(286, 22, 'SH03_02 - Inequalities, discrimination, prejudice, aggression and violence, antisocial behaviour'),
+(287, 22, 'SH03_03 - Social integration, exclusion, prosocial behaviour'),
+(288, 22, 'SH03_04 - Attitudes and beliefs'),
+(289, 22, 'SH03_05 - Social influence; power and group behaviour'),
+(290, 22, 'SH03_06 - Kinship; diversity and identities, gender, interethnic relations'),
+(291, 22, 'SH03_07 - Social policies, welfare'),
+(292, 22, 'SH03_08 - Population dynamics; households, family and fertility'),
+(293, 22, 'SH03_09 - Health, ageing and society'),
+(294, 22, 'SH03_10 - Religious studies, ritual; symbolic representation'),
+(295, 22, 'SH03_11 - Social aspects of learning, curriculum studies, educational policies'),
+(296, 22, 'SH03_12 - Communication and information, networks, media'),
+(297, 22, 'SH03_13 - Digital social research'),
+(298, 22, 'SH03_14 - Science and technology studies'),
+(299, 23, 'SH04_01 - Cognitive basis of human development and education, developmental disorders; comparative cognition'),
+(300, 23, 'SH04_02 - Personality and social cognition; emotion'),
+(301, 23, 'SH04_03 - Clinical and health psychology'),
+(302, 23, 'SH04_04 - Neuropsychology'),
+(303, 23, 'SH04_05 - Attention, perception, action, consciousness'),
+(304, 23, 'SH04_06 - Learning, memory; cognition in ageing'),
+(305, 23, 'SH04_07 - Reasoning, decision-making; intelligence'),
+(306, 23, 'SH04_08 - Language learning and processing (first and second languages)'),
+(307, 23, 'SH04_09 - Theoretical linguistics; computational linguistics'),
+(308, 23, 'SH04_10 - Language typology; historical linguistics'),
+(309, 23, 'SH04_11 - Pragmatics, sociolinguistics, linguistic anthropology, discourse analysis'),
+(310, 23, 'SH04_12 - Philosophy of mind, philosophy of language'),
+(311, 23, 'SH04_13 - Philosophy of science, epistemology, logic'),
+(312, 24, 'SH05_01 - Classics, ancient literature and art'),
+(313, 24, 'SH05_02 - Theory and history of literature, comparative literature'),
+(314, 24, 'SH05_03 - Philology and palaeography'),
+(315, 24, 'SH05_04 - Visual and performing arts, film, design'),
+(316, 24, 'SH05_05 - Music and musicology; history of music'),
+(317, 24, 'SH05_06 - History of art and architecture, arts-based research'),
+(318, 24, 'SH05_07 - Museums, exhibitions, conservation and restoration'),
+(319, 24, 'SH05_08 - Cultural studies, cultural identities and memories, cultural heritage'),
+(320, 24, 'SH05_09 - Metaphysics, philosophical anthropology; aesthetics'),
+(321, 24, 'SH05_10 - Ethics; social and political philosophy'),
+(322, 24, 'SH05_11 - History of philosophy'),
+(323, 24, 'SH05_12 - Computational modelling and digitisation in the cultural sphere'),
+(324, 25, 'SH06_01 - Historiography, theory and methods in history, including the analysis of digital data'),
+(325, 25, 'SH06_02 - Classical archaeology, history of archaeology'),
+(326, 25, 'SH06_03 - General archaeology, archaeometry, landscape archaeology'),
+(327, 25, 'SH06_04 - Prehistory, palaeoanthropology, palaeodemography, protohistory'),
+(328, 25, 'SH06_05 - Ancient history'),
+(329, 25, 'SH06_06 - Medieval history'),
+(330, 25, 'SH06_07 - Early modern history'),
+(331, 25, 'SH06_08 - Modern and contemporary history'),
+(332, 25, 'SH06_09 - Colonial and post-colonial history'),
+(333, 25, 'SH06_10 - Global history, transnational history, comparative history, entangled histories'),
+(334, 25, 'SH06_11 - Social and economic history'),
+(335, 25, 'SH06_12 - Gender history; cultural history; history of collective identities and memories'),
+(336, 25, 'SH06_13 - History of ideas, intellectual history, history of economic thought'),
+(337, 25, 'SH06_14 - History of science, medicine and technologies');
+
+INSERT INTO public.tr_cat_modele (id_cat_modele, lb_nom_fr, lb_nom_en) VALUES
+(1, 'Rappel de clôture d''un AAP', 'Rappel de clôture d''un AAP'),
+(2, 'Mail de clôture de soumission d''un AAP, projet sou', 'Mail de clôture de soumission d''un AAP, projet sou'),
+(3, 'Mail de clôture de soumission d''un AAP, projet non', 'Mail de clôture de soumission d''un AAP, projet non'),
+(4, 'Mail d''invitation à participer à un CE', 'Mail d''invitation à participer à un CE'),
+(5, 'Mail de convocation à une réunion du CE', 'Mail de convocation à une réunion du CE'),
+(6, 'Mail de remerciement aux membres du CE', 'Mail de remerciement aux membres du CE'),
+(7, 'Mail de sollicitation aux experts', 'Mail de sollicitation aux experts'),
+(8, 'Mail de relance aux experts', 'Mail de relance aux experts'),
+(9, 'Mail de notification de l''acception d''une expertis', 'Mail de notification de l''acception d''une expertis'),
+(10, 'Accusé de réception de rendu de l''expertise', 'Accusé de réception de rendu de l''expertise'),
+(11, 'Mail de remerciement aux experts', 'Mail de remerciement aux experts'),
+(12, 'Mail de notification aux porteurs de la liste prin', 'Mail de notification aux porteurs de la liste prin'),
+(13, 'Mail de notification aux porteurs de la liste comp', 'Mail de notification aux porteurs de la liste comp'),
+(14, 'Mail de notification aux porteurs de projets non r', 'Mail de notification aux porteurs de projets non r'),
+(15, 'Mail d''envoi de l''acte attributif (Convention)', 'Mail d''envoi de l''acte attributif (Convention)'),
+(16, 'Mail de finalisation du dossier', 'Mail de finalisation du dossier'),
+(17, 'Mail de relance 1', 'Mail de relance 1'),
+(18, 'Mail de relance 2', 'Mail de relance 2'),
+(19, 'Mail de relance 3', 'Mail de relance 3'),
+(20, 'Rappel pour l''acte attributif (Convention)', 'Rappel pour l''acte attributif (Convention)'),
+(21, 'Mail de refus du document administratif', 'Mail de refus du document administratif'),
+(22, 'Mail de refus du document scientifico-financier', 'Mail de refus du document scientifico-financier'),
+(23, 'Mail de refus du document scientifique', 'Mail de refus du document scientifique'),
+(24, 'Relance pour l''acte attributif (Convention)', 'Relance pour l''acte attributif (Convention)'),
+(25, 'Mail d''information de la validation d''une prolonga', 'Mail d''information de la validation d''une prolonga'),
+(26, 'Mail d''information de modification du calendrier d', 'Mail d''information de modification du calendrier d');
+
+INSERT INTO public.tr_cat_balise (id_cat_balise, lb_nom_fr, lb_nom_en) VALUES
+ (1, 'Destinataire', 'recipient'),
+ (2, 'ANR', 'ANR'),
+ (3, 'CPS', 'CPS'),
+ (4, 'CPS/RS', 'CPS/RS'),
+ (5, 'Appel', 'Call'),
+ (6, 'Coordinateur', 'coordinator'),
+ (7, 'Projet', 'Project'),
+ (8, 'Comité', 'committee'),
+ (9, 'Expertise', 'Expert'),
+ (10, 'Technique', 'Technical');
 
 INSERT INTO "tr_choix_dispo_expert" ("id_choix_expert", "lb_nom_en", "nb_ordre", "lb_nom_fr") VALUES
-('2',	'Non, je ne suis pas  disponible pour cette période',	2,	'Non, je ne suis pas  disponible pour cette période'),
-('3',	'Aucun avis',	3,	'Aucun avis'),
-('1',	'Oui, je suis disponible pour cette période',	1,	'Oui, je suis disponible pour cette période');
+('2',	'No, I am not available but may be another time',	2,	'Non, je ne suis pas disponible à cette période'),
+('3',	'No, I do not want to be an external reviewer for the ANR',	3,	'Non, je ne souhaite pas évaluer pour l''ANR'),
+('1',	'Yes, I am available',	1,	'Oui, je suis disponible');
 
 INSERT INTO "tr_civilite" ("id_civilite", "civilite_longue", "civilite_court") VALUES
 (1,	'Monsieur',	'M'),
@@ -96,9 +790,9 @@ INSERT INTO "tr_departement" ("id_departement", "lb_court", "lb_long") VALUES
 (5,	'EERB',	'Environnements,écosystèmes,ressources biologiques');
 
 INSERT INTO "tr_dispo_comite" ("id_choix", "lb_nom", "nb_ordre") VALUES
-('1',	'Oui',	3),
-('2',	'Non',	1),
-('3',	'Aucun avis',	2);
+('1',	'Oui, selon mes disponibilités',	1),
+('2',	'Non, je préfére rester expert indépendant',	2),
+('3',	'Non, je ne souhaite pas évaluer pour l''ANR',	3);
 
 INSERT INTO "tr_etat_sol" ("cd_etat_sollicitation", "lb_etat_sollicitation") VALUES
 (1,	'Impossible'),
@@ -120,6 +814,7 @@ INSERT INTO "tr_fonction" ("id_fonction", "lb_nom_fr", "lb_nom_en") VALUES
 (10,'Professeur émérite','Professor Emeritus'),
 (11,'Chercheur émérite','Researcher Emeritus'),
 (8,'Autre','Other');
+
 
 INSERT INTO "tr_genre" ("id_genre", "cd_genre", "lb_long") VALUES
 (1,	'H',	'Homme'),
@@ -234,93 +929,201 @@ INSERT INTO "tr_info" ("cd_info", "lb_info") VALUES
 ('3',	'On cochant cette case, vous aurez la possibilité de faire appel a une ou plusieurs infrastructures pour ce projet, au moins une infrastructure doit être renseignée.'),
 ('4',	'Les versions françaises et anglaises sont requises, Ces résumés ne sont pas confidentiels et pourrons ainsi être transmis à d''autres organismes (INCA,...).');
 
-INSERT INTO "tr_inst_fi" ("id_inst_fi", "lb_nom", "mnt_max", "mnt_min", "lb_acro") VALUES
+INSERT INTO "tr_inst_fi" ("id_inst_fi", "lb_inst_fi", "mnt_max", "mnt_min", "lb_acro") VALUES
 (1,'Projet de recherche collaborative',	12000,	10000, 'PRC'),
 (2,'Projet de recherche collaborative - Entreprise',	9000,	7500, 'PRCE'),
 (3,'Jeunes chercheuses - jeunes chercheurs',	10000,	8500, 'JCJC'),
 (4,'Projet de recherche collaborative - International',	20500,	18000, 'PRCI');
 
-INSERT INTO "tr_langue" ("id_langue", "lb_langue", "cd_langue") VALUES
-(1,	'Français',	'FR'),
-(2,	'Anglais',	'EN'),
-(3,	'Allemand',	'GR'),
-(4,	'Arabe',	'ARA'),
-(5,	'Chinois (mandarin)',	'CHI'),
-(6,	'Espagnol',	'ES'),
-(7,	'Hindi /Ourdou',	'HI'),
-(8,	'Italien',	NULL),
-(9,	'Japonais',	NULL),
-(10,	'Portugais',	NULL),
-(11,	'Russe',	NULL),
-(12,	'Bengali',	NULL),
-(13,	'Panjabi',	NULL),
-(14,	'Haoussa',	NULL),
-(15,	'Javanais',	NULL),
-(16,	'Télougou',	NULL),
-(17,	'Malais',	NULL),
-(18,	'Coréen',	NULL),
-(19,	'Marathi',	NULL),
-(20,	'Turc',	NULL),
-(21,	'Vietnamien',	NULL),
-(22,	'Tamoul',	NULL),
-(23,	'Persan',	NULL),
-(24,	'Thaï',	NULL),
-(25,	'Gujarati',	NULL),
-(26,	'Chinois (wu)',	NULL),
-(27,	'Chinois (cantonais)',	NULL),
-(28,	'Chinois (jing)',	NULL),
-(29,	'Chinois (min)',	NULL),
-(30,	'Chinois (xiang)',	NULL),
-(31,	'Chinois (gan)',	NULL),
-(32,	'Chinois (hakka)',	NULL),
-(33,	'Chinois (zhouang)',	NULL),
-(34,	'Chinois (min bei)',	NULL),
-(35,	'Polonais',	NULL),
-(36,	'Pachtou',	NULL),
-(37,	'Kannada',	NULL),
-(38,	'Malayalam',	NULL),
-(39,	'Soundanais',	NULL),
-(40,	'Oriya (odiya)',	NULL),
-(41,	'Birman',	NULL),
-(42,	'Ukrainien',	NULL),
-(43,	'Bhojpouri',	NULL),
-(44,	'Filipino (tagalog)',	NULL),
-(45,	'Yorouba',	NULL),
-(46,	'Maithili',	NULL),
-(47,	'Ouzbek',	NULL),
-(48,	'Sindhi',	NULL),
-(49,	'Amharique',	NULL),
-(50,	'Peul (fulani)',	NULL),
-(51,	'Roumain',	NULL),
-(52,	'Oromo',	NULL),
-(53,	'Igbo (ibo)',	NULL),
-(54,	'Azéri',	NULL),
-(55,	'Awadhi',	NULL),
-(56,	'Visayan (cibuano)',	NULL),
-(57,	'Néerlandais',	NULL),
-(58,	'Kurde',	NULL),
-(59,	'Malgache',	NULL),
-(60,	'Saraiki',	NULL),
-(61,	'Chittagonien',	NULL),
-(62,	'Khmer',	NULL),
-(63,	'Turkmène',	NULL),
-(64,	'Assamais',	NULL),
-(65,	'Madourais',	NULL),
-(66,	'Somali',	NULL),
-(67,	'Marwari',	NULL),
-(68,	'Magahi',	NULL),
-(69,	'Haryanvi',	NULL),
-(70,	'Hongrois',	NULL),
-(71,	'Chhattisgarhi',	NULL),
-(72,	'Grec',	NULL),
-(73,	'Chewa (nyanja)',	NULL),
-(74,	'Deccan',	NULL),
-(75,	'Akan',	NULL),
-(76,	'Kazakh',	NULL),
-(77,	'Sylheti',	NULL),
-(78,	'Zoulou',	NULL),
-(79,	'Tchèque',	NULL),
-(80,	'Créole haïtien',	NULL);
+INSERT INTO "tr_langue" ("id_langue","lb_nom_fr","lb_nom_en", "cd_langue") VALUES
+(1,'Afar','Afar',NULL),
+(2,'Abkhaze','Abkhazian',NULL),
+(3,'Avestique','Avestan',NULL),
+(4,'Afrikaans','Afrikaans',NULL),
+(5,'Akan','Akan',NULL),
+(6,'Amharique','Amharic',NULL),
+(7,'Aragonais','Aragonese',NULL),
+(8,'Arabe','Arabic',NULL),
+(9,'Assamais','Assamese',NULL),
+(10,'Avar','Avaric',NULL),
+(11,'Aymara','Aymara',NULL),
+(12,'Azéri','Azerbaijani',NULL),
+(13,'Bachkir','Bashkir',NULL),
+(14,'Biélorusse','Belarusian',NULL),
+(15,'Bulgare','Bulgarian',NULL),
+(16,'Bihari','Bihari',NULL),
+(17,'Bichelamar','Bislama',NULL),
+(18,'Bambara','Bambara',NULL),
+(19,'Bengali','Bengali',NULL),
+(20,'Tibétain','Tibetan',NULL),
+(21,'Breton','Breton',NULL),
+(22,'Bosnien','Bosnian',NULL),
+(23,'Catalan','Catalan',NULL),
+(24,'Tchétchène','Chechen',NULL),
+(25,'Chamorro','Chamorro',NULL),
+(26,'Corse','Corsican',NULL),
+(27,'Cri','Cree',NULL),
+(28,'Tchèque','Czech',NULL),
+(29,'Vieux-slave','Old Church Slavonic',NULL),
+(30,'Tchouvache','Chuvash',NULL),
+(31,'Gallois','Welsh',NULL),
+(32,'Danois','Danish',NULL),
+(33,'Allemand','German',NULL),
+(34,'Maldivien','Divehi',NULL),
+(35,'Dzongkha','Dzongkha',NULL),
+(36,'Ewe','Ewe',NULL),
+(37,'Grec moderne','Greek',NULL),
+(38,'Anglais','English',NULL),
+(39,'Espéranto','Esperanto',NULL),
+(40,'Espagnol','Spanish',NULL),
+(41,'Estonien','Estonian',NULL),
+(42,'Basque','Basque',NULL),
+(43,'Persan','Persian',NULL),
+(44,'Peul','Fulah',NULL),
+(45,'Finnois','Finnish',NULL),
+(46,'Fidjien','Fijian',NULL),
+(47,'Féroïen','Faroese',NULL),
+(48,'Français','French',NULL),
+(49,'Frison occidental','Western Frisian',NULL),
+(50,'Irlandais','Irish',NULL),
+(51,'Écossais','Scottish Gaelic',NULL),
+(52,'Galicien','Galician',NULL),
+(53,'Guarani','Guarani',NULL),
+(54,'Gujarati','Gujarati',NULL),
+(55,'Mannois','Manx',NULL),
+(56,'Haoussa','Hausa',NULL),
+(57,'Hébreu','Hebrew',NULL),
+(58,'Hindi','Hindi',NULL),
+(59,'Hiri motu','Hiri Motu',NULL),
+(60,'Croate','Croatian',NULL),
+(61,'Créole haïtien','Haitian',NULL),
+(62,'Hongrois','Hungarian',NULL),
+(63,'Arménien','Armenian',NULL),
+(64,'Héréro','Herero',NULL),
+(65,'Interlingua','Interlingua',NULL),
+(66,'Indonésien','Indonesian',NULL),
+(67,'Occidental','Interlingue',NULL),
+(68,'Igbo','Igbo',NULL),
+(69,'Yi','Sichuan Yi',NULL),
+(70,'Inupiak','Inupiaq',NULL),
+(71,'Ido','Ido',NULL),
+(72,'Islandais','Icelandic',NULL),
+(73,'Italien','Italian',NULL),
+(74,'Inuktitut','Inuktitut',NULL),
+(75,'Japonais','Japanese',NULL),
+(76,'Javanais','Javanese',NULL),
+(77,'Géorgien','Georgian',NULL),
+(78,'Kikongo','Kongo',NULL),
+(79,'Kikuyu','Kikuyu',NULL),
+(80,'Kuanyama','Kwanyama',NULL),
+(81,'Kazakh','Kazakh',NULL),
+(82,'Groenlandais','Greenlandic',NULL),
+(83,'Khmer','Khmer',NULL),
+(84,'Kannada','Kannada',NULL),
+(85,'Coréen','Korean',NULL),
+(86,'Kanouri','Kanuri',NULL),
+(87,'Cachemiri','Kashmiri',NULL),
+(88,'Kurde','Kurdish',NULL),
+(89,'Komi','Komi',NULL),
+(90,'Cornique','Cornish',NULL),
+(91,'Kirghiz','Kirghiz',NULL),
+(92,'Latin','Latin',NULL),
+(93,'Luxembourgeois','Luxembourgish',NULL),
+(94,'Ganda','Ganda',NULL),
+(95,'Limbourgeois','Limburgish',NULL),
+(96,'Lingala','Lingala',NULL),
+(97,'Lao','Lao',NULL),
+(98,'Lituanien','Lithuanian',NULL),
+(99,'Luba','Luba',NULL),
+(100,'Letton','Latvian',NULL),
+(101,'Malgache','Malagasy',NULL),
+(102,'Marshallais','Marshallese',NULL),
+(103,'Maori de Nouvelle-Zélande','Māori',NULL),
+(104,'Macédonien','Macedonian',NULL),
+(105,'Malayalam','Malayalam',NULL),
+(106,'Mongol','Mongolian',NULL),
+(107,'Moldave','Moldavian',NULL),
+(108,'Marathi','Marathi',NULL),
+(109,'Malais','Malay',NULL),
+(110,'Maltais','Maltese',NULL),
+(111,'Birman','Burmese',NULL),
+(112,'Nauruan','Nauru',NULL),
+(113,'Norvégien Bokmål','Norwegian Bokmål',NULL),
+(114,'Sindebele','North Ndebele',NULL),
+(115,'Népalais','Nepali',NULL),
+(116,'Ndonga','Ndonga',NULL),
+(117,'Néerlandais','Dutch',NULL),
+(118,'Norvégien Nynorsk','Norwegian Nynorsk',NULL),
+(119,'Norvégien','Norwegian',NULL),
+(120,'Nrebele','South Ndebele',NULL),
+(121,'Navajo','Navajo',NULL),
+(122,'Chichewa','Chichewa',NULL),
+(123,'Occitan','Occitan',NULL),
+(124,'Ojibwé','Ojibwa',NULL),
+(125,'Oromo','Oromo',NULL),
+(126,'Oriya','Oriya',NULL),
+(127,'Ossète','Ossetian',NULL),
+(128,'Pendjabi','Panjabi',NULL),
+(129,'Pali','Pāli',NULL),
+(130,'Polonais','Polish',NULL),
+(131,'Pachto','Pashto',NULL),
+(132,'Portugais','Portuguese',NULL),
+(133,'Quechua','Quechua',NULL),
+(134,'Créole Réunionnais','Reunionese',NULL),
+(135,'Romanche','Romansh',NULL),
+(136,'Kirundi','Kirundi',NULL),
+(137,'Roumain','Romanian',NULL),
+(138,'Russe','Russian',NULL),
+(139,'Kinyarwanda','Kinyarwanda',NULL),
+(140,'Sanskrit','Sanskrit',NULL),
+(141,'Sarde','Sardinian',NULL),
+(142,'Sindhi','Sindhi',NULL),
+(143,'Same du Nord','Northern Sami',NULL),
+(144,'Sango','Sango',NULL),
+(145,'Serbo-croate','Serbo-Croatian',NULL),
+(146,'Cingalais','Sinhalese',NULL),
+(147,'Slovaque','Slovak',NULL),
+(148,'Slovène','Slovenian',NULL),
+(149,'Samoan','Samoan',NULL),
+(150,'Shona','Shona',NULL),
+(151,'Somali','Somali',NULL),
+(152,'Albanais','Albanian',NULL),
+(153,'Serbe','Serbian',NULL),
+(154,'Swati','Swati',NULL),
+(155,'Sotho du Sud','Sotho',NULL),
+(156,'Soundanais','Sundanese',NULL),
+(157,'Suédois','Swedish',NULL),
+(158,'Swahili','Swahili',NULL),
+(159,'Tamoul','Tamil',NULL),
+(160,'Télougou','Telugu',NULL),
+(161,'Tadjik','Tajik',NULL),
+(162,'Thaï','Thai',NULL),
+(163,'Tigrigna','Tigrinya',NULL),
+(164,'Turkmène','Turkmen',NULL),
+(165,'Tagalog','Tagalog',NULL),
+(166,'Tswana','Tswana',NULL),
+(167,'Tongien','Tonga',NULL),
+(168,'Turc','Turkish',NULL),
+(169,'Tsonga','Tsonga',NULL),
+(170,'Tatar','Tatar',NULL),
+(171,'Twi','Twi',NULL),
+(172,'Tahitien','Tahitian',NULL),
+(173,'Ouïghour','Uighur',NULL),
+(174,'Ukrainien','Ukrainian',NULL),
+(175,'Ourdou','Urdu',NULL),
+(176,'Ouzbek','Uzbek',NULL),
+(177,'Venda','Venda',NULL),
+(178,'Vietnamien','Viêt Namese',NULL),
+(179,'Volapük','Volapük',NULL),
+(180,'Wallon','Walloon',NULL),
+(181,'Wolof','Wolof',NULL),
+(182,'Xhosa','Xhosa',NULL),
+(183,'Yiddish','Yiddish',NULL),
+(184,'Yoruba','Yoruba',NULL),
+(185,'Zhuang','Zhuang',NULL),
+(186,'Chinois','Chinese',NULL),
+(187,'Zoulou','Zulu',NULL);
+
 
 INSERT INTO "tr_niveau" ("id_type_niveu", "lb_nom") VALUES
 (1,	'Soumission'),
@@ -328,10 +1131,10 @@ INSERT INTO "tr_niveau" ("id_type_niveu", "lb_nom") VALUES
 (3,	'Publication');
 
 INSERT INTO "tr_niveau_langue" ("id_niveau", "lb_niveau") VALUES
-(2,	'Courant'),
-(3,	'Bon'),
-(4,	'Moyen'),
-(1,	'Langue maternelle');
+(2,	'Langue maternelle'),
+(3,	'Courant'),
+(4,	'Bon'),
+(1,	'Moyen');
 
 INSERT INTO "tr_pays" ("cd_pays", "lb_pays", "lb_pays_en", "alpha2", "alpha3") VALUES
 ('4',	'Afghanistan',	'Afghanistan',	'AF',	'AFG'),
@@ -667,7 +1470,9 @@ INSERT INTO "tr_profil" ("id_profil", "lb_profil", "cd_profil", "lb_role") VALUE
 (15,	'Porteur projet',	'PPROJ',	'ROLE_PORTEUR_PROJET'),
 (16,	'Expert',	'EXPER',	'ROLE_EXPERT'),
 (17,	'Coordinateur de projet',	'CPROJ',	'ROLE_COORD_PROJ'),
-(18,	'Responsable administratif',	'RADM',	'ROLE_RE_ADM');
+(18,	'Responsable administratif',	'RADM',	'ROLE_RE_ADM'),
+(19, 'Rapporteur', 'RAPP', 'ROLE_RAPP'),
+(20, 'Lecteur', 'LECT', 'ROLE_LECT');
 
 INSERT INTO "tr_sts_evaluation" ("cd_sts_evaluation", "lb_description") VALUES
 ('AFR',	'A faire'),
@@ -675,23 +1480,33 @@ INSERT INTO "tr_sts_evaluation" ("cd_sts_evaluation", "lb_description") VALUES
 ('SOM',	'Soumise');
 
 INSERT INTO "tr_sts_sollicitation" ("cd_sollicitation", "lb_description", "action_sollicitation") VALUES
-('SOL',	'Sollicité',	'Déclarer que l’évaluateur est sollicité'),
-('RET',	'Retiré',	'Retirer l’évaluateur'),
-('REF',	'Refusée',	'Déclarer l’évaluateur en refus'),
-('ENC',	'En conflit',	'Déclarer l’évaluateur en conflit'),
-('ACC',	'Acceptée',	'Déclarer que l’évaluateur a accepté'),
-('PRO',	'Proposée',	'Déclarer que l''évaluateur est proposé');
+('SOL',	'Sollicité',	'Déclarer que l’évaluateur est sollicité.'),
+('RET',	'Retiré',	'Retirer l’évaluateur.'),
+('REF',	'Refus',	'Déclarer l’évaluateur en refus.'),
+('ENC',	'En conflit',	'Déclarer l’évaluateur en conflit.'),
+('ACC',	'Acceptée',	'Déclarer que l’évaluateur a donné son accord pour évaluer.'),
+('PRO',	'Proposée',	'Déclarer que l''évaluateur est proposé.'),
+('SAR', 'Sans réponse',  'Sollicité sans réponse après trois relances.');
 
 INSERT INTO "tr_typ_id_ext" ("id_type_ref_ext", "lb_nom_fr") VALUES
-('1',	'ORCID'),
-('2',	'ResearchID'),
-('3',	'idHal'),
-('4',	'idRef');
+(1,	'ORCID'),
+(2,	'ResearchID'),
+(3,	'idHal'),
+(4,	'idRef');
 
 INSERT INTO "tr_type_commande" ("cd_commande", "lb_commande") VALUES
 ('RLC',	'relance'),
 ('AJT',	'ajouter'),
 ('COM',	'commentaire');
+
+INSERT INTO public.tr_type_eval (id_type, lb_description) VALUES
+ (1, 'EXPERTISE'),
+(2, 'EVAL_RL'),
+(3, 'RAPPORT');
+
+INSERT INTO public.tr_statut_projet (id_sts_projet, lb_nom) VALUES
+ (1, 'Enregistré'),
+ (2, 'Soumis');
 
 INSERT INTO "tr_type_document" ("id_type_doc", "lb_type_doc") VALUES
 (1,	'Pré-proposition'),
@@ -1242,6 +2057,7 @@ INSERT INTO "tg_pers_cps" ("id_pers_cps", "id_genre", "lb_web_perso", "bl_sexe",
 (999,4,	NULL,	NULL,	NULL, 'Nassie', 'Andréa',NULL, NULL, NULL);
 
 SELECT SETVAL('tg_pers_cps_id_pers_cps_seq',1010);
+
 
 INSERT INTO "tg_personne" ("id_personne", "id_genre", "id_dispo_comite", "id_cv", "id_civilite", "id_pers_cps", "lb_nom_usage", "lb_prenom", "cd_francophone", "lb_web_perso", "fonction", "dt_soutenance_these", "cv_renseigne") VALUES
 (1,	1,	NULL,	NULL,	1,	1,	'Guesdon',	'Karim',	'Fr',	'www.cnrs.fr',	NULL,	NULL,	't'),
@@ -1930,21 +2746,21 @@ INSERT INTO "tg_utilisateur" ("id", "id_personne", "username", "username_canonic
 (25,	25,	'vp4',	'vp4',	'vp4@anr.fr',	'vp4@anr.fr',	't',	NULL,	'$2y$13$kHdSM2amG1NaBbqdecrRoeuJKKVqfHjVuGrZHrVKsbXPTYRFXOeOO',	'2020-06-11 18:11:17',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (27,	27,	'dali',	'dali',	'dali.chikhaoui@anr.fr',	'dali.chikhaoui@anr.fr',	't',	'c302bb3217a766539f7ba13d5ba038bb1bacd56a',	'$2y$13$3Z4a9gn3ETAYC0ZR1USCaeJDx19YIlcbk78s/wvwo8i5g9NOFoeT.',	'2020-06-11 18:11:17',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (14,	14,	'cpss1',	'cpss1',	'cpss1@anr.fr',	'cpss1@anr.fr',	't',	NULL,	'$2y$13$xm3WFLqg01A0A0FltvnnP.YRbsGK/tIqgyPRpP/iclSno2aZlsz.W',	'2020-08-31 15:57:55',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(30,	56,	'zdzd@tetets.fr',	'zdzd@tetets.fr',	'zdzd@tetets.fr',	'zdzd@tetets.fr',	  't',	'd2d87fddda7836a97f1f000961da1d822728fd68',	'zdzdzdzd',	NULL,	'WvuQCI7C6gxUu0zgSU8ShBrZaM1HLi4u3DQjQWI3aP0',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(42,	150,	'ecatoire59@hotmail.com',	'ecatoire59@hotmail.com',	'ecatoire59@hotmail.com',	'ecatoire59@hotmail.com',	  't',	NULL,	'$2y$13$SKtU7GrDskcXn503vvI/7.Ah36kekHkmXnEbrbAsZobKf3fRCD/Hi',	NULL,	'cVaib7ySe3c3jc5nxhXy-leBe2dlI7B1788GBO-8htM',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(30,	56,	'zdzd@tetets.fr',	'zdzd@tetets.fr',	'zdzd@tetets.fr',	'zdzd@tetets.fr',	'f',	'd2d87fddda7836a97f1f000961da1d822728fd68',	'zdzdzdzd',	NULL,	'WvuQCI7C6gxUu0zgSU8ShBrZaM1HLi4u3DQjQWI3aP0',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(42,	150,	'ecatoire59@hotmail.com',	'ecatoire59@hotmail.com',	'ecatoire59@hotmail.com',	'ecatoire59@hotmail.com',	'f',	NULL,	'$2y$13$SKtU7GrDskcXn503vvI/7.Ah36kekHkmXnEbrbAsZobKf3fRCD/Hi',	NULL,	'cVaib7ySe3c3jc5nxhXy-leBe2dlI7B1788GBO-8htM',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (39,	114,	'eric.catoirea@agencerecherche.fr',	'eric.catoirea@agencerecherche.fr',	'eric.catoirea@agencerecherche.fr',	'eric.catoirea@agencerecherche.fr',	't',	NULL,	'$2y$13$OQtPiM3LYCYk19thMY3LVeIwCQudqpik1SyorYoKk2rhlFE5UpEvK',	'2020-06-26 16:47:30',	'nVp47DTVx4tyeiSoXCsCJQM8txhIrgvgrAeA2toTUI4',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (5,	5,	'dosem1',	'dosem1',	'dosem1@anr.fr',	'dosem1@anr.fr',	't',	NULL,	'$2y$13$7qdr/KRC8y75u8V9aXMMwuA61V8zA4X6CUF5Icm6JySOiWV8hsSja',	'2020-08-29 13:21:47',	NULL,	NULL,	'a:1:{i:0;s:11:"ROLE_DOS_EM";}',	NULL,	NULL,	NULL),
 (8,	8,	'president',	'president',	'jean-damien.pillet@polytechnique.edu',	'jean-damien.pillet@polytechnique.edu',	't',	NULL,	'$2y$13$VaaFbY./BRmKGZL01JkG2.nZbu9QGdG0ccJidQzVOh6DqHJRlVpEy',	'2020-09-04 13:48:10',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (10,	10,	'pilote2',	'pilote2',	'pilote2@anr.fr',	'pilote2@anr.fr',	't',	NULL,	'$2y$13$SCPbJ2wd/wGRGa5U/fHxP.mmK4q7uQ6fa4s/oQYVHxYuhIhfLWndK',	'2020-07-24 14:30:17',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(67,	206,	'ramail.test.fr',	'ramail.test.fr',	'ramail.test.fr',	'ramail.test.fr',	  't',	'2e80f6fe52a8973105db48dbd64c9f797608fb25',	'ranom',	NULL,	'iHPvOnGn6FcS_DDOHaBL08oITKxcBWGzX_wDe4lQvgA',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(67,	206,	'ramail.test.fr',	'ramail.test.fr',	'ramail.test.fr',	'ramail.test.fr',	'f',	'2e80f6fe52a8973105db48dbd64c9f797608fb25',	'ranom',	NULL,	'iHPvOnGn6FcS_DDOHaBL08oITKxcBWGzX_wDe4lQvgA',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (26,	26,	'cpsp4',	'cpsp4',	'cpsp4@anr.fr',	'cpsp4@anr.fr',	't',	NULL,	'$2y$13$TIv84FWXvU845FKDhf9L6OMEmOGqK06.dkmcplGAoEX.w39i9COm.',	'2020-07-17 10:24:16',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(62,	NULL,	'arnaud.masclet1@gfi.fr',	'arnaud.masclet1@gfi.fr',	'arnaud.masclet1@gfi.fr',	'arnaud.masclet1@gfi.fr',	  't',	NULL,	'$2y$13$Rn0EYIK0mYFCrKDSN7j.Au0YKjTar1f2t9tcQwSCGZykH0sAa93Me',	NULL,	'',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(58,	194,	'arnaud.masclet2@gfi.fr',	'arnaud.masclet2@gfi.fr',	'arnaud.mascle2t@gfi.fr',	'arnaud.masclet2@gfi.fr',	  't',	NULL,	'$2y$13$Rn0EYIK0mYFCrKDSN7j.Au0YKjTar1f2t9tcQwSCGZykH0sAa93Me',	NULL,	'SJus632JseTxKO8xCbUUOULtY4aKpQPutIZXfamvZvw',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(65,	204,	'ramouche@test.fr',	'ramouche@test.fr',	'ramouche@test.fr',	'ramouche@test.fr',	  't',	'185cdd9ce75cea6df964471f7d0e362b9ada8674',	'RAtsetse',	NULL,	'RyPMO9ixeHXKacuNdV2HhnEnEOrxPSRtCP2NIrvm7L8',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(63,	199,	'arnaud.masclet@gfi.fr',	'arnaud.masclet@gfi.fr',	'arnaud.masclet@gfi.fr',	'arnaud.masclet@gfi.fr',	  't',	NULL,	'$2y$13$RkN38O/N.fhZLx9MAH57teZS2YCirzzWrPWHNQAZkAtXRhkdWwQwK',	NULL,	'P_k742_TAlEQWgnTMEYNm3izb4fa2vP8y9R-uU18Hhs',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(62,	NULL,	'arnaud.masclet1@gfi.fr',	'arnaud.masclet1@gfi.fr',	'arnaud.masclet1@gfi.fr',	'arnaud.masclet1@gfi.fr',	'f',	NULL,	'$2y$13$Rn0EYIK0mYFCrKDSN7j.Au0YKjTar1f2t9tcQwSCGZykH0sAa93Me',	NULL,	'',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(58,	194,	'arnaud.masclet2@gfi.fr',	'arnaud.masclet2@gfi.fr',	'arnaud.mascle2t@gfi.fr',	'arnaud.masclet2@gfi.fr',	'f',	NULL,	'$2y$13$Rn0EYIK0mYFCrKDSN7j.Au0YKjTar1f2t9tcQwSCGZykH0sAa93Me',	NULL,	'SJus632JseTxKO8xCbUUOULtY4aKpQPutIZXfamvZvw',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(65,	204,	'ramouche@test.fr',	'ramouche@test.fr',	'ramouche@test.fr',	'ramouche@test.fr',	'f',	'185cdd9ce75cea6df964471f7d0e362b9ada8674',	'RAtsetse',	NULL,	'RyPMO9ixeHXKacuNdV2HhnEnEOrxPSRtCP2NIrvm7L8',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(63,	199,	'arnaud.masclet@gfi.fr',	'arnaud.masclet@gfi.fr',	'arnaud.masclet@gfi.fr',	'arnaud.masclet@gfi.fr',	'f',	NULL,	'$2y$13$RkN38O/N.fhZLx9MAH57teZS2YCirzzWrPWHNQAZkAtXRhkdWwQwK',	NULL,	'P_k742_TAlEQWgnTMEYNm3izb4fa2vP8y9R-uU18Hhs',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (40,	121,	'mohamed.chikhaoui@anr.fr',	'mohamed.chikhaoui@anr.fr',	'mohamed.chikhaoui@anr.fr',	'mohamed.chikhaoui@anr.fr',	't',	NULL,	'$2y$13$abEvrTqdTPwd9TKPYG5aJe9oj2Q6WqO07khODfYDbRTCjTRIWoRb.',	'2020-07-15 14:58:37',	'oXeRfwIyeLN9KJARlviIRTu9JCFqsCaxCmAxvfh-aG0',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (6,	6,	'pilote1',	'pilote1',	'pilote1@anr.fr',	'pilote1@anr.fr',	't',	NULL,	'$2y$13$KL9QAZQfF35XpZ6paaxtMeaeB3Suy.tw2tW/S3I45mVQJq1aa3oLK',	'2020-09-04 14:05:15',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(69,	214,	'testmailsansarobas',	'testmailsansarobas',	'testmailsansarobas',	'testmailsansarobas',	  't',	'e9d2e2090f8bf2f368c94d26d00d515a51aeb236',	'raNom',	NULL,	'Ivlmw3DFW1IbOx2rGIfGAwaliXglByQqpkmkv25Y-QM',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(69,	214,	'testmailsansarobas',	'testmailsansarobas',	'testmailsansarobas',	'testmailsansarobas',	'f',	'e9d2e2090f8bf2f368c94d26d00d515a51aeb236',	'raNom',	NULL,	'Ivlmw3DFW1IbOx2rGIfGAwaliXglByQqpkmkv25Y-QM',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (2,	2,	'pres2',	'pres2',	'pres2@anr.fr',	'pres2@anr.fr',	't',	NULL,	'$2y$13$l.NcbY7.REMNMntsqXni6eKf7U6cd9VkOuikCVdAGafQ32pTsM4dm',	'2020-07-24 14:35:13',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (9,	9,	'dosem2',	'dosem2',	'dosem2@anr.fr',	'dosem2@anr.fr',	't',	NULL,	'$2y$13$CI5uIj.WQbKeYIElzFO0fePmQiHhD5lejGairhXwWo9wpmRBzqRxe',	'2020-06-11 20:20:57',	NULL,	NULL,	'a:1:{i:0;s:11:"ROLE_DOS_EM";}',	NULL,	NULL,	NULL),
 (4,	4,	'adlen',	'adlen',	'adlen@anr.fr',	'adlen@anr.fr',	't',	NULL,	'$2y$13$abEvrTqdTPwd9TKPYG5aJe9oj2Q6WqO07khODfYDbRTCjTRIWoRb.',	'2020-09-07 13:43:55',	NULL,	NULL,	'a:1:{i:0;s:10:"ROLE_ADMIN";}',	NULL,	NULL,	NULL),
@@ -1960,14 +2776,14 @@ INSERT INTO "tg_utilisateur" ("id", "id_personne", "username", "username_canonic
 (52,	39,	'mbre2',	'mbre2',	'mbre2@anr.fr',	'mbre2@anr.fr',	't',	NULL,	'$2y$13$CTXdWJhotTT7bsfcTZ3q9.r7Y5PhTEHTuI4c.HtWRXaz1CLjtDFRS',	'2020-09-03 10:57:11',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (51,	38,	'mbre1',	'mbre1',	'mbre1@anr.fr',	'mbre1@anr.fr',	't',	NULL,	'$2y$13$S/VagDSS2Qwv.ExwhZsXbuf/omw6nfKcGbn74hhqa0yi1dNgcLFNi',	'2020-09-03 11:06:52',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (50,	184,	'eric.catoire@agencerecherche.fr',	'eric.catoire@agencerecherche.fr',	'eric.catoire@agencerecherche.fr',	'eric.catoire@agencerecherche.fr',	't',	NULL,	'$2y$13$MmitE3MVGF.P8QMi3uxedOegkaoPUEpSK88T/JBKhvuI5kjmHOyue',	'2020-07-24 11:24:57',	'inY1BZ1Z2_k3NUq0NpsC9Xh2KiA1UzcG6AdA3qLyzuI',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(55,	191,	'ici.oui@hotmail.com',	'ici.oui@hotmail.com',	'ici.oui@hotmail.com',	'ici.oui@hotmail.com',	  't',	'a8cd0a2a7d4423855fc0ace5024b56ed5116e977',	'nom test',	NULL,	'u44PDXS_wRf2jT2ZixyacSdXotFsDeGKNSwSSlk9uOs',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(66,	205,	'ramail@test.fr',	'ramail@test.fr',	'ramail@test.fr',	'ramail@test.fr',	  't',	'e8728810eb62847e885f80e4ceb714cd03f257aa',	'ranom',	NULL,	'cSUHXpI2oD-vMnQjEGC3dFPs4gLj_ZzaRsiYjN97-Mw',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(68,	207,	'rsmailpasteurProj18@test.fr',	'rsmailpasteurproj18@test.fr',	'rsmailpasteurProj18@test.fr',	'rsmailpasteurproj18@test.fr',	  't',	'a97d7eb65d3aa9d2fca0e6b02c9015212374dd87',	'rsNomPasteurProj18',	NULL,	'0v98LBOClGTAnk29RcAFNYn9Zr_L3Pi4vvWufLEcRXA',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(55,	191,	'ici.oui@hotmail.com',	'ici.oui@hotmail.com',	'ici.oui@hotmail.com',	'ici.oui@hotmail.com',	'f',	'a8cd0a2a7d4423855fc0ace5024b56ed5116e977',	'nom test',	NULL,	'u44PDXS_wRf2jT2ZixyacSdXotFsDeGKNSwSSlk9uOs',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(66,	205,	'ramail@test.fr',	'ramail@test.fr',	'ramail@test.fr',	'ramail@test.fr',	'f',	'e8728810eb62847e885f80e4ceb714cd03f257aa',	'ranom',	NULL,	'cSUHXpI2oD-vMnQjEGC3dFPs4gLj_ZzaRsiYjN97-Mw',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(68,	207,	'rsmailpasteurProj18@test.fr',	'rsmailpasteurproj18@test.fr',	'rsmailpasteurProj18@test.fr',	'rsmailpasteurproj18@test.fr',	'f',	'a97d7eb65d3aa9d2fca0e6b02c9015212374dd87',	'rsNomPasteurProj18',	NULL,	'0v98LBOClGTAnk29RcAFNYn9Zr_L3Pi4vvWufLEcRXA',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (28,	54,	'adlen.boussadia1@agencerecherche.fr',	'adlen.boussadia1@agencerecherche.fr',	'adlen.boussadia1@agencerecherche.fr',	'adlen.boussadia1@agencerecherche.fr',	't',	NULL,	'$2y$13$9ZH/fuOUrufYZM6C3ya4u.ElGeMXzOgEH3qB0/cGvygi13E.CrJse',	'2020-09-08 09:34:37',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	'2020-08-30 15:34:48'),
 (56,	29,	'mbre5',	'mbre5',	'mbre5@anr.fr',	'mbre5@anr.fr',	't',	NULL,	'$2y$13$Er2yB5SFQY.UAviBWHxeYuVhVPkiMLWqnhK0dBehkyQjVUKEznsFq',	'2020-08-20 10:58:21',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(59,	195,	'adlen.boussadia@agencerecherche.fr',	'adlen.boussadia@agencerecherche.fr',	'adlen.boussadia@agencerecherche.fr',	'adlen.boussadia@agencerecherche.fr',	  't',	NULL,	'$2y$13$nB7jlSwIsysoGr81gAemKuzuUW5l0QgNG57fAUc/ki4b.Z6Q0pAKy',	NULL,	'KSrDmIORGvNzFCC5sCobmT6ML_GliECAlLXZUGsQfPg',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(57,	193,	'arnaud.masclet1@anr.fr',	'arnaud.masclet1@anr.fr',	'arnaud.masclet1@anr.fr',	'arnaud.masclet1@anr.fr',	  't',	NULL,	'$2y$13$U6geuiLuzjnEB2U8jRw8BuLafFxwCcontNrw3KVtTjfOqt5kHZuni',	NULL,	'uASoDadhI4HZHiPkUPXBTy8ExSZoSWHaqh-MEUHRGkw',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
-(61,	197,	'arnaud.masclet@anr.fr',	'arnaud.masclet@anr.fr',	'arnaud.masclet@anr.fr',	'arnaud.masclet@anr.fr',	  't',	NULL,	'$2y$13$rKVuHN6Du5Rl90ScAnegUubgSmcOXPAwauGvKu6Na8hVhCu5M8gt2',	NULL,	'P9tj2VgO8GiFVP9Kt8Bkf8FQut0YxqR41b2Sw8c7xy4',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(59,	195,	'adlen.boussadia@agencerecherche.fr',	'adlen.boussadia@agencerecherche.fr',	'adlen.boussadia@agencerecherche.fr',	'adlen.boussadia@agencerecherche.fr',	'f',	NULL,	'$2y$13$nB7jlSwIsysoGr81gAemKuzuUW5l0QgNG57fAUc/ki4b.Z6Q0pAKy',	NULL,	'KSrDmIORGvNzFCC5sCobmT6ML_GliECAlLXZUGsQfPg',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(57,	193,	'arnaud.masclet1@anr.fr',	'arnaud.masclet1@anr.fr',	'arnaud.masclet1@anr.fr',	'arnaud.masclet1@anr.fr',	'f',	NULL,	'$2y$13$U6geuiLuzjnEB2U8jRw8BuLafFxwCcontNrw3KVtTjfOqt5kHZuni',	NULL,	'uASoDadhI4HZHiPkUPXBTy8ExSZoSWHaqh-MEUHRGkw',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
+(61,	197,	'arnaud.masclet@anr.fr',	'arnaud.masclet@anr.fr',	'arnaud.masclet@anr.fr',	'arnaud.masclet@anr.fr',	'f',	NULL,	'$2y$13$rKVuHN6Du5Rl90ScAnegUubgSmcOXPAwauGvKu6Na8hVhCu5M8gt2',	NULL,	'P9tj2VgO8GiFVP9Kt8Bkf8FQut0YxqR41b2Sw8c7xy4',	NULL,	'a:0:{}',	NULL,	NULL,	NULL),
 (54,	28,	'mbre4',	'mbre4',	'mbre4@anr.fr',	'mbre4@anr.fr',	't',	NULL,	'$2y$13$Er2yB5SFQY.UAviBWHxeYuVhVPkiMLWqnhK0dBehkyQjVUKEznsFq',	'2020-08-20 11:50:29',	NULL,	NULL,	'a:0:{}',	NULL,	NULL,	NULL);
 
 SELECT SETVAL('tg_utilisateur_id_seq',100);
@@ -2015,7 +2831,7 @@ INSERT INTO "tg_niveau_phase" ("id_niveau_phase", "id_type_niveu", "id_phase", "
 
 SELECT SETVAL('tg_niveau_phase_id_niveau_phase_seq',50);
 
-INSERT INTO "tg_comite" ("id_comite", "id_appel", "id_langue", "lb_acr", "lb_titre", "bl_actif", "lb_desc", "quest_publie", "nb_quest_soum", "bl_droit_projet_ouvert", "nb_min_eval_soum", "nb_min_eval_accept", "dh_echeance_evaluation") VALUES
+INSERT INTO "tg_comite" ("id_comite", "id_appel", "id_langue", "lb_acr", "lb_titre", "bl_actif", "lb_desc", "quest_publie", "nb_quest_soum", "bl_droit_projet_ouvert", "nb_min_eval_soum", "nb_min_eval_accept", "dh_rendu_eval_rl") VALUES
 (2,	1,	NULL,	'CE02',	'Comité CE02',	1,	'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ''Content here,',	't',	0,	'f',	NULL,	NULL,	NULL),
 (4,	1,	NULL,	'CEAMA01',	'Comité AMA',	1,	'seqrse',	'f',	0,	'f',	NULL,	NULL,	NULL),
 (1,	1,	NULL,	'CE01',	'Comite CE01',	1,	'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',	't',	0,	'f',	NULL,	NULL,	NULL),
@@ -2195,141 +3011,143 @@ INSERT INTO "tg_habilitation" ("id_habilitation", "id_personne", "id_profil", "d
 (46,	197,	15,	'2020-09-01',	'Masclet4 197',	1),
 (47,	199,	15,	'2020-09-01',	'Masclet3 199',	1),
 (48,	39,	7,	'2020-09-03',	'LEBON Pierre',	1);
-INSERT INTO "tg_habilitation" (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values
-(300, 500, 16, '2020-09-17' , 1),
-(301, 501, 16, '2020-09-17' , 1),
-(302, 502, 16, '2020-09-17' , 1),
-(303, 503, 16, '2020-09-17' , 1),
-(304, 504, 16, '2020-09-17' , 1),
-(305, 505, 16, '2020-09-17' , 1),
-(306, 506, 16, '2020-09-17' , 1),
-(307, 507, 16, '2020-09-17' , 1),
-(308, 508, 16, '2020-09-17' , 1),
-(309, 509, 16, '2020-09-17' , 1),
-(310, 510, 16, '2020-09-17' , 1),
-(311, 511, 16, '2020-09-17' , 1),
-(312, 512, 16, '2020-09-17' , 1),
-(313, 513, 16, '2020-09-17' , 1),
-(314, 514, 16, '2020-09-17' , 1),
-(315, 515, 16, '2020-09-17' , 1),
-(316, 516, 16, '2020-09-17' , 1),
-(317, 517, 16, '2020-09-17' , 1),
-(318, 518, 16, '2020-09-17' , 1),
-(319, 519, 16, '2020-09-17' , 1),
-(320, 520, 16, '2020-09-17' , 1),
-(321, 521, 16, '2020-09-17' , 1),
-(322, 522, 16, '2020-09-17' , 1),
-(323, 523, 16, '2020-09-17' , 1),
-(324, 524, 16, '2020-09-17' , 1),
-(325, 525, 16, '2020-09-17' , 1),
-(326, 526, 16, '2020-09-17' , 1),
-(327, 527, 16, '2020-09-17' , 1),
-(328, 528, 16, '2020-09-17' , 1),
-(329, 529, 16, '2020-09-17' , 1),
-(330, 530, 16, '2020-09-17' , 1),
-(331, 531, 16, '2020-09-17' , 1),
-(332, 532, 16, '2020-09-17' , 1),
-(333, 533, 16, '2020-09-17' , 1),
-(334, 534, 16, '2020-09-17' , 1),
-(335, 535, 16, '2020-09-17' , 1),
-(336, 536, 16, '2020-09-17' , 1),
-(337, 537, 16, '2020-09-17' , 1),
-(338, 538, 16, '2020-09-17' , 1),
-(339, 539, 16, '2020-09-17' , 1),
-(340, 540, 16, '2020-09-17' , 1),
-(341, 541, 16, '2020-09-17' , 1),
-(342, 542, 16, '2020-09-17' , 1),
-(343, 543, 16, '2020-09-17' , 1),
-(344, 544, 16, '2020-09-17' , 1),
-(345, 545, 16, '2020-09-17' , 1),
-(346, 546, 16, '2020-09-17' , 1),
-(347, 547, 16, '2020-09-17' , 1),
-(348, 548, 16, '2020-09-17' , 1),
-(349, 549, 16, '2020-09-17' , 1),
-(350, 550, 16, '2020-09-17' , 1),
-(351, 551, 16, '2020-09-17' , 1),
-(352, 552, 16, '2020-09-17' , 1),
-(353, 553, 16, '2020-09-17' , 1),
-(354, 554, 16, '2020-09-17' , 1),
-(355, 555, 16, '2020-09-17' , 1),
-(356, 556, 16, '2020-09-17' , 1),
-(357, 557, 16, '2020-09-17' , 1),
-(358, 558, 16, '2020-09-17' , 1),
-(359, 559, 16, '2020-09-17' , 1),
-(360, 560, 16, '2020-09-17' , 1),
-(361, 561, 16, '2020-09-17' , 1),
-(362, 562, 16, '2020-09-17' , 1),
-(363, 563, 16, '2020-09-17' , 1),
-(364, 564, 16, '2020-09-17' , 1),
-(365, 565, 16, '2020-09-17' , 1),
-(366, 566, 16, '2020-09-17' , 1),
-(367, 567, 16, '2020-09-17' , 1),
-(368, 568, 16, '2020-09-17' , 1),
-(369, 569, 16, '2020-09-17' , 1),
-(370, 570, 16, '2020-09-17' , 1),
-(371, 571, 16, '2020-09-17' , 1),
-(372, 572, 16, '2020-09-17' , 1),
-(373, 573, 16, '2020-09-17' , 1),
-(374, 574, 16, '2020-09-17' , 1),
-(375, 575, 16, '2020-09-17' , 1),
-(376, 576, 16, '2020-09-17' , 1),
-(377, 577, 16, '2020-09-17' , 1),
-(378, 578, 16, '2020-09-17' , 1),
-(379, 579, 16, '2020-09-17' , 1),
-(380, 580, 16, '2020-09-17' , 1),
-(381, 581, 16, '2020-09-17' , 1),
-(382, 582, 16, '2020-09-17' , 1),
-(383, 583, 16, '2020-09-17' , 1),
-(384, 584, 16, '2020-09-17' , 1),
-(385, 585, 16, '2020-09-17' , 1),
-(386, 586, 16, '2020-09-17' , 1),
-(387, 587, 16, '2020-09-17' , 1),
-(388, 588, 16, '2020-09-17' , 1),
-(389, 589, 16, '2020-09-17' , 1),
-(390, 590, 16, '2020-09-17' , 1),
-(391, 591, 16, '2020-09-17' , 1),
-(392, 592, 16, '2020-09-17' , 1),
-(393, 593, 16, '2020-09-17' , 1),
-(394, 594, 16, '2020-09-17' , 1),
-(395, 595, 16, '2020-09-17' , 1),
-(396, 596, 16, '2020-09-17' , 1),
-(397, 597, 16, '2020-09-17' , 1),
-(398, 598, 16, '2020-09-17' , 1),
-(399, 599, 16, '2020-09-17' , 1),
-(400, 600, 17, '2020-09-17' , 1),
-(401, 601, 17, '2020-09-17' , 1),
-(402, 602, 17, '2020-09-17' , 1),
-(403, 603, 17, '2020-09-17' , 1),
-(404, 604, 17, '2020-09-17' , 1),
-(405, 605, 17, '2020-09-17' , 1),
-(406, 606, 17, '2020-09-17' , 1),
-(407, 607, 17, '2020-09-17' , 1),
-(408, 608, 17, '2020-09-17' , 1),
-(409, 609, 17, '2020-09-17' , 1),
-(410, 610, 17, '2020-09-17' , 1),
-(411, 611, 17, '2020-09-17' , 1),
-(412, 612, 17, '2020-09-17' , 1),
-(413, 613, 17, '2020-09-17' , 1),
-(414, 614, 17, '2020-09-17' , 1),
-(415, 615, 17, '2020-09-17' , 1),
-(416, 616, 17, '2020-09-17' , 1),
-(418, 617, 18, '2020-09-17' , 1),
-(419, 618, 18, '2020-09-17' , 1),
-(420, 619, 18, '2020-09-17' , 1),
-(421, 620, 18, '2020-09-17' , 1),
-(422, 621, 18, '2020-09-17' , 1),
-(423, 622, 18, '2020-09-17' , 1),
-(424, 623, 18, '2020-09-17' , 1),
-(425, 624, 18, '2020-09-17' , 1),
-(426, 625, 18, '2020-09-17' , 1),
-(427, 626, 18, '2020-09-17' , 1),
-(428, 627, 18, '2020-09-17' , 1),
-(429, 628, 18, '2020-09-17' , 1),
-(430, 629, 18, '2020-09-17' , 1),
-(431, 630, 18, '2020-09-17' , 1),
-(432, 631, 18, '2020-09-17' , 1),
-(433, 632, 18, '2020-09-17' , 1),
-(434, 633, 18, '2020-09-17' , 1);
+
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (300, 500, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (301, 501, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (302, 502, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (303, 503, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (304, 504, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (305, 505, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (306, 506, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (307, 507, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (308, 508, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (309, 509, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (310, 510, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (311, 511, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (312, 512, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (313, 513, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (314, 514, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (315, 515, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (316, 516, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (317, 517, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (318, 518, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (319, 519, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (320, 520, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (321, 521, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (322, 522, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (323, 523, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (324, 524, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (325, 525, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (326, 526, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (327, 527, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (328, 528, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (329, 529, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (330, 530, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (331, 531, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (332, 532, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (333, 533, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (334, 534, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (335, 535, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (336, 536, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (337, 537, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (338, 538, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (339, 539, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (340, 540, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (341, 541, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (342, 542, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (343, 543, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (344, 544, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (345, 545, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (346, 546, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (347, 547, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (348, 548, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (349, 549, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (350, 550, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (351, 551, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (352, 552, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (353, 553, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (354, 554, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (355, 555, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (356, 556, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (357, 557, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (358, 558, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (359, 559, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (360, 560, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (361, 561, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (362, 562, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (363, 563, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (364, 564, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (365, 565, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (366, 566, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (367, 567, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (368, 568, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (369, 569, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (370, 570, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (371, 571, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (372, 572, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (373, 573, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (374, 574, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (375, 575, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (376, 576, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (377, 577, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (378, 578, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (379, 579, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (380, 580, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (381, 581, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (382, 582, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (383, 583, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (384, 584, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (385, 585, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (386, 586, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (387, 587, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (388, 588, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (389, 589, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (390, 590, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (391, 591, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (392, 592, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (393, 593, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (394, 594, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (395, 595, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (396, 596, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (397, 597, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (398, 598, 16, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (399, 599, 16, '2020-09-17' , 1);
+--/--
+
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (400, 600, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (401, 601, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (402, 602, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (403, 603, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (404, 604, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (405, 605, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (406, 606, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (407, 607, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (408, 608, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (409, 609, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (410, 610, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (411, 611, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (412, 612, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (413, 613, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (414, 614, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (415, 615, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (416, 616, 17, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (418, 617, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (419, 618, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (420, 619, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (421, 620, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (422, 621, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (423, 622, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (424, 623, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (425, 624, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (426, 625, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (427, 626, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (428, 627, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (429, 628, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (430, 629, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (431, 630, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (432, 631, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (433, 632, 18, '2020-09-17' , 1);
+insert into tg_habilitation (id_habilitation, id_personne, id_profil, dh_maj, bl_supprime) values (434, 633, 18, '2020-09-17' , 1);
 --/--
 
 SELECT SETVAL('tg_habilitation_id_habilitation_seq',435);
@@ -2350,9 +3168,6 @@ INSERT INTO "tg_id_externes" ("id_type_ref_ext", "id_personne", "id_ident_ext", 
 ('4',	38,	19,	'ggf'),
 ('1',	54,	1,	'aaaaaaaaaaaaaaaa'),
 ('3',	54,	20,	'aa');
-
-
-SELECT SETVAL('tg_id_externes_id_ident_ext_seq',25);
 
 INSERT INTO "tg_mc_ces" ("id_mc_ces", "id_comite", "lb_mc_ces") VALUES
 (1,	1,	'Atmosphère'),
@@ -2393,342 +3208,6 @@ INSERT INTO "tg_mot_cle_cv" ("id_mc_cv", "id_personne", "lb_mc_fr", "lb_mc_en", 
 
 SELECT SETVAL('tg_mot_cle_cv_id_mc_cv_seq',50);
 
-INSERT INTO "tr_disc_erc" ("id_disc_erc", "id_cat_erc", "lb_disc_erc") VALUES
-(1,1,'LS01_01 - Macromolecular complexes including interactions involving nucleic acids, proteins, lipids and carbohydrates'),
-(2,1,'LS01_02 - Biochemistry'),
-(3,1,'LS01_03 - DNA synthesis, modification, repair, recombination, degradation'),
-(4,1,'LS01_04 - RNA synthesis, processing, modification, degradation'),
-(5,1,'LS01_05 - Protein synthesis, modification, turnover'),
-(6,1,'LS01_06 - Lipid biology'),
-(7,1,'LS01_07 - Glycobiology'),
-(8,1,'LS01_08 - Molecular biophysics (e.g. single-molecule approaches, bioenergetics, fluorescence)'),
-(9,1,'LS01_09 - Structural biology and its methodologies (e.g. crystallography, cryo-EM, NMR and new technologies)'),
-(10,1,'LS01_10 - Molecular mechanisms of signalling pathways'),
-(11,1,'LS01_11 - Fundamental aspects of synthetic biology and chemical biology'),
-(12,2,'LS02_01 - Molecular genetics, reverse genetics, forward genetics, genome editing'),
-(13,2,'LS02_02 - Non-coding RNAs'),
-(14,2,'LS02_03 - Quantitative genetics'),
-(15,2,'LS02_04 - Genetic epidemiology'),
-(16,2,'LS02_05 - Epigenetics and gene regulation'),
-(17,2,'LS02_06 - Genomics (e.g. comparative genomics, functional genomics)'),
-(18,2,'LS02_07 - Metagenomics'),
-(19,2,'LS02_08 - Transcriptomics'),
-(20,2,'LS02_09 - Proteomics'),
-(21,2,'LS02_10 - Metabolomics'),
-(22,2,'LS02_11 - Glycomics/Lipidomics'),
-(23,2,'LS02_12 - Bioinformatics'),
-(24,2,'LS02_13 - Computational biology'),
-(25,2,'LS02_14 - Biostatistics'),
-(26,2,'LS02_15 - Systems biology'),
-(27,3,'LS03_01 - Morphology and functional imaging of cells and tissues'),
-(28,3,'LS03_02 - Cytoskeleton and cell behaviour (e.g. control of cell shape, cell migration and cellular mechanosensing)'),
-(29,3,'LS03_03 - Organelle biology and trafficking'),
-(30,3,'LS03_04 - Cell junctions, cell adhesion, cell communication and the extracellular matrix'),
-(31,3,'LS03_05 - Cell signalling and signal transduction'),
-(32,3,'LS03_06 - Cell cycle, division and growth'),
-(33,3,'LS03_07 - Cell death (including senescence) and autophagy'),
-(34,3,'LS03_08 - Cell differentiation, physiology and dynamics'),
-(35,3,'LS03_09 - Developmental genetics in animals and plants'),
-(36,3,'LS03_10 - Embryology and pattern formation in animals and plants'),
-(37,3,'LS03_11 - Tissue organisation and morphogenesis in animals and plants (including biophysical approaches)'),
-(38,3,'LS03_12 - Stem cell biology in development, tissue regeneration and ageing, and fundamental aspects of stem cell-based therapies'),
-(39,4,'LS04_01 - Organ physiology and pathophysiology'),
-(40,4,'LS04_02 - Comparative physiology and pathophysiology'),
-(41,4,'LS04_03 - Molecular aspects of endocrinology'),
-(42,4,'LS04_04 - Fundamental mechanisms underlying ageing'),
-(43,4,'LS04_05 - Metabolism, biological basis of metabolism-related disorders'),
-(44,4,'LS04_06 - Fundamental mechanisms underlying cancer'),
-(45,4,'LS04_07 - Fundamental mechanisms underlying cardiovascular diseases'),
-(46,4,'LS04_08 - Non-communicable diseases (except for neural/psychiatric and immunity-related diseases)'),
-(47,5,'LS05_01 - Neural cell function, communication and signalling, neurotransmission in neuronal and/or glial cells'),
-(48,5,'LS05_02 - Systems neuroscience and computational neuroscience (e.g. neural networks, neural modelling)'),
-(49,5,'LS05_03 - Neuronal development, plasticity and regeneration'),
-(50,5,'LS05_04 - Sensation and perception (e.g. sensory systems, sensory processing, pain)'),
-(51,5,'LS05_05 - Neural bases of cognitive processes (e.g. memory, learning, attention)'),
-(52,5,'LS05_06 - Neural bases of behaviour (e.g. sleep, consciousness, addiction)'),
-(53,5,'LS05_07 - Neurological disorders (e.g. neurodegenerative diseases, seizures)'),
-(54,5,'LS05_08 - Psychiatric disorders (e.g. affective and anxiety disorders, autism, psychotic disorders)'),
-(55,5,'LS05_09 - Neurotrauma and neurovascular conditions (including injury, blood-brain barrier, stroke, neurorehabilitation)'),
-(56,6,'LS06_01 - Innate immunity in animals and plants'),
-(57,6,'LS06_02 - Adaptive immunity'),
-(58,6,'LS06_03 - Regulation and effector functions of the immune response (e.g. cytokines, interferons and chemokines, inflammation, immune signalling, helper T cells, immunological memory, immunological tolerance, cell-mediated cytotoxicity, complement)'),
-(59,6,'LS06_04 - Immunological mechanisms in disease (e.g. autoimmunity, allergy, transplantation immunology, tumour immunology)'),
-(60,6,'LS06_05 - Biology of pathogens (e.g. bacteria, viruses, parasites, fungi)'),
-(61,6,'LS06_06 - Mechanisms of infection (e.g. transmission, virulence factors, host defences, immunity to pathogens, molecular pathogenesis)'),
-(62,6,'LS06_07 - Biological basis of prevention and treatment of infection (e.g. infection natural cycle, reservoirs, vectors, vaccines, antimicrobials)'),
-(63,6,'LS06_08 - Infectious diseases in animals and plants'),
-(64,7,'LS07_01 - Imaging for medical diagnosis'),
-(65,7,'LS07_02 - Genetic tools for medical diagnosis'),
-(66,7,'LS07_03 - Other medical technologies for diagnosis and monitoring of diseases'),
-(67,7,'LS07_04 - Pharmacology and pharmacogenomics (including drug discovery and design, drug delivery and therapy, toxicology)'),
-(68,7,'LS07_05 - Applied gene and cell therapies, regenerative medicine'),
-(69,7,'LS07_06 - Radiation therapy'),
-(70,7,'LS07_07 - Analgesia and surgery'),
-(71,7,'LS07_08 - Epidemiology and public health'),
-(72,7,'LS07_09 - Environmental health, occupational medicine'),
-(73,7,'LS07_10 - Health services, health care research, medical ethics'),
-(74,8,'LS08_01 - Ecosystem and community ecology, macroecology'),
-(75,8,'LS08_02 - Biodiversity, conservation biology, conservation genetics'),
-(76,8,'LS08_03 - Population biology, population dynamics, population genetics'),
-(77,8,'LS08_04 - Evolutionary ecology'),
-(78,8,'LS08_05 - Evolutionary genetics'),
-(79,8,'LS08_06 - Phylogenetics, systematics, comparative biology'),
-(80,8,'LS08_07 - Macroevolution, paleobiology'),
-(81,8,'LS08_08 - Coevolution, biological mechanisms and ecology of species interactions (e.g. symbiosis, parasitism, mutualism, food-webs)'),
-(82,8,'LS08_09 - Behavioural ecology and evolution'),
-(83,8,'LS08_10 - Microbial ecology and evolution'),
-(84,8,'LS08_11 - Marine biology and ecology'),
-(85,9,'LS09_01 - Applied biotechnology (including transgenic organisms, applied genetics and genomics, biosensors, bioreactors, microbiology, bioactive compounds)'),
-(86,9,'LS09_02 - Applied bioengineering, synthetic biology, chemical biology, nanobiotechnology, metabolic engineering, protein and glyco-engineering, tissue engineering, biocatalysis, biomimetics'),
-(87,9,'LS09_03 - Applied animal sciences (including animal breeding, veterinary sciences, animal husbandry, animal welfare, aquaculture, fisheries, insect gene drive)'),
-(88,9,'LS09_04 - Applied plant sciences (including crop production, plant breeding, agroecology, forestry, soil biology)'),
-(89,9,'LS09_05 - Food sciences (including food technology, food safety, nutrition)'),
-(90,9,'LS09_06 - Biomass production and utilisation, biofuels'),
-(91,9,'LS09_07 - Environmental biotechnology (including bioindicators, bioremediation, biodegradation)'),
-(92,9,'LS09_08 - Biohazards (including biological containment, biosafety, biosecurity)'),
-(93,9,'LS09_09 - Marine biotechnology (including marine bioproducts, feed resources, genome mining)'),
-(94,10,'PE01_01 - Logic and foundations'),
-(95,10,'PE01_02 - Algebra'),
-(96,10,'PE01_03 - Number theory'),
-(97,10,'PE01_04 - Algebraic and complex geometry'),
-(98,10,'PE01_05 - Lie groups, Lie algebras'),
-(99,10,'PE01_06 - Geometry and Global Analysis'),
-(100,10,'PE01_07 - Topology'),
-(101,10,'PE01_08 - Analysis'),
-(102,10,'PE01_09 - Operator algebras and functional analysis'),
-(103,10,'PE01_10 - ODE and dynamical systems'),
-(104,10,'PE01_11 - Theoretical aspects of partial differential equations'),
-(105,10,'PE01_12 - Mathematical physics'),
-(106,10,'PE01_13 - Probability'),
-(107,10,'PE01_14 - Statistics'),
-(108,10,'PE01_15 - Discrete mathematics and combinatorics'),
-(109,10,'PE01_16 - Mathematical aspects of computer science'),
-(110,10,'PE01_17 - Numerical analysis'),
-(111,10,'PE01_18 - Scientific computing and data processing'),
-(112,10,'PE01_19 - Control theory and optimisation'),
-(113,10,'PE01_20 - Application of mathematics in sciences'),
-(114,10,'PE01_21 - Application of mathematics in industry and society'),
-(115,11,'PE02_01 - Fundamental interactions and fields'),
-(116,11,'PE02_02 - Particle physics'),
-(117,11,'PE02_03 - Nuclear physics'),
-(118,11,'PE02_04 - Nuclear astrophysics'),
-(119,11,'PE02_05 - Gas and plasma physics'),
-(120,11,'PE02_06 - Electromagnetism'),
-(121,11,'PE02_07 - Atomic, molecular physics'),
-(122,11,'PE02_08 - Ultra-cold atoms and molecules'),
-(123,11,'PE02_09 - Optics, non-linear optics and nano-optics'),
-(124,11,'PE02_10 - Quantum optics and quantum information'),
-(125,11,'PE02_11 - Lasers, ultra-short lasers and laser physics'),
-(126,11,'PE02_12 - Relativity'),
-(127,11,'PE02_13 - Thermodynamics'),
-(128,11,'PE02_14 - Non-linear physics'),
-(129,11,'PE02_15 - Metrology and measurement'),
-(130,11,'PE02_16 - Statistical physics (gases)'),
-(131,12,'PE03_01 - Structure of solids, material growth and characterisation'),
-(132,12,'PE03_02 - Mechanical and acoustical properties of condensed matter, Lattice dynamics'),
-(133,12,'PE03_03 - Transport properties of condensed matter'),
-(134,12,'PE03_04 - Electronic properties of materials, surfaces, interfaces, nanostructures, etc.'),
-(135,12,'PE03_05 - Physical properties of semiconductors and insulators'),
-(136,12,'PE03_06 - Macroscopic quantum phenomena: superconductivity, superfluidity, etc.'),
-(137,12,'PE03_07 - Spintronics'),
-(138,12,'PE03_08 - Magnetism and strongly correlated systems'),
-(139,12,'PE03_09 - Condensed matter - beam interactions (photons, electrons, etc.)'),
-(140,12,'PE03_10 - Nanophysics: nanoelectronics, nanophotonics, nanomagnetism, nanoelectromechanics, etc.'),
-(141,12,'PE03_11 - Mesoscopic physics'),
-(142,12,'PE03_12 - Molecular electronics'),
-(143,12,'PE03_13 - Structure and dynamics of disordered systems: soft matter (gels, colloids, liquid crystals, etc.), liquids, glasses, defects, etc.'),
-(144,12,'PE03_14 - Fluid dynamics (physics)'),
-(145,12,'PE03_15 - Statistical physics: phase transitions, noise and fluctuations, models of complex systems, etc.'),
-(146,12,'PE03_16 - Physics of biological systems'),
-(147,13,'PE04_01 - Physical chemistry'),
-(148,13,'PE04_02 - Spectroscopic and spectrometric techniques'),
-(149,13,'PE04_03 - Molecular architecture and Structure'),
-(150,13,'PE04_04 - Surface science and nanostructures'),
-(151,13,'PE04_05 - Analytical chemistry'),
-(152,13,'PE04_06 - Chemical physics'),
-(153,13,'PE04_07 - Chemical instrumentation'),
-(154,13,'PE04_08 - Electrochemistry, electrodialysis, microfluidics, sensors'),
-(155,13,'PE04_09 - Method development in chemistry'),
-(156,13,'PE04_10 - Heterogeneous catalysis'),
-(157,13,'PE04_11 - Physical chemistry of biological systems'),
-(158,13,'PE04_12 - Chemical reactions: mechanisms, dynamics, kinetics and catalytic reactions'),
-(159,13,'PE04_13 - Theoretical and computational chemistry'),
-(160,13,'PE04_14 - Radiation and Nuclear chemistry'),
-(161,13,'PE04_15 - Photochemistry'),
-(162,13,'PE04_16 - Corrosion'),
-(163,13,'PE04_17 - Characterisation methods of materials'),
-(164,13,'PE04_18 - Environment chemistry'),
-(165,14,'PE05_01 - Structural properties of materials'),
-(166,14,'PE05_02 - Solid state materials'),
-(167,14,'PE05_03 - Surface modification'),
-(168,14,'PE05_04 - Thin films'),
-(169,14,'PE05_05 - Ionic liquids'),
-(170,14,'PE05_06 - New materials: oxides, alloys, composite, organic-inorganic hybrid, nanoparticles'),
-(171,14,'PE05_07 - Biomaterials, biomaterials synthesis'),
-(172,14,'PE05_08 - Intelligent materials - self assembled materials'),
-(173,14,'PE05_09 - Coordination chemistry'),
-(174,14,'PE05_10 - Colloid chemistry'),
-(175,14,'PE05_11 - Biological chemistry'),
-(176,14,'PE05_12 - Chemistry of condensed matter'),
-(177,14,'PE05_13 - Homogeneous catalysis'),
-(178,14,'PE05_14 - Macromolecular chemistry'),
-(179,14,'PE05_15 - Polymer chemistry'),
-(180,14,'PE05_16 - Supramolecular chemistry'),
-(181,14,'PE05_17 - Organic chemistry'),
-(182,14,'PE05_18 - Medicinal chemistry'),
-(183,15,'PE06_01 - Computer architecture, pervasive computing, ubiquitous computing'),
-(184,15,'PE06_02 - Computer systems, parallel/distributed systems, sensor networks, embedded systems, cyber-physical systems'),
-(185,15,'PE06_03 - Software engineering, operating systems, computer languages'),
-(186,15,'PE06_04 - Theoretical computer science, formal methods, and quantum computing'),
-(187,15,'PE06_05 - Cryptology, security, privacy, quantum cryptography'),
-(188,15,'PE06_06 - Algorithms, distributed, parallel and network algorithms, algorithmic game theory'),
-(189,15,'PE06_07 - Artificial intelligence, intelligent systems, multi agent systems'),
-(190,15,'PE06_08 - Computer graphics, computer vision, multi media, computer games'),
-(191,15,'PE06_09 - Human computer interaction and interface, visualisation and natural language processing'),
-(192,15,'PE06_10 - Web and information systems, database systems, information retrieval and digital libraries, data fusion'),
-(193,15,'PE06_11 - Machine learning, statistical data processing and applications using signal processing (e.g. speech, image, video)'),
-(194,15,'PE06_12 - Scientific computing, simulation and modelling tools'),
-(195,15,'PE06_13 - Bioinformatics, biocomputing, and DNA and molecular computation'),
-(196,16,'PE07_01 - Control engineering'),
-(197,16,'PE07_02 - Electrical engineering: power components and/or systems'),
-(198,16,'PE07_03 - Simulation engineering and modelling'),
-(199,16,'PE07_04 - (Micro- and nano-) systems engineering'),
-(200,16,'PE07_05 - (Micro- and nano-) electronic, optoelectronic and photonic components'),
-(201,16,'PE07_06 - Communication technology, high-frequency technology'),
-(202,16,'PE07_07 - Signal processing'),
-(203,16,'PE07_08 - Networks (communication networks, sensor networks, networks of robots, etc.)'),
-(204,16,'PE07_09 - Man-machine interfaces'),
-(205,16,'PE07_10 - Robotics'),
-(206,16,'PE07_11 - Components and systems for applications (in e.g. medicine, biology, environment)'),
-(207,16,'PE07_12 - Electrical energy production, distribution, application'),
-(208,17,'PE08_01 - Aerospace engineering'),
-(209,17,'PE08_02 - Chemical engineering, technical chemistry'),
-(210,17,'PE08_03 - Civil engineering, architecture, maritime/hydraulic engineering, geotechnics, waste treatment'),
-(211,17,'PE08_04 - Computational engineering'),
-(212,17,'PE08_05 - Fluid mechanics, hydraulic-, turbo-, and piston- engines'),
-(213,17,'PE08_06 - Energy processes engineering'),
-(214,17,'PE08_07 - Mechanical and manufacturing engineering (shaping, mounting, joining, separation)'),
-(215,17,'PE08_08 - Materials engineering (biomaterials, metals, ceramics, polymers, composites, etc.)'),
-(216,17,'PE08_09 - Production technology, process engineering'),
-(217,17,'PE08_10 - Industrial design (product design, ergonomics, man-machine interfaces, etc.)'),
-(218,17,'PE08_11 - Sustainable design (for recycling, for environment, eco-design)'),
-(219,17,'PE08_12 - Lightweight construction, textile technology'),
-(220,17,'PE08_13 - Industrial bioengineering'),
-(221,18,'PE09_01 - Solar and interplanetary physics'),
-(222,18,'PE09_02 - Planetary systems sciences'),
-(223,18,'PE09_03 - Interstellar medium'),
-(224,18,'PE09_04 - Formation of stars and planets'),
-(225,18,'PE09_05 - Astrobiology'),
-(226,18,'PE09_06 - Stars and stellar systems'),
-(227,18,'PE09_07 - The Galaxy'),
-(228,18,'PE09_08 - Formation and evolution of galaxies'),
-(229,18,'PE09_09 - Clusters of galaxies and large scale structures'),
-(230,18,'PE09_10 - High energy and particles astronomy - X-rays, cosmic rays, gamma rays, neutrinos'),
-(231,18,'PE09_11 - Relativistic astrophysics'),
-(232,18,'PE09_12 - Dark matter, dark energy'),
-(233,18,'PE09_13 - Gravitational astronomy'),
-(234,18,'PE09_14 - Cosmology'),
-(235,18,'PE09_15 - Space Sciences'),
-(236,18,'PE09_16 - Very large data bases: archiving, handling and analysis'),
-(237,18,'PE09_17 - Instrumentation - telescopes, detectors and techniques'),
-(238,19,'PE10_01 - Atmospheric chemistry, atmospheric composition, air pollution'),
-(239,19,'PE10_02 - Meteorology, atmospheric physics and dynamics'),
-(240,19,'PE10_03 - Climatology and climate change'),
-(241,19,'PE10_04 - Terrestrial ecology, land cover change'),
-(242,19,'PE10_05 - Geology, tectonics, volcanology'),
-(243,19,'PE10_06 - Palaeoclimatology, palaeoecology'),
-(244,19,'PE10_07 - Physics of earth’s interior, seismology, volcanology'),
-(245,19,'PE10_08 - Oceanography (physical, chemical, biological, geological)'),
-(246,19,'PE10_09 - Biogeochemistry, biogeochemical cycles, environmental chemistry'),
-(247,19,'PE10_10 - Mineralogy, petrology, igneous petrology, metamorphic petrology'),
-(248,19,'PE10_11 - Geochemistry, crystal chemistry, isotope geochemistry, thermodynamics'),
-(249,19,'PE10_12 - Sedimentology, soil science, palaeontology, earth evolution'),
-(250,19,'PE10_13 - Physical geography'),
-(251,19,'PE10_14 - Earth observations from space/remote sensing'),
-(252,19,'PE10_15 - Geomagnetism, palaeomagnetism'),
-(253,19,'PE10_16 - Ozone, upper atmosphere, ionosphere'),
-(254,19,'PE10_17 - Hydrology, water and soil pollution'),
-(255,19,'PE10_18 - Cryosphere, dynamics of snow and ice cover, sea ice, permafrosts and ice sheets'),
-(256,20,'SH01_01 - Macroeconomics; monetary economics; economic growth'),
-(257,20,'SH01_02 - International management; international trade; international business; spatial economics'),
-(258,20,'SH01_03 - Development economics, health economics, education economics'),
-(259,20,'SH01_04 - Financial economics; banking; corporate finance; international finance; accounting; auditing; insurance'),
-(260,20,'SH01_05 - Labour and demographic economics; human resource management'),
-(261,20,'SH01_06 - Econometrics; operations research'),
-(262,20,'SH01_07 - Behavioural economics; experimental economics; neuro-economics'),
-(263,20,'SH01_08 - Microeconomics; game theory'),
-(264,20,'SH01_09 - Industrial organisation; strategy; entrepreneurship'),
-(265,20,'SH01_10 - Management; marketing; organisational behaviour; operations management'),
-(266,20,'SH01_11 - Technological change, innovation, research & development'),
-(267,20,'SH01_12 - Agricultural economics; energy economics; environmental economics'),
-(268,20,'SH01_13 - Public economics; political economics; law and economics'),
-(269,20,'SH01_14 - Competition law, contract law, trade law, Intellectual Property Rights'),
-(270,20,'SH01_15 - Quantitative economic history and history of economics; institutional economics; economic systems'),
-(271,21,'SH02_01 - Political systems, governance'),
-(272,21,'SH02_02 - Democratisation and social movements'),
-(273,21,'SH02_03 - Conflict resolution, war, peace building'),
-(274,21,'SH02_04 - Constitutions, human rights, comparative law, humanitarian law, anti-discrimination law'),
-(275,21,'SH02_05 - International relations, global and transnational governance'),
-(276,21,'SH02_06 - Sustainability sciences, environment and resources'),
-(277,21,'SH02_07 - Environmental and climate change, societal impact and policy'),
-(278,21,'SH02_08 - Energy, transportation and mobility'),
-(279,21,'SH02_09 - Urban, regional and rural studies'),
-(280,21,'SH02_10 - Land use and regional planning'),
-(281,21,'SH02_11 - Human, economic and social geography'),
-(282,21,'SH02_12 - GIS, spatial analysis; big data in political, geographical and legal studies'),
-(283,22,'SH03_01 - Social structure, social mobility'),
-(284,22,'SH03_02 - Inequalities, discrimination, prejudice, aggression and violence, antisocial behaviour'),
-(285,22,'SH03_03 - Social integration, exclusion, prosocial behaviour'),
-(286,22,'SH03_04 - Attitudes and beliefs'),
-(287,22,'SH03_05 - Social influence; power and group behaviour'),
-(288,22,'SH03_06 - Kinship; diversity and identities, gender, interethnic relations'),
-(289,22,'SH03_07 - Social policies, welfare'),
-(290,22,'SH03_08 - Population dynamics; households, family and fertility'),
-(291,22,'SH03_09 - Health, ageing and society'),
-(292,22,'SH03_10 - Religious studies, ritual; symbolic representation'),
-(293,22,'SH03_11 - Social aspects of learning, curriculum studies, educational policies'),
-(294,22,'SH03_12 - Communication and information, networks, media'),
-(295,22,'SH03_13 - Digital social research'),
-(296,22,'SH03_14 - Science and technology studies'),
-(297,23,'SH04_01 - Cognitive basis of human development and education, developmental disorders; comparative cognition'),
-(298,23,'SH04_02 - Personality and social cognition; emotion'),
-(299,23,'SH04_03 - Clinical and health psychology'),
-(300,23,'SH04_04 - Neuropsychology'),
-(301,23,'SH04_05 - Attention, perception, action, consciousness'),
-(302,23,'SH04_06 - Learning, memory; cognition in ageing'),
-(303,23,'SH04_07 - Reasoning, decision-making; intelligence'),
-(304,23,'SH04_08 - Language learning and processing (first and second languages)'),
-(305,23,'SH04_09 - Theoretical linguistics; computational linguistics'),
-(306,23,'SH04_10 - Language typology; historical linguistics'),
-(307,23,'SH04_11 - Pragmatics, sociolinguistics, linguistic anthropology, discourse analysis'),
-(308,23,'SH04_12 - Philosophy of mind, philosophy of language'),
-(309,23,'SH04_13 - Philosophy of science, epistemology, logic'),
-(310,24,'SH05_01 - Classics, ancient literature and art'),
-(311,24,'SH05_02 - Theory and history of literature, comparative literature'),
-(312,24,'SH05_03 - Philology and palaeography'),
-(313,24,'SH05_04 - Visual and performing arts, film, design'),
-(314,24,'SH05_05 - Music and musicology; history of music'),
-(315,24,'SH05_06 - History of art and architecture, arts-based research'),
-(316,24,'SH05_07 - Museums, exhibitions, conservation and restoration'),
-(317,24,'SH05_08 - Cultural studies, cultural identities and memories, cultural heritage'),
-(318,24,'SH05_09 - Metaphysics, philosophical anthropology; aesthetics'),
-(319,24,'SH05_10 - Ethics; social and political philosophy'),
-(320,24,'SH05_11 - History of philosophy'),
-(321,24,'SH05_12 - Computational modelling and digitisation in the cultural sphere'),
-(322,25,'SH06_01 - Historiography, theory and methods in history, including the analysis of digital data'),
-(323,25,'SH06_02 - Classical archaeology, history of archaeology'),
-(324,25,'SH06_03 - General archaeology, archaeometry, landscape archaeology'),
-(325,25,'SH06_04 - Prehistory, palaeoanthropology, palaeodemography, protohistory'),
-(326,25,'SH06_05 - Ancient history'),
-(327,25,'SH06_06 - Medieval history'),
-(328,25,'SH06_07 - Early modern history'),
-(329,25,'SH06_08 - Modern and contemporary history'),
-(330,25,'SH06_09 - Colonial and post-colonial history'),
-(331,25,'SH06_10 - Global history, transnational history, comparative history, entangled histories'),
-(332,25,'SH06_11 - Social and economic history'),
-(333,25,'SH06_12 - Gender history; cultural history; history of collective identities and memories'),
-(334,25,'SH06_13 - History of ideas, intellectual history, history of economic thought'),
-(335,25,'SH06_14 - History of science, medicine and technologies');
 
 INSERT INTO "tg_mot_cle_erc" ("id_mc_erc", "id_disc_erc", "lb_nom_fr") VALUES
 (1,	1,	'SH01_01 Political systems, governance'),
@@ -2737,131 +3216,8 @@ INSERT INTO "tg_mot_cle_erc" ("id_mc_erc", "id_disc_erc", "lb_nom_fr") VALUES
 (4,	4,	'SC07_01 TEST 5'),
 (5,	5,	'SC06_01 TEST 4'),
 (6,	6,	'SC04_01 TEST 2'),
-(7,	7,	'SC05_01 TEST 3'),
-(8,8,'SH01_01 Political systems, governance'),
-(9,9,'SH02_01 Democratisation and social movements'),
-(10,10,'SH01_01 Political systems, governance'),
-(11,11,'SH02_01 Democratisation and social movements'),
-(12,12,'SH01_01 Political systems, governance'),
-(13,13,'SH02_01 Democratisation and social movements'),
-(14,14,'SH01_01 Political systems, governance'),
-(15,15,'SH02_01 Democratisation and social movements'),
-(16,16,'SH01_01 Political systems, governance'),
-(17,17,'SH02_01 Democratisation and social movements'),
-(18,18,'SH01_01 Political systems, governance'),
-(19,19,'SH02_01 Democratisation and social movements'),
-(20,20,'SH01_01 Political systems, governance'),
-(21,21,'SH02_01 Democratisation and social movements'),
-(22,22,'SH01_01 Political systems, governance'),
-(23,23,'SH02_01 Democratisation and social movements'),
-(24,24,'SH01_01 Political systems, governance'),
-(25,25,'SH02_01 Democratisation and social movements'),
-(26,26,'SH01_01 Political systems, governance'),
-(27,27,'SH02_01 Democratisation and social movements'),
-(28,28,'SH01_01 Political systems, governance'),
-(29,29,'SH02_01 Democratisation and social movements'),
-(30,30,'SH01_01 Political systems, governance'),
-(31,31,'SH02_01 Democratisation and social movements'),
-(32,32,'SH01_01 Political systems, governance'),
-(33,33,'SH02_01 Democratisation and social movements'),
-(34,34,'SH01_01 Political systems, governance'),
-(35,35,'SH02_01 Democratisation and social movements'),
-(36,36,'SH01_01 Political systems, governance');
+(7,	7,	'SC05_01 TEST 3');
 
-
-INSERT INTO "tg_organisme" ("id_organisme", "id_compte", "id_adresse", "id_cv", "cd_rnsr", "lb_nom_fr", "siret", "sigle", "lb_service", "lb_laboratoire", "code_unite", "ville", "iban", "rib", "banque") VALUES
-(3,	NULL,	5,	NULL,	NULL,	'Centre de Recherche ESSEC Business School',	'196922775V',	'tet',	NULL,	NULL,	'0753639Y',	NULL,	'U05pejVFOVNjTUsybDhIcmM5WUQxeEhwSVd0NWRTbUVDRHBxdkl0SXRvYz0=',	'c3lrTWVIeVFON2lXZitnam14Rzl4bXI1dTM4U042K1R4azQrSjAraXBXMD0=',	'BP'),
-(4,	NULL,	6,	NULL,	'196917933G',	'Centre national de la recherche scientifique',	'18008901303720',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(5,	NULL,	7,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0951214D',	NULL,	NULL,	NULL,	''),
-(6,	NULL,	8,	NULL,	'196917933G',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(7,	NULL,	9,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0753639Y',	NULL,	NULL,	NULL,	''),
-(8,	NULL,	10,	NULL,	'196919311E',	'Centre national de la recherche scientifique',	'18008901303720',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	NULL,	NULL),
-(9,	NULL,	11,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0753639Y',	NULL,	NULL,	NULL,	''),
-(10,	NULL,	12,	NULL,	'196917933G',	'Centre national de la recherche scientifique',	'18008901303720',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(11,	NULL,	13,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0951214D',	NULL,	NULL,	NULL,	''),
-(12,	NULL,	14,	NULL,	'196917933G',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(13,	NULL,	15,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0753639Y',	NULL,	NULL,	NULL,	''),
-(14,	NULL,	16,	NULL,	'196919311E',	'Centre national de la recherche scientifique',	'18008901303720',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	NULL,	NULL),
-(15,	NULL,	17,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0951214D',	NULL,	NULL,	NULL,	''),
-(16,	NULL,	18,	NULL,	'196917933G',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(25,	NULL,	35,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	''),
-(26,	NULL,	36,	NULL,	'196917933G',	NULL,	'',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(28,	NULL,	38,	NULL,	NULL,	'TEST',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(29,	NULL,	NULL,	NULL,	NULL,	'tEST',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(30,	NULL,	39,	NULL,	NULL,	'sdee',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(31,	NULL,	NULL,	NULL,	NULL,	'efede',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(32,	NULL,	40,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	''),
-(33,	NULL,	41,	NULL,	'196922775V',	NULL,	'',	NULL,	NULL,	'CERESSEC',	NULL,	NULL,	NULL,	NULL,	NULL),
-(34,	NULL,	42,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0952199Z',	NULL,	NULL,	NULL,	''),
-(35,	NULL,	43,	NULL,	'196922775V',	'Université Paris-Seine',	'13002149600018',	NULL,	NULL,	'CERESSEC',	NULL,	NULL,	NULL,	NULL,	NULL),
-(37,	NULL,	45,	NULL,	NULL,	'INSTITUT DE RECHERCHE POUR LE DEVELOPPEMENT',	'18000602500159',	'IRD',	'TEST',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(38,	NULL,	46,	NULL,	NULL,	'test',	NULL,	NULL,	NULL,	'test',	NULL,	NULL,	NULL,	NULL,	NULL),
-(39,	NULL,	NULL,	NULL,	NULL,	'Organisme ',	NULL,	NULL,	NULL,	NULL,	NULL,	'Paris',	NULL,	NULL,	NULL),
-(40,	NULL,	47,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	''),
-(41,	NULL,	48,	NULL,	'196922775V',	'',	'',	NULL,	NULL,	'CERESSEC',	'',	NULL,	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	''),
-(42,	NULL,	49,	NULL,	NULL,	'',	'42980075800048',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(43,	NULL,	50,	NULL,	NULL,	'',	'1212',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(44,	NULL,	51,	NULL,	NULL,	'autinor',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(45,	NULL,	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(46,	NULL,	52,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0951793H',	NULL,	NULL,	NULL,	''),
-(47,	NULL,	53,	NULL,	'196917933G',	'Université Cergy Pontoise',	'19951793900013',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(50,	NULL,	56,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	''),
-(51,	NULL,	57,	NULL,	'196917933G',	'',	'',	NULL,	NULL,	'',	'',	NULL,	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	''),
-(49,	NULL,	55,	NULL,	'196917933G',	'',	'77566395800046',	NULL,	NULL,	'TBI',	'',	NULL,	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	''),
-(79,	NULL,	80,	NULL,	NULL,	'',	'385 365 713 00',	'',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(52,	NULL,	58,	NULL,	NULL,	'',	'42980075800048',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(53,	NULL,	59,	NULL,	NULL,	'',	'a',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(54,	NULL,	60,	NULL,	NULL,	'TEST',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(55,	NULL,	NULL,	NULL,	NULL,	'LAB TEST',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(56,	NULL,	61,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0951793H',	NULL,	NULL,	NULL,	''),
-(57,	NULL,	62,	NULL,	'196922775V',	'Université Cergy Pontoise',	'19951793900013',	NULL,	NULL,	'CERESSEC',	NULL,	NULL,	NULL,	NULL,	NULL),
-(48,	NULL,	54,	NULL,	NULL,	'',	'38347481400100',	'',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	''),
-(27,	NULL,	37,	NULL,	NULL,	'INSTITUT DE RECHERCHE POUR LE DEVELOPPEMENT',	'18000602500159',	'IRD',	NULL,	NULL,	NULL,	NULL,	'c3lrTWVIeVFON2lXZitnam14Rzl4cDJYZlFNTVpodTRkZXJKS0N1VGpGQT0=',	'c3lrTWVIeVFON2lXZitnam14Rzl4bXI1dTM4U042K1R4azQrSjAraXBXMD0=',	'BANQUE'),
-(58,	NULL,	63,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0755361V',	NULL,	NULL,	NULL,	''),
-(59,	NULL,	64,	NULL,	'196917933G',	'305',	'18007003901803',	NULL,	NULL,	'TBI',	'0755361V',	NULL,	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	''),
-(60,	NULL,	65,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0951214D',	NULL,	NULL,	NULL,	''),
-(61,	NULL,	66,	NULL,	'196922892X',	'253',	'77566395800046',	NULL,	NULL,	'Gamsau',	'0951214D',	NULL,	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	''),
-(62,	NULL,	67,	NULL,	NULL,	'DASSAULT AVIATION',	'71204245600061',	'DASSAULT AVIATION',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	''),
-(63,	NULL,	68,	NULL,	NULL,	'nom etbl. test',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(64,	NULL,	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(65,	NULL,	69,	NULL,	NULL,	'DASSAULT AVIATION',	'71204245600061',	'DASSAULT AVIATION',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	''),
-(66,	NULL,	70,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0952199Z',	NULL,	NULL,	NULL,	''),
-(67,	NULL,	71,	NULL,	'196917933G',	'Université Paris-Seine',	'13002149600018',	NULL,	NULL,	'TBI',	NULL,	NULL,	NULL,	NULL,	NULL),
-(68,	NULL,	72,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'0951214D',	NULL,	NULL,	NULL,	''),
-(69,	NULL,	73,	NULL,	'196922775V',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'CERESSEC',	NULL,	NULL,	NULL,	NULL,	NULL),
-(70,	NULL,	74,	NULL,	NULL,	'nom nom test',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(71,	NULL,	NULL,	NULL,	NULL,	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(74,	NULL,	77,	NULL,	NULL,	'Test 2',	NULL,	NULL,	NULL,	'LIB.',	NULL,	NULL,	NULL,	NULL,	NULL),
-(75,	NULL,	NULL,	NULL,	NULL,	'Organisme',	NULL,	NULL,	NULL,	NULL,	NULL,	'Paris',	NULL,	NULL,	NULL),
-(76,	NULL,	78,	NULL,	NULL,	'INSTITUTION NATIONALE DES INVALIDES',	'18000702300013',	'INI',	'EST',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(77,	NULL,	79,	NULL,	NULL,	'test etab',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(78,	NULL,	NULL,	NULL,	NULL,	'test lab',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(81,	NULL,	82,	NULL,	NULL,	'',	'47997345500047',	'',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(82,	NULL,	NULL,	NULL,	NULL,	'tret',	NULL,	NULL,	NULL,	NULL,	NULL,	'tre',	NULL,	NULL,	NULL),
-(83,	NULL,	83,	NULL,	'196917933G',	'Institut national de la recherche en agronomie',	'18007003901803',	NULL,	NULL,	'TBI',	'0755361V',	NULL,	NULL,	NULL,	NULL),
-(84,	NULL,	84,	NULL,	'196919311E',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'',	'0951214D',	NULL,	NULL,	NULL,	NULL),
-(85,	NULL,	85,	NULL,	NULL,	'INSTITUTION NATIONALE DES INVALIDES',	'18000702300013',	'INI',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(86,	NULL,	86,	NULL,	NULL,	'INSTITUT DE RECHERCHE POUR LE DEVELOPPEMENT',	'18000602500159',	'IRD',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(87,	NULL,	87,	NULL,	'196919311E',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'',	'0951214D',	NULL,	NULL,	NULL,	NULL),
-(88,	NULL,	88,	NULL,	NULL,	'INSTITUT DE RECHERCHE POUR LE DEVELOPPEMENT',	'18000602500159',	'IRD',	'test',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(89,	NULL,	89,	NULL,	'196917933G',	'Centre national de la recherche scientifique',	'18008901303720',	NULL,	NULL,	'TBI',	'0753639Y',	NULL,	NULL,	NULL,	NULL),
-(90,	NULL,	NULL,	NULL,	NULL,	'GFI',	NULL,	NULL,	NULL,	NULL,	NULL,	'France',	NULL,	NULL,	NULL),
-(92,	NULL,	91,	NULL,	NULL,	'Test Agency',	NULL,	NULL,	NULL,	'Labo',	NULL,	NULL,	NULL,	NULL,	NULL),
-(93,	NULL,	NULL,	NULL,	NULL,	'TEST ORG',	NULL,	NULL,	NULL,	NULL,	NULL,	'BELGIQ',	NULL,	NULL,	NULL),
-(94,	NULL,	92,	NULL,	NULL,	'zfdqs',	NULL,	NULL,	NULL,	'dty',	NULL,	NULL,	NULL,	NULL,	NULL),
-(95,	NULL,	93,	NULL,	'196922775V',	'Ministère de la culture',	'11004601800013',	NULL,	NULL,	'CERESSEC',	'',	NULL,	NULL,	NULL,	NULL),
-(91,	NULL,	90,	NULL,	NULL,	'',	'71204245600061',	'',	'Test Modif Service',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(72,	NULL,	75,	NULL,	'196917933G',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'TBI',	'0753639Y',	NULL,	NULL,	NULL,	NULL),
-(96,	NULL,	94,	NULL,	NULL,	'',	'18008901303720',	'',	'test',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(97,	NULL,	95,	NULL,	NULL,	'AIRBUS',	'38347481400100',	'AIRBUS',	'',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(98,	NULL,	96,	NULL,	NULL,	'AIRBUS',	'38347481400100',	'AIRBUS',	'test2',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(99,	NULL,	NULL,	NULL,	NULL,	'bla',	NULL,	NULL,	NULL,	NULL,	NULL,	'FRANCE',	NULL,	NULL,	NULL),
-(100,	NULL,	97,	NULL,	'196919311E',	'Université Paris-Seine',	'13002149600018',	NULL,	NULL,	'',	'0952199Z',	NULL,	NULL,	NULL,	NULL),
-(101,	NULL,	98,	NULL,	'196919311E',	'Université Paris-Seine',	'13002149600018',	NULL,	NULL,	'',	'0952199Z',	NULL,	NULL,	NULL,	NULL),
-(102,	NULL,	99,	NULL,	'196917933G',	'Ecole Supérieure des Sciences Economiques et Commerciales Cergy',	'77566395800046',	NULL,	NULL,	'TBI',	'0951214D',	NULL,	NULL,	NULL,	NULL),
-(36,	NULL,	44,	NULL,	'196917933G',	'Université Paris-Seine',	'13002149600018',	NULL,	NULL,	'TBI',	'0753639Y',	NULL,	NULL,	NULL,	NULL),
-(104,	NULL,	101,	NULL,	NULL,	'',	'',	'',	NULL,	NULL,	'',	NULL,	NULL,	NULL,	''),
-(105,	NULL,	102,	NULL,	'196917933G',	'Institut Pasteur',	'77568489700017',	NULL,	NULL,	'TBI',	'',	NULL,	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	'Vm42T0dnNE1BOUNvelVwK1BsSTlZQT09',	'');
 
 SELECT SETVAL('tg_organisme_id_organisme_seq',200);
 
@@ -2889,19 +3245,19 @@ INSERT INTO "tg_projet" ("id_projet", "id_cat_rd", "id_comite", "id_appel", "id_
 (50,	3,	1,	1,	3,	3,	54,	NULL,	'acro_1',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
 (51,	3,	1,	1,	3,	3,	54,	NULL,	'acro_2',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
 (52,	3,	1,	1,	3,	3,	54,	NULL,	'acro_3',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(53,	3,	1,	1,	3,	2,	54,	NULL,	'acro_4',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(54,	3,	1,	1,	3,	2,	54,	NULL,	'acro_5',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(55,	3,	1,	1,	3,	2,	114,	NULL,	'acro_6',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(56,	3,	1,	1,	3,	2,	114,	NULL,	'acro_7',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(57,	3,	1,	1,	3,	2,	114,	NULL,	'acro_8',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(58,	3,	1,	1,	3,	2,	114,	NULL,	'acro_9',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(59,	3,	1,	1,	3,	4, 121,	NULL,	'acro_10',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(60,	3,	1,	1,	3,	4, 121,	NULL,	'acro_11',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(61,	3,	1,	1,	3,	4, 121,	NULL,	'acro_12',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(62,	3,	1,	1,	3,	4, 121,	NULL,	'acro_13',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(63,	3,	1,	1,	3,	4, 121,	NULL,	'acro_14',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(64,	3,	1,	1,	3,	4,	150,	NULL,	'acro_15',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(65,	3,	1,	1,	3,	4,	150,	NULL,	'acro_16',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(53,	3,	1,	1,	3,	3,	54,	NULL,	'acro_4',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(54,	3,	1,	1,	3,	3,	54,	NULL,	'acro_5',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(55,	3,	1,	1,	3,	3,	114,	NULL,	'acro_6',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(56,	3,	1,	1,	3,	3,	114,	NULL,	'acro_7',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(57,	3,	1,	1,	3,	3,	114,	NULL,	'acro_8',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(58,	3,	1,	1,	3,	3,	114,	NULL,	'acro_9',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(59,	3,	1,	1,	3,	3, 121,	NULL,	'acro_10',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(60,	3,	1,	1,	3,	3, 121,	NULL,	'acro_11',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(61,	3,	1,	1,	3,	3, 121,	NULL,	'acro_12',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(62,	3,	1,	1,	3,	3, 121,	NULL,	'acro_13',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(63,	3,	1,	1,	3,	3, 121,	NULL,	'acro_14',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(64,	3,	1,	1,	3,	3,	150,	NULL,	'acro_15',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(65,	3,	1,	1,	3,	3,	150,	NULL,	'acro_16',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
 (66,	3,	1,	1,	3,	3,	150,	NULL,	'acro_17',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
 (67,	3,	1,	1,	3,	3,	150,	NULL,	'acro_18',	NULL,	'titre projet en',	30,	20000,	'f',	'f',	'f',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
 
@@ -2927,7 +3283,7 @@ INSERT INTO "tl_hab_projet" ("id_habilitation", "id_projet") VALUES
 (25,	66),
 (25,	67);
 
-INSERT INTO "tl_hab_projet" ("id_habilitation", "id_projet") VALUES
+ INSERT INTO "tl_hab_projet" ("id_habilitation", "id_projet") VALUES
 (300,50),
 (301,51),
 (302,52),
@@ -3030,7 +3386,7 @@ INSERT INTO "tl_hab_projet" ("id_habilitation", "id_projet") VALUES
 (399,60);
 
 
-INSERT INTO "tl_hab_projet" ("id_habilitation", "id_projet") VALUES
+ INSERT INTO "tl_hab_projet" ("id_habilitation", "id_projet") VALUES
 (400,50),
 (401,51),
 (402,52),
@@ -3066,6 +3422,9 @@ INSERT INTO "tl_hab_projet" ("id_habilitation", "id_projet") VALUES
 (433,64),
 (434,65);
 
+
+
+
 INSERT INTO "tg_mc_libre" ("id_mc_libre", "id_projet", "lb_nom", "lb_nom_en") VALUES
 (1,	1,	'"Lorem ipsum dolor sit amet, consectetur adipiscin',	'"Lorem ipsum dolor sit amet, consectetur adipiscin'),
 (2,	9,	'terme fr',	'terme en');
@@ -3078,9 +3437,10 @@ INSERT INTO "tg_affectation" ("id_affectation", "id_profil", "id_st_affect", "cd
 (47,	17,	2,	NULL,	3,	38,	NULL,	NULL,	NULL,	NULL,	'f',	'f',	NULL,	NULL),
 (48,	17,	2,	NULL,	10,	28,	NULL,	NULL,	NULL,	NULL,	'f',	'f',	NULL,	NULL),
 (49,	18,	1,	NULL,	10,	39,	NULL,	NULL,	NULL,	NULL,	'f',	'f',	NULL,	NULL),
-(50,	NULL,	1,	NULL,	10,	36,	NULL,	NULL,	NULL,	NULL,	'f',	'f',	NULL,	NULL),
+(50,	NULL,	4,	NULL,	10,	36,	NULL,	NULL,	NULL,	NULL,	'f',	'f',	NULL,	NULL),
 (51,	18,	1,	NULL,	7,	36,	NULL,	NULL,	NULL,	NULL,	'f',	'f',	NULL,	NULL),
 (52,	17,	2,	NULL,	1,	38,	NULL,	NULL,	NULL,	NULL,	'f',	'f',	NULL,	NULL);
+
 
 INSERT INTO public.tg_affectation (id_affectation, id_profil, id_st_affect, cd_sts_evaluation, id_projet, id_personne, cd_sollicitation, id_type, id_propose, lb_cause, bl_new_modif, bl_doc_telecharge, dh_echeance, txt_commentaire) VALUES
  (884, 18, 1, null, 1, 603, null, null, null, null, false, false, null, null),
@@ -3232,24 +3592,6 @@ INSERT INTO "tg_affectation" ("id_affectation", "id_profil", "id_st_affect", "cd
 
 SELECT SETVAL('tg_affectation_id_affectation_seq',1300);
 
-INSERT INTO "tg_coordination_proj" ("id_coordination", "id_organisme", "id_personne", "id_projet", "cd_pays") VALUES
-(2,	6,	NULL,	2,	'250'),
-(4,	30,	NULL,	2,	'380'),
-(5,	33,	NULL,	3,	'250'),
-(7,	44,	NULL,	9,	'10'),
-(15,	54,	121,	8,	'380'),
-(16,	57,	NULL,	8,	'250'),
-(3,	28,	72,	1,	'156'),
-(18,	12,	NULL,	1,	'250'),
-(19,	61,	NULL,	12,	'250'),
-(20,	63,	NULL,	9,	'8'),
-(22,	47,	NULL,	9,	'250'),
-(23,	67,	NULL,	15,	'250'),
-(24,	69,	NULL,	16,	'250'),
-(25,	70,	191,	16,	'12'),
-(26,	77,	121,	17,	'380'),
-(27,	105,	207,	18,	'250');
-
 SELECT SETVAL('tg_coordination_proj_id_coordination_seq',50);
 
 INSERT INTO "tg_non_souhaite" ("id_non_souhaite", "lb_nom_fr", "lb_prenom", "organisme", "lb_courriel", "lb_motif") VALUES
@@ -3323,7 +3665,6 @@ INSERT INTO "tg_partenariat" ("id_partenaire", "id_cout_prv", "laboratoire", "ty
 (33,	NULL,	NULL,	'ETR',	NULL,NULL,	NULL,	121,	NULL,	17,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
 (34,	NULL,	NULL,	'PUF',	216,NULL,	202,	207,	215,	18,	NULL,	NULL,	'Institut Pasteur Cayenne',	NULL,	NULL,	NULL,	NULL,	NULL);
 
-
 SELECT SETVAL('tg_partenariat_id_partenaire_seq',50);
 
 INSERT INTO "tg_participation" ("id_participation", "cd_etat_sollicitation", "id_phase_ref", "id_comite", "id_personne", "id_profil", "lb_groupe", "prio_grp", "bl_supprime", "quest_soum") VALUES
@@ -3376,7 +3717,9 @@ INSERT INTO public.tg_participation (id_participation, cd_etat_sollicitation, id
  (62, 3, 1, 1, 632, 9, null, 1, 1, true),
  (63, 3, 1, 1, 633, 9, null, 1, 1, true);
 
+
 SELECT SETVAL('tg_participation_id_participation_seq',65);
+
 
 INSERT INTO "tg_message" ("id_message", "destinataire", "emetteur", "id_comite", "id_participation", "dh_envoi", "texte") VALUES
 (1,	1,	6,	1,	NULL,	'2020-06-11 18:26:28',	'"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'),
@@ -3415,6 +3758,7 @@ INSERT INTO "tg_resume" ("id_projet", "id_langue", "lb_texte") VALUES
 (13,	2,	''),
 (18,	1,	'FR - Résumé test projet AMA01'),
 (18,	2,	'EN - Résumé test projet AMA01');
+
 
 INSERT INTO "tg_reunion" ("id_reunion", "id_type_reunion", "id_phase", "id_appel", "lb_titre", "tx_comment", "dt_deb_periode", "dt_fin_periode", "nb_duree_max", "bl_obligatoire", "bl_actif") VALUES
 (1,	1,	1,	1,	'Réunion',	'"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."',	'2020-06-15',	'2020-06-21',	3,	't',	1),
@@ -3482,14 +3826,6 @@ INSERT INTO "tg_document" ("id_doc", "id_type_doc", "id_projet", "id_langue", "i
 (16,	1,	18,	1,	1,	'TEST DOC PDF.pdf-5f5600f5172a8.pdf');
 
 SELECT SETVAL('tg_document_id_doc_seq',20);
-
-INSERT INTO "tg_poste" ("id_cv", "id_organisme", "id_fonction", "dt_debut", "dt_fin", "bl_anterieur") VALUES
-(2,	75,	2,	'2019-01-01',	'2020-01-01',	NULL),
-(1,	39,	1,	'1900-01-01',	'2020-01-01',	NULL),
-(3,	82,	1,	'1975-01-01',	'1975-01-01',	NULL),
-(4,	90,	1,	'2010-01-01',	'2014-01-01',	NULL),
-(4,	93,	2,	'2009-01-01',	'2012-01-01',	NULL),
-(4,	99,	1,	'2020-01-01',	'2020-01-01',	NULL);
 
 INSERT INTO "tl_avis_possibles" ("cd_avis", "id_comite", "pourcent_max", "pourcent_min") VALUES
 (5,	1,	100,	10),
@@ -3688,32 +4024,6 @@ INSERT INTO "tl_mc_erc_proj" ("id_projet", "id_mc_erc") VALUES
 (18,	1),
 (18,	6);
 
-INSERT INTO "tl_pers_org" ("id_personne", "id_organisme", "type_oraganisme") VALUES
-(54,	36,	'PUB'),
-(54,	37,	'PRV'),
-(54,	38,	'ETR'),
-(4,	72,	'PUB'),
-(4,	74,	'ETR'),
-(4,	76,	'PRV'),
-(12,	79,	'PRV'),
-(12,	81,	'PRV'),
-(11,	83,	'PUB'),
-(11,	84,	'PUB'),
-(54,	85,	'PRV'),
-(54,	86,	'PRV'),
-(11,	87,	'PUB'),
-(11,	88,	'PRV'),
-(38,	89,	'PUB'),
-(38,	91,	'PRV'),
-(38,	92,	'ETR'),
-(38,	94,	'ETR'),
-(38,	95,	'PUB'),
-(38,	96,	'PRV'),
-(38,	97,	'PRV'),
-(38,	98,	'PRV'),
-(54,	100,	'PUB'),
-(54,	101,	'PUB'),
-(54,	102,	'PUB');
 
 INSERT INTO "tl_pers_part" ("id_partenaire", "id_personne") VALUES
 (23,	121),
@@ -3760,78 +4070,6 @@ INSERT INTO "tl_proj_non_souhait" ("id_projet", "id_non_souhaite") VALUES
 (1,	1),
 (9,	2);
 
-INSERT INTO "tt_gestion_formulaire_phase" ("id", "id_appel", "id_phase", "id_formulaire", "table_name", "field", "role", "visibility", "permissions", "saved", "info_field") VALUES
-(29,	17,	1,	17,	'tg_projet',	'city_tut_g_prf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(30,	17,	1,	17,	'tg_projet',	'sigle_prf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(3,	17,	1,	17,	'tg_projet',	'lbTitreEn',	'ROLE_COORD_PROJ',	't',	'R',	't',	NULL),
-(31,	17,	1,	17,	'tg_projet',	'laboratoire_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(39,	17,	1,	17,	'tg_projet',	'phone_gest_admin_prf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(2,	17,	2,	17,	'tg_projet',	'lbAcro',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(4,	17,	2,	17,	'tg_projet',	'lbTitreEn',	'ROLE_COORD_PROJ',	't',	'R',	't',	NULL),
-(5,	17,	1,	17,	'tg_projet',	'lbTitreFr',	'ROLE_COORD_PROJ',	't',	'R',	't',	NULL),
-(6,	17,	2,	17,	'tg_projet',	'lbTitreFr',	'ROLE_COORD_PROJ',	't',	'R',	't',	NULL),
-(7,	17,	1,	17,	'tg_projet',	'mntAidePrev',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(8,	17,	2,	17,	'tg_projet',	'mntAidePrev',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(10,	17,	2,	17,	'tg_projet',	'noDuree',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(23,	17,	1,	17,	'tg_projet',	'sigle_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(1,	17,	1,	17,	'tg_projet',	'lbAcro',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(9,	17,	1,	17,	'tg_projet',	'noDuree',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(12,	17,	1,	17,	'tg_projet',	'adress_tut_heb_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(13,	17,	1,	17,	'tg_projet',	'compl_adress_tut_heb_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(14,	17,	1,	17,	'tg_projet',	'postal_code_tut_heb_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(15,	17,	1,	17,	'tg_projet',	'country_tut_hub_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(16,	17,	1,	17,	'tg_projet',	'city_tut_hub_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(24,	17,	1,	17,	'tg_projet',	'name_tut_gest_prf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(25,	17,	1,	17,	'tg_projet',	'adress_tut_gest_prf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(26,	17,	1,	17,	'tg_projet',	'compl_adress_tut_gest_prf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(27,	17,	1,	17,	'tg_projet',	'postal_code_tut_gest_prf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(28,	17,	1,	17,	'tg_projet',	'country_tut_g_prf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(44,	17,	1,	17,	'tg_projet',	'phone_gest_admin_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(52,	17,	1,	17,	'tg_projet',	'banque_tut_g_prf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(53,	17,	1,	17,	'tg_projet',	'rib_tut_g_prf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(54,	17,	1,	17,	'tg_projet',	'iban_tut_g_prf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(55,	17,	2,	17,	'tg_projet',	'banque_tut_g_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(35,	17,	1,	17,	'tg_projet',	'gender_gest_admin_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(36,	17,	1,	17,	'tg_projet',	'firstname_gest_admin_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(37,	17,	1,	17,	'tg_projet',	'lastname_gest_admin_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(38,	17,	1,	17,	'tg_projet',	'mail_gest_admin_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(45,	17,	1,	17,	'tg_projet',	'code_unite_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(58,	17,	1,	17,	'tg_projet',	'firstname_rep_juridique_prf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(49,	17,	2,	17,	'tg_projet',	'banque_tut_g_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(56,	17,	2,	17,	'tg_projet',	'rib_tut_g_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(57,	17,	2,	17,	'tg_projet',	'iban_tut_g_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(59,	17,	1,	17,	'tg_projet',	'lastname_rep_juridique_prf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(60,	17,	1,	17,	'tg_projet',	'function_rep_juridique_prf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(61,	17,	1,	17,	'tg_projet',	'firstname_rep_juridique_puf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(62,	17,	1,	17,	'tg_projet',	'lastname_rep_juridique_puf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(63,	17,	1,	17,	'tg_projet',	'function_rep_juridique_puf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(40,	17,	1,	17,	'tg_projet',	'siret_tut_gest_puf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(17,	17,	1,	17,	'tg_projet',	'name_tut_gest_puf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(41,	17,	2,	17,	'tg_projet',	'firstname_rep_juridique_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(42,	17,	2,	17,	'tg_projet',	'lastname_rep_juridique_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(46,	17,	1,	17,	'tg_projet',	'banque_tut_g_puf',	'ROLE_COORD_PROJ',	'f',	'R',	'f',	NULL),
-(43,	17,	2,	17,	'tg_projet',	'function_rep_juridique_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(32,	17,	2,	17,	'tg_projet',	'firstname_rep_juridique_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(33,	17,	2,	17,	'tg_projet',	'lastname_rep_juridique_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(34,	17,	2,	17,	'tg_projet',	'function_rep_juridique_prf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(18,	17,	1,	17,	'tg_projet',	'adress_tut_gest_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(19,	17,	1,	17,	'tg_projet',	'compl_adress_tut_gest_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(20,	17,	1,	17,	'tg_projet',	'postal_code_tut_gest_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(21,	17,	1,	17,	'tg_projet',	'country_tut_g_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(22,	17,	1,	17,	'tg_projet',	'city_tut_g_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(64,	17,	2,	17,	'tg_projet',	'siret_tut_gest_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(65,	17,	2,	17,	'tg_projet',	'name_tut_gest_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(66,	17,	2,	17,	'tg_projet',	'adress_tut_gest_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(67,	17,	2,	17,	'tg_projet',	'compl_adress_tut_gest_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(68,	17,	2,	17,	'tg_projet',	'postal_code_tut_gest_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(69,	17,	2,	17,	'tg_projet',	'country_tut_g_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(70,	17,	2,	17,	'tg_projet',	'city_tut_g_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(11,	17,	1,	17,	'tg_projet',	'siret_tut_heb_puf',	'ROLE_COORD_PROJ',	't',	'L',	'f',	NULL),
-(50,	17,	2,	17,	'tg_projet',	'rib_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(51,	17,	2,	17,	'tg_projet',	'iban_puf',	'ROLE_COORD_PROJ',	't',	'R',	'f',	NULL),
-(48,	17,	1,	17,	'tg_projet',	'iban_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL),
-(47,	17,	1,	17,	'tg_projet',	'rib_puf',	'ROLE_COORD_PROJ',	'f',	'L',	'f',	NULL);
-
 UPDATE  "tg_appel_proj"  SET "niveau_en_cours" = 16  where  "id_appel" =  3;
 UPDATE  "tg_appel_proj"  SET "niveau_en_cours" =  7  where  "id_appel" =  2;
 UPDATE  "tg_appel_proj"  SET "niveau_en_cours" = 1  where  "id_appel" =  1;
@@ -3840,7 +4078,254 @@ UPDATE "tg_personne" SET  "id_cv" = 4 WHERE id_personne = 38;
 UPDATE "tg_personne" SET  "id_cv" = 1 WHERE id_personne = 54;
 UPDATE "tg_personne" SET  "id_cv" = 2 WHERE id_personne = 4;
 
+INSERT INTO "tr_sts_sollicitation"(cd_sollicitation, lb_description, action_sollicitation)
+	VALUES ('SSR', 'Sans réponses', 'Sollicité sans réponses après relances');
+
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (3, NULL, 'ACC', '99FF99', 5, 3);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (4, NULL, 'SOL', 'FFFF99', 2, 4);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (5, NULL, 'PRO', 'FFFFFF', 1, 5);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (6, NULL, 'SSR', 'FFCC99', 3, 6);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (7, NULL, 'RET', 'FFCC99', 4, 7);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (8, NULL, 'REF', 'FF9999', 4, 8);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (9, NULL, 'ENC', 'FF9999', 4, 9);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (1, 'SOM', NULL, '99CCFF', 7, 1);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (2, 'ENC', NULL, 'CCFFFF', 6, 2);
+INSERT INTO "tl_sts_evaluation" (id_sts_evaluation, cd_sts_evaluation, cd_sollicitation, color_hexa, ordre, ordre_affichage) VALUES (10, 'AFR', NULL, 'FFFFFF', 1, NULL);
+
+INSERT INTO "tr_criticite"(id_criticite, code_criticite, couleur_criticite)
+    VALUES (1, 0, '#FFFFFF'), (2, 1, '#FF9999'), (3, 2, '#FFCC99'), (4, 3, '#FFFF99'), (5, 4, '#CCFFCC'), (6, 5, '#99FF99'), (7, 6, '#CCFFFF'), (8, 7, '#99CCFF');
+
+UPDATE "tg_comite" SET nb_min_eval_soum=2, nb_min_eval_accept=3, dh_rendu_eval_rl='30/10/2020';
+
+update "tg_affectation" set cd_sollicitation = 'PRO' where id_st_affect = 5 and id_affectation >= 1199 and id_affectation < 1221;
+update "tg_affectation" set cd_sollicitation = 'SOL' where id_st_affect = 5 and id_affectation >= 1221 and id_affectation < 1239;
+update "tg_affectation" set cd_sollicitation = 'SSR' where id_st_affect = 5 and id_affectation >= 1239 and id_affectation < 1251;
+update "tg_affectation" set cd_sollicitation = 'RET' where id_st_affect = 5 and id_affectation >= 1251 and id_affectation < 1258;
+update "tg_affectation" set cd_sollicitation = 'REF' where id_st_affect = 5 and id_affectation >= 1258 and id_affectation < 1263;
+update "tg_affectation" set cd_sollicitation = 'ENC' where id_st_affect = 5 and id_affectation >= 1263 and id_affectation < 1268;
+update "tg_affectation" set cd_sollicitation = 'ACC' where id_st_affect = 5 and id_affectation >= 1268;
+update "tg_affectation" set cd_sts_evaluation = 'AFR' where id_st_affect = 5;
+update "tg_affectation" set cd_sts_evaluation = 'ENC' where id_st_affect = 5 and cd_sollicitation = 'ACC' and id_affectation >= 1276 and id_affectation < 1289;
+update "tg_affectation" set cd_sts_evaluation = 'SOM' where id_st_affect = 5 and cd_sollicitation = 'ACC' and id_affectation >= 1289;
+
+INSERT INTO "tg_affectation"(id_affectation, id_profil, id_st_affect, cd_sts_evaluation, id_projet, id_personne, cd_sollicitation, id_propose)
+	VALUES (1299, 16, 5, 'SOM', 65, 592, 'ACC', 606),(1300, 16, 5, 'SOM', 65, 593, 'ACC', 607);
+
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 917;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 918;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 903;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 904;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 905;
+UPDATE public.tg_affectation SET cd_sts_evaluation='SOM', cd_sollicitation='ACC' WHERE id_affectation= 906;
+
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP1', lb_prenom='cpsp1'
+WHERE id_personne=11;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS5', lb_prenom='cpss5'
+WHERE id_personne=17;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS4', lb_prenom='cpss4'
+WHERE id_personne=18;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP6', lb_prenom='cpsp6'
+WHERE id_personne=20;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES4', lb_prenom='pres4'
+WHERE id_personne=21;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP1', lb_prenom='vp1'
+WHERE id_personne=22;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP2', lb_prenom='vp2'
+WHERE id_personne=23;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP3', lb_prenom='vp3'
+WHERE id_personne=24;
+UPDATE public.tg_personne
+SET lb_nom_usage='VP4', lb_prenom='vp4'
+WHERE id_personne=25;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS1', lb_prenom='cpss1'
+WHERE id_personne=14;
+UPDATE public.tg_personne
+SET lb_nom_usage='PILOTE2', lb_prenom='pilote2'
+WHERE id_personne=10;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP4', lb_prenom='cpsp4'
+WHERE id_personne=26;
+UPDATE public.tg_personne
+SET lb_nom_usage='PILOTE1', lb_prenom='pilote1'
+WHERE id_personne=6;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES2', lb_prenom='pres2'
+WHERE id_personne=2;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS3', lb_prenom='cpss3'
+WHERE id_personne=16;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES3', lb_prenom='pres3'
+WHERE id_personne=3;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP3', lb_prenom='CPSP3'
+WHERE id_personne=13;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP5', lb_prenom='cpsp5'
+WHERE id_personne=19;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSS2', lb_prenom='cpss2'
+WHERE id_personne=15;
+UPDATE public.tg_personne
+SET lb_nom_usage='PRES1', lb_prenom='pres1'
+WHERE id_personne=1;
+UPDATE public.tg_personne
+SET lb_nom_usage='CPSP2', lb_prenom='cpsp2'
+WHERE id_personne=12;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE3', lb_prenom='mbre3'
+WHERE id_personne=36;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE2', lb_prenom='mbre2'
+WHERE id_personne=39;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE1', lb_prenom='mbre1'
+WHERE id_personne=38;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE5', lb_prenom='mbre5'
+WHERE id_personne=29;
+UPDATE public.tg_personne
+SET lb_nom_usage='MBRE4', lb_prenom='mbre4'
+WHERE id_personne=28;
 
 
+UPDATE public.tg_affectation
+SET id_type=1
+WHERE id_st_affect=5;
 
+UPDATE public.tg_affectation
+SET id_type=2
+WHERE id_st_affect IN (1,2);
 
+UPDATE public.tg_niveau_phase SET dh_fin = '2020-10-29' WHERE id_type_niveu = 2 AND id_appel = 1;
+
+UPDATE public.tg_projet	SET id_langue = 38 WHERE id_projet >= 1 AND id_projet < 19;
+UPDATE public.tg_projet	SET id_langue = 48 WHERE id_projet >= 19 AND id_projet <= 67;
+
+UPDATE public.tg_appel_proj SET niveau_en_cours=2 WHERE id_appel=1;
+
+INSERT INTO tl_hab_projet VALUES (32, 10);
+INSERT INTO tl_hab_projet VALUES (39, 16);
+INSERT INTO tl_hab_projet VALUES (17, 3);
+INSERT INTO tl_hab_projet VALUES (33, 10);
+INSERT INTO tl_hab_projet VALUES (16, 10);
+INSERT INTO tl_hab_projet VALUES (32, 7);
+INSERT INTO tl_hab_projet VALUES (17, 1);
+INSERT INTO tl_hab_projet VALUES (33, 50);
+INSERT INTO tl_hab_projet VALUES (17, 51);
+INSERT INTO tl_hab_projet VALUES (33, 54);
+INSERT INTO tl_hab_projet VALUES (17, 55);
+INSERT INTO tl_hab_projet VALUES (32, 57);
+INSERT INTO tl_hab_projet VALUES (33, 61);
+INSERT INTO tl_hab_projet VALUES (32, 66);
+INSERT INTO tl_hab_projet VALUES (33, 59);
+
+INSERT INTO public.tl_hab_projet
+(id_habilitation, id_projet)
+VALUES(32, 12);
+
+INSERT INTO public.tg_affectation
+(id_affectation, id_profil, id_st_affect, cd_sts_evaluation, id_projet, id_personne, cd_sollicitation, id_type, id_propose, lb_cause, bl_new_modif, bl_doc_telecharge)
+VALUES(10000, 18, 1, NULL, 12, 36, NULL, 2, NULL, NULL, false, false);
+
+UPDATE public.tg_phase
+	SET dh_rendu_expertise='2020-11-30', dh_rendu_eval_rl='2020-11-30', dh_rendu_rapport='2020-11-30'
+	WHERE id_phase = 5;
+
+UPDATE public.tg_phase
+	SET dh_rendu_expertise='2020-12-30', dh_rendu_eval_rl='2020-12-30', dh_rendu_rapport='2020-12-30'
+	WHERE id_phase = 4;
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 323);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (5, 336);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 349);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (5, 363);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 377);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (5, 394);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 305);
+
+UPDATE public.ft_commande_app
+	SET id_personne=12
+	WHERE id_fr_command_app=4;
+
+UPDATE public.tg_affectation
+	SET bl_doc_telecharge=true
+	WHERE id_affectation=1204;
+
+UPDATE public.tg_affectation
+SET dh_rendu='2020-10-25'
+WHERE id_affectation=1248;
+
+UPDATE public.tg_affectation
+SET dh_rendu='2020-10-17'
+WHERE id_affectation=1262;
+
+INSERT INTO public.ft_commande_app(
+	id_fr_command_app, id_personne, cd_commande, id_projet, dh_commande, txt_commentaire)
+	VALUES (4, 523, null, 55, NOW(), 'Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu il est prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin, le Lorem ipsum ou Lipsum');
+
+UPDATE public.tr_langue
+	SET cd_langue='FR'
+	WHERE id_langue=48;
+
+INSERT INTO public.tg_resume(
+	id_projet, id_langue, lb_texte)
+	VALUES (55, 48, 'Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, 
+le texte définitif venant remplacer le faux-texte dès qu il est prêt ou que la mise en page est achevée.');
+
+INSERT INTO public.tl_mc_erc_proj(
+	id_projet, id_mc_erc)
+	VALUES (55, 4);
+
+UPDATE public.tg_personne
+	SET bl_recuse=true
+	WHERE id_personne in (505, 563, 577);
+
+INSERT INTO public.tr_rnsr(
+	cd_rnsr, id_adresse, lb_laboratoire)
+	VALUES ('TST', 78, 'Labo Test Recherche');
+
+INSERT INTO public.tg_organisme(
+	id_organisme, cd_rnsr, siret, cd_pays, lb_nom_fr, lb_service, ville, lb_laboratoire)
+	VALUES (1, 'TST', null, 250, 'Test Orga', 'Test Orga Service', 'Paris', 'Labo Test Recherche');
+
+INSERT INTO public.tl_pers_org(
+	id_personne, id_organisme, type_oraganisme, lb_service)
+	VALUES (505, 1, 'Orga', 'Test Service');
+
+INSERT INTO public.tl_pers_org(
+	id_personne, id_organisme, type_oraganisme, lb_service)
+	VALUES (563, 1, 'Orga', 'Test Service');
+
+INSERT INTO public.tl_pers_org(
+	id_personne, id_organisme, type_oraganisme, lb_service)
+	VALUES (577, 1, 'Orga', 'Test Service');

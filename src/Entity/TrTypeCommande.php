@@ -25,7 +25,7 @@ class TrTypeCommande
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_commande", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_commande", type="string", length=255, nullable=false)
      */
     private $lbCommande;
 

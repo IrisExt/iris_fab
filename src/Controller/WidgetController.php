@@ -371,4 +371,47 @@ class WidgetController extends BaseController
         return $appelHabPersonne;
     }
 
+    public function widgetSuiviExpertiseCpsP(){
+        return $this->widgetSuiviExpertise(6, true);
+    }
+
+    public function widgetSuiviExpertiseCpsS(){
+        return $this->widgetSuiviExpertise(7, true);
+    }
+
+    public function widgetSuiviExpertiseRespSc(){
+        return $this->widgetSuiviExpertise(12, true);
+    }
+
+    public function widgetSuiviExpertiseP(){
+        return $this->widgetSuiviExpertise(4, true, true);
+    }
+
+    public function widgetSuiviExpertiseVP(){
+        return $this->widgetSuiviExpertise(8, true, true);
+    }
+
+    public function widgetSuiviExpertiseM(){
+        return $this->widgetSuiviExpertise(9, false, true);
+    }
+
+    public function widgetSuiviExpertise(int $idProfil, $lienComite = true, $lienPortefeuille = false){
+        $comitesFinaux = [];
+        $habilitation = $this->habilitationsPersonne($this->profilEntity($idProfil));
+        $comites = $habilitation->getIdComite();
+        /** @var TgComite $comite */
+        foreach($comites as $comite) {
+            $niveauEnCours = $comite->getIdAppel()->getNiveauEnCours();
+            if ($niveauEnCours->getIdTypeNiveu()->getLbNom() !== 'Soumission') {
+                $comitesFinaux[] = $comite;
+            }
+        }
+
+        return $this->render('widgets/suivi_eval/suivi_expertise.html.twig',[
+            'comites' => $comitesFinaux,
+            'lienComite' => $lienComite,
+            'lienPortefeuille' => $lienPortefeuille,
+        ]);
+    }
+
 }

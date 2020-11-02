@@ -1,25 +1,45 @@
+{% block stylesheet %}
+<style>
+    #affichageRoleRow {
+        display: flex;
+    }
 
+    #affichageRole {
+        padding-left: 15px;
+    }
+
+    #breadcomeDiv {
+        margin-left: auto;
+    }
+
+    #breadcomeUl {
+        padding-top: 0 !important;
+        padding-right: 10px;
+    }
+</style>
+{% endblock %}
 <!-- Breadcome start-->
-<div class="breadcome-area mg-b-30 small-dn">
+<div class="breadcome-area mg-b-30">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
                 <div class="breadcome-list shadow-reset">
-                    <div class="row">
-                        <div class="col-lg-6">
+                    <div class="row" id="affichageRoleRow">
+                        <div id="affichageRole">
                             {% if (is_granted('ROLE_ANR') == true) and  (app.session.get('appel') != null ) %}
-                            <i class="text-justify"> Vous êtes sur :  {{ app.session.get('appel') }}
+                            <i class="text-justify"> Vous êtes sur : {{ app.session.get('appel') }}
 
-                                {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : app.session.get('appel')})) == 1 %} <!-- return true / false -->
-                                     Statut actuel :   <i class="text-primary">En cours</i>
+                                {% if render(controller('App\\Controller\\AccueilController:statutAppel', {'appel' : app.session.get('appel')})) == 1 %}
+                                <!-- return true / false -->
+                                Statut actuel : <i class="text-primary">En cours</i>
                                 {% else %}
-                                   Statut actuel : <i class="text-danger"> Clos </i>
+                                Statut actuel : <i class="text-danger"> Clos </i>
                                 {% endif %}
                             </i>
                             {% endif %}
                         </div>
-                        <div class="col-lg-6">
-                            <ul class="breadcome-menu">
+                        <div id="breadcomeDiv">
+                            <ul class="breadcome-menu" id="breadcomeUl">
                                 <li>
                                     <a href="{{ path('accueil') }}">Accueil</a>
                                     <span class="bread-slash">/</span>
@@ -34,3 +54,19 @@
         </div>
     </div>
 </div>
+{% if project is defined %}
+    <div id="mySidenav" class="sidenav">
+        <div class="row sidenav-head">
+            <div class="col-md-6">
+                <a href="#" class="closebtn">&times;</a>
+            </div>
+            <div class="col-md-6">
+                <h4 class="sidenav-head-title"></h4>
+            </div><hr>
+        </div>
+        <div class="row sidenav-content">
+            
+        </div>
+    </div>
+    <span id='open' class="chip" style="font-size:20px;cursor:pointer" data-id="{{ path('get_ajax_booklet') }}" data-idprojet="{{ project.idProjet }}">Booklet</span>
+{% endif %}

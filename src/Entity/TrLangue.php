@@ -27,9 +27,16 @@ class TrLangue
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_langue", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_nom_fr", type="string", length=50, nullable=true)
      */
     private $lbLangue;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lb_nom_en", type="string", length=50, nullable=true)
+     */
+    private $lbNomEn;
 
     /**
      * @var string
@@ -41,7 +48,7 @@ class TrLangue
     /**
      * @return string
      */
-    public function getCdLangue(): string
+    public function getCdLangue(): ?string
     {
         return $this->cdLangue;
     }
@@ -216,6 +223,22 @@ class TrLangue
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLbNomEn(): string
+    {
+        return $this->lbNomEn;
+    }
+
+    /**
+     * @param string $lbNomEn
+     */
+    public function setLbNomEn(string $lbNomEn): void
+    {
+        $this->lbNomEn = $lbNomEn;
     }
 
 }
