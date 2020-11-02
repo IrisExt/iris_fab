@@ -1,4 +1,4 @@
-
+{% trans_default_domain 'Evaluations' %}
 <div class="row">
   {{ include('evaluation/evaluation/modal/contact_personne.html.twig', {personne: tgPersonne}) }}
 </div></br></br>
@@ -8,36 +8,13 @@
     <h4 class="modal-title">Post-it </a></h4>
   </div>
   <div class="col-md-6">
-    <h4 class="modal-title"><a href="#" id="show_edit_comment" class="footer-text-right" type="button"
+    <h4 class="modal-title"><a href="#" id="show_edit_comment" class="footer-text-right" type="button"  data-toggle="modal" data-target="#evaluationModal"
                                                 data-id="{{ path('update_name') }}"><span class="adminpro-icon adminpro-edit"></span></a></h4>
   </div>
-  
 </div></br></br>
 <div class="row">
-  
-  
-  <div class="row add_comment">
-      
-      {#% if is_granted('ROLE_CPS') == true  onsubmit="return confirm('voulez vous supprimer ce comité ?');" %#}
-          <!-- block annulation comite >
-          <form method="post" action="#">
-                <input type="hidden" name="_token"-->
-              <div class="row">
-                <div class="col-md-12">
-                  <textarea id="add_comment" name="add_comment" rows="5" cols="100"></textarea>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-secondary cancel-comment">Fermer</button>
-                    <button type="submit" class="btn btn-warning send-comment" data-id="{{ path('set_ajax_comment') }}" data-idprojet="{{ project.idProjet }}" data-idpersonne="{{ tgPersonne.idPersonne }}">Soumettre</button>
-                </div>
-              </div>
-          <!--/form--><br>
-      {#% endif %#}
-  </div>
   <div class="row">
-      <div id="comments" class="col-md-12">
+      <div id="comments" class="col-md-10">
         {% for comment in personneComments %}
           <p>{{ comment.idPersonne.lbNomUsage ~ " " ~ comment.idPersonne.lbPrenom }}:</p>
           <p>{{ comment.dhCommande| date('d/m/Y') }} à {{ comment.dhCommande| date('H:i') }}</p>
@@ -50,15 +27,26 @@
 
 {% block javascripts %}
     <script>
-        $(document).on("click", "#show_edit_comment", function () {
-            $('.add_comment').css({'display': 'block'});
-            $('.cancel-comment').on("click", function () {
-              $('.add_comment').css({'display': 'none'});
-            });
-        });
+        $("#show_edit_comment").on("click", function () {
+
+          var bodyhtml =
+              "<div class='row add_comment'>"+
+                "<div class='row'>"+
+                  "<div class='col-md-12'>"+
+                    "<textarea id='add_comment' name='add_comment' rows='5' cols='70'></textarea>"+
+                  "</div>"+
+                "</div>"+
+                "<div class='row'>"+
+                  "<div class='col-md-12'>"+
+                      "<button type='submit' class='btn btn-warning send-comment' data-id={{ path('set_ajax_comment') }} data-idprojet='{{ project.idProjet }}' data-idpersonne='{{ tgPersonne.idPersonne }}'>Soumettre</button>"+
+                  "</div>"+
+                "</div><br>"+
+              "</div>";
+            $('#evaluationModal .modal-title').text('Ajouter un Commentaire');
+            $('#evaluationModal .modal-body').html(bodyhtml);
             // AJAX request
             $('.send-comment').on("click", function (event ) {
-              event.preventDefault();
+              $('#comments').html("<div id='loader'></div>");
               $.ajax({
                   url: $(this).data('id'),
                   type: 'POST',
@@ -66,8 +54,7 @@
                   success: function (response) {
                     if (response.success) {
                       $('textarea#add_comment').val('');
-                      $('.cancel-comment').trigger("click");
-                      $('#comments').html(' ');
+                      $('.close').trigger("click");
                       var html = '';
                       response.comments.forEach(function(comment) {
                           html += "<p>"+comment.lbNomUsage+' '+comment.lbPrenom+' :</p>'+
@@ -83,6 +70,7 @@
                   }
               });
             });
+        });
     </script>
 {% endblock %}
 

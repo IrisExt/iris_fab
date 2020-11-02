@@ -375,19 +375,19 @@ class TgProjet
      */
     private $lbAnnexePreproposition;
 
-//    /**
-//     * @var bool|null
-//     *
-//     * @ORM\Column(name="coord_francais", type="boolean", nullable=true)
-//     */
-//    private $coordFr;
-//
-//    /**
-//     * @var bool|null
-//     *
-//     * @ORM\Column(name="coord_etranger", type="boolean", nullable=true)
-//     */
-//    private $coordEtr;
+    //    /**
+    //     * @var bool|null
+    //     *
+    //     * @ORM\Column(name="coord_francais", type="boolean", nullable=true)
+    //     */
+    //    private $coordFr;
+    //
+    //    /**
+    //     * @var bool|null
+    //     *
+    //     * @ORM\Column(name="coord_etranger", type="boolean", nullable=true)
+    //     */
+    //    private $coordEtr;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -474,12 +474,22 @@ class TgProjet
      */
     private $typAdm;
 
-//    /**
-//     * @var \Doctrine\Common\Collections\Collection
-//     *
-//     * @ORM\ManyToMany(targetEntity="TrLangue", mappedBy="idProjet")
-//     */
-//    private $idLangue;
+    //    /**
+    //     * @var \Doctrine\Common\Collections\Collection
+    //     *
+    //     * @ORM\ManyToMany(targetEntity="TrLangue", mappedBy="idProjet")
+    //     */
+    //    private $idLangue;
+
+    /**
+     * @var \TrLangue
+     *
+     * @ORM\ManyToOne(targetEntity="TrLangue")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_langue", referencedColumnName="id_langue")
+     * })
+     */
+    private $idLangue;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -539,7 +549,7 @@ class TgProjet
         $this->idCoFi = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idInfRech = new \Doctrine\Common\Collections\ArrayCollection();
         $this->idMcCes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->idLangue = new \Doctrine\Common\Collections\ArrayCollection();
+        // $this->idLangue = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tgResume = new ArrayCollection();
         $this->tgDocument = new ArrayCollection();
         $this->avisProjet = new ArrayCollection();
@@ -1069,69 +1079,69 @@ class TgProjet
         $this->lbAnnexePreproposition = $lbAnnexePreproposition;
     }
 
-//    /**
-//     * @return bool|null
-//     */
-//    public function getCoordFr(): ?bool
-//    {
-//        return $this->coordFr;
-//    }
-//
-//    /**
-//     * @param bool|null $coordFr
-//     */
-//    public function setCoordFr(?bool $coordFr): void
-//    {
-//        $this->coordFr = $coordFr;
-//    }
-//
-//    /**
-//     * @return bool|null
-//     */
-//    public function getCoordEtr(): ?bool
-//    {
-//        return $this->coordEtr;
-//    }
-//
-//    /**
-//     * @param bool|null $coordEtr
-//     */
-//    public function setCoordEtr(?bool $coordEtr): void
-//    {
-//        $this->coordEtr = $coordEtr;
-//    }
+    //    /**
+    //     * @return bool|null
+    //     */
+    //    public function getCoordFr(): ?bool
+    //    {
+    //        return $this->coordFr;
+    //    }
+    //
+    //    /**
+    //     * @param bool|null $coordFr
+    //     */
+    //    public function setCoordFr(?bool $coordFr): void
+    //    {
+    //        $this->coordFr = $coordFr;
+    //    }
+    //
+    //    /**
+    //     * @return bool|null
+    //     */
+    //    public function getCoordEtr(): ?bool
+    //    {
+    //        return $this->coordEtr;
+    //    }
+    //
+    //    /**
+    //     * @param bool|null $coordEtr
+    //     */
+    //    public function setCoordEtr(?bool $coordEtr): void
+    //    {
+    //        $this->coordEtr = $coordEtr;
+    //    }
 
-//    /**
-//     * @return Collection|TrLangue[]
-//     */
-//    public function getIdLangue(): Collection
-//    {
-//        return $this->idLangue;
-//    }
-//
-//    public function addIdLangue(TrLangue $idLangue): self
-//    {
-//        if (!$this->idLangue->contains($idLangue)) {
-//            $this->idLangue[] = $idLangue;
-//            $idLangue->addIdProjet($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removeIdLangue(TrLangue $idLangue): self
-//    {
-//        if ($this->idLangue->contains($idLangue)) {
-//            $this->idLangue->removeElement($idLangue);
-//            $idLangue->removeIdProjet($this);
-//        }
-//
-//        return $this;
-//    }
+    //    /**
+    //     * @return Collection|TrLangue[]
+    //     */
+    //    public function getIdLangue(): Collection
+    //    {
+    //        return $this->idLangue;
+    //    }
+    //
+    //    public function addIdLangue(TrLangue $idLangue): self
+    //    {
+    //        if (!$this->idLangue->contains($idLangue)) {
+    //            $this->idLangue[] = $idLangue;
+    //            $idLangue->addIdProjet($this);
+    //        }
+    //
+    //        return $this;
+    //    }
+    //
+    //    public function removeIdLangue(TrLangue $idLangue): self
+    //    {
+    //        if ($this->idLangue->contains($idLangue)) {
+    //            $this->idLangue->removeElement($idLangue);
+    //            $idLangue->removeIdProjet($this);
+    //        }
+    //
+    //        return $this;
+    //    }
 
     public function __toString()
     {
-        return $this->getIdProjet().$this->getLbAcro().$this->getLbTitreFr();
+        return $this->getIdProjet() . $this->getLbAcro() . $this->getLbTitreFr();
     }
 
     public function serialize()
@@ -1143,9 +1153,9 @@ class TgProjet
 
     public function unserialize($serialized)
     {
-        list (
+        list(
             $this->lbPreproposition,
-            ) = unserialize($serialized);
+        ) = unserialize($serialized);
     }
 
     /**
@@ -1315,4 +1325,15 @@ class TgProjet
         return $this;
     }
 
+    public function getIdLangue(): ?TrLangue
+    {
+        return $this->idLangue;
+    }
+
+    public function setIdLangue(?TrLangue $idLangue): self
+    {
+        $this->idLangue = $idLangue;
+
+        return $this;
+    }
 }

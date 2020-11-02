@@ -7,14 +7,18 @@ use App\Entity\TgComite;
 use App\Entity\TgProjet;
 use App\Entity\TgPersonne;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Manager\ProjetManager;
 use App\Manager\AffectationManager;
 use App\Manager\TlStsEvaluationManager;
+use App\Manager\NiveauPhaseManager;
 use App\Manager\FtCommandeAppManager;
 use App\Manager\ComiteManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Helper\StringHelperTrait;
+use App\Manager\TgProjetManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Manager\UserManager;
 
 class EvaluationController extends BaseController
 {
@@ -27,13 +31,18 @@ class EvaluationController extends BaseController
      * @example /evaluations/1?role=expert Accés aux évaluations des experts
      * @example /evaluations/1?role=rl Accés aux évaluations des rapporteurs/lecteurs
      */
-    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite)
+    public function index(Request $request, AffectationManager $affectationManager, TlStsEvaluationManager $tlStsEvaluationManager, TgComite $tgComite, NiveauPhaseManager $niveauPhaseManager, TgProjetManager $tgProjetManager)
     {
-        $lstProjets = $affectationManager->getComiteProjets($tgComite);
+        $user = $this->getUserConnect();
+        if ($request->query->get('portefeuille', false)) {
+            $lstProjets = $tgProjetManager->getPortefeuilleRL($user->getIdPersonne(), $tgComite->getIdComite());
+        } else {
+            $lstProjets = $affectationManager->getComiteProjets($tgComite);
+        }
         $listeProjet = [];
         foreach ($lstProjets as $projet) {
             $projetWithCriticite = $affectationManager->setCriticiteToProject($projet);
-            if (!$affectationManager->utilisateurEstEnConflit($projet, $this->getUserConnect())) {
+            if (!$affectationManager->utilisateurEstEnConflit($projet, $user)) {
                 array_push($listeProjet, $projetWithCriticite);
             }
         }
@@ -41,9 +50,11 @@ class EvaluationController extends BaseController
         $statusEvaluations = $tlStsEvaluationManager->getAllStsEvaluations();
 
         return $this->render('evaluation/evaluation/index.html.twig', [
+            'comite' => $tgComite,
             'projets' => $listeProjet,
             'statusEvaluations' => $statusEvaluations,
-            'role' => $request->query->get('role')
+            'role' => $request->query->get('role'),
+            'dateFinPhaseEval' => $tgComite->getIdAppel()->getNiveauEnCours()->getDhFin()
         ]);
     }
 
@@ -85,9 +96,12 @@ class EvaluationController extends BaseController
      */
     public function setDateRendu(Request $request, AffectationManager $affectationManager)
     {
-        //$tgPersonne = $this->getEm()->getRepository(TgPersonne::class)->findOneBy(['idPersonne' => $request->request->get('idPersonne')]);
-        //$project = $affectationManager->getProject(55);
         $success = $affectationManager->setDateRendu($request->request->get('idPersonne'), $request->request->get('idAffectation'), $request->request->get('dhRendu'));
+        
+        $this->addFlash(
+            'success',
+            "La date a été bien modifiée."
+        );
 
         return new JsonResponse(['success' => $success]);
     }
@@ -136,5 +150,38 @@ class EvaluationController extends BaseController
     {
         $success = $comiteManager->updateDateComite($request->request->get('idComite'), $request->request->get('newDateComite'));
         return new JsonResponse(['success' => $success]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/get_ajax_booklet", name="get_ajax_booklet", methods={"GET","POST"})
+     */
+    public function getBooklet(Request $request, ProjetManager $projetManager)
+    {
+        $project = $projetManager->getProject($request->request->get('idProjet'));
+        $userhistory = $this->getUser()->getHistory();
+
+        return $this->render('evaluation/evaluation/modal/booklet.html.twig', [
+                'project'=> $project,
+                'userhistory' => $userhistory
+            ]
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/set_booklet_opened", name="set_booklet_opened", methods={"GET","POST"})
+     */
+    public function setBookletOpened(Request $request, UserManager $userManager)
+    {
+        $session = $request->getSession();
+        $collapse = $session->get('COLLAPSE');
+        $collapse['opened'] = $request->request->get('collapseid');
+        $session->set('COLLAPSE', $collapse);
+        $user = $this->getUser();
+        $user->setHistory(['booklet' => $collapse]);
+        $userManager->save($user);
+
+        return new JsonResponse(['collapse' => $collapse, 'user' => $this->getUser()]);
     }
 }

@@ -52,6 +52,27 @@ class TgPhase
     private $idHabilitation;
 
     /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dh_rendu_expertise", type="date", nullable=true)
+     */
+    private $dhRenduExpertise;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dh_rendu_eval_rl", type="date", nullable=true)
+     */
+    private $dhRenduEvalRL;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="dh_rendu_rapport", type="date", nullable=true)
+     */
+    private $dhRenduRapport;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="TgNiveauPhase", mappedBy="idPhase", cascade={"persist"})
@@ -219,4 +240,39 @@ class TgPhase
         return $this;
     }
 
+    public function getDhRenduExpertise(): ?\DateTimeInterface
+    {
+        return $this->dhRenduExpertise;
+    }
+
+    public function setDhRenduExpertise(?\DateTimeInterface $dhRenduExpertise): self
+    {
+        $this->dhRenduExpertise = $dhRenduExpertise;
+
+        return $this;
+    }
+
+    public function getDhRenduEvalRL(): ?\DateTimeInterface
+    {
+        return $this->dhRenduEvalRL;
+    }
+
+    public function setDhRenduEvalRL(?\DateTimeInterface $dhRenduEvalRL): self
+    {
+        $this->dhRenduEvalRL = $dhRenduEvalRL;
+
+        return $this;
+    }
+
+    public function getDhRenduRapport(): ?\DateTimeInterface
+    {
+        return $this->dhRenduRapport;
+    }
+
+    public function setDhRenduRapport(?\DateTimeInterface $dhRenduRapport): self
+    {
+        $this->dhRenduRapport = $dhRenduRapport;
+
+        return $this;
+    }
 }

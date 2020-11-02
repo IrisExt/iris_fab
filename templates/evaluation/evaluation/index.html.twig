@@ -74,7 +74,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-        max-width: 190px;
+        max-width: 170px;
     }
 
     #langueStyle {
@@ -116,9 +116,15 @@
         display: contents;
     }
 
+    #echeanceModalDateFinEval {
+        color: slategrey;
+        display: contents;
+    }
+
     #echeanceModalDateDuJourLegende,
     #echeanceModalDateComiteLegende,
-    #echeanceModalNewDateComiteLegende {
+    #echeanceModalNewDateComiteLegende,
+    #echeanceModalDateFinEvalLegende {
         color: black;
     }
 
@@ -143,20 +149,22 @@
         color: white;
     }
 
+    .dateFinEval {
+        background-color: slategrey;
+        color: white;
+    }
+
     #echeanceModalNewDateComiteLegende {
         display: inline-flex;
     }
 
     #newDateComite {
-        width: 75px;
+        width: 100px;
         border: none;
         padding-top: 2px;
         margin-left: 2px;
     }
 </style>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 {% endblock %}
 
 {% block navmenu %}
@@ -177,7 +185,8 @@
                     {{ 'evaluation.actions.echeance'|trans }}</button>
             </div>
             <div class="breadcome-heading has-feedback" id="rechercheStyle">
-                <input id="filter" type="text" placeholder="Recherche..." class="form-control" style="width:100%">
+                <input id="filter" type="text" placeholder="{{ 'evaluation.actions.recherche'|trans }}..."
+                    class="form-control" style="width:100%">
                 <i class="glyphicon glyphicon-search form-control-feedback"></i>
             </div>
         </div>
@@ -303,17 +312,23 @@
                                 ({{ projet.tgAffectations|filter(affect => affect.idPropose == lecteur.idPersonne)|length }})
                                 {% endfor %}
                         </td>
-                        <td></td>
-                        <td id="langueStyle">
-                            {% set doc = projet.tgDocument|filter(doc => doc.idTypeDoc == '1')|first %}
-                            {% if doc is not empty %}
-                            {% if doc.idLangue is not empty %}
-                            {{ doc.idLangue.cdLangue }}
-                            {% else %}
-                            no language
+                        <td>
+                            {% set countexpertrecuse = 0 %}
+                            {% for expertrecuse in projet.tgAffectations|filter(affect => affect.idStAffect.lbNom == 'Expert')  %}
+                                {% if expertrecuse.idPersonne.blRecuse is same as(true) %}
+                                    {% set countexpertrecuse = countexpertrecuse + 1 %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if countexpertrecuse > 0 %}
+                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{countexpertrecuse}}
                             {% endif %}
+                            
+                        </td>
+                        <td id="langueStyle">
+                            {% if app.request.pathinfo|split('/')[1] == 'fr' %}
+                            {{ (projet.idLangue is not null) ? projet.idLangue.lbLangue }}
                             {% else %}
-                            no doc
+                            {{ (projet.idLangue is not null) ? projet.idLangue.lbNomEn }}
                             {% endif %}
                         </td>
                         <td></td>
@@ -329,50 +344,54 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="echeanceModalContent">
             <div class="modal-header bg-primary text-white" id="echeanceModalHeader">
-                <h4 class="modal-title">{{ 'date échéance comité'|upper }}</h4>
+                <h4 class="modal-title">{{ 'evaluation.modal.titre'|trans|upper }}</h4>
             </div>
             <div class="modal-body" id="echeanceModalBody">
-                {% set dateEcheanceComite = projets[0].idComite.dhRenduEvalRl %}
-                <div id="datepicker" data-date-echeance-comite="{{ dateEcheanceComite|date('d/m/Y') }}"></div>
+                {% set dateEcheanceComite = comite.dhRenduEvalRl %}
+                <div id="datepicker" data-date-echeance-comite="{{ dateEcheanceComite|date('d/m/Y') }}"
+                    data-date-fin-eval="{{ dateFinPhaseEval|date('d/m/Y') }}"></div>
                 <div id="echeanceModalBodyLegende">
                     <div id="echeanceModalBodyTitleLegende">
-                        <h4>Légende</h4>
+                        <h4>{{ 'evaluation.modal.legende'|trans }}</h4>
                     </div>
                     <div id="echeanceModalBodyContentLegende">
                         <div class="fa fa-circle fa-stack-1x" id="echeanceModalDateDuJour">
-                            <span id="echeanceModalDateDuJourLegende">Date du jour : {{ "now"|date("d/m/Y") }}</span>
+                            <span id="echeanceModalDateDuJourLegende">{{ 'evaluation.modal.date.today'|trans }} :
+                                {{ "now"|date("d/m/Y") }}</span>
                         </div>
                         <br>
                         <div class="fa fa-circle fa-stack-1x" id="echeanceModalDateComite">
-                            <span id="echeanceModalDateComiteLegende">Date échéance comité :
-                                {{ dateEcheanceComite|date("d/m/Y") }}</span>
+                            <span id="echeanceModalDateComiteLegende">{{ 'evaluation.modal.date.comite'|trans }} :
+                                {{ dateEcheanceComite ? dateEcheanceComite|date("d/m/Y") : 'evaluation.modal.date.find'|trans
+                                }}</span>
+                        </div>
+                        <br>
+                        <div class="fa fa-circle fa-stack-1x" id="echeanceModalDateFinEval">
+                            <span id="echeanceModalDateFinEvalLegende">{{ 'evaluation.modal.date.eval'|trans }} :
+                                {{ dateFinPhaseEval ? dateFinPhaseEval|date("d/m/Y") : 'evaluation.modal.date.find'|trans
+                                }}</span>
                         </div>
                         <br>
                         <div class="fa fa-circle fa-stack-1x" id="echeanceModalNewDateComite">
-                            <span id="echeanceModalNewDateComiteLegende">Nouvelle date échéance comité : <input
-                                    type="text" id="newDateComite" disabled /></span>
+                            <span id="echeanceModalNewDateComiteLegende">{{ 'evaluation.modal.date.new'|trans }} :
+                                <input type="text" id="newDateComite"
+                                    placeholder="{{ 'evaluation.modal.date.placeholder'|trans }}" disabled /></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer" id="echeanceModalFooter">
                 <button type="button" class="btn btn-light" data-dismiss="modal"
-                    id="echeanceModalCloseButton">Fermer</button>
+                    id="echeanceModalCloseButton">{{ 'evaluation.modal.close'|trans }}</button>
                 <button type="button" class="btn btn-danger" id="echeanceModalSaveButton" onclick="saveNewDateComite()"
-                    data-id-comite="{{ projets[0].idComite.idComite }}"
-                    data-path="{{ path('update_ajax_date_comite') }}">Sauvegarder</button>
+                    data-id-comite="{{ comite.idComite }}"
+                    data-path="{{ path('update_ajax_date_comite') }}">{{ 'evaluation.modal.save'|trans }}</button>
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
 {% block javascripts %}
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
 <script>
     $(document).ready(function () {
         $('#filter').keyup(function () {
@@ -387,7 +406,7 @@
     $("#sortTable")
         .tablesorter({
             // Enable filter
-            widgets: ["filter"],
+            widgets: ["filter", "saveSort"],
             widgetOptions: {
                 filter_columnFilters: false,
                 filter_searchDelay: 60,
@@ -408,16 +427,24 @@
         content.scrollLeft -= 28;
     }
 
+    var language = "en-GB";
+    if (window.location.pathname.split('/')[1] == "fr") {
+        language = "fr";
+    }
     var echeanceComite = $('#datepicker').data('dateEcheanceComite');
+    var dateFinEval = $('#datepicker').data('dateFinEval');
 
     $('#datepicker').datepicker({
-        language: 'fr',
+        language: language,
         calendarWeeks: true,
         todayHighlight: true,
         clearBtn: true,
         startDate: new Date(),
         beforeShowDay: function (date) {
             formattedDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+            if (formattedDate == dateFinEval) {
+                return { classes: 'dateFinEval' };
+            }
             if (formattedDate == echeanceComite) {
                 return { classes: 'dateEcheanceComite' };
             }
@@ -446,6 +473,5 @@
             }
         });
     }
-
 </script>
 {% endblock %}

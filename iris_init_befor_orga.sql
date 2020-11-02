@@ -4205,3 +4205,127 @@ WHERE id_st_affect=5;
 UPDATE public.tg_affectation
 SET id_type=2
 WHERE id_st_affect IN (1,2);
+
+UPDATE public.tg_niveau_phase SET dh_fin = '2020-10-29' WHERE id_type_niveu = 2 AND id_appel = 1;
+
+UPDATE public.tg_projet	SET id_langue = 38 WHERE id_projet >= 1 AND id_projet < 19;
+UPDATE public.tg_projet	SET id_langue = 48 WHERE id_projet >= 19 AND id_projet <= 67;
+
+UPDATE public.tg_appel_proj SET niveau_en_cours=2 WHERE id_appel=1;
+
+INSERT INTO tl_hab_projet VALUES (32, 10);
+INSERT INTO tl_hab_projet VALUES (39, 16);
+INSERT INTO tl_hab_projet VALUES (17, 3);
+INSERT INTO tl_hab_projet VALUES (33, 10);
+INSERT INTO tl_hab_projet VALUES (16, 10);
+INSERT INTO tl_hab_projet VALUES (32, 7);
+INSERT INTO tl_hab_projet VALUES (17, 1);
+INSERT INTO tl_hab_projet VALUES (33, 50);
+INSERT INTO tl_hab_projet VALUES (17, 51);
+INSERT INTO tl_hab_projet VALUES (33, 54);
+INSERT INTO tl_hab_projet VALUES (17, 55);
+INSERT INTO tl_hab_projet VALUES (32, 57);
+INSERT INTO tl_hab_projet VALUES (33, 61);
+INSERT INTO tl_hab_projet VALUES (32, 66);
+INSERT INTO tl_hab_projet VALUES (33, 59);
+
+INSERT INTO public.tl_hab_projet
+(id_habilitation, id_projet)
+VALUES(32, 12);
+
+INSERT INTO public.tg_affectation
+(id_affectation, id_profil, id_st_affect, cd_sts_evaluation, id_projet, id_personne, cd_sollicitation, id_type, id_propose, lb_cause, bl_new_modif, bl_doc_telecharge)
+VALUES(10000, 18, 1, NULL, 12, 36, NULL, 2, NULL, NULL, false, false);
+
+UPDATE public.tg_phase
+	SET dh_rendu_expertise='2020-11-30', dh_rendu_eval_rl='2020-11-30', dh_rendu_rapport='2020-11-30'
+	WHERE id_phase = 5;
+
+UPDATE public.tg_phase
+	SET dh_rendu_expertise='2020-12-30', dh_rendu_eval_rl='2020-12-30', dh_rendu_rapport='2020-12-30'
+	WHERE id_phase = 4;
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 323);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (5, 336);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 349);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (5, 363);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 377);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (5, 394);
+
+INSERT INTO public.tl_hab_phase(
+	id_phase, id_habilitation)
+	VALUES (4, 305);
+
+UPDATE public.ft_commande_app
+	SET id_personne=12
+	WHERE id_fr_command_app=4;
+
+UPDATE public.tg_affectation
+	SET bl_doc_telecharge=true
+	WHERE id_affectation=1204;
+
+UPDATE public.tg_affectation
+SET dh_rendu='2020-10-25'
+WHERE id_affectation=1248;
+
+UPDATE public.tg_affectation
+SET dh_rendu='2020-10-17'
+WHERE id_affectation=1262;
+
+INSERT INTO public.ft_commande_app(
+	id_fr_command_app, id_personne, cd_commande, id_projet, dh_commande, txt_commentaire)
+	VALUES (4, 523, null, 55, NOW(), 'Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu il est prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin, le Lorem ipsum ou Lipsum');
+
+UPDATE public.tr_langue
+	SET cd_langue='FR'
+	WHERE id_langue=48;
+
+INSERT INTO public.tg_resume(
+	id_projet, id_langue, lb_texte)
+	VALUES (55, 48, 'Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, 
+le texte définitif venant remplacer le faux-texte dès qu il est prêt ou que la mise en page est achevée.');
+
+INSERT INTO public.tl_mc_erc_proj(
+	id_projet, id_mc_erc)
+	VALUES (55, 4);
+
+UPDATE public.tg_personne
+	SET bl_recuse=true
+	WHERE id_personne in (505, 563, 577);
+
+INSERT INTO public.tr_rnsr(
+	cd_rnsr, id_adresse, lb_laboratoire)
+	VALUES ('TST', 78, 'Labo Test Recherche');
+
+INSERT INTO public.tg_organisme(
+	id_organisme, cd_rnsr, siret, cd_pays, lb_nom_fr, lb_service, ville, lb_laboratoire)
+	VALUES (1, 'TST', null, 250, 'Test Orga', 'Test Orga Service', 'Paris', 'Labo Test Recherche');
+
+INSERT INTO public.tl_pers_org(
+	id_personne, id_organisme, type_oraganisme, lb_service)
+	VALUES (505, 1, 'Orga', 'Test Service');
+
+INSERT INTO public.tl_pers_org(
+	id_personne, id_organisme, type_oraganisme, lb_service)
+	VALUES (563, 1, 'Orga', 'Test Service');
+
+INSERT INTO public.tl_pers_org(
+	id_personne, id_organisme, type_oraganisme, lb_service)
+	VALUES (577, 1, 'Orga', 'Test Service');

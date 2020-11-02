@@ -6,6 +6,7 @@ namespace App\Controller\Cv;
 
 use App\Controller\BaseController;
 use App\Entity\TgCv;
+use App\Entity\TgPersonne;
 use App\Entity\TgDispoExp;
 use App\Form\CvBlocs\DisponibleType;
 use App\Form\TgCompetenceLangeType;
