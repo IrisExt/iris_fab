@@ -86,15 +86,39 @@
             border: 1px solid black;
         }
 
+        thead th {
+            border: 1px solid blue;
+        }
+
         .gras {
             font-weight: bold;
         }
 
         .scorll_tab {
             width: 100%;
+            /*overflow-y: auto;*/
             height: 50em;
-            padding: .75em;
+            overflow-y: auto;
+        }
 
+        .scorll_tab thead th {
+            position: sticky;
+            top: 0;
+        }
+
+        table {
+            /*border-collapse: collapse;*/
+            width: auto;
+        }
+
+        th,
+        td {
+            /*padding: 8px 16px;*/
+            /*border: 1px solid #eeeeee;*/
+        }
+
+        th {
+            background: #eeeeee;
         }
 
         {% for key , arrStatutsClassmmbre in arrStatutsClassMembre %}
@@ -150,15 +174,15 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            {#            <div class="col-lg-3">#}
-            {#            </div>#}
+            {# <div class="col-lg-3"> #}
+            {# </div> #}
             <div class="col-lg-12">
                 <div class="sparkline8-list shadow-reset">
                     <div class="sparkline8-hd" style="background: #dfdfdf">
                         <div class="main-sparkline8-hd">
                             <h1>{{ comite }}: Affectation des rapporteurs et lecteurs</h1>
                             <div class="sparkline8-outline-icon">
-{#                                <a href="{{ path('export_affec_RL',  {'tgComite': comite.idComite}) }}" title="EXCEL"><i class="fa fa-file-excel"></i>Excel</a>#}
+                                {# <a href="{{ path('export_affec_RL',  {'tgComite': comite.idComite}) }}" title="EXCEL"><i class="fa fa-file-excel"></i>Excel</a> #}
                                 <a href="{{ path('accueil') }}">Retour</a>
                             </div>
                         </div>
@@ -167,9 +191,11 @@
                         <div class="sparkline8-graph">
                             <div class="row">
                                 {% if comite.isBlDroitProjetOuvert == 1 %}
-                                <div class="alert alert-warning">les accès sont ouvert pour les Rapporteurs / lecteurs</div>
+                                    <div class="alert alert-warning">les accès sont ouvert pour les Rapporteurs /
+                                        lecteurs
+                                    </div>
                                 {% else %}
-                                <div class="success_open"></div>
+                                    <div class="success_open"></div>
                                 {% endif %}
                                 <div class="success"></div>
 
@@ -182,23 +208,23 @@
                                             <a><i class="fa fa-search"></i></a>
                                         </form>
                                     </div>
-                                    {#                                  <span class="fa fa-remove" id="remove_text"></span>  #}
-                                    {#                                    <input class="form-control" id="search" type="text" placeholder="Recherche ...">#}
+                                    {# <span class="fa fa-remove" id="remove_text"></span> #}
+                                    {# <input class="form-control" id="search" type="text" placeholder="Recherche ..."> #}
                                 </div>
                                 {% set droitOuver = comite.isBlDroitProjetOuvert == false %}
 
                                 {% if comite.isBlDroitProjetOuvert != 1 %}
-                                    {% set disabled = ''%} {% set actif ='' %}
+                                    {% set disabled = '' %} {% set actif ='' %}
                                     {% set lien_save = path('submit_rl',{'idComite' : comite.idComite, 'openAccess' : true}) %}
                                     {% set lien = path('submit_rl',{'idComite' : comite.idComite, 'openAccess' : true}) %}
                                     {% set hide_select = '' %}
                                 {% else %}
-                                        {% set actif %} onClick="this.disabled=true;" {% endset %} {% set lien_sav = '' %} {% set lien = '' %}  {% set disabled = 'disabled'%}
-                                        {% set hide_select = 'hidden' %}
+                                    {% set actif %} onClick="this.disabled=true;" {% endset %} {% set lien_sav = '' %} {% set lien = '' %}  {% set disabled = 'disabled' %}
+                                    {% set hide_select = 'hidden' %}
                                 {% endif %}
 
-{#                                {% if comite.isBlDroitProjetOuvert != 1 %} {% set disabled = ''%} {% set actif ='' %} {% set lien = path('submit_rl',{'idComite' : comite.idComite, 'openAccess' : true}) %}#}
-{#                                {% else %} {% set actif %} onClick="this.disabled=true;" {% endset %}{% set lien = '' %}  {% set disabled = 'disabled'%} {% endif %}#}
+                                {# {% if comite.isBlDroitProjetOuvert != 1 %} {% set disabled = ''%} {% set actif ='' %} {% set lien = path('submit_rl',{'idComite' : comite.idComite, 'openAccess' : true}) %} #}
+                                {# {% else %} {% set actif %} onClick="this.disabled=true;" {% endset %}{% set lien = '' %}  {% set disabled = 'disabled'%} {% endif %} #}
 
                                 <div class="form-group col-lg-1 col-lg-offset-2">
                                     <form method="POST" id="formaffs">
@@ -216,30 +242,27 @@
                                 </div>
 
                                 <div class="form-group col-lg-2" {{ hide_select }}>
-                                    <select class="form-control" id="changeTimes" {{ disabled }}  >
-                                        <option value="0" >Manuel</option>
+                                    <select class="form-control" id="changeTimes" {{ disabled }} >
+                                        <option value="0">Manuel</option>
                                         <option value="5" selected>Auto. toutes les : 5 min</option>
                                         <option value="10">Auto. toutes les : 10 min</option>
                                     </select>
                                     <small id="mesageTime"></small>
-{#                                    <small>un enregistrement automatique de vos affectations aura lieu toutes les 5 mn</small>#}
+                                    {# <small>un enregistrement automatique de vos affectations aura lieu toutes les 5 mn</small> #}
                                 </div>
 
 
                                 <div class="form-group col-lg-2">
-                                    <a href="#" {{ disabled }} {{ actif }}
-                                                                    class="btn btn-warning btn-sm" name="open_access"
-                                                                    id="submit_affectations" data-id="{{ lien }}" >
-                                        Ouvrir les accès </a></div>
-
+                                    <a href="#" {{ disabled }} {{ actif }} class="btn btn-warning btn-sm"
+                                       name="open_access"
+                                       id="submit_affectations" data-id="{{ lien }}">Ouvrir les accès </a></div>
                             </div>
-                            <br><br>
+                            <br>
                             <div class="container_table">
                                 <div class="scorll_tab" style="overflow:scroll;">
                                     <table class="" border="1">
-                                        <thead style="position:static">
+                                        <thead>
                                         <tr>
-                                            {#                    <th>&nbsp;</th>#}
                                             <th colspan="3" style="background-color:#dfdfdf">
                                                 {% set cpt_mbr = 0 %}
                                                 {% for membre in affectMembre %}
@@ -250,10 +273,11 @@
                                             {% set cpt_mbr = cpt_mbr + 1 %}
                                             {% endfor %}
                                         </tr>
+                                        <thead>
                                         <tr>
-                                            <td class="gras" style="padding:3px;"></td>
-                                            <td class="gras" style="padding:3px;">Rap.</td>
                                             <td></td>
+                                            <td class="gras" style="padding:3px;">Rap.</td>
+                                            <td class="gras" style="padding:3px;"></td>
 
                                             {% set cpt_mbr = 0 %}
                                             {% for membre in affectMembre %}
@@ -263,8 +287,10 @@
                                                 </td>
                                                 {% set cpt_mbr = cpt_mbr + 1 %}
                                             {% endfor %}
-                                        </tr>
 
+                                        </tr>
+                                        </thead>
+                                        <thead>
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -279,8 +305,8 @@
                                                 {% set cpt_mbr = cpt_mbr + 1 %}
                                             {% endfor %}
                                         </tr>
-
-
+                                        </thead>
+                                        <thead>
                                         <tr>
                                             <td>&nbsp;</td>
                                             <td colspan="2">Total</td>
@@ -293,6 +319,8 @@
                                                 {% set cpt_mbr = cpt_mbr + 1 %}
                                             {% endfor %}
                                         </tr>
+                                        </thead>
+                                        <thead>
                                         <tr>
                                             <td>&nbspProjet</td>
                                             <td id="ttrap" class="gras">0</td>
@@ -307,12 +335,11 @@
                                                 {% set cpt_mbr = cpt_mbr + 1 %}
                                             {% endfor %}
                                         </tr>
-
                                         </thead>
                                         <tbody id="myTable">
-                                        {#                                        <tr>#}
-                                        {#                                            <td class="gras" style="padding:3px;">Projet</td>#}
-                                        {#                                        </tr>#}
+                                        {# <tr> #}
+                                        {# <td class="gras" style="padding:3px;">Projet</td> #}
+                                        {# </tr> #}
                                         {% set cpt_case_affectations = 0 %}
                                         {% set cpt_tab_prjs = 0 %}
 
@@ -322,14 +349,15 @@
                                                     class="gras trow-{{ cpt_tab_prjs }}"
                                                     style="padding:3px;">
                                                     {% set langue_ = '' %}
-                                                    {% if comite.idLangue.idLangue is defined  %}
+                                                    {% if comite.idLangue.idLangue is defined %}
                                                         {% if comite.idLangue.idLangue == 108 %}
                                                             {% set langue_ %} {{ arrProjet.lbTitreFr }} {% endset %}
                                                         {% else %}
                                                             {% set langue_ %} {{ arrProjet.lbTitreEn }}  {% endset %}
                                                         {% endif %}
                                                     {% endif %}
-                                                    <span data-toggle="tooltip" data-placement="top" title="{{ langue_ }} - {{ arrProjet.idInfraFi|default('') }}">{{ arrProjet.lbAcro }} {{ arrProjet.idInfraFi.lbAcro|default('') }}</span>
+                                                    <span data-toggle="tooltip" data-placement="top"
+                                                          title="{{ langue_ }} - {{ arrProjet.idInfraFi|default('') }}">{{ arrProjet.lbAcro }} {{ arrProjet.idInfraFi.lbAcro|default('') }}</span>
                                                 </td>
                                                 <td data-clight="0" data-rlight="trow-{{ cpt_tab_prjs }}"
                                                     id="prap-{{ cpt_tab_prjs }}"
@@ -358,7 +386,7 @@
                                                     {% endif %}
 
                                                     {% if arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]  is defined %}
-                                                        {#                            {% set result = arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]['codeAvis'] %}#}
+                                                        {# {% set result = arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]['codeAvis'] %} #}
                                                         {% set classe_affectation = arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]|lower %}
                                                         {% set result = arrAffectations[arrProjet.idProjet][membre.idPersonne.idPersonne]|upper %}
                                                     {% endif %}
@@ -388,21 +416,23 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-    {#    <script src="{{ asset('js/vendor/jquery-1.11.3.min.js') }}"></script>#}
+    {# <script src="{{ asset('js/vendor/jquery-1.11.3.min.js') }}"></script> #}
     <!-- bootstrap JS
     ============================================ -->
-{#    <script src="{{ asset('js/bootstrap.min.js') }}"></script>#}
+    {# <script src="{{ asset('js/bootstrap.min.js') }}"></script> #}
     <script>
         $(function () {
+            // $('#myTable').scroll();
+
 
             $("#changeTimes").change(function () {
-                    var idSelect = $(this).val();
-                    if( idSelect != 0 ){
-                        $("#mesageTime").text("Un enregistrement automatique de vos affectations aura lieu toutes les "+ idSelect +" mn" );
-                    }else{
-                        $("#mesageTime").text("");
-                    }
-                })
+                var idSelect = $(this).val();
+                if (idSelect != 0) {
+                    $("#mesageTime").text("Un enregistrement automatique de vos affectations aura lieu toutes les " + idSelect + " mn");
+                } else {
+                    $("#mesageTime").text("");
+                }
+            })
                 .change();
 
             $("#remove_text").click(function () {
@@ -418,9 +448,9 @@
 
             window.setInterval(function () {
                 var date = new Date();
-               if (date.getMinutes() % document.getElementById('changeTimes').value == 0){
-                   $('#submit_affectations').get(0).click();
-               }
+                if (date.getMinutes() % document.getElementById('changeTimes').value == 0) {
+                    $('#submit_affectations').get(0).click();
+                }
             }, 100000);
 
             // var save_affect = $("[name=save_affect]");
@@ -462,12 +492,12 @@
                         'Les conflits d\'intérêt doivent en particulier avoir tous été tracés. \n' +
                         'Il vous sera possible de modifier une à une ces affectations dans l\'écran xxx')) {
                         this.setAttribute('disabled', 'disabled');
-                        this.setAttribute('onClick' , "this.disabled=true;");
+                        this.setAttribute('onClick', "this.disabled=true;");
                         document.getElementById("changeTimes").setAttribute('disabled', 'disabled');
                         document.getElementById("submit_affectations").setAttribute('disabled', 'disabled');
-                        document.getElementById("submit_affectations").setAttribute('onClick' , "this.disabled=true;");
+                        document.getElementById("submit_affectations").setAttribute('onClick', "this.disabled=true;");
                         $('.success_open').html('<div class="alert alert-warning">les accès sont ouvert pour les Rapporteurs / lecteurs</div>');
-                    }else{
+                    } else {
                         return false
                     }
                 }
@@ -627,7 +657,7 @@
                 // xxx[i].style["background-color"] = "#FFCCFF";
                 //console.log(vmcrap[i].innerText);
                 mtotval = parseInt(vprap[i].innerText, 10);
-                if (mtotval == 0 ) {
+                if (mtotval == 0) {
                     vprap[i].style["background-color"] = "#FFCCFF";
                 } else if (mtotval == 1) {
                     vprap[i].style["background-color"] = "#CCFFCC";
@@ -642,7 +672,7 @@
                 // xxx[i].style["background-color"] = "#FFCCFF";
                 //console.log(vmcrap[i].innerText);
                 mtotval = parseInt(vlect[i].innerText, 10);
-                if (mtotval == 0 ) {
+                if (mtotval == 0) {
                     vlect[i].style["background-color"] = "#FFCCFF";
                 } else if (mtotval == 1) {
                     vlect[i].style["background-color"] = "#CCFFCC";
@@ -736,7 +766,6 @@
             }
             {% endfor %}
         });
-
 
 
         $(window).on('load', function () {

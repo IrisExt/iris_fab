@@ -15,6 +15,9 @@ use App\Entity\TrProfil;
 use App\Entity\TrRole;
 use App\Form\PersCpsType;
 use App\Form\SollicitationType;
+use App\Manager\ConstitutionCesManager;
+use App\Manager\HabilitationManager;
+use App\Manager\PersonneManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
@@ -45,13 +48,35 @@ class ConstitutionCesController extends BaseController
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var PersonneManager
+     */
+    private $personneManager;
+    /**
+     * @var HabilitationManager
+     */
+    private $habilitationManager;
+    /**
+     * @var ConstitutionCesManager
+     */
+    private $cesManager;
 
 
-    public function __construct(EntityManagerInterface $em, SessionInterface $session)
+    /**
+     * ConstitutionCesController constructor.
+     * @param EntityManagerInterface $em
+     * @param SessionInterface $session
+     * @param PersonneManager $personneManager
+     * @param HabilitationManager $habilitationManager
+     * @param ConstitutionCesManager $cesManager
+     */
+    public function __construct(EntityManagerInterface $em, SessionInterface $session, PersonneManager $personneManager, HabilitationManager $habilitationManager, ConstitutionCesManager $cesManager)
     {
         $this->em = $em;
-
         $this->session = $session;
+        $this->personneManager = $personneManager;
+        $this->habilitationManager = $habilitationManager;
+        $this->cesManager = $cesManager;
     }
 
     /**
@@ -103,15 +128,15 @@ class ConstitutionCesController extends BaseController
         if ($request->query->get('participant')) {
             foreach ($request->query->get('participant') as $prio_now => $id) {
                 $emParti->updatePrioGroupe($id, $prio_now);
-            };
+            }
             $this->addFlash('success', 'Les priorités groupe ont été mises à jour ');
             return $this->redirect($request->headers->get('referer'));
-        };
+        }
 
         $phaseRef = $this->getEmPhase()->findOneBy(['idPhase' =>  $this->session->get('phase')]);
         $tt = $emParti->findBy(['idComite' => $idComite, 'idPhaseRef' => $phaseRef->getIdPhaseRef()],['prioGrp'=>'ASC']);
 
-//dd($tt);
+
         $mmbreComite = $paginator->paginate(
 //            $emParti->findPartParComiteCes($comite,  $this->session->get('phase'),  $this->session->get('appel')),
             $emParti->findBy(['idComite' => $idComite, 'idPhaseRef' => $phaseRef->getIdPhaseRef()],['prioGrp'=>'ASC']),
@@ -145,7 +170,6 @@ class ConstitutionCesController extends BaseController
     {
         $this->appelClos( $this->session->get('appel')); // retour 403 / Accès refusé si appel est clos
         $PersCps = new TgPersCps();
-        $participation = new TgParticipation();
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(PersCpsType::class, $PersCps);
@@ -153,7 +177,7 @@ class ConstitutionCesController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $appel_object = $this->getEmAppPro()->find( $this->session->get('appel'));
+            $appel_object = $this->getEmAppPro()->find($this->session->get('appel'));
             $phase_object = $appel_object->getNiveauEnCours()->getIdPhase();
             $sollicitation = $this->getDoctrine()->getRepository(TrEtatSol::class)->find(3);
             $genre = $form->get('idGenre')->getData();
@@ -161,24 +185,19 @@ class ConstitutionCesController extends BaseController
 
             try {
                 $em->persist($PersCps);
-                $personne = new TgPersonne();
-                $personne->setIdGenre($genre)
-                    ->setLbNomUsage($request->get('pers_cps')['lbNomFr'])
-                    ->setLbPrenom($request->get('pers_cps')['lbPrenom'])
-                    ->setIdPersCps($PersCps)
-                    ->setCvRenseigne(false);
-                $em->persist($personne);
+                // insert to tgpersonne and return $tgPersonne
+               $personne = $this->personneManager->setTgPersonne($request->get('pers_cps')['lbNomFr'],$request->get('pers_cps')['lbPrenom'],$genre,$PersCps);
 
                 $motCles = explode(',', $request->get('pers_cps')['motcle']);
                 foreach ($motCles as $motCle) {
                     $motcle = new TgMotCleCps();
-                    $motcle->setIdPersonne($personne)
+                    $motcle
+                        ->setIdPersonne($personne)
                         ->setLbMcCpsFr($motCle);
                     $em->persist($motcle);
                 }
-
-                $this->inserToHabilitation($personne, $profil, $idComite, $phase_object);
-                $this->inserToParticipation($personne, $idComite, $phase_object->getIdPhaseRef(), $sollicitation, $profil);
+                $this->habilitationManager->setHabilitation($personne,$profil,$idComite,null,$phase_object,null);
+                $this->cesManager->setNewParticipComite($personne,$profil,$idComite,$phase_object->getIdPhaseRef(),$sollicitation);
 
                 $metadata = $em->getClassMetaData(get_class($personne));
                 $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
@@ -186,7 +205,7 @@ class ConstitutionCesController extends BaseController
 
                 $em->flush();
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->addFlash('error', "L'évaluateur n'a pas été créé");
             }
 
@@ -232,14 +251,13 @@ class ConstitutionCesController extends BaseController
             $habilExiste = $this->getEmHabil()->findOneBy(['idPersonne' => $personne, 'idProfil' => $profil]);
             $phase = $this->getEmPhase()->find( $this->session->get('phase'));
             if (empty($habilExiste)) {
-                $this->inserToHabilitation($personne, $profil, $idComite, $phase_object);
+                $this->habilitationManager->setHabilitation($personne,$profil,$idComite,null,$phase_object,null);
             } else {
                 $habilExiste->AddIdPhase($phase)
-                    ->AddIdComite($idComite);
+                            ->AddIdComite($idComite);
                 $em->persist($habilExiste);
             }
-            $this->inserToParticipation($personne, $idComite, $phase_object->getIdPhaseRef(), $sollicitation, $profil);
-
+            $this->cesManager->setNewParticipComite($personne,$profil,$idComite,$phase_object->getIdPhaseRef(),$sollicitation);
             $this->em->flush();
 
             $this->addFlash('success', ' Un membre ' . $personne->getLbNomUsage() . ' ' . $personne->getLbPrenom() . ' est ajouté ');
@@ -288,7 +306,7 @@ class ConstitutionCesController extends BaseController
                 $habilExiste = $this->getEmHabil()->findOneBy(['idPersonne' => $personne, 'idProfil' => $form->get('profil')->getData()]);
                 $phase = $em->getRepository(TgPhase::class)->find( $this->session->get('phase'));
                 if (empty($habilExiste)) {
-                    $this->inserToHabilitation($personne, $form->get('profil')->getData(), $comite, $phase);
+                    $this->habilitationManager->setHabilitation($personne,$form->get('profil')->getData(),$comite,null,$phase,null);
                 } else {
                     $habilExiste->AddIdPhase($phase)
                         ->AddIdComite($comite);
@@ -437,31 +455,4 @@ class ConstitutionCesController extends BaseController
 
         return $resultat;
     }
-
-    public function inserToHabilitation($personne, $profil, $comite, $phase)
-    {
-        $habilitation = new TgHabilitation();
-        $habilitation->setIdPersonne($personne)
-            ->AddIdPhase($phase)
-            ->setIdProfil($profil)
-            ->AddIdComite($comite)
-            ->setDhMaj(new \DateTime())
-            ->setLbRespMaj($this->getUserConnect()->getLbNomUsage() . ' ' . $this->getUserConnect()->getLbPrenom())
-            ->setBlSupprime(1);
-        $this->em->persist($habilitation);
-    }
-
-    public function inserToParticipation($personne, $comite, $phaseref, $sollicitation, $profil)
-    {
-
-        $participation = new TgParticipation();
-        $participation->setIdPersonne($personne)
-            ->setIdComite($comite)
-            ->setIdPhaseRef($phaseref)
-            ->setCdEtatSollicitation($sollicitation)
-            ->setBlSupprime(1)
-            ->setIdProfil($profil);
-        $this->em->persist($participation);
-    }
-
 }

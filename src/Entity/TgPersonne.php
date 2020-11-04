@@ -282,6 +282,11 @@ class TgPersonne
     private $experProj;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TlAffectUtilisateur", mappedBy="IdPersonne", cascade={"persist"})
+     */
+    private $tlAffectUtilisateurs;
+
+    /**
      * @ORM\Column(name="bl_recuse", type="boolean", nullable=true)
      */
     private $blRecuse;

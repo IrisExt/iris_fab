@@ -49,7 +49,7 @@ class TgProjet
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_titre_fr", type="string", length=50, nullable=true)
+     * @ORM\Column(name="lb_titre_fr", type="string", length=500, nullable=true)
      *
      * @Assert\NotBlank(
      *     message="tgprojet.lb_titre_fr.not_blank",
@@ -69,7 +69,7 @@ class TgProjet
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lb_titre_en", type="string", length=50, nullable=true, options={"comment"="titre du projet en anglais"})
+     * @ORM\Column(name="lb_titre_en", type="string", length=500, nullable=true, options={"comment"="titre du projet en anglais"})
      *
      * @Assert\Length(
      *      min = 10,

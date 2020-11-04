@@ -35,8 +35,10 @@ class SearchPersonnesController extends BaseController
 
     /**
      * @Route("/search/personnes", name="search_personnes")
+     * @param Request $request
+     * @return Response
      */
-    public function search(Request $request, SessionInterface $session)
+    public function search(Request $request)
     {
         $referer = $request->headers->get('referer'); // get the referer, it can be empty!
         if ($request->isXmlHttpRequest()) {
@@ -250,6 +252,8 @@ class SearchPersonnesController extends BaseController
             $linkOrigine = $request->request->get('referer');
 
             if ($linkOrigine) {
+
+
             }
 
             $response = new Response(json_encode(['personne' => $personne->getIdPersonne(), 'referer' => $linkOrigine])

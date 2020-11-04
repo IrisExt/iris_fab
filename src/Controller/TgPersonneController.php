@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\RecherchePersonneCes;
 use App\Entity\TgComite;
+use App\Entity\TgParticipation;
 use App\Entity\TgPersonne;
 use App\Entity\TrProfil;
 use App\Entity\User;
+use App\Form\PersonneSearchType;
 use App\Form\RecherchePersonneCesType;
 use App\Form\TgPersonneType;
 use App\Repository\PersonneRepository;
@@ -14,6 +16,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -181,5 +184,35 @@ class TgPersonneController extends BaseController
 
     }
 
+    /**
+     * @Route ("/search/set_ajax_personne", name="set_ajax_personne")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function setPersonneAjax(Request $request): JsonResponse
+    {
+        $requestString = $request->get('q');
+        $personnes = $this->em->getRepository(TgPersonne::class)->findPersonnesByString($requestString);
+        if(!$personnes) {
+            $result = null;
+        }else{
+            $result = $this->getPersonnesSelect($personnes);
+        }
+        return new JsonResponse($result);
+    }
 
+    /**
+     * @param $personnes
+     * @return mixed
+     */
+    private function getPersonnesSelect($personnes){
+
+        foreach ($personnes as $personne){
+            $resultArray[] = [
+                'id' => $personne->getIdPersonne(),
+                'text' => $personne->getLbNomUsage().' '.$personne->getLbPrenom(),
+            ];
+        }
+        return $resultArray;
+    }
 }

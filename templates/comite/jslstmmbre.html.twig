@@ -1,7 +1,8 @@
 <script>
 
-    // jQuery(window).load(function(){ jQuery(".loader").fadeOut("200"); });
-    $(window).on('load', function () {jQuery(".loader").fadeOut("200"); });
+    $(window).on('load', function () {
+        jQuery(".loader").fadeOut("200");
+    });
 
     $('#exampleModal').on('shown.bs.modal', function () {
         // if(invalidForm) {
@@ -11,15 +12,77 @@
         $.ajax('{{ path('ajouter_comite') }}', {
                 success: function (data) {
                     modal.find('.modal-body').html(data);
-                    $('.chosen-select').chosen();
+                    $(".select2_personne").select2({
+                        // minimumInputLength: 2,
+                        // allowClear: true,
+                        width: '100%',
+                        // multiple: false,
+                        placeholder: "Veuillez choisir un président",
+                        language: {
+                            inputTooShort: function () {
+                                return "Veuillez saisir 2 caractères ou plus...";
+                            }
+                        },
+                        ajax: {
+                            url: '/fr/personne/search/set_ajax_personne',
+                            dataType: 'json',
+                            delay: 250,
+                            data: function (params) {
+                                return {
+                                    q: params.term, // search term
+                                    page: params.page
+                                };
+                            },
+                            processResults: function (data, params) {
+                                params.page = params.page || 1;
+                                return {
+                                    results: data,
+                                    pagination: {
+                                        more: (params.page * 30) < data.total_count
+                                    }
+                                };
+                            },
+                            cache: true
+                        },
+                    })
+                    $(".select2_").select2();
+                    $(".select2_personne_mult").select2({
+                        allowClear: true,
+                        width: '100%',
+                        multiple: true,
+                        // placeholder: "Pilote de l'appel à projet",
+                        language: {
+                            inputTooShort: function () {
+                                return "Veuillez saisir 2 caractères ou plus...";
+                            }
+                        },
+                        ajax: {
+                            url: '/fr/personne/search/set_ajax_personne',
+                            dataType: 'json',
+                            delay: 250,
+                            data: function (params) {
+                                return {
+                                    q: params.term, // search term
+                                    page: params.page
+                                };
+                            },
+                            processResults: function (data) {
+                                return {
+                                    results: data,
+                                };
+                            },
+                            cache: true
+                        },
+                    })
                 },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert('Error : ' + errorThrown);
-            }
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
             }
         )
         ;
     });
+
     // $('#exampleModal').modal({backdrop: 'static', keyboard: false})
 
     //modal pour la création seance
@@ -44,17 +107,17 @@
     //modal pour les reunions
     $('#reunionPeriodeModal').on('show.bs.modal', function (e) {
         // if (e.namespace === 'bs.modal') {
-            // <-- ajouter pour le fonctionnement de Datapicker
-            // var modal_periode_reunion = $(this);
-            // récuperer la route du lien modal  data-id
-            $.ajax('{{ path('show_periode_reu') }}',
-                {
+        // <-- ajouter pour le fonctionnement de Datapicker
+        // var modal_periode_reunion = $(this);
+        // récuperer la route du lien modal  data-id
+        $.ajax('{{ path('show_periode_reu') }}',
+            {
                 success: function (data) {
                     $('#reunionPeriodeModal').find('.modal-body').html(data);
                 },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('Error : ' + errorThrown);
-                    }
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
             });
         // }
     });
@@ -118,7 +181,7 @@
                                 }
 
                                 $('#reunionPeriodeModal').on('hidden.bs.modal', function () {
-                                    location.reload(true);
+                                    location.reload();
                                 });
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -152,18 +215,18 @@
     });
 
     $('#seanceModal').on('show.bs.modal', function (e) {
-            var path = $(e.relatedTarget).data('id');
-            var modal_seance = $(this);
-            $.ajax({
-                type: 'POST',
-                'url': path,
-                success: function (data) {
-                    modal_seance.find('.modal-body').html(data);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('Error : ' + errorThrown);
-                }
-            });
+        var path = $(e.relatedTarget).data('id');
+        var modal_seance = $(this);
+        $.ajax({
+            type: 'POST',
+            'url': path,
+            success: function (data) {
+                modal_seance.find('.modal-body').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error : ' + errorThrown);
+            }
+        });
     });
 
     $('#seanceModalMaj').on('show.bs.modal', function (e) {
@@ -206,7 +269,7 @@
                     $(".readonly").keydown(function(e){
                         e.preventDefault();
                     });
-                    $('.chosen-select').chosen();
+
                     $('#data_periode .input-daterange').datepicker({
                         keyboardNavigation: false,
                         forceParse: false,
@@ -254,34 +317,34 @@
                         $(this).serializeArray().forEach((object) => {
                             formResult[object.name] = object.value;
                         });
-                            $.ajax({
-                                url: '/fr/sea/modifSeance/Ajax/'+document.getElementById("seance").value,
-                                type: 'POST',
-                                data: JSON.stringify(formResult),
-                                success: function (data) {
+                        $.ajax({
+                            url: '/fr/sea/modifSeance/Ajax/'+document.getElementById("seance").value,
+                            type: 'POST',
+                            data: JSON.stringify(formResult),
+                            success: function (data) {
 
-                                    if (data.succes != '') {
-                                        $('.js-success-s_modif').show().delay(2000).hide("slow");
-                                        $('.js-success-s_modif').html('<div class="alert alert-success text-center">' +
-                                            ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
-                                            ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
-                                            ' </button>' +
-                                            '<p class="message-alert-none"><strong>Succès ! </strong>' + data.succes + '</p>' +
-                                            '</div>');
-                                    }else {
-                                        $('.js-error-s_modif').show().delay(2000).hide("slow");
-                                        $('.js-error-s_modif').html('<div class="alert alert-danger text-center">' +
-                                            ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
-                                            ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
-                                            ' </button>' +
-                                            '<p class="message-alert-none"><strong>Erreur ! </strong>' + data.errors + '</p>' +
-                                            '</div>');
-                                    }
-                                },
-                                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                    alert('Error : ' + errorThrown);
+                                if (data.succes != '') {
+                                    $('.js-success-s_modif').show().delay(2000).hide("slow");
+                                    $('.js-success-s_modif').html('<div class="alert alert-success text-center">' +
+                                        ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                        ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                        ' </button>' +
+                                        '<p class="message-alert-none"><strong>Succès ! </strong>' + data.succes + '</p>' +
+                                        '</div>');
+                                }else {
+                                    $('.js-error-s_modif').show().delay(2000).hide("slow");
+                                    $('.js-error-s_modif').html('<div class="alert alert-danger text-center">' +
+                                        ' <button type="button" class="close sucess-op" data-dismiss="alert" aria-label="Close">\n' +
+                                        ' <span class="icon-sc-cl" aria-hidden="true">×</span>\n' +
+                                        ' </button>' +
+                                        '<p class="message-alert-none"><strong>Erreur ! </strong>' + data.errors + '</p>' +
+                                        '</div>');
                                 }
-                            });
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                alert('Error : ' + errorThrown);
+                            }
+                        });
                     });
                     // ajouter pour le style
                     $('.i-checks').iCheck({
@@ -310,14 +373,14 @@
     });
 
     $('#SupprimeSeanceModal').on('show.bs.modal', function (event) {
-            // récuperer la route du lien modal  data-id
+        // récuperer la route du lien modal  data-id
         var path_ = $(event.relatedTarget).data('id');
         var modal_delete = $(this);
         $.ajax({
             'url': path_,
             success: function (data) {
                 modal_delete.find('.modal-body').html(data);
-                $("#form_delete_seance").submit(function(e) {
+                $('#form_delete_seance').submit(function(e) {
                     e.preventDefault();
                     console.log('/fr/seadelete/'+ document.getElementById("_seance").value);
                     $.ajax({
@@ -334,8 +397,8 @@
                             }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert('Error : ' + errorThrown);
-                    }
+                            alert('Error : ' + errorThrown);
+                        }
                     });
 
                 });

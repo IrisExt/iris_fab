@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Security\AffectationRole;
 use App\Security\AppelExiste;
 use App\Service\HabilitationService;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class AccueilController.

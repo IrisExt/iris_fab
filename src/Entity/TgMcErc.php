@@ -28,9 +28,9 @@ class TgMcErc
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_mc_erc", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_mc_erc", type="string", length=5000, nullable=false)
      * @Assert\Length(
-     *      max = 50,
+     *      max = 500,
      *      maxMessage = "Le titire est limité à {{ limit }} caractères"
      * )
      */

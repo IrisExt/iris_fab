@@ -181,6 +181,10 @@ class TgHabilitation
         return $this->idComite;
     }
 
+    /**
+     * @param TgComite $idComite
+     * @return $this
+     */
     public function addIdComite(TgComite $idComite): self
     {
         if (!$this->idComite->contains($idComite)) {
@@ -315,8 +319,10 @@ class TgHabilitation
         return $this->lbRespMaj;
     }
 
-    public function setLbRespMaj(?string $lbRespMaj): void
+    public function setLbRespMaj(?string $lbRespMaj): self
     {
         $this->lbRespMaj = $lbRespMaj;
+
+        return $this;
     }
 }

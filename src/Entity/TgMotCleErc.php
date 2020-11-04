@@ -28,9 +28,9 @@ class TgMotCleErc
     /**
      * @var string
      *
-     * @ORM\Column(name="lb_nom_fr", type="string", length=50, nullable=false)
+     * @ORM\Column(name="lb_nom_fr", type="string", length=255, nullable=false)
      * @Assert\Length(
-     *      max = 50,
+     *      max = 255,
      *      maxMessage = "Le titire est limité à {{ limit }} caractères"
      * )
      */

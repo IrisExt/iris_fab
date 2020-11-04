@@ -1,4 +1,4 @@
-    {% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
     {% trans_default_domain 'Comites' %}
 
       {% block stylesheets1 %}
@@ -6,9 +6,6 @@
               /*html, body.materialdesign {background: blue;*/
               /*}*/
 
-              .sort_tab {
-                  cursor: pointer;
-              }
               .datepicker table tr td.range {
                   background: #c1e9ff;
               }
@@ -25,11 +22,10 @@
               ============================================ -->
           <link rel="stylesheet" href="{{ asset('css/datapicker/datepicker3.css') }}">
           <link rel="stylesheet" href="{{ asset('css/tabs.css') }}">
-          <link rel="stylesheet" href="{{ asset('css/chosen/bootstrap-chosen.css') }}">
           <!-- Preloader CSS
               ============================================ -->
           <link rel="stylesheet" href="{{ asset('css/preloader/preloader-style.css') }}">
-          <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+          {#          <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">#}
       {% endblock %}
 
       {% block navmenu %}
@@ -40,9 +36,9 @@
 
     {% block body %}
         {%  if apstatut == true %} {% set disabled = '' %}{% else %}{% set disabled = 'disabled' %}{% endif %}       <!-- statut appel encours or clos -->
-        <div class="loader">
-            <h1>Veuillez patientez pendant le chargement de la page.</h1>
-        </div>
+        {#        <div class="loader">#}
+        {#            <h1>Veuillez patientez pendant le chargement de la page.</h1>#}
+        {#        </div>#}
 
         <div class="data-table-area mg-b-15">
             <div class="container-fluid">
@@ -66,9 +62,9 @@
                                         <!-- choisir Comités -->
                                         <form  action="{{ path('list_comite') }}" method='GET'>
                                             <div class="input-group custom-go-button">
-                                                <select data-placeholder="Chosir un comite" name="cmte" class="chosen-select" tabindex="-1" required onChange = "this.form.submit();">
+                                                <select data-placeholder="Chosir un comite" name="cmte" class="select2_" tabindex="-1" required onChange = "this.form.submit();">
                                                     <option value="">{{ 'comite.form.choixcomite'|trans }}</option>
-                                                    <option value="">{{ 'comite.form.tous'|trans }}</option>
+                                                    <option value="0">{{ 'comite.form.tous'|trans }}</option>
                                                     {% for comite in cmte %}
                                                         <option value="{{ comite.idcomite }}">{{ comite.lbacr}}</option>
                                                     {% endfor %}
@@ -80,9 +76,9 @@
                                         <!-- choisir département -->
                                         <form  action="{{ path('list_comite') }}" method='GET'>
                                             <div class="input-group custom-go-button">
-                                                <select data-placeholder="Chosir un département" name="dep" class="chosen-select" tabindex="-1" required onChange = "this.form.submit();">
+                                                <select data-placeholder="Chosir un département" name="dep" class="select2_" tabindex="-1" required onChange = "this.form.submit();">
                                                     <option value="">{{ 'comite.form.choixdep'|trans }}</option>
-                                                    <option value="">{{ 'comite.form.tous'|trans }}</option>
+                                                    <option value="0">{{ 'comite.form.tous'|trans }}</option>
                                                     {% for dep in deps %}
                                                         <option value="{{ dep.lblong }}">{{ dep.lbcourt }}</option>
                                                     {% endfor %}
@@ -118,17 +114,18 @@
                                         <thead>
                                         <tr>
                                             {# sorting of properties based on query components #}
-                                            <th  class="col-md-4"> <h5>Comités <span class="sort_tab fa fa-fw fa-sort"></span></h5>
+                                            <th  class="col-md-4"> <h5>Comités</h5>
                                                 {#                                      <h5>{{ knp_pagination_sortable(comites, 'Tri comités', 'idComite')}} </h5>  </i>#}
                                             </th>
-                                            <th  class="col-md-4"><h5>CPS / Réunion <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
-                                            <th  class="col-md-3"><h5>Messages <span class="sort_tab fa fa-fw fa-sort"></span></h5></th>
+                                            <th  class="col-md-4"><h5>CPS / Réunions</h5></th>
+                                            <th  class="col-md-3"><h5>Messages</h5></th>
                                             <th  class="col-md-1"></th>
                                         </tr>
 
                                         </thead>
                                         <tbody class="searchable">
                                         {% for comite in comites %}
+                                            {#                                            {{ dump(comite) }}#}
                                             <tr >
                                                 <!-- block comite , titre, département -->
                                                 <td class="col-md-4" style="word-wrap: break-word;">
@@ -144,7 +141,7 @@
                                                                         {{ comite.lbacr }} : {{ comite.lbtitre }}
                                                                     {% endif %}
                                                                 </b></i><br>
-                                                            <h6>{{ comite.lbdesc }}</h6>
+                                                            <h6 class="minimize">{{ comite.lbdesc }}</h6>
                                                             <i><b>Dept :</b></i> {% for  dep in comite.iddepartement %}
                                                                 {{ dep.lbcourt }}
                                                             {% endfor %}
@@ -155,9 +152,7 @@
                                                 <td class="col-md-4" style="overflow-wrap: break-word;">
                                                     <div class="col-lg-12">
                                                         <div class="contact-client-single ct-client-b-mg-30 ct-client-b-mg-30-n shadow-reset">
-                                                            {% set PR = true %}
-                                                            {% set VP = true %}
-                                                            {% set virg = true %}
+                                                            {% set PR ,VP,virg = true,true,true %}
                                                             <!-- id  2 => 'vise président', 3 => 'Président', 4, 'Membre', 5, 'CPS Secondaire', 1, 'CPS Principal' Tg_role -->
                                                             <b> <i> <b>CPS: </b></i> </b>
                                                             {% set virgule = 0 %}
@@ -195,15 +190,6 @@
                                                                         {{ part.idPersonne.lbprenom|capitalize|slice(0, 1) }}.{{ part.idPersonne.lbnomusage }}
                                                                         {% set virg = 0 %}  {% set virgule = 1 %}
                                                                     {% endif %}
-                                                                {% endfor %}
-                                                                {% for  part in comite.idhabilitation %}
-                                                                    {#  {% if part.idRole.idrole == 6 and part.blsupprime == 1 and part.idPersonne != null %} <!-- 6 COES,  -->#}
-                                                                    {#      {% if coes == true %}#}
-                                                                    {#          <b>Coes </b>:#}
-                                                                    {#      {% endif %}#}
-                                                                    {#      {% set coes = false %}#}
-                                                                    {#      {{ part.idPersonne.lbprenom|capitalize|slice(0, 1) }}.{{ part.idPersonne.lbnomusage }},#}
-                                                                    {#  {% endif %}#}
                                                                 {% endfor %}
                                                                 <br>
                                                                 <!-- Block reunion -->
@@ -336,18 +322,14 @@
             <script src="{{ asset('js/datapicker/bootstrap-datepicker.js') }}"></script>
             <script src="{{ asset('js/datapicker/datepicker-active.js') }}"></script>
 
-            <!-- chosen JS
-                  ============================================ -->
-            <script src="{{ asset('js/chosen/chosen.jquery.js') }}"></script>
-            <script src="{{ asset('js/chosen/chosen-active.js') }}"></script>
             <!-- icheck JS
                        ============================================ -->
             <script src="{{ asset('/js/icheck/icheck.min.js') }}"></script>
             <script src="{{ asset('/js/icheck/icheck-active.js') }}"></script>
             <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>
+            {#            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.js"></script>#}
+            {#            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/jquery.tablesorter.widgets.js"></script>#}
+            {#            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.24.6/js/widgets/widget-columnSelector.min.js"></script>#}
 
         {% endblock %}
             {% block javascripts %}
@@ -364,26 +346,6 @@
                                 }).show();
                             })
                         }(jQuery));
-
-
-                        $('[rel="tooltip"]').tooltip({trigger: "hover"});
-                        $('[data-toggle="tooltip"]').tooltip()
-                        $('[data-toggle="tooltip_info"]').tooltip()
-
-
-                        $("#sortTable")
-                            .tablesorter({
-                                // Enable filter
-                                widgets: ["filter"],
-                                widgetOptions: {
-                                    filter_columnFilters: false,
-                                    filter_searchDelay: 60,
-                                    filter_useParsedData: true
-                                },
-                                sortList: [
-                                    [8, 1]
-                                ]
-                            });
                     });
 
                     function msg(status,classe, messages){

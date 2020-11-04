@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\TgHabilitation;
+use App\Entity\TgPersonne;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method TgHabilitation|null find($id, $lockMode = null, $lockVersion = null)
@@ -76,13 +78,13 @@ class HabilitationRepository extends ServiceEntityRepository
     public function AppelPersonne($idPersonne)
     {
         return $this
-                    ->createQueryBuilder('a')
-                    ->select('(a.idAppel)')
-                    ->where('a.idPersonne = :idpersonne')
-                    ->setParameter(':idpersonne', $idPersonne)
-                    ->groupBy('a.idAppel')
-                    ->getQuery()
-                    ->getResult();
+            ->createQueryBuilder('a')
+            ->select('(a.idAppel)')
+            ->where('a.idPersonne = :idpersonne')
+            ->setParameter(':idpersonne', $idPersonne)
+            ->groupBy('a.idAppel')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -362,8 +364,7 @@ class HabilitationRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('h')
             ->innerJoin('h.idProjet', 'p')
-             ->where('p.idProjet = :projet')
-             ->andWhere('h.idProfil IN (17,18)')
+            ->where('p.idProjet = :projet')
             ->setParameter('projet', $projet)
             ->getQuery()->getResult();
     }
@@ -386,4 +387,31 @@ class HabilitationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByHabiltationComitePersonne($comite, $profil)
+    {
+        return $this
+            ->addIdComiteQueryBuilder()
+            ->innerJoin('a.idComite', 'c')
+            ->andWhere('c.idComite = :comite')
+            ->andWhere('a.idProfil = :profil')
+            ->andWhere('a.blSupprime = 1')
+            ->setParameter('comite', $comite)
+            ->setParameter('profil', $profil)
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function addIdComiteQueryBuilder(QueryBuilder $qb = null)
+    {
+        return $this->getOrCreateQueryBuilder($qb)
+            ->andWhere('a.blSupprime = 1');
+    }
+
+    private function getOrCreateQueryBuilder(?QueryBuilder $qb)
+    {
+        return $qb ?: $this->createQueryBuilder('a');
+    }
+
+
 }

@@ -10,8 +10,9 @@ use App\Entity\TrNiveau;
 use App\Entity\TrPhase;
 use App\Entity\TrProfil;
 use App\Form\AppelProjetType;
+use App\Manager\HabilitationManager;
 use App\Service\InsertDataProvisional;
-use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,10 +31,26 @@ class AppelProjet extends AbstractController
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var HabilitationManager
+     */
+    private $habilitationManager;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
-    public function __construct(SessionInterface $session)
+    /**
+     * AppelProjet constructor.
+     * @param SessionInterface $session
+     * @param HabilitationManager $habilitationManager
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(SessionInterface $session, HabilitationManager $habilitationManager, EntityManagerInterface $em)
     {
         $this->session = $session;
+        $this->habilitationManager = $habilitationManager;
+        $this->em = $em;
     }
 
     /**
@@ -55,79 +72,69 @@ class AppelProjet extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $habilitation = new TgHabilitation();
         $tgAppelProj = new TgAppelProj();
-        $phase = new TgPhase();
-
-        $nivPhase = new TgNiveauPhase();
         $appelNb = $this->getDoctrine()->getRepository(TgAppelProj::class)->findAll();
         $nbAppel = count($appelNb); // s'il n'existe aucun appel mettre les Session Appel, et Phase
         $form = $this->createForm(AppelProjetType::class, $tgAppelProj);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $profil = $em->getRepository(TrProfil::class)->find(1);
+
+            $profil = $this->em->getRepository(TrProfil::class)->find(1);
+
             if ($this->similaireAcronyme($tgAppelProj->getLbAcronyme(), $tgAppelProj->getDtMillesime()) > 0) {
-                $this->addFlash('error', ' L\'édition '.$tgAppelProj->getDtMillesime().'avec l\'acronyme '.$tgAppelProj->getLbAcronyme().' existe déja, Veuillez réessayer SVP !');
+                $this->addFlash('error', ' L\'édition ' . $tgAppelProj->getDtMillesime() . 'avec l\'acronyme ' . $tgAppelProj->getLbAcronyme() . ' existe déja, Veuillez réessayer SVP !');
 
                 return $this->render('appelprojet/new.html.twig', [
                     'tg_appel_proj' => $tgAppelProj,
                     'form' => $form->createView(),
                 ]);
             }
-            if (!empty($tgAppelProj->getPilote())) {
-                $habi = $em->getRepository(TgHabilitation::class)->findOneBy(['idPersonne' => $tgAppelProj->getPilote(), 'idProfil' => $profil]);
-            } else {
-                $habi = null;
-            }
+
+            $habi = $tgAppelProj->getPilote() !== null ? $this->habilitationManager->getHabProfilPersonne($tgAppelProj->getPilote(), $profil) : null;
+
             try {
                 $nombrePhase = $tgAppelProj->getNbPhase();
                 for ($nbPhase = 1; $nbPhase <= $nombrePhase; ++$nbPhase) {
                     $phase = new TgPhase();
-                    $phase->setIdPhaseRef($em->getRepository(TrPhase::class)->find($nbPhase));
-                    $em->persist($phase);
+                    $phase->setIdPhaseRef($this->em->getRepository(TrPhase::class)->find($nbPhase));
+                    $this->em->persist($phase);
 
                     for ($nbNivPhase = 1; $nbNivPhase <= 3; ++$nbNivPhase) {  // 3 est le niveau de phase Soum, evalu , edit
                         $nivPhase = new TgNiveauPhase();
                         $nivPhase->setIdAppel($tgAppelProj)
                             ->setIdPhase($phase)
-                            ->setIdTypeNiveu($em->getRepository(TrNiveau::class)->find($nbNivPhase))
+                            ->setIdTypeNiveu($this->em->getRepository(TrNiveau::class)->find($nbNivPhase))
                             ->setOrdPhase($nbNivPhase);
-                        $em->persist($nivPhase);
+                        $this->em->persist($nivPhase);
                     }
-                    if (empty($habi) && !empty($tgAppelProj->getPilote())) {
-                        $habilitation
-                            ->setIdProfil($profil)
-                            ->setLbRespMaj($this->getUser()->getIdPersonne()->getLbNomUsage().' '.$this->getUser()->getIdPersonne()->getLbPrenom())
-                            ->setIdPersonne($tgAppelProj->getPilote())
-                            ->addIdPhase($phase)
-                            ->addIdAppel($tgAppelProj);
-                        $em->persist($habilitation);
-                    } elseif (!empty($habi)) {
+                    if ($habi === null && $tgAppelProj->getPilote() !== null) {
+                        $this->habilitationManager->setHabilitation($tgAppelProj->getPilote(), $profil, null, $tgAppelProj, $phase, null);
+                    } elseif ($habi !== null) {
                         $habi->addIdPhase($phase)
                             ->addIdAppel($tgAppelProj);
-                        $em->persist($habi);
+                        $this->em->persist($habi);
                     }
                 }
 
                 ////////////////////////////////////// Remplir tg_parametre et mot cle erc / test , -- Provisoire -- //////////////////
-                $insertData = new InsertDataProvisional($em);
+                $insertData = new InsertDataProvisional($this->em);
                 $insertData->DataAapg($tgAppelProj);
                 ///////////////////////////////////// FIN  tg_parametre and motCleErc/////////////////////////////////////////////////
-                $em->persist($tgAppelProj);
-                $em->flush();
-            } catch (DBALException $e) {
+                $this->em->persist($tgAppelProj);
+                $this->em->flush();
+            } catch (\Exception $e) {
+                dd($e);
                 $this->addFlash('error', 'Impossible de d\ajouter un appel ! Veuillez contacter  l\'administrateur');
 
                 return $this->redirectToRoute('tg_appel_proj_index');
             }
 
             // chercher la phase 1 et niveau 1
-            $nivAppel = $em->getRepository(TgNiveauPhase::class)->findOneBy(['idAppel' => $tgAppelProj], ['idNiveauPhase' => 'ASC']);
+            $nivAppel = $this->em->getRepository(TgNiveauPhase::class)->findOneBy(['idAppel' => $tgAppelProj], ['idNiveauPhase' => 'ASC']);
             $tgAppelProj->setNiveauEnCours($nivAppel);
-            $em->persist($tgAppelProj);
-            $em->flush();
+            $this->em->persist($tgAppelProj);
+            $this->em->flush();
             if (0 != $nbAppel) {
                 $this->session->set('appel', $tgAppelProj);
                 $this->session->set('phase', $nivAppel->getIdPhase());
@@ -157,8 +164,7 @@ class AppelProjet extends AbstractController
      */
     public function edit(Request $request, TgAppelProj $tgAppelProj): Response
     {
-        $habilitation = new TgHabilitation();
-        $em = $this->getDoctrine()->getManager();
+
         $form = $this->createForm(AppelProjetType::class, $tgAppelProj);
         $form->handleRequest($request);
         $profilPilote = $this->getDoctrine()->getRepository(TrProfil::class)->find(1);
@@ -186,30 +192,24 @@ class AppelProjet extends AbstractController
                 if ((!empty($habiAnc) && $personneAncien != $form->all()['pilote']->getData()) || empty($habiAnc)) {
                     if (!isset($habilPiloteByAppel)) {
                         if (null !== $form->all()['pilote']->getData()) {
-                            $habilitation
-                                ->setIdProfil($profilPilote)
-                                ->setLbRespMaj($this->getUser()->getIdPersonne()->getLbNomUsage().' '.$this->getUser()->getIdPersonne()->getLbPrenom())
-                                ->setIdPersonne($tgAppelProj->getPilote())
-                                ->addIdPhase($phase)
-                                ->addIdAppel($tgAppelProj);
-                            $em->persist($habilitation);
+                            $this->habilitationManager->setHabilitation($tgAppelProj->getPilote(), $profilPilote, null, $tgAppelProj, null, null);
                         }
                     } else {
                         $habilPiloteByAppel->addIdAppel($tgAppelProj)
                             ->addIdPhase($phase);
-                        $em->persist($habilPiloteByAppel);
+                        $this->em->persist($habilPiloteByAppel);
                     }
                     if (!empty($habiAnc)) {
                         if ($personneAncien != $form->all()['pilote']->getData()) {
                             $habiAnc[0]->removeIdAppel($tgAppelProj)
                                 ->removeIdPhase($phase);
-                            $em->persist($habiAnc[0]);
+                            $this->em->persist($habiAnc[0]);
                         }
                     }
                 }
             }
-            $em->persist($tgAppelProj);
-            $em->flush();
+            $this->em->persist($tgAppelProj);
+            $this->em->flush();
 
             return $this->redirectToRoute('tg_appel_proj_index', [
                 'idAppel' => $tgAppelProj->getIdAppel(),
@@ -227,16 +227,17 @@ class AppelProjet extends AbstractController
      */
     public function delete(Request $request, TgAppelProj $tgAppelProj): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$tgAppelProj->getIdAppel(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $tgAppelProj->getIdAppel(), $request->request->get('_token'))) {
             try {
-                $em = $this->getDoctrine()->getManager();
-                $tgNivPhases = $em->getRepository(TgNiveauPhase::class)->findBy(['idAppel' => $tgAppelProj]);
-                $tgPhaseAppel = $em->getRepository(TgNiveauPhase::class)->phaseByAppel($tgAppelProj); // retourne les phases de l'appel
-                $tghabs = $em->getRepository(TgHabilitation::class)->pilotebyAppel($tgAppelProj, 1); // hab profil pilote
+                $this->em = $this->getDoctrine()->getManager();
+                $tgNivPhases = $this->em->getRepository(TgNiveauPhase::class)->findBy(['idAppel' => $tgAppelProj]);
+                $tgPhaseAppel = $this->em->getRepository(TgNiveauPhase::class)->phaseByAppel($tgAppelProj); // retourne les phases de l'appel
+                $tghabs = $this->em->getRepository(TgHabilitation::class)->pilotebyAppel($tgAppelProj, 1); // hab profil pilote
                 $tghabs[0]->removeIdAppel($tgAppelProj);
                 $tgAppelProj->setNiveauEnCours(null); // set null for TgAppel
-                $em->persist($tgAppelProj);
-                $em->flush();
+                $this->em->persist($tgAppelProj);
+                $this->em->flush();
+
                 foreach ($tgPhaseAppel as $tgPhase) {
                     $phase = $this->getDoctrine()->getRepository(TgPhase::class)->find($tgPhase['idPhase']);
                     foreach ($tghabs[0]->getIdPhase() as $phase_) {
@@ -246,15 +247,15 @@ class AppelProjet extends AbstractController
                     }
                 }
                 foreach ($tgNivPhases as $tgNivPhase) {
-                    $em->remove($tgNivPhase);
+                    $this->em->remove($tgNivPhase);
                     $tgphase = $tgNivPhase->getIdPhase();
                     if ($tgphase) {
-                        $em->remove($tgphase);
+                        $this->em->remove($tgphase);
                     }
                 }
-                $em->remove($tgAppelProj);
-                $em->flush();
-            } catch (DBALException $e) {
+                $this->em->remove($tgAppelProj);
+                $this->em->flush();
+            } catch (\Exception  $e) {
                 $this->addFlash('error', 'Impossible de supprimer, d\'autres données sont liées à cette entité');
 
                 return $this->redirectToRoute('tg_appel_proj_index');
@@ -279,7 +280,7 @@ class AppelProjet extends AbstractController
         $this->session->set('appel', $idAppel);
 
         $aapgActuel = $this->getDoctrine()->getRepository(TgAppelProj::class)->find($idAppel);
-        $this->addFlash('success', "Vous êtes actuellement  sur l '".$aapgActuel);
+        $this->addFlash('success', "Vous êtes actuellement  sur l '" . $aapgActuel);
 
         return new RedirectResponse($request->headers->get('referer'));
     }
