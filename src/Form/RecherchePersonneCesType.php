@@ -15,9 +15,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Tetranz\Select2EntityBundle\Form\Type\Select2EntityType;
 
 class RecherchePersonneCesType extends AbstractType
 {
@@ -30,53 +32,56 @@ class RecherchePersonneCesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-            $comite = $options['comite'];
+        $comite = $options['comite'];
 
-            $builder
-                ->add('genre',EntityType::class,[
-                    'class' => TrGenre::class,
-                    'label' => 'Genre',
-                    'placeholder' => 'Sélectionner un genre',
-                    'required' => false,
-                    'attr'=>['class' => 'chosen-select']
-                ])
-                ->add('personne', EntityType::class, [
-                    'class' => TgPersonne::class,
-                    'query_builder' => function (EntityRepository $er) use ($comite) {
-                        $resltUser = $er->createQueryBuilder('p')
-                            ->join('p.idPersCps', 'pc')
-                            ->where('p.idPersCps is not null');
-                        return $resltUser;
-                    },
-                    'required' => false,
-                    'attr' => ['class' => 'chosen-select'],
-                    'label' => 'Nom',
-                    'choice_label' => function ($personne) {
-                        return $personne->getLbNomUsage();
-                            }
-                ])
-                ->add('email', EntityType::class, [
-                    'class' => TgPersonne::class,
-                    'query_builder' => function (EntityRepository $er) use ($comite) {
-                        $resltUser = $er->createQueryBuilder('p')
-                            ->join('p.idPersCps', 'pc')
-                            ->where('p.idPersCps is not null');
-                        return $resltUser;
-                    },
-                    'required' => false,
-                    'attr' => ['class' => 'chosen-select'],
-                    'label' => 'Email',
-                    'choice_label' => function ($personne) {
-                        return $personne->getIdPersCps()->getLbadrMail();
-                    }
-                ])
-                ->add('motcle', EntityType::class, [
-                    'class' => TgMotCleCps::class,
-                    'required' => false,
-                    'attr' => ['class' => 'chosen-select'],
-                    'label' => 'Mot Clé'
-                ])
-                ->add('organisme');
+        $builder
+            ->add('genre',EntityType::class,[
+                'class' => TrGenre::class,
+                'label' => 'Genre',
+                'placeholder' => 'Sélectionner un genre',
+                'required' => false,
+                'attr'=>['class' => 'chosen-select']
+            ])
+            ->add('personne', Select2EntityType::class, [
+                'class' => TgPersonne::class,
+                'remote_route' => 'set_ajax_personne',
+                'primary_key' => 'idPersonne',
+                'minimum_input_length' => 2,
+//                    'query_builder' => function (EntityRepository $er) use ($comite) {
+//                        $resltUser = $er->createQueryBuilder('p')
+//                            ->join('p.idPersCps', 'pc')
+//                            ->where('p.idPersCps is not null');
+//                        return $resltUser;
+//                    },
+                'required' => false,
+//                    'attr' => ['class' => 'chosen-select'],
+                'label' => 'Nom',
+//                    'choice_label' => function ($personne) {
+//                        return $personne->getLbNomUsage();
+//                            }
+            ])
+            ->add('email', TextType::class, [
+//                    'class' => TgPersonne::class,
+//                    'query_builder' => function (EntityRepository $er) use ($comite) {
+//                        $resltUser = $er->createQueryBuilder('p')
+//                            ->join('p.idPersCps', 'pc')
+//                            ->where('p.idPersCps is not null');
+//                        return $resltUser;
+//                    },
+                'required' => false,
+                'attr' => ['class' => 'chosen-select'],
+                'label' => 'Email',
+//                    'choice_label' => function ($personne) {
+//                        return $personne->getIdPersCps()->getLbadrMail();
+//                    }
+            ])
+            ->add('motcle', EntityType::class, [
+                'class' => TgMotCleCps::class,
+                'required' => false,
+                'attr' => ['class' => 'chosen-select'],
+                'label' => 'Mot Clé'
+            ])
+            ->add('organisme');
 
     }
 
